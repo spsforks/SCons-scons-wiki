@@ -1,0 +1,344 @@
+#format irc
+16:23:54 *      bdbaddog (n=bdeegan@adsl-71-131-1-136.dsl.sntc01.pacbell.net) has joined #scons
+16:59:39 *      jrandall (n=jim@bas1-london14-1088933074.dsl.bell.ca) has joined #scons
+17:00:32 <GregoryNoel>  Steven and Gary have said they will be late; who else is here for the bug party?
+17:00:52 <GregoryNoel>  And Gary may not make it at all.
+17:01:18 <jrandall>     here, but after looking through the current list of bugs, there's not a lot I have to add to them
+17:01:40 <jrandall>     Had a hard time getting into 2007Q3.   Any known problem with that spreadsheet?
+17:02:08 <GregoryNoel>  No, just the usual.  Nobody has figured out the exact magic needed.
+17:03:00 <jrandall>     Hrm, I had it opened view-only in another tab, maybe that vexed it for some reason.   I'll try again later to see if it likes me then
+17:03:24 <GregoryNoel>  Apparently, that's one no-no.
+17:03:55 <GregoryNoel>  Could you add that note to the ReadWrite page?
+17:04:00 <jrandall>     Sure thing
+17:04:44 <GregoryNoel>  Bill, are you there?  Or was that an automatic connection?
+17:06:40 <GregoryNoel>  Apparently not.  Only two isn't a quorum, but we can wait a bit and see if Steven or Gary show up.
+17:06:48 <jrandall>     Sure thing
+17:06:48 *      chit-chat while wating for quorum
+17:12:54 *      stevenknight (n=stevenkn@c-69-181-234-155.hsd1.ca.comcast.net) has joined #scons
+17:13:12 <stevenknight> hi, who's here?
+17:13:23 <GregoryNoel>  nobody
+17:13:31 <stevenknight> damn
+17:13:39 <jrandall>     aye, 'tis quiet
+17:14:11 <GregoryNoel>  Gary is caught at work and may not make it.
+17:16:43 <bdbaddog>     Hi All. I'm here til about 5:30ish.
+17:17:00 <stevenknight> hi bill
+17:17:09 <bdbaddog>     Good Day!
+17:17:31 <GregoryNoel>  Hey, Bill.
+17:17:13 <stevenknight> i just got connected myself, shall we dive into the current issues?
+17:17:39 <GregoryNoel>  Sure
+17:17:38 <stevenknight> 2073:  moot, already fixed
+17:17:56 <stevenknight> 2074:  consensus 2.x p2
+17:18:14 <stevenknight> 2076:  consensus 1.x p1
+17:18:43 <GregoryNoel>  Geeze, let me catch up.
+17:19:20 <GregoryNoel>  2074, 2076, done
+17:19:30 <GregoryNoel>  2077
+17:19:37 <stevenknight> oh, 2076:  we should assign to someone, yes?
+17:19:54 <GregoryNoel>  Assign Bill
+17:20:01 <stevenknight> works for me
+17:20:10 <bdbaddog>     oh boy. imagine if I wasn't here.. ;)
+17:20:17 <stevenknight> 2077:  consensus 1.x
+17:20:28 <stevenknight> two votes (kind of) for p4, any objections?
+17:20:43 <GregoryNoel>  Er, 2077 assign Bill; I'll look at 2076
+17:20:56 <stevenknight> okay
+17:20:57 <GregoryNoel>  unless Bill wants it
+17:21:35 <bdbaddog>     nope. but I'll take a look at 2077. might be 2 weeks as I have trade show next week, before I get a chance.
+17:21:45 <stevenknight> done
+17:21:47 <GregoryNoel>  done
+17:22:03 <stevenknight> 2078:  1.x, p2, me (along with other Visual Studio / VC work)
+17:22:21 <GregoryNoel>  ok
+17:22:39 <stevenknight> (the reprioritization after 1.0 is released is going to be fun...)
+17:22:49 <stevenknight> 2079:  2.x, greg?
+17:23:05 <GregoryNoel>  Hmmm...  OK, I guess
+17:23:14 <GregoryNoel>  what priority?
+17:23:28 <stevenknight> sounds like you have a handle on it
+17:23:37 <stevenknight> I don't quite grok why a File.Grep() method
+17:23:54 <bdbaddog>     it's like Glob() but with regular expressions..
+17:24:00 <GregoryNoel>  It's not obvious when to use f.name and str(f)
+17:24:09 <stevenknight> as opposed to some more generic method that might also grep for Dir, Alias, Value...
+17:24:27 <GregoryNoel>  No, no, no, it looks at file contents.
+17:24:39 <stevenknight> ah
+17:24:41 <GregoryNoel>  Like a scanner.
+17:24:50 <bdbaddog>     oh. I thought from the emails, the requestor wanted to grep the file names,not contents.
+17:25:10 <stevenknight> yeah, like Filter (and FilterOut) in Ant
+17:25:25 <GregoryNoel>  No, he wanted to scan for 'int main(' to locate the main programs
+17:25:28 <bdbaddog>     o.k. never mind just reread.
+17:25:44 <GregoryNoel>  Maybe those are better names (FilterIn/Out)
+17:25:55 <stevenknight> well, they imply matching names, not file contents
+17:26:02 <GregoryNoel>  Ah, true.
+17:26:05 <bdbaddog>     yes. sounds clearer, Grep makes me think Glob but Regex.
+17:26:13 <stevenknight> i guess rather than add a special method (IMHO)
+17:26:40 <GregoryNoel>  (yes?)
+17:26:47 <stevenknight> i'm more interested in giving File nodes a read() method
+17:26:57 <GregoryNoel>  Hmmmm......
+17:26:58 <stevenknight> that looks like normal Python file objects
+17:26:59 <bdbaddog>     ahh. I like that even more.
+17:27:12 <GregoryNoel>  I think I do, too
+17:27:14 <stevenknight> and then let people manipulate f1.read() using normal Python
+17:27:41 <GregoryNoel>  Yes, good idea.  I'll write it up that way.
+17:27:49 <stevenknight> okay, thanks
+17:27:57 <GregoryNoel>  next?
+17:28:16 <stevenknight> 2080:  TASK
+17:28:32 <stevenknight> i forget, how are we marking items like this?  1.0 and just move them along?
+17:28:39 <stevenknight> i.e., things that can be done any time
+17:28:42 <GregoryNoel>  How about David as a release team member?
+17:28:50 <stevenknight> ++
+17:28:58 <bdbaddog>     I think he said he didn't have enough time though.
+17:29:03 <GregoryNoel>  No, I make up something
+17:29:48 <stevenknight> ??
+17:29:48 <GregoryNoel>  I don't think being on the mailing list would be a problem; I'd appreciate his insight for the spreadsheets.
+17:30:07 <stevenknight> agreed
+17:30:12 <bdbaddog>     sounds good.
+17:30:40 <GregoryNoel>  "make up something" === try to guess when it would be done; it's what the not-research items should be.
+17:30:54 <stevenknight> okay
+17:31:17 <stevenknight> 2081:  consensus 1.x p2
+17:31:29 <GregoryNoel>  I can create something for backburner issues, but "backburner" is not a name that delights me.
+17:31:51 <stevenknight> "backburner" to me would be implied by the priority
+17:32:02 <stevenknight> since the target milestone is really about timeframe
+17:32:07 <stevenknight> how about an explicit "anytime"
+17:32:09 <stevenknight> ?
+17:32:20 <GregoryNoel>  Hmmm....  I'll look at that
+17:32:24 <stevenknight> okay
+17:32:34 <GregoryNoel>  2081: done
+17:33:12 <GregoryNoel>  2082: split between p2 and p4
+17:33:15 <stevenknight> 2082:  i meant 1.x
+17:33:18 <GregoryNoel>  (both 1.x)
+17:33:41 <stevenknight> so 1.x, and p3? (split the difference)
+17:33:47 <bdbaddog>     Looks like just needs some tests to be able to be applied right?
+17:33:56 <bdbaddog>     Do we have much coverage on rc files?
+17:34:18 <stevenknight> not a lot
+17:34:23 <stevenknight> i was just dealing with rc file today
+17:34:34 <stevenknight> so i'd put my name on this one, too
+17:34:39 <GregoryNoel>  works
+17:35:03 <bdbaddog>     O.k I"m a pumpkin. I've gotta head to class.
+17:35:04 <stevenknight> 2083:  looks like consensus 1.x p2
+17:35:08 <bdbaddog>     Good evening to all.
+17:35:10 <stevenknight> later
+17:35:13 *      bdbaddog has quit ("Leaving.")
+17:36:05 <GregoryNoel>  2083: yeah, but we need to talk about the model.
+17:36:16 <stevenknight> fire away
+17:36:28 <stevenknight> or did you mean on the ML?
+17:36:25 <GregoryNoel>  Maybe not right now, but there needs to be some agreement on how to do it.
+17:36:45 <stevenknight> okay
+17:37:09 <GregoryNoel>  ML would be fine; the last time I wrote a suggestion about it, it just died away, and I still don't have any real ideas
+17:37:34 <stevenknight> yeah, i may be the only one who cares about it in practice
+17:37:44 <stevenknight> purely because of wanting to do everything that Make does... :-)
+17:37:46 <GregoryNoel>  No, I do
+17:37:58 <stevenknight> no, i mean cares whether there is a mechanism that works
+17:38:06 <stevenknight> i think most people want it to just go away... :-)
+17:38:05 <GregoryNoel>  The real problem is less-than-clean removals
+17:38:17 <stevenknight> ah, right
+17:39:08 <GregoryNoel>  If it were only creating "cleaner" levels, it would be easy, but you want to be able to clean out, say, just the intermediate files
+17:39:17 <stevenknight> right
+17:39:40 <GregoryNoel>  I just don't have any good idea for how to do thatt.
+17:39:45 <stevenknight> so for now:  1.x, p2, and either you or I to lead discussion (even if it's just between the two of us)?
+17:39:52 <GregoryNoel>  works
+17:40:03 <stevenknight> either that or "research" since we're still not sure
+17:40:23 <stevenknight> your choice, 1.x or research
+17:40:48 <GregoryNoel>  1.x; that'll force us to look at it at a specific time
+17:40:52 <stevenknight> good
+17:41:02 <stevenknight> 2084:  i'm clueless
+17:41:07 <GregoryNoel>  2084, where's Gary?
+17:41:17 <stevenknight> we could make it research, garyo
+17:41:29 <stevenknight> just so he doesn't escape completely unscathed by not showing up...  :-)
+17:41:35 <GregoryNoel>  I'll buy that!
+17:41:43 <stevenknight> done
+17:41:49 <jrandall>     lol
+17:42:20 <stevenknight> 2085:  1.0, p4 (split difference), me
+17:42:28 <GregoryNoel>  done
+17:42:53 <stevenknight> i have doc changes teed up for once i get 0.98.5 out (I hope later this evening, this past weekend was overrun by daughter's birthday)
+17:43:12 <GregoryNoel>  Happy birthday; daughters are dangerous
+17:43:30 <stevenknight> oh my goodness yes
+17:43:34 <GregoryNoel>  how old?
+17:43:39 <stevenknight> 10
+17:43:44 <GregoryNoel>  ouch!
+17:44:05 <GregoryNoel>  I remember my niece at ten....  oh, my, are you in for it!
+17:44:25 <stevenknight> yeah, I'm right on the cusp of going from being cool Dad to the biggest dork in the world
+17:44:46 <stevenknight> mind you, that last bit isn't much of a stretch...
+17:45:20 <stevenknight> anyway, 2007 q2?
+17:45:32 <GregoryNoel>  er, q3?
+17:45:41 <stevenknight> oh, right, q3
+17:45:48 <stevenknight> i was working ahead a little on q2
+17:46:20 <GregoryNoel>  1869
+17:46:51 <stevenknight> ?
+17:46:55 <stevenknight> i have 1687 as the first?
+17:47:01 <GregoryNoel>  fixed
+17:47:08 <stevenknight> ah
+17:47:39 <stevenknight> 1689:  consensus 1.x,
+17:47:55 <stevenknight> p2?
+17:48:14 <GregoryNoel>  Another one that needs some discussion after a bit of research, but
+17:48:27 <GregoryNoel>  p2 is a reasonable time to do it.
+17:48:27 <stevenknight> right
+17:48:43 <GregoryNoel>  OK, done
+17:49:08 <stevenknight> assign to...?  you (maybe ParseConfig), me (I might know what's going on), leave blank for now?
+17:49:41 <GregoryNoel>  blank, actually issues@scons
+17:49:55 <stevenknight> okay
+17:50:09 <GregoryNoel>  I don't think it was backtick
+17:50:27 <stevenknight> maybe not
+17:50:04 <stevenknight> 1690:  research, me (Visual Studio stuff)
+17:50:40 <GregoryNoel>  1690, done
+17:50:52 <stevenknight> 1691:  documentation, 1.0, me
+17:51:14 <GregoryNoel>  done
+17:51:28 <stevenknight> 1692:  research, me (Visual Studio again)
+17:51:29 <GregoryNoel>  may need to follow up to see what the message was
+17:51:40 <GregoryNoel>  1692, done
+17:51:52 <stevenknight> 1693:  consensus 1.x p2
+17:52:08 <GregoryNoel>  done
+17:52:09 <stevenknight> good manageable bug for someone else to take
+17:52:15 <GregoryNoel>  yes
+17:52:28 <stevenknight> 1697:  research, me (Visual Studio)
+17:52:47 <GregoryNoel>  okay
+17:53:16 <GregoryNoel>  1701, ditto
+17:53:17 <stevenknight> 1701:  research, me (Visual Studio)
+17:53:19 <stevenknight> right
+17:53:20 <GregoryNoel>  done
+17:53:34 <stevenknight> it isn't the pipes thing, it has to do with how we look in the #*@&(#$ registry for various info
+17:53:56 <stevenknight> 1702:  same...
+17:54:02 <GregoryNoel>  1702, ditto
+17:54:10 <stevenknight> man, there's a lot of Visual Studio cruft piling up
+17:54:26 <stevenknight> I'm really itching to get in there and clean this stuff up
+17:54:50 <stevenknight> 1703:
+17:54:52 <GregoryNoel>  Do you want a keyword for it?  I can set it up, but you'll have to assign them all.
+17:54:56 <stevenknight> not sure about my 1.x p3
+17:55:04 <stevenknight> keyword:  yes
+17:55:17 <stevenknight> "VisualStudio" seems logical
+17:55:30 <GregoryNoel>  do you mean 1704?
+17:55:39 <stevenknight> oh, yes 1704:
+17:56:00 <stevenknight> 1704:  seems like if it were really crucial more people would have asked for it
+17:56:07 <stevenknight> i only know of this one patch
+17:56:19 <stevenknight> on the other hand, it kind of goes along with what Russel was saying on the ML today
+17:56:33 <stevenknight> about how SCons really doesn't have much traction in the Java community
+17:56:35 <GregoryNoel>  There was something on the mailing list about JAR() recently, maybe today?
+17:56:46 <GregoryNoel>  oops, you already said that
+17:56:47 <stevenknight> yeah, Russel's threads
+17:57:00 <stevenknight> let's leave it p3
+17:57:06 <stevenknight> since there's already a patch
+17:57:07 <GregoryNoel>  OK
+17:57:25 <stevenknight> if we ever are going to do better with Java, it can't hurt to have this already supported
+17:57:32 <GregoryNoel>  Maybe draft a Java specialist to keep us on track
+17:57:50 <GregoryNoel>  Maybe Russel?
+17:57:58 <stevenknight> maybe
+17:58:09 <stevenknight> he tends to appear and reapper in fits and starts
+17:58:14 <stevenknight> disappear i mean
+17:58:47 <GregoryNoel>  I'll write him about creating a wiki page with what's needed for Java support
+17:58:56 <stevenknight> hmm, i thought i recalled there was someone else who showed up on the ML with some Java knowledge a month or two ago
+17:59:09 <stevenknight> maybe i'm making that up
+17:59:22 <stevenknight> well, it can't hurt to ask, anyway
+17:59:24 <GregoryNoel>  No, I have his name
+17:59:37 <GregoryNoel>  I'll ask them both
+17:59:43 <stevenknight> good idea re: wiki page
+17:59:49 <stevenknight> sounds good
+18:00:35 <GregoryNoel>  anyway, what did we decide about 1704?
+18:01:04 <GregoryNoel>  1.x, p2, you?
+18:01:21 <stevenknight> done
+18:01:58 <stevenknight> 1705:  1.x, jim ...  p3?
+18:02:05 <GregoryNoel>  or p2
+18:02:09 <jrandall>     Aye - I've got a patch in that fixes it
+18:02:24 <stevenknight> jrandall++
+18:02:32 <GregoryNoel>  bravo!
+18:02:47 <GregoryNoel>  p2 then?
+18:02:48 <jrandall>     thanks.
+18:02:52 <stevenknight> yeah, p2
+18:02:55 <GregoryNoel>  done
+18:03:23 <stevenknight> 1706:  1.x, but now i'm not sure of priority
+18:03:50 <GregoryNoel>  I'll look at it, maybe p4?
+18:04:02 <GregoryNoel>  It's part of getting symlinks right.
+18:04:16 <stevenknight> sure, 1.x, p4, you
+18:04:21 <GregoryNoel>  done
+18:04:44 <stevenknight> 1707: consensus 2.x p4
+18:04:53 <GregoryNoel>  done, or future?
+18:05:26 <stevenknight> hmm, i'm torn
+18:05:38 <stevenknight> part of me says future because no one seems to have asked for it
+18:05:47 <stevenknight> but maybe 2.x because there's already code
+18:06:06 <GregoryNoel>  Yeah, but infected
+18:07:12 <GregoryNoel>  Let's leave it at 2.x p4 and revisit later
+18:07:24 <stevenknight> okay
+18:07:31 <GregoryNoel>  1708, I'll go with Ken to look at it.
+18:08:00 <stevenknight> 1708:  okay
+18:08:15 <stevenknight> I may need to take it back if he doesn't pop up again
+18:08:26 <stevenknight> but we should at least see if he can take it
+18:08:27 <GregoryNoel>  If he doesn't like it, he can kick it elsewhere.
+18:08:32 <stevenknight> yeah
+18:08:38 <GregoryNoel>  I'll put that in the note.
+18:08:43 <stevenknight> okay
+18:09:14 <GregoryNoel>  1711, quite a mix
+18:09:18 <stevenknight> 1711:  yeah
+18:09:30 <stevenknight> when in doubt, shade to the earlier target
+18:09:37 <GregoryNoel>  Huh?
+18:09:46 <GregoryNoel>  Oh, I see.
+18:09:55 <stevenknight> i tend to go with the earlier/earliest milestone
+18:10:26 <stevenknight> i'd rather make sure it gets considered and reprioritize to later if necessary
+18:10:27 <GregoryNoel>  Let's make it 1.x then and give it to Gary, since he's not here
+18:10:48 <GregoryNoel>  p3?
+18:10:53 <stevenknight> ah, good idea -- he's done subst stuff
+18:10:54 <stevenknight> yes, p3
+18:10:58 <GregoryNoel>  done
+18:11:17 <stevenknight> 1712:  2.x, p3
+18:11:27 <stevenknight> perhaps Benoit if we want to assign it
+18:11:32 <stevenknight> he's good at things like this
+18:12:00 <GregoryNoel>  I'd want measurements.  I don't think scanners are that slow.
+18:12:19 <stevenknight> good point, they're probably not
+18:12:26 <jrandall>     Aye.   Not clear where the tradeoff would be as to whether it'd be worth it or not
+18:12:37 <jrandall>     Most of mine, it wouldn't be worth spawning
+18:12:46 <stevenknight> actually, (off topic) i have an optimization i'm thinking of that I'd like to discuss with you some time
+18:13:02 <stevenknight> let's get through bugs first though
+18:13:19 <GregoryNoel>  In fact, I think a small rewrite so that scanners overlap with the previous command would cure it.
+18:13:36 <GregoryNoel>  I do that in TaskmasterNG
+18:13:42 <jrandall>     nice
+18:13:43 <stevenknight> oh, very cool
+18:13:48 <stevenknight> simple and effective
+18:14:14 <stevenknight> 1714:  1.x, p3
+18:14:15 <GregoryNoel>  Is that the optimization?
+18:14:59 <stevenknight> no, it's basically trying to make searching CPPPATH O(1) instead of O(n)
+18:15:06 <GregoryNoel>  1714, agreed, but spin off JAR to another issue
+18:15:16 <stevenknight> 1714: agreed
+18:15:26 <stevenknight> 1.x, p3, garyo
+18:15:38 <stevenknight> could also go to Russel or whoever gets to be Java guru
+18:15:53 <GregoryNoel>  done; I'll note that
+18:16:13 <GregoryNoel>  OT: yes, they should be hashed better.
+18:16:16 <stevenknight> good
+18:16:43 <stevenknight> OT: actually, even beyond that, the search is attached to the wrong object
+18:16:51 <GregoryNoel>  1717, you, VS
+18:17:07 <GregoryNoel>  OT: yes, I've noticed that
+18:17:08 <stevenknight> 1717:  yes
+18:17:15 <GregoryNoel>  done
+18:17:41 <stevenknight> 1722:  it's Bill's, let's WONTFIX it...  :-)
+18:17:52 <GregoryNoel>  1720, has Bill left?
+18:18:05 <GregoryNoel>  oops, 1722
+18:18:10 <stevenknight> yeah he's gone
+18:18:19 <stevenknight> so he gets what he deserves... :-)
+18:18:27 <GregoryNoel>  OK, WONTFIX unless he provides a test case
+18:18:37 <stevenknight> done
+18:19:00 <stevenknight> 1723:  can this be part of the toolchain stuff you and Gary have on the backburner?
+18:19:10 <GregoryNoel>  yes
+18:19:15 <stevenknight> oh, yeah, your comment even *says* that...
+18:19:21 <GregoryNoel>  yup
+18:19:32 <stevenknight> future, you?
+18:19:36 <GregoryNoel>  done
+18:19:51 <stevenknight> 1730:  1.x, p3, Rob?
+18:20:33 <GregoryNoel>  Uh, maybe not Rob
+18:21:11 <GregoryNoel>  Oops, I was thinking of another issue; yes, Rob.
+18:21:19 <stevenknight> okay
+18:21:27 <GregoryNoel>  It's a little out of his area, but he can work with you.
+18:21:56 <stevenknight> okay
+18:22:21 <stevenknight> 1735:  research, Rob?
+18:22:30 <GregoryNoel>  1735, what if it's still a bug?  Where to put it?
+18:22:56 <stevenknight> I'm agnostic -- 1.x p3?
+18:23:22 <GregoryNoel>  works; I'll tell him to contact me if he needs to
+18:23:27 <stevenknight> done
+18:23:39 <stevenknight> 1716:  research, me, VisualStudio
+18:23:57 <GregoryNoel>  done; quit for the evening?
+18:24:02 <stevenknight> yeah, i have to run
+18:24:06 <stevenknight> real quick re: CPPPATH
+18:24:06 *      off-topic discussion between stevenknight and GregoryNoel
+18:30:36 <stevenknight> okay, really gotta run
+18:30:39 <stevenknight> thanks!
+18:30:39 <GregoryNoel>  When shall we all meet again?
+18:30:39 <GregoryNoel>  In thunder, lightning, or in rain?
+18:30:39 <GregoryNoel>  Where the place, ...  same time next week?
+18:30:52 <stevenknight> oh, damn, that's right
+18:30:57 <stevenknight> yes, default, same time and place
+18:31:01 <GregoryNoel>  done; cu
+18:31:05 <stevenknight> l8r
+18:31:06 *      stevenknight has quit ("Leaving")
+18:31:07 <jrandall>     see you
+18:31:09 *      jrandall (n=jim@bas1-london14-1088933074.dsl.bell.ca) has left #scons

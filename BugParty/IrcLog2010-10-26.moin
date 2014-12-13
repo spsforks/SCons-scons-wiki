@@ -1,0 +1,199 @@
+#format irc
+16:57:18 *	bdbaddog (~bdeegan@adsl-71-131-1-95.dsl.sntc01.pacbell.net) has joined #SCONS
+17:00:43 <sgk>	hey guys
+17:01:00 <bdbaddog>	Greetings.
+17:01:06 *	Jason_at_Intel (~chatzilla@12.18.240.208) has joined #SCONS
+17:01:53 <GregNoel>	Hi, I can't stay the entire time, so if we're going to get started, we should do it soon.
+17:02:04 <Jason_at_Intel>	hello
+17:02:16 <sgk>	let's go, gary indicated he has a conflict
+17:02:22 <GregNoel>	2689 clear preference for 2.1 p2, but who can do it?
+17:03:07 <sgk>	sigh...  probably belongs in my camp, i probably know that code best
+17:03:17 <GregNoel>	done
+17:03:26 <GregNoel>	2690 Consensus on "asap" but that needs to be defined (also "who").
+17:03:49 <sgk>	gary suggested using callable(), give it to him?
+17:03:59 <GregNoel>	works for me
+17:04:16 <Jason_at_Intel>	agree
+17:04:24 <GregNoel>	done
+17:04:27 <GregNoel>	2691 Done by Gary (thanks!)
+17:04:27 <GregNoel>	2692 Technically invalid.  Also technically a dup of 2536.  I agree with Steven that a separate InstallDir() is not the way to go.  So, is this sufficiently urgent that we should do it independently of 2536?  I'm inclined to treat it as a dup.
+17:05:06 <sgk>	i'd go with dup, unless someone feels strongly enough to take it on sooner
+17:05:13 <Jason_at_Intel>	I think this shows a need to handle structure in the node lists
+17:05:42 <sgk>	Jason_at_Intel:  that sounds right
+17:05:58 <GregNoel>	This has nothing to do with node lists; it's about structuring a destination directory.
+17:06:29 <GregNoel>	Yes, zip files should be structured in the same way, but that's not the point here.
+17:06:34 <Jason_at_Intel>	ya... like Zipfile... remember you idea with tuples
+17:07:12 <sgk>	anyway, it's big enough that i doubt anyone's going to pull a rabbit out of their hat for it soon
+17:07:19 <Jason_at_Intel>	I agree a new function is the wrong way to go.. I am only saying that a fundamental fix is needed in SCons.. once that is done a large set of issues go away
+17:07:23 <sgk>	so dup 2536 should be fine
+17:07:31 <GregNoel>	OK, dup it is; done
+17:07:35 <GregNoel>	2693 I'm willing for it to be 2.x p3, so there's consensus there, but who should do it?  And should it be activated by catching the exception if the unlink() fails?
+17:08:19 <sgk>	Jason_at_Intel:  since you already dealt with the os.stat() issue in Parts, could you take this one?
+17:08:24 <Jason_at_Intel>	I have a fix in Parts with an unlink override that will do this
+17:08:37 <GregNoel>	done
+17:08:49 <sgk>	if you want to implement it in a way that melds nicely with Parts, that'd be cool
+17:08:58 <Jason_at_Intel>	I guess... can we get that patch ( maybe tweaked in this case) that i put i dev list in SCons?
+17:09:33 <sgk>	which one?  i don't see why not
+17:09:50 <Jason_at_Intel>	it would this one... getting link
+17:10:36 <Jason_at_Intel>	http://scons.tigris.org/ds/viewMessage.do?dsForumId=1268&dsMessageId=2673518
+17:11:02 <Jason_at_Intel>	this will allow the base of what is needed to get hard links and symlinks working in SCons for windows
+17:11:53 <sgk>	okay, but that's orthogonal to 2693, yes?
+17:11:54 <Jason_at_Intel>	we can add the tweaked CCopy builder as well if you like :-) ( as my copy has the reporting API in Parts for --verbose ability)
+17:12:09 <sgk>	so let's get through the bug list first before discussing those details
+17:12:38 <Jason_at_Intel>	only in that i would then add the unlink overide to retarget readonly files as well
+17:12:16 <GregNoel>	2694 (First thing I'd look for is spelling errors.)
+17:13:10 <Jason_at_Intel>	Greg I would agree
+17:13:55 <Jason_at_Intel>	They might be an issue with MSVS_VERSION
+17:14:03 <sgk>	2694:   spelling errors in what?  he posted his SConstruct, and MSV[CS]_VERSION are spelled correctly, at least...
+17:14:45 <GregNoel>	sgk, I'll take your word for it.
+17:14:51 <sgk>	yeah, he posted it
+17:14:41 <Jason_at_Intel>	there should be a simple test case that can verify this.
+17:15:38 <sgk>	bdbaddog, do you have cycles to investigate?  if not, how about if we ask gary to follow up, since he already replied once
+17:15:41 <Jason_at_Intel>	BDog?
+17:16:20 <bdbaddog>	hmm. I can take a first pass at it.
+17:16:40 <bdbaddog>	just checking that MSVSProject is reading/doing anything with those variables..
+17:16:44 <GregNoel>	research?  If so, then what priority?
+17:16:47 <bdbaddog>	it could be broken from the refactoring.
+17:16:54 <sgk>	p3?
+17:17:11 <bdbaddog>	p3
+17:17:14 <GregNoel>	works for me
+17:17:19 <sgk>	cool, thanks
+17:17:17 <GregNoel>	2695
+17:18:50 <GregNoel>	I'm almost positive Action() does the right thing (there are tests for it); what did you mean here?
+17:18:53 <sgk>	2695:  looking to see if my diagnosis looks in the ballpark
+17:19:48 <sgk>	yeah, looks right
+17:20:16 <sgk>	GregNoel:  you're right, Actions know how to rebuild in response to changes to variables, but only if they know what variables are used
+17:20:30 <sgk>	command-line strings track the changes for free because we expand them
+17:20:39 <sgk>	but Python function actions don't get expanded that way
+17:20:57 <sgk>	so they have to be told what construction variables the Python function will look at when building its target
+17:20:57 <GregNoel>	Ah, you mean MSVSProject() doesn't provide the variables?
+17:21:00 <sgk>	yeah
+17:21:37 <GregNoel>	So yes, easy fix: just provide the variables.  Who does it?
+17:21:35 <sgk>	so give it to me, should be pretty trivial
+17:21:43 <GregNoel>	done
+17:22:01 <GregNoel>	2696 Er, it's not O(1), but I agree with Gary that the size should be included.
+17:22:53 <Jason_at_Intel>	I think it would be nice if we could reuse existing logic
+17:23:21 <sgk>	the question is how?
+17:23:42 <sgk>	we have this Unlink() action that really should only be called if necessary
+17:23:48 <sgk>	instead of every time
+17:23:55 <Jason_at_Intel>	and i think the link unlink can be used for more than it is going forward with the fixes i have for win32
+17:25:40 <Jason_at_Intel>	so it might be good to factor the checking "decider" logic in a different way in the node objects
+17:25:44 <sgk>	the architectural issue (iirc) is that the duplicate logic is kind of handled as a side effect of examining source files
+17:26:22 <sgk>	not as a direct action in the DAG walk, which is probably where it should really happen
+17:26:36 <sgk>	so the goal of re-using it is good, but would take a lot more work
+17:27:06 <sgk>	and i'd hate to not give people a good optimization in the meantime
+17:27:18 <Jason_at_Intel>	well that seems simple then
+17:27:29 <sgk>	we should still be able to refactor it in the future along the lines you're suggesting
+17:27:32 <Jason_at_Intel>	take the fix.. and note that this needs to be cleaned up
+17:27:45 <sgk>	yeah
+17:27:58 <sgk>	oh, i'll open up a separate issue to track that clean up
+17:28:01 <GregNoel>	decision?
+17:28:12 <sgk>	so...  2.1 p3 sgk?
+17:28:30 <Jason_at_Intel>	+1
+17:28:32 <GregNoel>	hmmm...  Yeah, that seems OK.
+17:28:34 <GregNoel>	done
+17:28:53 <GregNoel>	2697
+17:29:05 <sgk>	bdbaddog or Jason_at_Intel, can either of you volunteer?
+17:29:41 <Jason_at_Intel>	I have code, and stuff to share to help...
+17:30:06 <Jason_at_Intel>	however the current msvc tools is beyond me.. as i already have a working version in Parts
+17:30:37 <sgk>	can you update the issue with specifics about the registry difference?
+17:30:47 <Jason_at_Intel>	Be happy to
+17:31:00 <bdbaddog>	I was looking at vc9 vs vc9 express (and for 10) wasn't sure how to detect the diff.
+17:31:41 <sgk>	bdbaddog:  if Jason_at_Intel provides that info, would it be pretty straightforward to fix?
+17:32:34 <Jason_at_Intel>	r'Software\Wow6432Node\Microsoft\VisualStudio\9.0\Setup\VC\ProductDir',
+17:32:36 <Jason_at_Intel>	                    r'Software\Microsoft\VisualStudio\9.0\Setup\VC\ProductDir',
+17:32:38 <Jason_at_Intel>	                    r'Software\Wow6432Node\Microsoft\VCExpress\9.0\Setup\VC\ProductDir',
+17:32:39 <Jason_at_Intel>	                    r'Software\Microsoft\VCExpress\9.0\Setup\VC\ProductDir'
+17:32:42 <bdbaddog>	I'm not sure there's a fix for this, looks invalid.?
+17:32:50 <Jason_at_Intel>	first two are pro... second two are express
+17:33:01 <bdbaddog>	@jason please post to bug or email to dev list
+17:33:12 <Jason_at_Intel>	doing it as we type
+17:33:14 <bdbaddog>	if they request an invalid TARGET_ARCH..
+17:33:39 <Jason_at_Intel>	well there is another case in this...
+17:33:51 <Jason_at_Intel>	there is the 2008 server sdk
+17:33:57 <bdbaddog>	anyway .. yes I'll take a look.
+17:34:02 <Jason_at_Intel>	this has teh 32-bit -64-bit and ia64 compilers
+17:34:07 <Jason_at_Intel>	all looks the same
+17:34:12 <sgk>	bdbaddog:  oh, the issue being that the default is to build for the current host arch (64 bits) but he has no 64-bit compiler installed?
+17:34:14 <bdbaddog>	we handle sdk separately.
+17:34:34 <bdbaddog>	well sort of, if I remember we have a list of SDK's which are valid with diff VC/VS's.
+17:34:59 <GregNoel>	decision?  research?  If so, then what priority?
+17:35:15 <sgk>	if that's the case, you're right, that does sound invalid
+17:35:26 <bdbaddog>	research 2.1 p3
+17:35:28 <bdbaddog>	me
+17:35:41 <GregNoel>	done
+17:35:45 <sgk>	seems like he has an obvious workaround, set TARGET_ARCH to 32 bit, so yeah, 2.1 p3 seems eminently fair
+17:35:52 <bdbaddog>	I did finally get a win 7 64 bit machine to play on. so that'll help
+17:35:52 <sgk>	I'd be okay with even lower
+17:36:02 <GregNoel>	2698 No spreadsheet quorum, so we should bypass this issue if there's no immediate agreement.  (If I have time while I'm writing up the meeting results, I may propose a patch.)
+17:36:24 <sgk>	2698:  sounds good
+17:36:35 <GregNoel>	so, bypass?
+17:36:47 <sgk>	yes
+17:36:50 <bdbaddog>	+`1
+17:36:51 <GregNoel>	done
+17:37:02 <GregNoel>	2699 Again, no spreadsheet quorum.  That said, I think I prefer dup 2536.
+17:37:19 <sgk>	i'll go with dup 2536
+17:37:31 <Jason_at_Intel>	+1
+17:37:40 <sgk>	especially since there's a reference back when the dup occurs, it's not like we lose any additional info
+17:37:45 <GregNoel>	done
+17:37:49 <GregNoel>	Of the issues up for review, only 1406 could be considered to have a quorum, and that's only if you include Dirk's email.  I propose we assign 1406 to Dirk, make Steven either CC or QA, and turn him loose.
+17:38:33 <sgk>	+1, that sounds good
+17:38:58 <GregNoel>	sgk, do you want CC or QA?
+17:39:19 <sgk>	uh....  both?  QA, if both are superfluous
+17:39:33 <sgk>	(both is superfluous?)
+17:39:52 <GregNoel>	both can't hurt; the notification email isn't duplicated.
+17:39:58 <sgk>	both, then
+17:40:03 <GregNoel>	done
+17:40:10 <GregNoel>	OK, we're done.
+17:40:23 <GregNoel>	And I've got to go, good timing.
+17:40:28 <sgk>	ok, thnx everyone
+17:40:37 <bdbaddog>	np.. l8r
+17:40:50 <GregNoel>	bye, all...
+17:41:12 <sgk>	GregNoel, bdbaddog:  'night
+17:40:51 <sgk>	Jason_at_Intel:  any more stuff to go over?  I owe you emails from weeks ago
+17:41:14 <Jason_at_Intel>	sure
+17:41:23 <Jason_at_Intel>	the file handling stuff
+17:42:04 <Jason_at_Intel>	I think what i have in Parts for override the file open call ( and unlink .. minus maybe the readonly file issue)  is ready to go
+17:42:40 <Jason_at_Intel>	I have it re factored in truck as a separate file
+17:42:54 <Jason_at_Intel>	to make it easy to add to SCons
+17:43:24 <Jason_at_Intel>	there is a little quirk in that I whack the current SCons win32 file overrides
+17:43:33 <Jason_at_Intel>	but other than that I think this code is done
+17:44:12 <Jason_at_Intel>	I am sure there is other stuff.. but i can remember the e-mails at this time ( long day...)
+17:44:18 <sgk>	well, if your overrides work better, that should be fine
+17:44:49 <sgk>	i hear you re: long day, real life's been impossible lately
+17:45:24 <sgk>	there's nothing in your windows symlink support that'll blow up on earlier Windows or Python versions, is there?
+17:46:48 <Jason_at_Intel>	only if you don't have ctypes
+17:47:10 <Jason_at_Intel>	I have fixes in my CCopy builder to deal with an issue with hardlinks already existing
+17:47:37 <Jason_at_Intel>	might be a better way minus the delete call to deal with it... but it works well enough
+17:47:54 <sgk>	okay, so send me a patch and I'll take a look
+17:48:00 <Jason_at_Intel>	however that code.. or any code like this needs this override to allow correct file creation so links of some form can be used
+17:48:04 <sgk>	and I'll also dig up the email stuff I was supposed to send
+17:48:21 <Jason_at_Intel>	so.. that is the question.. I have a file
+17:48:25 <Jason_at_Intel>	not a patch
+17:49:08 <Jason_at_Intel>	http://parts.tigris.org/source/browse/parts/trunk/parts/parts/overrides/os_file.py?revision=344&view=markup
+17:50:02 <Jason_at_Intel>	sort of unclear how to do this "patch" in Scons as it is new code, and might need a certain location
+17:51:20 <Jason_at_Intel>	so i guess look it over.. I will send links again tomorrow in e-mail
+17:51:49 <Jason_at_Intel>	we can discuss where it should go in SCons
+17:53:06 <Jason_at_Intel>	Does that sound OK?
+17:55:04 <Jason_at_Intel>	??
+17:55:21 <sgk>	sure, sounds good
+17:55:29 <sgk>	(sorry, got interrupted -- still at work)
+17:55:36 <Jason_at_Intel>	great
+17:55:51 <Jason_at_Intel>	oh I recall one item
+17:55:56 <Jason_at_Intel>	the scons.bat issue
+17:56:06 <Jason_at_Intel>	you can use scons.py on windows
+17:56:15 <Jason_at_Intel>	it works better in general
+17:56:36 <Jason_at_Intel>	but we can do that in e-mail
+17:56:47 <sgk>	except for passing command line arguments, there's some gotcha with that
+17:57:07 <Jason_at_Intel>	I have to get going here it is about 8pm.. need to help with the twins...
+17:57:08 <sgk>	at least for some combination of Python version + Windows version
+17:57:09 <Jason_at_Intel>	oh??
+17:57:19 <Jason_at_Intel>	I have not seen this
+17:57:34 <sgk>	yeah, i remember having some links describing it, i'll dig them up
+17:57:49 <Jason_at_Intel>	ok.. will be good to review
+17:58:01 <sgk>	yeah
+17:58:09 <sgk>	okay, good night, good luck with the twins
+17:58:29 <Jason_at_Intel>	thank..
+17:58:37 <Jason_at_Intel>	good night!
+17:58:44 *	Jason_at_Intel has quit (Quit: ChatZilla 0.9.86 [Firefox 3.5.3/20090824101458])
+18:00:07 *	bdbaddog (~bdeegan@adsl-71-131-1-95.dsl.sntc01.pacbell.net) has left #SCONS
+18:00:13 *	sgk (~sgk@nat/google/x-mbowtfhelsfesqin) has left #SCONS

@@ -1,0 +1,385 @@
+#format irc
+17:18:01 *	Jason_at_intel (n=chatzill@bementil-116.illinois.prairieinet.net) has joined #scons
+17:27:59 *	GregNoel is no longer marked as being away
+17:28:16 *	garyo-home (n=chatzill@209-6-158-38.c3-0.smr-ubr1.sbo-smr.ma.cable.rcn.com) has joined #scons
+17:30:22 *	stevenknight (n=stevenkn@67.218.107.49) has joined #scons
+17:30:30 *	stevenknight is now known as sgk_
+17:30:40 <GregNoel>	Hi, guys
+17:30:49 <sgk_>	hey
+17:31:07 <GregNoel>	right on time; looks like everybody's here
+17:31:19 <garyo-home>	hlo
+17:31:58 <garyo-home>	shall we dive in with 804?
+17:32:22 <sgk_>	804:  defer again?
+17:32:26 <sgk_>	only half joking...
+17:32:26 <GregNoel>	I think we should tackle 804 and 2404 as a pair.  Even if it's not the same problem, they're both related to lazy actions; it makes sense for only one person to have to open the code.
+17:32:41 <sgk_>	agree w/GN
+17:32:45 <sgk_>	re: one person
+17:32:46 <garyo-home>	makes sense.
+17:33:59 <garyo-home>	I suggest for 804 and 2404 we assign to research/Bill; they're low pri so if he doesn't get to them soon, no problem.
+17:34:17 <sgk_>	sounds good to me
+17:34:32 <GregNoel>	p3 or p4?
+17:34:37 <garyo-home>	p4
+17:34:38 <sgk_>	although it goes a little against the idea of "research" being a triage-soon-for-reclassification bucket
+17:34:42 <sgk_>	p4
+17:34:47 <sgk_>	GN, you okay with it?
+17:34:49 <GregNoel>	done
+17:34:49 <sgk_>	research p4
+17:34:52 <sgk_>	done
+17:35:06 <GregNoel>	2409, consensus
+17:35:20 <GregNoel>	2406, consensus
+17:35:31 <GregNoel>	2408, consensus
+17:35:41 <sgk_>	rockin'...
+17:36:03 <GregNoel>	2410, who, but otherwise consensus
+17:37:00 <garyo-home>	I've already got two from this spreadsheet, but this one is *so* easy...
+17:37:12 <GregNoel>	I guess I'll take it.
+17:37:16 <garyo-home>	thx
+17:37:25 <GregNoel>	done
+17:37:27 <sgk_>	thank you...
+17:37:35 <GregNoel>	2410
+17:37:43 <sgk_>	give it to me
+17:37:49 <sgk_>	this and the next are a google guy
+17:37:54 <sgk_>	i'll thump on him for filing lousy bug reports
+17:38:05 <garyo-home>	:-)
+17:38:07 <GregNoel>	I was thinking the same thing...
+17:38:29 <GregNoel>	ok, 2.x p3 sk, done
+17:38:40 <garyo-home>	agreed.
+17:38:43 <sgk_>	no context to the diffs, no problem description...  sheesh, the people that company will stoop to hiring...
+17:38:55 <garyo-home>	lol
+17:39:00 <GregNoel>	{;-}
+17:39:25 <sgk_>	2413
+17:39:34 <garyo-home>	2414, xml output: wontfix, suggest posting on wiki
+17:39:35 <sgk_>	er
+17:39:36 <sgk_>	2414
+17:39:47 <sgk_>	i like that even better than future
+17:40:01 <GregNoel>	agreed
+17:40:02 <sgk_>	seems like "xml outputter" is just too vague and generic
+17:40:18 <sgk_>	done
+17:40:21 <GregNoel>	done
+17:40:40 <sgk_>	2415
+17:40:52 <garyo-home>	2.x/p2/ludwig
+17:41:10 <garyo-home>	or 1.3, either one
+17:41:15 <sgk_>	ok with assigning to Ludwig, me as backup if he's AWOL?
+17:41:21 <GregNoel>	OK, but I'll say that he can reassign it to sk
+17:41:21 <garyo-home>	yes.
+17:41:21 *	bdbaddog (n=chatzill@adsl-71-142-86-81.dsl.pltn13.pacbell.net) has joined #scons
+17:41:28 <sgk_>	agreed
+17:41:33 <garyo-home>	Hi, Bill.
+17:41:37 <bdbaddog>	Hi
+17:41:39 <sgk_>	hey bill
+17:41:46 <Jason_at_intel>	wow step away for a minute and you are all are almost done
+17:41:47 <sgk_>	2415:  done
+17:41:50 <sgk_>	2416
+17:42:06 <garyo-home>	Hi Jason, big crowd tonight!
+17:42:19 <Jason_at_intel>	I see .. that is good :-)
+17:42:29 <GregNoel>	I  don't think 2316 is lazy action; it's failure to substitute the target
+17:42:33 <garyo-home>	2416: guess I'll take it, at least I'll look at it.
+17:42:47 <garyo-home>	I know the subst code pretty well.
+17:42:42 <GregNoel>	research or anytime?
+17:42:54 <garyo-home>	research is a good idea.
+17:42:56 <GregNoel>	done
+17:43:09 <GregNoel>	2417: Gary, a return code of -1 means "command not found" (at least in this case)
+17:43:36 <GregNoel>	Same failure in packaging tests; I don't know why it can't find "rm".
+17:44:20 <GregNoel>	I wonder about a missing PATH
+17:43:46 <garyo-home>	Really?
+17:43:55 <sgk_>	GregNoel:  if zsh is well-behaved
+17:44:35 <sgk_>	yeah, that packaging test failure is a real pain
+17:44:42 <sgk_>	i took a quick look once but nothing obvious
+17:44:47 <sgk_>	PATH (as reported by buildbot) looks good
+17:44:50 <garyo-home>	I use zsh daily on Mac, Linux and Windows.  I'll try it, but it'll work fine.  Give it to me for research, I'll get more info from the OP.
+17:45:02 <GregNoel>	done
+17:45:05 <sgk_>	s/packaging test/packaging buildbot step/
+17:45:17 <sgk_>	done
+17:45:34 <sgk_>	2418:  me, +vs_revamp
+17:45:55 <GregNoel>	Really?  Sure.
+17:45:56 <sgk_>	or maybe +VisualStudio, we're still using that keyword, right?
+17:46:37 <GregNoel>	I just put "v" in the box and Firefox finds the right one
+17:46:13 <garyo-home>	not +VisualStudio, that's for *building* VS solution files.
+17:46:19 <garyo-home>	(iirc)
+17:46:20 <sgk_>	okay
+17:46:26 <sgk_>	that sounds right
+17:46:46 <garyo-home>	:-/
+17:46:53 <Jason_at_intel>	does this reproduce?
+17:47:07 <Jason_at_intel>	I just tested this.. and it works for me
+17:47:08 <garyo-home>	Jason: what, 2418?
+17:47:15 <Jason_at_intel>	yes
+17:47:23 <garyo-home>	hey, maybe it's already fixed then.
+17:47:26 <Jason_at_intel>	i assumed cache means that it woudl not rebuild
+17:48:02 <garyo-home>	it's more complex than that.  See the bug report.
+17:48:15 <Jason_at_intel>	ok
+17:48:02 <sgk_>	aha
+17:48:08 <sgk_>	light just went on
+17:48:23 <garyo-home>	sgk: ?
+17:48:36 <sgk_>	i was misreading the problem
+17:48:59 <garyo-home>	Is it that they aren't sideeffects or something?
+17:49:19 <garyo-home>	or side effects don't get retrieved maybe?
+17:49:23 <Jason_at_intel>	ahhh
+17:48:58 <sgk_>	yeah, it would be good to retrieve the .pdb from cache, too
+17:49:25 <sgk_>	but retrieving multiple target files from CacheDir with the same "build signature" isn't supported right now
+17:50:14 <sgk_>	so it would involve some design work to support
+17:50:18 <garyo-home>	ok, so maybe not +vs_revamp after all, but 3.x?  Your call...
+17:50:26 <sgk_>	yeah, 3.x
+17:50:35 <GregNoel>	priority?
+17:50:50 <sgk_>	p2 or p3
+17:51:01 <sgk_>	it's one of those things that's grating because we *should* be smart about it
+17:51:08 <GregNoel>	p2 then
+17:51:10 <sgk_>	but it's not clear how widespread a problem it really is in practice
+17:51:16 <garyo-home>	p3 then :-)
+17:51:27 <sgk_>	:-)
+17:51:27 <GregNoel>	{;-}
+17:51:30 <garyo-home>	(I don't really care, just being snarky)
+17:51:42 <sgk_>	go with p2
+17:51:46 <GregNoel>	done
+17:51:58 <GregNoel>	2319, consensue
+17:52:03 <GregNoel>	2420
+17:52:33 <sgk_>	Rob, me as backup if he's AWOL
+17:52:34 <sgk_>	2.x p3
+17:53:08 <GregNoel>	done; I'll add you as cc
+17:53:14 <garyo-home>	sounds good
+17:53:26 <sgk_>	2421:  garyo++
+17:53:32 <GregNoel>	++
+17:53:40 <garyo-home>	(well of course I broke it first...)
+17:53:50 <garyo-home>	but thx.
+17:53:54 <GregNoel>	(that's why I gave it to you)
+17:54:11 <GregNoel>	That's the issues; report on 1.3?
+17:54:37 <sgk_>	i've still been out of it;  bill, yt?  any progress?
+17:54:51 <sgk_>	bdbadog?
+17:54:55 <sgk_>	bdbaddog?
+17:55:11 <bdbaddog>	sorry distracted by my wife.. ;)
+17:55:38 <garyo-home>	I have one 1.3 bug I've still been working on but it's much more complicated than I'd thought when I started it, 2048.  May need to get deferred.
+17:55:53 <bdbaddog>	o.k. so I'm behind on that, but looks like I need to shuffle some logic around to make it not too messy for the HOST_* and TARGET_* initialization.
+17:56:20 <Jason_at_intel>	does 1.3 get vs vs_revamp
+17:56:34 <sgk_>	Jason_at_intel:  yes
+17:56:34 <bdbaddog>	Seems like that logic should be in the Platform/*.py code.
+17:56:35 <garyo-home>	That's the plan right now anyway.
+17:56:40 <sgk_>	the pacing item is merging vs_revamp to trunk
+17:56:53 <Jason_at_intel>	gary: what about the extra vars in MSVS you complained about?
+17:57:12 <garyo-home>	btw, I'm using vs_revamp (latest trunk) successfully at work w/ VS2003 and 2005.  Thanks for some well-placed help, Jason.
+17:58:05 <Jason_at_intel>	no problem.. I have  new version almost done of this... should address the need to redo this code everytime we add a new version
+17:58:20 <Jason_at_intel>	I'll post when done
+17:58:37 <garyo-home>	more table-driven?
+17:59:03 <sgk_>	bdbaddog:  any pieces where you could use help?
+17:59:20 <bdbaddog>	So the issue at hand with the HOST/TARGET variable initialization in Platform/*.py is that the Environment() isn't initialized prior to the environment being initialized (if I remember correctly)
+18:00:11 <bdbaddog>	And I wanted to bounce it off of at least 1 other person prior to coding it up.
+18:00:33 <sgk_>	profitable to do it here?  or take it off line?
+18:02:47 <bdbaddog>	I'll bow to the wisdom of others. if there are other topics to discuss, then we can do it another time.
+18:03:08 <GregNoel>	Nothing but time tonight; Steven is pacer on the shuttle
+18:03:10 <sgk_>	i think this is the main topic -- GN, you have anything else to go over?
+18:03:23 <GregNoel>	nope
+18:03:34 <sgk_>	~10-15 minutes to shuttle stop
+18:03:48 <garyo-home>	I'm happy to listen
+18:04:01 <bdbaddog>	Lemme find the code in question.
+18:04:09 *	vsmatck has quit (kubrick.freenode.net irc.freenode.net)
+18:04:09 <bdbaddog>	Do you all have vs_revamp checked out?
+18:04:24 <GregNoel>	One aside: For what it's worth, I've got an update of PlatformToolConfig that focuses on the platform configuration phase.  The tool part of it isn't anywhere near complete, though.  Should I push it over for your comments?
+18:04:27 <Jason_at_intel>	I am interest if nothing else to learn more of the insides of Scons
+18:04:53 <sgk_>	i do
+18:04:57 <sgk_>	updating...
+18:05:13 <Jason_at_intel>	updated
+18:05:14 <bdbaddog>	I can't remember off the top of my head where Platform is initialized. anyone?
+18:05:34 <GregNoel>	Platform/__init__.py
+18:06:59 <bdbaddog>	Scons.Platform.Platform() is called from somewhere. that's the where I'm looking for.
+18:07:25 <bdbaddog>	But if you look at Platform/__init__.py Platform()
+18:08:16 <bdbaddog>	you'll see it returns a PlatformSpec, and then assigns the platform module.generated to the __call__
+18:08:58 <sgk_>	ah
+18:09:00 <bdbaddog>	So then is the generated in win32.py the right place to populated the HOST_CPU, and HOST_OS
+18:09:09 <bdbaddog>	I mean generate() in win32.py
+18:09:47 <bdbaddog>	Also I wanted to move get_architecture() from Tools/MSCommon/arch.py to win32.py
+18:10:12 <sgk_>	i think the generate() in win32.py
+18:10:23 <bdbaddog>	In which case the generate() for each platform should set the HOST_OS/CPU and TARGET_{OS|CPU} as well.
+18:10:24 <sgk_>	(and in the other platform-speciific modules)
+18:10:33 <Jason_at_intel>	HOST_ARCH? or HOST_CPU
+18:10:51 <bdbaddog>	I think we decided HOST_CPU to leverage autoconf/auto* nomenclature.
+18:11:05 <sgk_>	yes, HOST_CPU for exactly that reason
+18:11:32 <Jason_at_intel>	I thought it was the other way.. as x86_64 is an architecture not a CPU
+18:11:40 <bdbaddog>	So does that sound like a reasonable reorganization of the code?
+18:11:47 <GregNoel>	(Actually, I argue it should set PLATFORM_{CPU,VENDOR,KERNEL,OS} since it could be different in different Environment()s.)
+18:11:48 <sgk_>	why move get_architecture()?  win32.py implies an OS
+18:11:58 <sgk_>	i was thinking our mapping was arch => cpu
+18:11:58 <bdbaddog>	Jason: Hmm it's a cpu family
+18:12:06 <bdbaddog>	get_architecture is os specific logic.
+18:12:14 <bdbaddog>	at least for win32, it's only for win32.
+18:12:38 <Jason_at_intel>	that is fine.. just worried about people wanting a AMD64 CPU or an INTEL64 CPU
+18:12:49 <sgk_>	oh, right, because of looking for the magic PROCESSOR__ARCHIT* variables
+18:12:53 <sgk_>	okay, makes sense
+18:13:11 <sgk_>	GregNoel:  PLATFORM_* ?
+18:13:12 <bdbaddog>	plus the tools aren't initialized yet.
+18:13:17 <Jason_at_intel>	Greg: ya.. so I did not push the otehr two as i can't find a build use for them.. only a packing use.. I took what was safe
+18:13:23 <sgk_>	we were converging on HOST_* and TARGET_*
+18:13:24 <Jason_at_intel>	not that it woudl not be added on later
+18:13:41 <garyo-home>	I like HOST and TARGET_*.
+18:13:42 <bdbaddog>	and that allows us to have (eventually) the platform logic set the default tools lists
+18:14:44 <sgk_>	we're also converging on _{CPU,VENDOR,KERNEL,OS} suffixes to ride GNU's coattails
+18:14:54 <Jason_at_intel>	I thought HOST_ARCH was the "high level" cpu and CPU was the low level
+18:15:02 <GregNoel>	In general, whatever (cross-)compiler you want to invoke, it runs on the current platform, so you shouldn't really need the detailed specifics.  Only for what you're generating.  And PLATFORM_* makes sense for that.
+18:15:33 <sgk_>	sorry, i don't understand that
+18:15:43 <Jason_at_intel>	which one?
+18:15:48 <sgk_>	PLATFORM_ seems ambiguous to me
+18:15:49 <garyo-home>	google HOST_ARCH: 3960 results.  google HOST_CPU: 59,700 results.
+18:15:55 <sgk_>	HOST_* and TARGET_* seem obvious
+18:16:07 <bdbaddog>	+1 HOST_ and TARGET_
+18:16:23 <garyo-home>	+1 HOST_ and TARGET_
+18:16:26 <Jason_at_intel>	but these don't map to auto config... i say HOST as Greg might say BUILD
+18:16:32 <sgk_>	Jason_at_intel:  what would be the distnction between "high level" and "low level" ?
+18:16:33 <GregNoel>	I won't argue here; I'll push over the proposal; critique at your leisure.
+18:16:40 <sgk_>	okay
+18:16:48 <sgk_>	just reaching exit for shuttle stop
+18:16:57 <sgk_>	< 1 minute
+18:17:14 <bdbaddog>	any reason not to start coding as proposed?
+18:17:19 <sgk_>	Jason_at_intel:  examples of "high level" vs. "low level" ?
+18:17:20 <bdbaddog>	Naming aside ?
+18:17:23 <Jason_at_intel>	high level is x86, x86_64... low level is p3, p4, amd64
+18:17:28 <sgk_>	and what it provides that the GNU model doesn't already cover?
+18:17:31 <garyo-home>	jason: I agree
+18:17:49 *	BinkyTheClown (n=binky@unaffiliated/binkytheclown) has joined #scons
+18:17:52 <bdbaddog>	I think realisticaly the low level is left for the user to implement at this point.
+18:18:03 <garyo-home>	sgk: compiler flags to generate specific code (SSE2, SSE3).  Prob not that important for us.
+18:18:07 <bdbaddog>	it's flags on top of whatever flags are set for bit-ness
+18:18:15 <garyo-home>	bdbaddog: that's right, for now at least.
+18:18:19 <sgk_>	iirc, boost distinguishes between 32-bit and 64-bit "memory model"
+18:18:27 <bdbaddog>	yes. not forever, but we have bigger fish to fry
+18:18:36 <Jason_at_intel>	I was was just simplifying term to a simple set, as i could not justify to other the need for the other stuff
+18:18:36 <sgk_>	okay, shuttle
+18:18:41 <sgk_>	good work, folks
+18:18:46 <sgk_>	i'll check the log for follow-on discussion
+18:18:47 <bdbaddog>	l8r SGK
+18:18:50 <garyo-home>	ok, bye for now SGK
+18:18:50 *	sgk_ has quit (Read error: 104 (Connection reset by peer))
+18:19:33 <bdbaddog>	Anyone have feedback + or - for my proposed reorg?
+18:19:56 <Jason_at_intel>	I think the move for get_architecture is correct
+18:19:58 <bdbaddog>	mainly focused on win32/visual studio/visual c initially.
+18:20:34 <bdbaddog>	I figure sunos/irix/hpux/etc would then handle their possible CPU's
+18:21:01 <bdbaddog>	in some sense OS===PLATFORM
+18:21:26 <garyo-home>	bdbaddog: seems OK to me.
+18:21:34 <GregNoel>	platform==unix, os==ultrix
+18:21:47 <bdbaddog>	:) ultrix
+18:21:51 <bdbaddog>	ahh memories.
+18:22:15 <GregNoel>	OK, os==solaris
+18:22:08 <Jason_at_intel>	does this mean we will say linux.. instead of posix?
+18:22:59 <GregNoel>	no idea.  you asked for an example.
+18:23:13 <garyo-home>	jason: yes, I'd say linux/bsd/irix, not just "unix" for all of them.
+18:23:27 <garyo-home>	.. or posix.
+18:23:38 <Jason_at_intel>	platform=linux os=RH
+18:23:53 <bdbaddog>	re posix; I agree, but not sure how much that might break in userland if we make that change.
+18:23:54 <Jason_at_intel>	or platform==os==linux
+18:23:58 <bdbaddog>	probably need deprecation cycle?
+18:24:04 <GregNoel>	Uh, that's vendor==redhat, os==gnu
+18:24:17 <bdbaddog>	os=GNU/Linux
+18:24:28 <garyo-home>	I would *not* say os=RH/Ubuntu; that's a distro, the OS is still linux.
+18:24:41 <bdbaddog>	anyway it's really semantics at some point.
+18:24:48 <GregNoel>	vendor==ubuntu
+18:24:55 <garyo-home>	Greg has it right there, vendor=ubuntu.
+18:24:56 <bdbaddog>	and none of that really impacts vs_revamp issues.
+18:24:58 <Jason_at_intel>	vender makes sence
+18:25:10 <garyo-home>	but it's not very relevant to Bill's task right now.
+18:25:14 <bdbaddog>	and none of that needs to happen in 1.3
+18:25:35 <bdbaddog>	we can add HOST_VENDOR/TARGET_VENDOR in 2.x
+18:25:45 <Jason_at_intel>	seem like a good idea
+18:25:52 <garyo-home>	sure, if it turns out to actually affect something :-)
+18:26:01 <bdbaddog>	and that leaves time to figure out which names we'll use.
+18:26:12 <garyo-home>	Actually it could, for packaging.  rpm vs. deb for instance.
+18:26:26 <Jason_at_intel>	and kernel drivers
+18:26:33 <bdbaddog>	true, but that's sort of user space issues.
+18:26:45 <garyo-home>	for sure.
+18:27:04 <bdbaddog>	if we add too much user space stuff to scons, we'll never improve it.
+18:27:11 <Jason_at_intel>	that is why i have not touched in yet in what i have worked on
+18:27:40 <bdbaddog>	and/or maybe in a contrib/unsupported/future package.
+18:27:48 <bdbaddog>	sorry module.
+18:28:19 <garyo-home>	contrib++
+18:28:40 <bdbaddog>	O.k. so I'll start coding all that up (the HOST_OS|CPU, TARGET_OS|CPU) for win32.
+18:28:50 <garyo-home>	sounds great to me.
+18:28:54 <Jason_at_intel>	so is it _ARCH or _CPU
+18:28:59 <bdbaddog>	_CPU
+18:29:00 <Jason_at_intel>	i had this from our talk
+18:29:06 <Jason_at_intel>	<Jason_at_intel>
+18:29:08 <Jason_at_intel>	HOST/TARGET_OS _ARCH or ARCHITECTURE
+18:29:10 <Jason_at_intel>	<stevenknight>
+18:29:11 <Jason_at_intel>	i thought the consensus was that "platform" should conceptually mean the tuple of relevant things
+18:29:13 <Jason_at_intel>	<stevenknight>
+18:29:14 <Jason_at_intel>	_OS and _ARCH
+18:29:23 <Jason_at_intel>	I missed when this was changed
+18:29:43 <bdbaddog>	I think Steven and Greg conversed about this, and sugguested HOST_CPU
+18:29:50 <garyo-home>	Bill: I kind of like _ARCH myself for x86/x86_64/mips
+18:30:06 <bdbaddog>	I'm agnostic.
+18:30:11 <bdbaddog>	about _CPU or _ARCH
+18:30:20 <Jason_at_intel>	I was pushing for having CPU and ARCH
+18:30:29 <bdbaddog>	well. maybe not.. _ARCH is probably appropriate for this level of specificity
+18:30:30 <Jason_at_intel>	ideally add CPU later
+18:30:47 <bdbaddog>	Greg U still there?
+18:30:58 <garyo-home>	Yes, that's why I like arch.  Leaves room for more specific cpu.
+18:31:06 <GregNoel>	sorta; being distracted by pizza
+18:31:10 <bdbaddog>	:)
+18:31:46 <bdbaddog>	U have an opinion _CPU vs _ARCH when its at the level of x86 and x86_64 vs P4/Core2/Atom/ whatever
+18:31:54 <GregNoel>	I favor CPu because we can leverage autoconf stuff; if you deem it must be called arch, then that's not my problem.
+18:32:28 <Jason_at_intel>	how do you plan to leverage autoconf?
+18:32:40 <Jason_at_intel>	I thought you want to build in a autoconf like system?
+18:32:47 <bdbaddog>	we can default CPU = ARCH and then user/platform  can set/user more specific?
+18:32:49 <Jason_at_intel>	but not copy everything
+18:33:13 <garyo-home>	I think GNU uses ARCH for this, at least sometimes.  See http://pingus77.free.fr/Gentoo/240/files/xdtv-2.4.0-mmx.patch
+18:33:17 <garyo-home>	(which I just googled)
+18:33:22 <GregNoel>	Just about everybody who configures machines for cross-compiles knows GNU triples; I want people converting from Autoconf to be comfortable.
+18:33:30 <Jason_at_intel>	got to love google
+18:34:06 <Jason_at_intel>	i guess i never got autoconf to easy work for cross builds
+18:34:24 <Jason_at_intel>	it always was to hard to get it to work
+18:34:26 <garyo-home>	"OS: linux-gnu, ARCH: i386, CPU: i686" <--- from another google
+18:34:27 <BinkyTheClown>	GregNoel: that's me ;)
+18:35:01 <bdbaddog>	GregNoel: I'm not that familiar with autoconf, what's their terms?
+18:35:25 <garyo-home>	OK BinkyTheClown: would you expect ARCH=x86 and CPU=Core2, or just CPU=x86?
+18:35:26 <GregNoel>	garyo-home, but what's the GNU triple?  It'll say x86.
+18:35:34 <Jason_at_intel>	I agree that we need at least  OS and ARCH for cross builds.. I don't see the need for vender or a CPU
+18:36:01 <Jason_at_intel>	I cross build all the time, but maybe I am missing something
+18:36:27 <BinkyTheClown>	garyo-home: I'd expect CPU=Core2
+18:36:47 <Jason_at_intel>	the triple can also say intel64 amd64 and x86_64
+18:36:54 <BinkyTheClown>	garyo-home: and ARCH=x86
+18:37:44 <GregNoel>	No, the triple can only say x86_64.  Anything else is canonicalized.  Try it.
+18:37:53 <Jason_at_intel>	so I am for the arch=x86 and cpu=p4r2-see2
+18:37:54 <garyo-home>	How do I try it?
+18:38:08 <GregNoel>	Look for config-sub.
+18:38:36 <GregNoel>	There's probably a copy on your system somewhere; if there's a configure.in, there's a config.sub.
+18:40:25 <garyo-home>	my config.sub (Ubuntu 9.04) allows x86, i386, i686, x86_64 at least for cpu
+18:40:27 <bdbaddog>	ok. so sounds like HOST_OS, HOST_ARCH (and future HOST_CPU)
+18:41:07 <Jason_at_intel>	gary: that is why i like _arch and _CPU
+18:41:37 <GregNoel>	try 'config.sub blah-garyo-linux' for blah in x86, i386, i686, x86_64, amd64, ...
+18:42:51 <garyo-home>	yup, I did.  It accepts (and returns exactly) those, except for amd64.
+18:43:17 <garyo-home>	(which it canonicalizes to x86_64).
+18:43:23 <garyo-home>	it's a shell script, btw.
+18:43:26 <GregNoel>	Then GNU considers them significantly different, and we should use them.  What more can I say?
+18:43:28 <Jason_at_intel>	I think the point we have to remember is why does the user care about these values
+18:44:22 <Jason_at_intel>	do 80% of user building care about i386 or i686.. I woudl say no
+18:44:33 <Jason_at_intel>	packaging they might care mroe.. but building .. no
+18:45:22 <garyo-home>	again, ARCH is high level (x86 vs. x86_64 vs. mips4 vs. powerpc), CPU should be lower level (386 vs 686 vs mmx)
+18:45:36 <GregNoel>	garyo-home: don't look in the shell script; it's contaminated with the GNU virus
+18:45:54 <garyo-home>	Oh no, I'm infected.
+18:46:26 <Jason_at_intel>	GNU virus?
+18:46:31 <GregNoel>	I've been very careful not to look inside, in case we have to reverse-engineer it.
+18:46:34 <garyo-home>	ah-choo!
+18:47:05 <bdbaddog>	o.k. I've gotta check out. But I'll code to HOST_OS, HOST_ARCH (with HOST_CPU to be future)
+18:47:08 <Jason_at_intel>	so everyone is saying  HOST_OS, HOST_ARCH (and future HOST_CPU)
+18:47:24 <Jason_at_intel>	is this agreeable?
+18:47:31 <bdbaddog>	I can also float it to the dev list.
+18:47:32 <garyo-home>	I think that will be pretty clear to everyone.
+18:47:38 <bdbaddog>	+1
+18:47:47 <Jason_at_intel>	+1
+18:47:50 <garyo-home>	bdbaddog: sure, mention it why not
+18:49:07 <bdbaddog>	O.k. Now to actaully do the work... ;)
+18:49:10 <bdbaddog>	Good night to all!
+18:49:13 <garyo-home>	Just for kicks, here's what "dpkg-architecture" says about this:
+18:49:17 <garyo-home>	garyo@server1:~$ dpkg-architecture
+18:49:19 <garyo-home>	DEB_BUILD_ARCH=i386
+18:49:21 <garyo-home>	DEB_BUILD_ARCH_OS=linux
+18:49:22 <garyo-home>	DEB_BUILD_ARCH_CPU=i386
+18:49:23 <garyo-home>	DEB_BUILD_GNU_CPU=i486
+18:49:25 <garyo-home>	DEB_BUILD_GNU_SYSTEM=linux-gnu
+18:49:26 <garyo-home>	DEB_BUILD_GNU_TYPE=i486-linux-gnu
+18:49:28 <garyo-home>	DEB_HOST_ARCH=i386
+18:49:29 <garyo-home>	DEB_HOST_ARCH_OS=linux
+18:49:31 <garyo-home>	DEB_HOST_ARCH_CPU=i386
+18:49:32 <garyo-home>	DEB_HOST_GNU_CPU=i486
+18:49:34 <garyo-home>	DEB_HOST_GNU_SYSTEM=linux-gnu
+18:49:36 <garyo-home>	DEB_HOST_GNU_TYPE=i486-linux-gnu
+18:49:37 <garyo-home>	and now to all a good night.
+18:49:45 <GregNoel>	G'day, mate.
+18:49:46 <Jason_at_intel>	night!
+18:50:02 *	bdbaddog has quit ("ChatZilla 0.9.84 [Firefox 3.0.10/2009042315]")
+18:50:05 *	garyo-home has quit ("ChatZilla 0.9.84 [Firefox 3.0.10/2009042316]")
+18:50:18 *	Jason_at_intel has quit ("ChatZilla 0.9.84 [Firefox 3.0.7/2009021910]")
+18:50:18 *	GregNoel has been marked as being away

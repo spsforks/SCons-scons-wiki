@@ -1,0 +1,26 @@
+#acl ReleaseGroup:read,write,revert All:
+== Read/Write Access to the Spreadsheets ==
+
+Here's the theory: Log in at Google and then follow one of the links below.  If you're still logged in when you get there, you should have been added as a collaborator and will be able to edit the spreadsheet.  In the future, you can use a direct link rather than one of these "magic" links; it should remember that you are a collaborator.  Here are the known caveats:
+
+ * You __must__ be logged in at Google __before__ following the link.  If you're not logged in, it will ask you for your name and password, but then it will not continue and connect to the spreadsheet; you will get an access error.  Moreover, this seems to stick; you have to log off, let things time out, and start from scratch.
+
+ * Having the spreadsheet opened view-only in a different window or tab will cause the magic embedded in these links to fail for some reason.  Be sure to use the "File>Close" option to release the page or it won't be released until the server times out (typically a couple of hours).
+
+If this doesn't work, let me know; there's __got__ to be an automated way of allowing collaborators to join.  And if you find other variants work or don't work, let me know that, as well (or add them to the caveats above).
+
+ * [[http://spreadsheets.google.com/ccc?key=p1VsJ6ACdIhAs91YGwSnBYw&inv=sguireknight@gmail.com&t=3426996294246234781&guest | current issues]] [[http://spreadsheets.google.com/ccc?key=p3OolfevnankBcfamKYf5DQ&inv=gregnoel@tigris.org&t=6551539910144145694&guest | Retriage 1.0]] [[http://spreadsheets.google.com/ccc?key=p3Oolfevnanm9l3-ql1wtMQ&inv=gregnoel@tigris.org&t=8449721297547237125&guest | Retriage 1.0.x]]
+
+ * [[http://spreadsheets.google.com/ccc?key=p3OolfevnannIMg9Fr0UYew&inv=gregnoel@tigris.org&t=1311408818505628576&guest|2002 issues]]
+
+ * [[http://spreadsheets.google.com/ccc?key=p3OolfevnannV7gsNHif6VA&inv=gregnoel@tigris.org&t=5091086915624502655&guest|2003 issues]]
+
+ * 2004 issues: [[http://spreadsheets.google.com/ccc?key=p3OolfevnanlyLWXLbO7BCg&inv=gregnoel@tigris.org&t=7296390060422022854&guest | H1]] [[http://spreadsheets.google.com/ccc?key=p3OolfevnankjAYP0uqsfHA&inv=gregnoel@tigris.org&t=4089138323041182482&guest | H2]]
+
+ * 2005 issues: [[http://spreadsheets.google.com/ccc?key=p3Oolfevnanm_4PxSiTK0bw&inv=gregnoel@tigris.org&t=9088532344732085990&guest|Q1]] [[http://spreadsheets.google.com/ccc?key=p3OolfevnanmeJ0NJRhdcaQ&inv=gregnoel@tigris.org&t=6843167981887201221&guest|Q2]] [[http://spreadsheets.google.com/ccc?key=p3OolfevnanmC05FVx4dDZg&inv=gregnoel@tigris.org&t=1981162779367062648&guest|H2]]
+
+ * 2006 issues: [[http://spreadsheets.google.com/ccc?key=p3OolfevnanmPpCc6-1umTw&inv=gregnoel@tigris.org&t=3251656996135545915&guest|H1]] [[http://spreadsheets.google.com/ccc?key=p3OolfevnankvO4ojrDDaNw&inv=gregnoel@tigris.org&t=1540541937395920201&guest|H2]]
+
+ * 2007 issues: [[http://spreadsheets.google.com/ccc?key=p3OolfevnannKX33A7H0WaQ&inv=gregnoel@tigris.org&t=4915030495989945759&guest|Q1]] [[http://spreadsheets.google.com/ccc?key=p3Oolfevnann2oLoNX8YxDw&inv=gregnoel@tigris.org&t=4343682686199745187&guest|Q2]] [[http://spreadsheets.google.com/ccc?key=p3Oolfevnannvww1lD0fxZg&inv=gregnoel@tigris.org&t=8995778810857781678&guest|Q3]] [[http://spreadsheets.google.com/ccc?key=p3OolfevnannZjx0LVYDUCA&inv=gregnoel@tigris.org&t=2354092748432313249&guest|Q4]]
+
+ * [[http://spreadsheets.google.com/ccc?key=p3OolfevnanmvlUxH3vCUSw&inv=gregnoel@tigris.org&t=113084589124175733&guest|2008 issues]]

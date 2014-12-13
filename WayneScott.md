@@ -1,0 +1,1 @@
+Wayne Scott (wscott at bitmover dot com) I am just a lurker on the mailing list at this point. But I am starting to lurk on the wiki now. :-)  

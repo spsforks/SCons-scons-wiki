@@ -1,0 +1,13 @@
+
+
+## Chris Sincock
+
+Email: these AT SPAMFREE mail DOT links DOT do DOT not DOT protect DOT the DOT email DOT address DOT from DOT spammers DOT in DOT any DOT way therefore I am not giving out my email address here. 
+
+... 
+
+
+
+---
+
+ [CategoryHomepage](CategoryHomepage) 

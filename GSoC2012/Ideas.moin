@@ -1,0 +1,276 @@
+## page was copied from GSoC2009/Ideas
+#acl MentorsGroup:read,write,revert All:read
+<<TableOfContents(3)>>
+
+### Better Java Support needs to be synthesized from the component paragraphs
+
+### Cross-compilation
+
+----
+=== Fix Bugs ===
+As with all projects, bugs and requests for enhancements and new features accumulate. Many of them only involve a couple of weeks worth of effort, but the primary developers are busy enough that there's just not enough time to get to them. Dealing with a few small bugs, a couple of medium enhancements, or a single large new feature (and including tests and documentation) is a tremendous way for inexperienced programmers to get their feet wet, gain experience, and sharpen your Python skills.
+
+The idea here is to choose a reasonable set of bugs to tackle: not too hard and not too easy. You can get advice from the mailing list as to the difficulty of various bugs, but judging how long it will take to do a task is one of the skills that young programmers must develop.
+
+The issues database contains the <<BugSchedule(@ALL, prioritized list of active issues)>> that is a good place to look for issues to fix.  If someone's name is on the issue, don't hesitate to contact them to see if they would be willing to let you work on it and if it's a good candidate.  That person would also be a good source of information and advice while working on the bug.
+
+Mentor(s): StevenKnight, GaryOberbrunner, GregNoel, others
+
+----
+=== Simpler Interface for "Simple" Builds ===
+The attraction of systems like [[http://www.cmake.org/HTML/Documentation.html|CMake]] and [[http://sources.redhat.com/automake/automake.html|GNU automake]] is that they provide a very simple interface (parseable as a Python script) that handles a wide number of typical builds.  The idea is to design and implement an interface that is as simple as CMake and {{{automake}}} for the kinds of tasks they handle, while still allowing the full power of SCons for the tasks that they don't handle well.
+
+A prior project has provided a great deal of the {{{automake}}} functionality for SCons.  Although it is useful, the interface is not simple.  One approach to this task would be to take that implementation and extend it with a very simple interface.
+
+This task requires skills in language synthesis and language design, plus the ability to conceal unnecessary complexity behind a simple façade.  The interface should "just work" for a wide range of common tasks, keeping the implementation details out of sight.
+
+Mentor(s): GregNoel, possibly StevenKnight
+
+----
+=== Internationalization with Gettext ===
+The {{{gettext}}} set of library functions allows a program to deal with internationalization (i18n) and localization (l10n) issues.  The entire suite contains functions to use a translation catalog to convert a string in one language into another and handle the various numeric and date formats.  Providing this support to programs being built would be very useful.
+
+GNU uses the {{{autopoint}}} command to determine the {{{getttext}}} infrastructure.  SCons will need a similar configuration step to determine exactly what it needs to do.
+
+SCons will need a builder for the {{{msgfmt}}} program, which compiles the catalogs into binary format, and possibly for other programs as well.
+
+This project will need someone who understands i18n, l10n, and the {{{gettext}}} model.
+
+Mentor(s): GregNoel, StevenKnight
+
+----
+=== Internationalization of SCons ===
+SCons itself needs to be internationalized.  There's a Python {{{gettext}}} module to do the heavy lifting, but locating and marking all the strings that need to be translated, plus setting up the infrastructure to provide translations, is a lot of patient, detailed grunt work.
+
+----
+=== LIBOBJ Support ===
+GNU {{{autoconf}}} can replace missing or broken library functions with versions that are locally compiled and included in a program.  It provides support for {{{alloca}}}, {{{error_if_line}}}, {{{getloadavg}}}, {{{lstat}}}, {{{malloc}}}, {{{memcmp}}}, {{{mktime}}}, {{{obstack}}}, {{{realloc}}}, {{{strtod}}}, {{{strnlen}}}, {{{fnmatch}}}, {{{fileblocks}}}, and probably others.
+
+It would not be a stretch to extend this facility to generating header files for specific circumstances; {{{dirent.h}}} comes to mind.
+
+SCons should have such a facility.  It's far more than a summer project to provide not only a complete framework but also all the functions (not to mention the configure tests that determine if the replacement is needed); however, establishing the framework and a few of the configure tests and corresponding functions should be well within scope.
+
+Mentor(s): GregNoel, possibly StevenKnight
+
+## ----
+## === Common basis for "external" inputs ===
+## TODO
+
+----
+=== Library and Application Versioning ===
+## I have found the possibility of having multiple versions of a package and its dependencies simultaneously available on a system extremely valuable. This is in the context of doing astronomy, so we're simultaneously developing applications and running old stable versions in an environment where the users are pretty savvy.
+
+## We use a system called eups which uses a simple "table" file to declare the dependency of one product on others, and a "setup" command to select which version is desired [which is naturally managed recursively]. The chosen versions are currently expressed via environment variables (e.g. BOOST_DIR for the root of the chosen version of boost).
+
+## I have a rather crude integration of this system with scons --- basically an enhancement of the autoconf stuff that is aware of the currently chosen versions. It would be very nice if scons itself was able to support some idea of library version tracking, either by providing a eups-like tool [eups is partly OK python, but largely very non-OK perl4], or by integrating the functionality into scons itself.
+
+SCons has no direct support for versioned libraries and applications, that is, packages that may have multiple versions installed at the same time.  SCons supports neither installing a versioned package nor choosing between multiple packages for a particular build.
+
+In the former case, the need is for a cross-platform "link" (or "symlink"?) action, with generic chaining so that {{{libfoo.so}}} can be symlinked to {{{libfoo.so.1}}}, which is linked to {{{libfoo.so.1.2}}}, which is linked to {{{libfoo.so.1.2.3}}} (the actual installed library).  Similarly, an application might be installed as {{{prog2.3}}} and needs a symlink to {{{prog}}}.  In addition, when cleaning ({{{'scons -c'}}}), it needs to remove the link only if it refers to the correct object (''i.e.'', it should not remove a link created by a later installation).  See <<bug(1947)>> for other aspects of this task.
+
+In the latter case, the need is to be able to choose a version of a library or application that's not the default (either an older guaranteed-stable version or a newer maybe-not-stable version).  How this is done varies between systems; the design of the feature should hide that level of detail.  Robert Lupton of Princeton has an Python implementation for selecting applications that works in his environment (it also can specify version dependencies to automate much of the selection), but it's not clear if it's sufficiently general-purpose.
+
+Doing both aspects of this for a single summer is probably too much, unless there's some existing technology that can be leveraged.
+
+Mentor(s): StevenKnight, GregNoel, Robert Lupton (rhl at astro princeton edu), others
+
+----
+=== Performance Improvements ===
+SCons would get much wider adoption if its performance were improved.  The subsections below describe different techniques.  In general, the techniques can be divided into two major styles: top-down, by eliminating the need to execute entire phases, and bottom-up, by speeding up individual functions that contribute too much to the runtime.
+
+==== Large-scale Optimizations ====
+There have been proposals to optimize SCons' performance by eliminating the need to reparse the SConscripts every time.  Other proposals have approached the issue by identifying only those SConscripts that contribute to the current rebuild and only reparse those.
+
+This section describes some large-scale changes that are intended to eliminate entire phases of SCons' operation in some circumstances.
+
+ * One idea is a daemon that monitors filesystem changes.  SCons could query this daemon to learn what files have changed since the last build.  The daemon might also keep the SCons environment in memory to make "startup" instantaneous.  On Windows, the daemon could easily be implemented using public APIs (`FindFirstChangeNotification`, `ReadDirectoryChangesW`).  On some U~-NIX-~-like systems, there is the `fam` utility to monitor changes to files (there is a bit of prior art several years back when someone prototyped something like this on IRIX, but it never became widespread).
+
+ * Another idea is to cache the DAG itself, in addition to the dependencies.  When SCons is started, it would check to see if any of its inputs (which would include files such as SConscripts, option files, imports, and so forth, as well as command-line options) have changed from the last run.  If not, it would reuse the cached DAG instead of running the SConstruct to rebuild the DAG from scratch.
+
+Mentor(s):  probably StevenKnight
+
+==== "Fast Unsafe" Build Mode ====
+
+Normally, SCons emphasizes correct builds over everything else, including speed.  For larger projects with multiple hierarchal directories, it would be a boon to have an 'instant build' option that would just build the changed files in a leaf directory, sort of as a syntax check before building and linking everything that depends on the changed files in other directories.  This would ease the pain on large projects where only a small part of it at a time is being modified and a quick compile check would suffice.
+
+The idea is to trade a guaranteed correct build for a fast development cycle when correctness is not desired.  This feature would be intended for savvy users, and it would be up to them to diagnose any problems that result from missing dependencies.
+
+The feature could require modifications to SConscripts to take advantage of it.  It could also impose restrictions on the information provided by calling SConscripts (perhaps so that the imports could be cached) so that only the local SConscript needs to be evaluated.  Additional restrictions and caveats are also possible.  And when a full build is done, the affected files may be rebuilt, even if it is not strictly necessary.
+
+<<Bug(1939)>> is one possible way to implement this project.  Other ways are possible.  A good proposal should consider alternatives.
+
+Mentor(s): Josh Leavitt <Josh dot Leavitt at hill af mil>, GregNoel, StevenKnight
+
+==== Benchmarks ====
+One important aspect of performance is to be able to document the changes in performance.  The SCons project has started developing some benchmarks where the performance of routines believed to be critical can be tested and documented.  The task here would be to build some more of these benchmarks.
+
+There are two complimentary approaches in use: "micro" benchmarks that profile an actual SCons run that exercises one particular feature, and "nano" benchmarks that do side-by-side comparisons of internal functions.  Microbenchmarks are used to identify code that seems to be more expensive than one would expect.  Nanobenchmarks explore possible alternative implementations of code highlighted by microbenchmarks.
+
+Any project to work on performance should describe how the project plans to measure the performance.  It's not enough to just say, "I'll use the Python profiler," the idea is to discuss __''how''__ you'd use it, what pieces you think you'll measure, how you plan to set reasonable performance targets and track progress against them, ''etc''.  Development of any necessary tools, subsystems, or other infrastructure for measuring performance is fine, but should ideally aim for tools that are generally re-usable and useful in the future, not one-offs just for the project.
+
+Mentor(s): GregNoel or StevenKnight
+
+----
+=== Integrate Code Coverage into Testing ===
+
+''Code coverage'' is a form of testing that determines how much of the code has been executed during testing.  [[http://www.wikipedia.org/|Wikipedia]] lists five types of [[http://en.wikipedia.org/wiki/Code_coverage|code coverage]]:
+ * Function coverage - Has each function in the program been executed?
+ * Statement coverage - Has each line of the source code been executed?
+ * Condition coverage - Has each evaluation point (such as a true/false decision) been executed?
+ * Path coverage - Has every possible route through a given part of the code been executed?
+ * Entry/exit coverage - Has every possible call and return of the function been executed?
+
+There are at least three packages that do code coverage for Python: [[http://pypi.python.org/pypi/trace2html|trace2html]], [[http://nedbatchelder.com/code/modules/coverage.html|Coverage]], and [[http://darcs.idyll.org/~t/projects/figleaf/doc/|figleaf]].  A Google search would probably turn up others.
+
+The idea here is to add code coverage as a testing option.  The project would be to evaluate the various tools available, pick one (or synthesize one), and integrate it into the standard testing procedures.  It should be possible to visualize the output easily so that areas of untested code can be quickly identified.  And the process should be well documented.
+
+Mentor(s): GregNoel or StevenKnight
+
+----
+=== Regression Testing of Performance ===
+
+The basis of this idea is to add features to the SCons testing framework (used for both unit tests and integration tests) to allow performance-critical subsystems to be monitored routinely.  It would have to be self-scaling, either by running a standard mix of Python statements to provide a relative yardstick or by using a provided function to set the yardstick.  The former would be useful for functions with an absolute requirement (''e.g.'', no more than 100,000 instructions); the latter would be useful for functionality with "Big-O" requirements (''e.g.'', if the standard is O(N^2), run some sequence with one input then with ten; the performance of the latter should be less than a hundred times the former).
+
+The second part of this idea is to implement performance regression tests.  It will require coordinating with developers to identify the portions of the code to be measured, jointly determining the performance requirement, and implementing the necessary tests.
+
+Mentor(s): GregNoel or StevenKnight
+
+----
+=== Distributed Compilation ===
+
+A model for being able to parallelize software builds by distributing work across a network of homogeneous machines would benefit many large projects.  One possible approach would be to try to integrate (and generalize) some functionality like {{{distcc}}}, perhaps similar to the way that SCons has already integrated some {{{ccache}}}-like functionality.  Another more ambitious approach would be to try to make use of existing grid computing systems.  Since the scope of this project is only a summer's worth of coding, there probably won't be enough time to solve this big a problem completely, so a better idea is to try to carve out a manageable first step in your proposal.
+
+(Note: [[http://www.xoreax.com/|Incredibuild]] recently added support for distributed SCons builds, which would meet the needs of some users.  However, it is a closed-source commercial product, so it is not an option for most open source software projects.)
+
+Mentor(s):  probably StevenKnight
+
+----
+<<Anchor(java)>>
+=== Better Java Support ===
+SCons' Java support gets dinged by Java programmers for being relatively limited.  Revising the Java support to be better is important to the acceptance of SCons in the Java community.  There are a number of different pieces that could be carved out as well:
+
+==== Revamp approach to Java ====
+
+SCons' approach to Java is to build entire subdirectories of {{{'.java'}}} files into one or more {{{'.jar'}}} files.  This is inadequate when only partial rebuilds are needed.  The Java support could use some refactoring (even redesign) by someone who's familiar with the needs of large-scale Java projects, and has an itch to try to use the underlying flexibility of SCons to do better than what's out there.
+
+Mentor(s): ???  Possibly StevenKnight
+
+==== More Ant-like Behavior? ====
+
+{{{Ant}}} is obviously the standard for Java compilation.  As a general dependency tool, it leaves something to be desired, largely because so much of the nitty-gritty Java dependency management is actually in {{{javac}}}, not {{{Ant}}}.  Nevertheless, Java programmers are familiar with the {{{Ant}}} model, and to the extent that we can find SCons-like ways to adopt parts of it, it would help make SCons more attractive (especially to Java programmers who are part of multi-language software projects).
+
+Mentor(s): ???  Possibly StevenKnight
+
+==== Port to Jython ====
+
+Making SCons run under Jython, thereby allowing it to run under the Java VM, might also help make it more attractive to the Java community.  Since SCons is all Python, it's actually not far from being able to do this, but there's a serious barrier with respective to Java's complete lack of a notion of a current directory and being able to {{{chdir()}}}.  Working around that might involve some serious refactoring to completely eradicate {{{chdir()}}} calls from the SCons source (which by itself would be a good thing).
+
+Mentor(s): ???  Possibly StevenKnight
+
+==== Groovy ====
+
+Add a {{{Groovy()}}} builder that works with the {{{Java()}}} builder so that Groovy programs can be compiled and intermixed with Java.
+
+A simple builder for Groovy is a small project that could combined with other small projects to fill up a summer.  Integrating Groovy with Java is at least a medium-sized project.
+
+Mentor(s): Russel Winder <russel dot winder at concertan com>, possibly StevenKnight
+
+----
+=== Improved Target-File Caching ===
+
+The SCons `CacheDir()` function provides a framework for sharing built targets between developers, but it's relatively primitive.  A project to tackle one or more potential improvements to it would be extremely welcome.  Possible objectives include:
+
+ * Administrative tools for managing the cache directory, including aging/clean up of old targets, limiting the size of cache, etc.  All subject to configuration options, of course.
+
+ * Some mechanism for locking write access to target files when multiple clients try to create the same target—or better, some distribution of locking logic so clients can detect that some other client is in the progress of building a target file that will end up in the cache when finished.
+
+ * Measure the efficiency and scalability of caching and address any issues so that it can handle thousands of source files in a tree and tens of thousands of targets.
+
+Mentor(s):  probably StevenKnight
+
+## ----
+## === Better TeX support ===
+## Here are the issues I see with the current TeX/Latex system. TeX is very flexible and our scanners are limited. We pick up the most obvious files that the output will depend on but there are still ways to hide the file dependencies within user defined commands.
+
+## Some of that we cover at run time by parsing the .log file to check whether we need to run bibtex or makeindex. If the log file exists when the emitter is run (from a previous build attempt) it is checked then for files the result is dependant on. However, the emitter does not know about the build directory. So if you use that feature there is no way to scan an existing log file.
+
+## For my usage this is not a problem since the simple file scanning works for my files. Is it reasonable to have the target list of files include the build directory path information when the emitter is run or must it be added later. This would be applicable to other tools chains that work only in the working directory.
+
+## Then there is the whole issue of how Tex uses environment variables to allow it to find input files that are not in the "standard" locations. We use that now to get the builddir option to work. The snag there is that one of them "TEXPICT" has to be left set since the dvipdf or was it dvi2ps also uses it to find the postscript file to include in the resulting PDF document.
+
+## Then there is the whole book/system documentation issue. Since there are tools like tex2html I suppose latex sources could play a role there. I resonate with the comment about Don. I see that sometimes here at the lab and have probably been guilty of it myself at times!
+
+######## DRAFT PARAGRAPHS, STILL NEED TO BE ORGANIZED INTO SUBTASKS.
+
+### T~-e-~X is a very flexible documentation system, yet our scanners are limited and can't take full advantage of the information present.  Moreover, the T~-e-~X command itself requires that the sources and converted files be in the same directory, which is difficult if BuildDir or Repository is in use.  Overcoming these difficulties is the first step in improving out T~-e-~X support.  (A generalized mechanism for running commands with this sort of requirement could easily be a useful side-effect.)
+
+### Currently, the T~-e-~X Builders recognize certain special cases and execute operations like {{{dvipdf}}} and {{{dvi2ps}}} instead of using multi-step builders within SCons.  Identifing the toolchains involved for these operations and breaking them into individual operations would go a long way toward rationalizing the documentation toolchains.
+
+### It would be useful to recognize and use source formats other than T~-e-~X and L~-a-~T~-e-~X, like !TextInfo, !DocBook, and {{{nroff}} (particularly {{{nroff-man}}}.  It would be useful to generate multiple output formats, such as !PostScript, PDF, HTML, XML, and {{{nroff}}}, all the way to platform-specific help files.  One particularly useful chain would be to convert L~-a-~T~-e-~X (with suitable macros) into U~-NIX-~ man pages suitable for distribution, as well as being able to generate equivalent pages in HTML for web consumption.
+
+### The existing conversion programs from DVI to HTML and {{{nroff-man}}}} to HTML are terrible.  They loose much of the formatting by converting structured layouts like lists into tables and enforced indentation; they don't use equivalent operations in HTML.  A tool that intelligently identified the equivalent constructs and translated correctly would be a help.
+
+### The existing T~-e-~X support doesn't deal well with documents large enough to require subdirectories for organization (books with multiple chapters or documents that share subcomponents as help text often does).
+
+### In addition, the SCons project would like to convert its own documentation from opaque {{{nroff-man}}} (with a side component of XML) to some easier-to-maintain format and yet still be able to deliver U~-nix-~ man pages as well as HTML.  L~-a-~T~-e-~X with specialized macros has been suggested (there's a tool that can edit such files), but it needs to be demonstrated in practice.
+
+----
+=== Dynamically Determine Documentation Toolchains ===
+
+## Date: March 22, 2007 5:21:01 AM PDT
+## From: john.pye@student.unsw.edu.au
+
+## I have an idea for SCons that might perhaps fall in the realm of what my be doable over a summer—don't know if it's too late for ideas.
+
+## I think this would help to improve access to what precious documentation we developers deign to create :-)
+
+## This idea would work together nicely with last summer's project, as well, perhaps.
+
+## John Pye
+## Department of Mechanical and Manufacturing Engineering
+## University of New South Wales, Sydney, Australia
+## http://pye.dyndns.org/
+
+A problem with many open source projects is that in the documentation area, developers don't know how to produce documentation that will be of use to many different users, so they end up producing plaintext documentation or documentation that only really flies on one platform (as in the case of SCons manpage), or they produce a PDF and hope that that will be OK with everyone.  If SCons were able to provide a convenient path from some of the popular documentation 'source' formats (L~-a-~T~-e-~X, !TextInfo, !DocBook, HTML) all the way through to platform-specific help files, this would help to improve access to what documentation developers create.
+
+The challenge is to integrate a decent suite of documentation tools so that platform-specific help files can be built and installed. On Windows there is the !HtmlHelp compiler that can produce `.CHM` files from HTML files plus some index files. On GNOME and KDE there is the freedesktop.org [[http://scrollkeeper.sourceforge.net/|ScrollKeeper]] system, which allows HTML and !DocBook XML to be served up via a centralised help browser. There are probably similar things on Mac, Solaris, and so on.
+
+The idea here is to create the mechanism that will determine the correct "native" documentation format based upon the deployment platform and then find a toolchain from the starting format to the deployment format.  The toolchain could be as short as zero commands if the deployment format is the same as the source format, or it could be one command that converts directly from the source format to the destination format, or it could be a series of conversions.  It's possible that the toolchain could vary based upon the commands available on the build machine.  Moreover, there could be more than one documentation format required if the same package could be deployed on different platforms.
+
+Mentor(s): possibly JohnPye
+
+----
+=== Batched Builders ===
+Some builders are significantly faster if they compile more than one program at a time.  Other builders can optimize better if they can see more than one file at a time.  What these builders have in common is that they want to be passed all the out-of-date source files in the same step.
+
+<<Bug(1086)>> has added batch builders for some limited cases; the need now is to automate the finding of other members of a batch for languages like FORTRAN and Java.  There are several issues to implement extensions to make batch building work with FORTRAN (<<bug(1888)>>), Java (<<bug(1766)>>), D (<<bug(1923)>>), and Vala (<<bug(2147)>>).
+
+The effort is two-fold: implement scanners (or something similar) to identify all the sources that must be compiled and implement an algorithm to break up these sources into individual compile units.  These units would then be combined into batches that don't exceed any system or compiler limits (''e.g.'', length of command line or maximum number of files the compiler can handle).
+
+This task needs someone who is good with both data structures and algorithms.  Integrating the logic into the existing data structures without breaking anything will be difficult and implementing the algorithm efficiently will stretch anyone's design ability.
+
+Mentor(s): GregNoel
+
+----
+=== Python Software Foundation ===
+SCons will accept proposals for non-SCons projects, as long as we believe that the work will directly benefit us as well a wider community.
+
+One source of ideas is the [[http://www.python.org/psf/|Python Software Foundation]] (PSF), an umbrella organization whose mission is to promote, protect, and advance the Python programming language, and to support and facilitate the growth of the international community of Python programmers.  It holds the intellectual property rights to recent versions of Python and ensures that Python distributions are made available to the public free of charge.
+
+PSF is also a participant in the Summer of Code and has [[http://wiki.python.org/moin/SummerOfCode|their own ideas page]].  Feel free to pick a topic from their site that has direct applicability to SCons and float a proposal with us.
+
+----
+=== Eclipse Plugin ===
+There have been recurring questions as to whether SCons has an [[http://eclipse.org/ | Eclipse]] plugin.  We don't, so this idea is to design and implement such a plugin.
+
+Mentor(s): unknown
+
+----
+=== Other ideas ===
+Feel free to suggest other topics for ideas.  If you have sufficient permission, go ahead and add them to the page yourself, using this section as a template; if not, contact GregNoel (preferably with a suggested writeup) and he will add it.
+
+==== Idea subhead one ====
+Most ideas fit under a single third-level heading, but sometimes there are a number of related ideas.  In that case, the third-level heading establishes the context and each related idea is under a forth-level header like this one.
+
+==== Idea subhead two ====
+A second related idea would go here.

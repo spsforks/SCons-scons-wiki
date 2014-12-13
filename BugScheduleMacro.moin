@@ -1,0 +1,29 @@
+= BugSchedule Macro =
+
+The {{{BugSchedule}}} macro is an extension to the SCons wiki.  It creates a link to the SCons issues database which will do a query for specific kinds of issues.
+
+== Usage ==
+
+To use it, just put the macro in your wiki page with the parameters you want:
+
+{{{             <<BugSchedule(who, text)>>}}}
+
+It takes two arguments:
+ .
+  who:: Either a Tigris.org account name, {{{@ALL}}}, {{{@ALL=}}}''accountname'', {{{@TRIAGE}}}, or {{{@TRIAGE=}}}''milestone''.  If it is missing, {{{@ALL}}} is assumed
+
+  text:: The text that will be highlighted for the link.  If it is missing, a best guess for some reasonable text is made.
+
+== Examples ==
+
+ <<BugSchedule>>:: Equivalent to {{{<<BugSchedule(@ALL)>>}}}; it will create a link with the default text which will list all of the scheduled (triaged) issues.  Actual output: <<BugSchedule>>
+
+ <<BugSchedule(stevenknight, Steven's bugs)>>:: Creates a link with the text "Steven's bugs" which will list all the open issues assigned to the Tigris account {{{stevenknight}}}.  In effect, this is the worklist for poor Steven, who should be slaving away on the issues at the top of this list. Actual output: <<BugSchedule(stevenknight, Steven's bugs)>>
+
+ <<BugSchedule(@ALL, bugs slated to be fixed)>>:: Creates a link with the text "bugs slated to be fixed" which will list all scheduled (triaged) issues.  Actual output: <<BugSchedule(@ALL, bugs slated to be fixed)>>
+
+ <<BugSchedule(@ALL=garyo, Gary's interests)>>:: Creates a link with the text "Gary's interests" which will list all issues where Gary is an submitter, an owner, or a CC.  Actual output: <<BugSchedule(@ALL=garyo, Gary's interests)>>
+
+ <<BugSchedule(@TRIAGE, agenda for the next bug council)>>:: Creates a link with the text "agenda for the next bug council" which will list all issues that have not yet been scheduled (triaged).  Actual output: <<BugSchedule(@TRIAGE, agenda for the next bug council)>>
+
+ <<BugSchedule(@TRIAGE=future, future bugs)>>:: Creates a link with the text "future bugs" which will list all issues that are in the "future" milestone.  Actual output: <<BugSchedule(@TRIAGE=future, future bugs)>>

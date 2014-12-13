@@ -1,0 +1,7 @@
+#acl MentorsGroup:read,write,revert All:read
+=== Google Summer of Code Mentors ===
+ * StevenKnight
+ * GaryOberbrunner
+ * GregNoel
+ * MarkFlacy
+ * LudwigHaehne

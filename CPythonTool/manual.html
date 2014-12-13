@@ -1,0 +1,62 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>CPython, a binary builder for Python installs</title><link rel="stylesheet" href="scons.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.71.1"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="article" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id2476347"></a>CPython, a binary builder for Python installs</h2></div><div><div class="author"><h3 class="author"><span class="surname">Dirk Baechle</span></h3></div></div><div><p class="pubdate">2010-07-28</p></div></div><hr></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#examples">1. Examples</a></span></dt></dl></div><p>This first version of a Python Binary Builder is based on the work of
+  <a href="http://www.scons.org/wiki/GSoC2008/MatiGruca" target="_top">Mati Gruca's
+  Google Summer of Code 2008 project</a> (<a href="http://scons.tigris.org/source/browse/scons/branches/py-builder/" target="_top">last
+  SVN branch</a>).</p><p>The &#8220;<span class="quote"><code class="literal">InstallPython</code></span>&#8221; method creates
+  <code class="literal">.pyc</code> or <code class="literal">.pyo</code> files for
+  <code class="literal">.py</code> source files and adds them to the list of targets
+  along with the source files. They are later copied to the destination
+  (target) directory.</p><p>The &#8220;<span class="quote"><code class="literal">InstallPython</code></span>&#8221; Builder takes a
+  target (destination) directory as its first argument and a list of source
+  files/directories as a second argument. It returns the list of target files
+  to copy to the target directory.</p><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="examples"></a>1. Examples</h2></div></div></div><p>A simple example of an &#8220;<span class="quote"><code class="literal">SConstruct</code></span>&#8221;
+    file:</p><pre class="screen">env = Environment()
+hello = File('hello.py')
+env.InstallPython('/usr/local/bin/', hello)
+env.Alias('install', '/usr/local/bin/')
+</pre><p>&#8220;<span class="quote"><code class="literal">SCons</code></span>&#8221; invoked with the
+    &#8220;<span class="quote"><code class="literal">-Q install</code></span>&#8221; parameter will compile the
+    &#8220;<span class="quote"><code class="literal">hello.py</code></span>&#8221; file into
+    &#8220;<span class="quote"><code class="literal">hello.pyc</code></span>&#8221;, and copy both files into
+    &#8220;<span class="quote"><code class="literal">/usr/local/bin/</code></span>&#8221; directory.</p><p>Sample output:</p><pre class="screen">$ scons -Q install
+Install file: "hello.py" as "/usr/local/bin/hello.py"
+Install file: "hello.pyc" as "/usr/local/bin/hello.pyc"
+</pre><p>&#8220;<span class="quote"><code class="literal">InstallPython</code></span>&#8221; can also compile
+    Python source files into optimized binary files
+    (&#8220;<span class="quote"><code class="literal">.pyo</code></span>&#8221; suffix) instead of ordinary
+    binaries (&#8220;<span class="quote"><code class="literal">.pyc</code></span>&#8221; files). To achieve this,
+    change the call to &#8220;<span class="quote"><code class="literal">Environment()</code></span>&#8221; and set
+    the &#8220;<span class="quote"><code class="literal">CPYTHON_PYC</code></span>&#8221; variable to
+    '<code class="literal">0</code>' (zero):</p><pre class="screen">env = Environment(CPYTHON_PYC=0)
+hello = File('hello.py')
+env.InstallPython('/usr/local/bin/', hello)
+env.Alias('install', '/usr/local/bin/')
+</pre><p>Sample output:</p><pre class="screen">$ scons -Q install
+Install file: "hello.py" as "/usr/local/bin/hello.py"
+Install file: "hello.pyo" as "/usr/local/bin/hello.pyo"
+</pre><p>The &#8220;<span class="quote"><code class="literal">InstallPython</code></span>&#8221; method accepts
+    both, files and directories, as its source arguments:</p><pre class="screen">env = Environment()
+pyfiles = Dir('pyfiles/')
+env.InstallPython('/usr/local/bin/', pyfiles)
+env.Alias('install', '/usr/local/bin')
+</pre><p>Running &#8220;<span class="quote"><code class="literal">scons -Q install</code></span>&#8221; will copy
+    all the &#8220;<span class="quote"><code class="literal">.py</code></span>&#8221; files from
+    &#8220;<span class="quote"><code class="literal">pyfiles</code></span>&#8221; directory into
+    &#8220;<span class="quote"><code class="literal">/usr/local/lib/pyfiles</code></span>&#8221; directory along
+    with corresponding &#8220;<span class="quote"><code class="literal">.pyc</code></span>&#8221; files.</p><p>Sample output:</p><pre class="screen">$ scons -Q install
+Install file: "pyfiles/hello.py" as "/usr/local/bin/pyfiles/hello.py"
+Install file: "pyfiles/hello.pyc" as "/usr/local/bin/pyfiles/hello.pyc"
+Install file: "pyfiles/hello2.py" as "/usr/local/bin/pyfiles/hello2.py"
+Install file: "pyfiles/hello2.pyc" as "/usr/local/bin/pyfiles/hello2.pyc"
+</pre><p>Mixing files and directories is also possible:</p><pre class="screen">env = Environment()
+hello = File('hello.py')
+pyfiles = Dir('pyfiles/')
+env.InstallPython('/usr/local/bin/', [hello, pyfiles])
+env.Alias('install', '/usr/local/bin')
+</pre><p>Sample output:</p><pre class="screen">$ scons -Q install
+Install file: "hello.py" as "/usr/local/bin/hello.py"
+Install file: "hello.pyc" as "/usr/local/bin/hello.pyc"
+Install file: "pyfiles/hello.py" as "/usr/local/bin/pyfiles/hello.py"
+Install file: "pyfiles/hello.pyc" as "/usr/local/bin/pyfiles/hello.pyc"
+Install file: "pyfiles/hello2.py" as "/usr/local/bin/pyfiles/hello2.py"
+Install file: "pyfiles/hello2.pyc" as "/usr/local/bin/pyfiles/hello2.pyc"
+</pre></div></div></body></html>

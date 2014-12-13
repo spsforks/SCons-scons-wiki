@@ -1,0 +1,22 @@
+#format irc
+19:16:08 <>	Only Gary and Greg showed up for the bug party.  After waiting for a while, Greg produced a summary of the spreadsheet comments and Gary replied.  Steven later responded to those via email.
+19:16:08 <GregNoel>	1949: consensus
+19:16:08 <GregNoel>	2240: consensus
+19:16:08 <GregNoel>	2231: concur, but who?  Steven?
+19:16:08 <GregNoel>	2236: I'll add a note to the doc
+19:16:08 <GregNoel>	2238: anytime is OK; should Steven do it?
+19:16:08 <GregNoel>	2239: consensus
+19:16:08 <GregNoel>	2241: consensus
+19:16:08 <GregNoel>	2242: consensus
+19:16:08 <GregNoel>	2244: Bug is obvious to inspection; cure is to make it the same as the other four cases that do the same thing (compare exception against string).  And I've already checked in the fix, so the thing outstanding is what to do with the attachment.  People have muttered about using py2exe to get a DOS binary; does this attachment get us further along that path?
+19:16:08 <GregNoel>	(Not that I care, of course, being a user of a Real Operating System (TM), but there are those who don't have that privilege.)
+19:16:08 <GregNoel>	2246: consensus
+19:16:08 <GregNoel>	2247: consensus
+19:32:24 <garyo-home>	looks great, Greg.
+19:32:24 <garyo-home>	2231: maybe you?
+19:32:24 <garyo-home>	2238: Steven.
+19:32:24 <garyo-home>	2244: ignore attachment.
+19:32:24 <garyo-home>	Just my opinions...
+01:31:31 <sk-email>	If you can take 2231, great.  If not, give it to me.
+01:31:31 <sk-email>	2238: agree re: assign to me, and agree w/advertising 2.6 support for 1.2.  We're pretty close.
+01:31:31 <sk-email>	I agree with all the rest as well.

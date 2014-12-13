@@ -1,0 +1,37 @@
+One fairly common requirement in builds is to create some tool from source code, and then use that tool as part of the build to generate other files. This example shows how to do that, with thanks to Gary Oberbrunner. The tool to be generated is named mk_vds, and is built from the source file mk_vds.c. Then .txt input files are used by mk_vds to generate .vds files.
+{{{
+#!python
+# SConstruct file
+env=Environment()
+
+# Create the mk_vds generator tool
+mk_vds_tool = env.Program(target= 'mk_vds', source = 'mk_vds.c')
+
+# This emitter will be used later by a Builder, and has an explcit dependency on the mk_vds tool
+def mk_vds_emitter(target, source, env):
+    env.Depends(target, mk_vds_tool)
+    return (target, source)
+
+# Create a builder (that uses the emitter) to build .vds files from .txt files
+# The use of abspath is so that mk_vds's directory doesn't have to be added to the shell path.
+bld = Builder(action = mk_vds[0].abspath + ' < $SOURCE > $TARGET',
+              emitter = mk_vds_emitter,
+              suffix = '.vds', src_suffix = '.txt')
+
+# Add the new Builder to the list of builders
+env['BUILDERS']['MK_VDS'] = bld
+
+# Generate foo.vds from foo.txt using mk_vds
+env.MK_VDS('foo.txt')
+}}}
+
+If you look at the resulting dependency tree you can see it works::
+
+{{{
+% scons --debug=tree foo.vds
++-foo.vds
+ +-foo.txt
+  +-mk_vds
+    +-mk_vds.o
+      +-mk_vds.c
+}}}

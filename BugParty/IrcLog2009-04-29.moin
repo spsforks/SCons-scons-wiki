@@ -1,0 +1,302 @@
+#format irc
+17:10:22 *	bdbaddog (n=chatzill@adsl-71-142-86-81.dsl.pltn13.pacbell.net) has joined #scons
+17:18:36 *	Jason_at_intel (n=chatzill@bementil-116.illinois.prairieinet.net) has joined #scons
+17:27:26 <bdbaddog>	Hi Jason
+17:27:43 *	garyo-home (n=chatzill@209-6-158-38.c3-0.smr-ubr1.sbo-smr.ma.cable.rcn.com) has joined #scons
+17:27:59 *	GregNoel is no longer marked as being away
+17:31:33 <garyo-home>	hi
+17:32:00 <Jason_at_intel>	hi
+17:32:09 <Jason_at_intel>	sorry was away from the computer
+17:32:23 *	stevenknight (n=stevenkn@67.218.104.94) has joined #scons
+17:32:30 <garyo-home>	big group here tonight, looks like!
+17:32:36 *	stevenknight is now known as sk
+17:32:48 <sk>	hey all
+17:32:55 <Jason_at_intel>	hi
+17:33:02 <sk>	hey Jason_at_inetl
+17:33:54 <garyo-home>	Hi Steven
+17:34:25 <GregNoel>	Hi, guys...
+17:34:30 <garyo-home>	Hi, Greg.
+17:34:45 <GregNoel>	Steven has only ~45 minutes on the shuttle, but can connect again after he gets home (a break of ~15 minutes, he says).  That's not enough time to do all the issues and then discuss the 1.3 plans.  (I'd like to see what's happening, as I have a gap coming up next week when I could spent full time on the changes between 1.3 and 2.0.)
+17:34:45 <GregNoel>	I propose that we go as far as we can with the issues, but break when Steven is maybe 15 minutes from his stop and discuss 1.3 plans so that they won't get dropped.
+17:34:45 <GregNoel>	Then we can decide if we want to reconvene when he gets home or leave the remaining issues for next time.
+17:34:45 <GregNoel>	Comments?
+17:35:14 <garyo-home>	ok
+17:35:47 <sk>	worksforme
+17:36:14 <garyo-home>	ok, shall we dive in?
+17:36:16 <garyo-home>	148?
+17:36:39 <sk>	consensus 1.3+doc, p3, bill?
+17:36:52 <garyo-home>	sure.  Bill, I like your text in the bug report.
+17:36:54 <GregNoel>	done; glad it's not me
+17:38:07 <GregNoel>	633
+17:38:23 <sk>	633:  consensus 2.x p3 Lukas Erlingen
+17:38:27 <garyo-home>	633 2.x p3 lukas
+17:38:32 <GregNoel>	done
+17:38:36 <sk>	790:
+17:38:50 <garyo-home>	bill already emailed OP, great!
+17:38:57 <sk>	go bill!
+17:39:02 <sk>	for classification?
+17:39:11 <sk>	how about future, p3, +MinGW keyword?
+17:39:27 <garyo-home>	works4me
+17:39:29 <GregNoel>	I'll agree
+17:39:48 <sk>	done
+17:39:50 <sk>	797:
+17:39:51 <garyo-home>	797, 3.x p3 draft choice
+17:40:03 <sk>	done
+17:40:12 <GregNoel>	done
+17:40:30 <sk>	(browser lag...)
+17:40:49 <sk>	(someone carry on)
+17:40:50 <garyo-home>	798: hard to warn in this case.
+17:41:03 <garyo-home>	I think doc's the best we can do.
+17:41:24 <GregNoel>	if the docs already say it's a global namespace, close as invalid
+17:41:39 <garyo-home>	I don't think the doc is that clear on it.
+17:42:10 <sk>	agree w/documenting this explicit case
+17:42:17 <sk>	GregNoel is technically correct
+17:42:30 <sk>	but not everyone immediately grasps that implication of "global namespace"
+17:42:35 <sk>	and I'm in favor of trying to be helpful
+17:42:29 <GregNoel>	then 2.1 p2 Bill?
+17:42:49 <garyo-home>	Bill, if you want help w/ verbiage I can pitch in
+17:43:02 <sk>	2.1 p2 bill, if it's ok w/him
+17:43:50 <garyo-home>	(bill?)
+17:43:59 <sk>	bdbaddog:  ping
+17:44:08 <Jason_at_intel>	sk: global is as in global or global in environment
+17:44:46 <garyo-home>	global as in global.
+17:45:02 <sk>	Export("env") exports to a global namespace
+17:44:59 <Jason_at_intel>	thanks
+17:45:01 <garyo-home>	Let's just assign it to him & move on, he volunteered in the ssheet.
+17:45:10 <sk>	done
+17:45:10 <GregNoel>	done
+17:45:41 <garyo-home>	804 seems to have mutated far from what I originally reported.
+17:46:22 <sk>	804:  research, not me
+17:46:24 <garyo-home>	I don't know what a LazyAction is, but I can guess it gets in the way of this use case.
+17:46:49 <garyo-home>	3.x p4 draft pick??  Unless Bill is interested?
+17:47:07 <GregNoel>	I'm not seeing any consensus; bypass?
+17:47:08 <sk>	garyo-home:  there's a special hack in Action.py that looks for an action like '$SINGLE_VARIABLE_NAME'
+17:47:38 <garyo-home>	that explains why all the workarounds work, then.
+17:47:39 <sk>	if it finds that, it instantiates a special class that delays instantiation of the actual Action object until it's used
+17:48:33 <garyo-home>	I see, it's so the var can be lazy-evaled as late as possible.
+17:48:17 <sk>	what i'd really like is for us to revisit the underlying problem this was introduced to solve way back when because we have a lot more functionality now and could probably get rid of the hack by providing a transition to a less hacky solution
+17:48:38 <GregNoel>	No time here; bypass until next time?
+17:48:44 <garyo-home>	ok w/ me
+17:49:02 <sk>	okay, defer
+17:49:06 <GregNoel>	done
+17:49:08 <sk>	806
+17:49:11 <GregNoel>	806
+17:49:26 <sk>	consensus 2.x p4, who?
+17:49:38 <garyo-home>	I"ll contact OP
+17:49:47 <GregNoel>	done
+17:49:53 <sk>	810:
+17:50:05 <sk>	consensus future p2
+17:50:12 <garyo-home>	good
+17:50:23 <GregNoel>	Gary, yes, would need both revamped downstream dependencies and something like DynamicSourceGenerator.
+17:50:27 <sk>	813:  consensus 2.x p3 Bill +dmd
+17:50:39 <GregNoel>	done
+17:50:48 <sk>	816:  consensus 2.x p3 +Easy
+17:50:56 <GregNoel>	done
+17:51:06 <sk>	824: research Ariane
+17:51:11 <GregNoel>	A note: Ariane Paola is her first name
+17:51:25 <sk>	(might be a stretch, but we'll kick it back if it seems outside her intended domain)
+17:51:29 <sk>	arianepaola, yt?
+17:51:50 <garyo-home>	Thanks, Greg.  And hi, Ariane Paola if you're online!
+17:52:12 <bdbaddog>	back now.. dang mac...
+17:52:25 <garyo-home>	np, we just assigned all the bugs to you. :-)
+17:52:35 <bdbaddog>	I saw.. ;)
+17:52:58 <bdbaddog>	re 804. anyone able to look at the taskmaster traces?
+17:53:09 <sk>	not me
+17:53:32 <GregNoel>	804: why? it has nothing to do with Taskmaster.
+17:53:44 <garyo-home>	804, we decided to revisit next time because we didn't get consensus yet
+17:53:53 <garyo-home>	... and we're trying to go fast tonight
+17:53:57 <bdbaddog>	o.k
+17:53:11 <GregNoel>	824: priority and milestone
+17:53:38 <sk>	824: for research?
+17:54:11 <garyo-home>	824: research Ariane Paola
+17:54:17 <GregNoel>	OK, done
+17:54:22 <sk>	824 done
+17:54:26 <sk>	843:  consensus future +qt
+17:54:42 <GregNoel>	priority?
+17:54:50 <sk>	p3
+17:54:51 <garyo-home>	843: Bill, if you have a builder at least put it on the wiki.
+17:55:04 <bdbaddog>	it's in previous clients code.. I'll ask if it's ok..
+17:55:11 <garyo-home>	I think someday we'll scrape all the builders off the wiki into a contrib folder or something.
+17:55:25 <garyo-home>	(or separate repo)
+17:55:22 <sk>	contrib folder ++
+17:55:46 <GregNoel>	priority?
+17:55:54 <bdbaddog>	p3 is fine
+17:55:55 <garyo-home>	p3?
+17:55:59 <GregNoel>	done
+17:56:09 <sk>	843:  future p3 +qt
+17:56:24 <GregNoel>	We're done with the backlog!
+17:56:33 <garyo-home>	Greg: go us!
+17:56:44 *	sk applauds wildly
+17:57:03 *	sk grins sheepishly at the other people on the shuttle
+17:57:07 *	garyo-home smiles
+17:56:24 <sk>	2384:  consensus 2.x p2 GregNoel
+17:56:29 <garyo-home>	2384: 2.x p2 greg
+17:56:35 <GregNoel>	done
+17:57:24 <sk>	2384:  done
+17:57:26 <GregNoel>	2400?
+17:57:42 <sk>	2400:  doc
+17:57:44 <garyo-home>	anytime, p3, doc, who?
+17:57:52 <sk>	bdbaddog, can you?  you're picking up a few others of those
+17:57:54 <GregNoel>	+Easy
+17:57:58 <garyo-home>	sure
+17:58:17 <sk>	2400:  anytime, p3, doc, bdbaddog +Easy
+17:58:20 <bdbaddog>	sure. Got little work this week so I have time.
+17:58:25 <GregNoel>	done
+17:58:26 <garyo-home>	thanks!
+17:58:43 <sk>	ta
+17:58:51 <garyo-home>	?
+17:59:09 <sk>	(archaic short form for "thanks")
+17:59:26 <garyo-home>	learn something new every day.
+17:59:43 <Jason_at_intel>	( thought it was thanks again)
+17:59:58 <garyo-home>	jason: that makes sense
+17:59:31 <GregNoel>	2401, consensus
+17:59:32 <sk>	2401:  anytime p2 GregNoel
+17:59:33 <garyo-home>	2401 anytime/p2/greg
+17:59:36 <GregNoel>	done
+17:59:37 <sk>	done
+18:00:05 <garyo-home>	2402 anytime/p4/greg
+18:00:08 <sk>	2402:  anytime p4 greg
+18:00:13 <bdbaddog>	+1
+18:00:16 <GregNoel>	done
+18:00:25 <sk>	done
+18:00:29 <garyo-home>	2403 anytime/p3/bill
+18:00:35 <sk>	2403:  anytime p3 bdbaddog
+18:00:36 <sk>	done
+18:00:41 <GregNoel>	done
+18:00:38 <garyo-home>	sk: how much time do you have left?
+18:00:58 <sk>	~15, let's defer the rest
+18:01:05 <GregNoel>	works
+18:01:11 <garyo-home>	(actually 2405 is consensus)
+18:01:39 <GregNoel>	2405: done
+18:01:14 <GregNoel>	1.3 then?
+18:01:16 <sk>	okay, re: 1.3
+18:01:38 <sk>	hold up is I don't have time to do a proper job on the integration
+18:01:48 <bdbaddog>	I've got time.
+18:01:59 <sk>	there's some design work that needs doing
+18:02:00 <garyo-home>	the vs_revamp stuff integration?
+18:02:11 <sk>	yes vs_revamp
+18:02:27 <sk>	Jason contributed the parts code and some really valuable insight into 64-bit / 32-bit support
+18:02:38 <garyo-home>	I'm trying to use vs_revamp at work w/o success yet, but I need to rip out all our old hacks before I know what's wrong
+18:02:41 <sk>	unfortunately, it's lain fallow long enough that I've forgotten the particulars
+18:02:43 <Jason_at_intel>	oh forgot to send you the updates
+18:02:56 <sk>	about what needs updating
+18:03:01 <bdbaddog>	Jason.. are the latest in parts/trunk?
+18:03:08 <Jason_at_intel>	Yes
+18:03:12 <garyo-home>	From what I could see Jason's work has definite value
+18:03:15 <sk>	i remember there are some parts of Jason's parts stuff that didn't feel completely "SConsy" to me
+18:03:22 <sk>	but again don't remember the particulars
+18:03:27 <garyo-home>	but needs some merging (yes SK)
+18:03:27 <sk>	agreed re: value
+18:03:41 <GregNoel>	Let's focus on 1.3, please
+18:03:48 <Jason_at_intel>	I plan to revamp it again.. I have a general toolsetup object.. the hope it to make it easy to add any tool and new version of it
+18:03:50 <sk>	i tried to look for ~1 hour last night
+18:03:57 <sk>	through email and the current code state
+18:03:49 <garyo-home>	Steven, can you provide Bill some direction?
+18:04:13 <sk>	yeah, was trying to get to that last night
+18:04:28 <sk>	the problem is it's taking me too long to recreate what needs to be done
+18:04:36 <sk>	and i didn't make any good notes when i had it in mind... :-(
+18:04:36 <Jason_at_intel>	...>	i remember there are some parts of Jason's parts stuff that didn't feel completely "SConsy" to me
+18:04:45 <Jason_at_intel>	so I wanted to talk to you some time about that :-)
+18:04:57 <GregNoel>	Not now, please.
+18:05:15 <garyo-home>	I think the tool stuff is cool but needs to be separated out for this release
+18:05:17 <bdbaddog>	Greg: this is 1.3 related, vs_revamps supposed to go into 1.3
+18:05:33 <GregNoel>	But parts is not
+18:05:36 <sk>	unless we decide to release 1.3 as is without vs_revamp
+18:05:40 <garyo-home>	my point xactly
+18:05:46 <sk>	GregNoel:  the issue is that to do the 1.3 API right
+18:06:02 <sk>	we need to incorporate some aspects of the architectural work that Jason's done on parts
+18:06:09 <sk>	specifically the 32-bit / 64-bit cross-compilation
+18:06:30 <sk>	my main concern is that if we don't at least have a road map to the cross-compilation API
+18:06:04 <GregNoel>	I see.  But let's not get sidetracked to all of Parts.
+18:06:05 <Jason_at_intel>	I think teh current vs_revamp is a big improvement over the existing stuff
+18:06:30 <garyo-home>	that would scratch my itch at work big time.
+18:06:32 <Jason_at_intel>	however it 100% script .. the latest is missing the default logic
+18:06:39 <sk>	we could release something in 1.3 that boxes us into a corner
+18:07:03 <sk>	i'm okay with declaring actual 32-bit/64-bit cross-compilation out of scope to get 1.3 out the door
+18:07:12 <sk>	but i'm afraid if we don't know where we're going
+18:07:23 <sk>	1.3 will be a half-assed API that we'll have to support forever
+18:07:08 <bdbaddog>	Cross-compilation's not really mainstream is it?
+18:07:10 <Jason_at_intel>	have you look at the design notes on teh wiki for scons?
+18:07:25 <Jason_at_intel>	:-) wiki for Parts..
+18:07:32 <garyo-home>	sk: agreed.  Which is more important: vs_revamp, or 1.3 schedule?  Either do it right and delay, or leave it out.
+18:07:49 <sk>	garyo-home:  nicely put
+18:07:58 <bdbaddog>	is vs_revamp(today) worse than trunk now?
+18:08:01 *	sk wishes he were as concise as the rest of the world...
+18:08:14 <sk>	it apparently doesn't even work for gary
+18:08:18 <Jason_at_intel>	I think vs_revamp is better than current
+18:08:23 <sk>	modulo local mods to his configuration
+18:08:43 <garyo-home>	true, but I have lots of add-on junk to find SDKs and stuff, probably conflicting w/ vs_revamp doing it correctly.
+18:09:04 <bdbaddog>	Gary do you have time to resolve the issues in your environment with vs_revamp in the near term?
+18:09:07 <garyo-home>	It does find the right compiler/linker, I just get link errors.
+18:09:12 <garyo-home>	I will try hard to do it this wk.
+18:09:28 <garyo-home>	Or early next.
+18:10:10 <garyo-home>	I do have a problem though that I have some old branches that still need to build, will need an old scons version to use them.
+18:10:04 <bdbaddog>	Can you extract your logic so we can resolve the issue without your  whole build?
+18:10:31 <garyo-home>	bdbaddog: I wish I could, it's all tangled up.
+18:10:35 <bdbaddog>	o.k.
+18:10:42 <GregNoel>	What I'm seeing is no freeze for 1.3 by this weekend, so I won't be able to use my upcoming gap for 1.3 to 2.0.  I've got other things to work on (the console view comes to mind) so the time won't be wasted.
+18:09:52 <sk>	bill and jason:
+18:10:02 <sk>	i have no meetings tomorrow during the day
+18:10:06 <sk>	actually, only one at 1:00
+18:10:24 <sk>	can we each set up times to meet via irc?
+18:10:30 <bdbaddog>	I only have a 3:45 meeting.
+18:10:43 <Jason_at_intel>	8:00 central for me.. any time after that
+18:10:56 <sk>	if so, I'll block out schedule time to meet for some real-time pair-investigation of what to do w/vs_revamp
+18:11:08 <bdbaddog>	cool. - lunch of course.
+18:11:13 <Jason_at_intel>	cool
+18:11:28 <garyo-home>	wait, when?
+18:11:29 <Jason_at_intel>	I be online irc after meeting then.. or wait for e-mail from you
+18:11:38 <sk>	okay
+18:11:43 <sk>	bill, you want to come to google for ftf?
+18:11:54 <bdbaddog>	SK; sure.
+18:12:03 <sk>	whatever's easiest
+18:12:10 <bdbaddog>	SK: I'll be in MV tomorrow so that's easy for me.
+18:12:24 <garyo-home>	Greg: I think you're right, it's too bad though.
+18:12:30 <garyo-home>	Your time is valuable.
+18:12:50 <sk>	big agreement with that
+18:13:07 <Jason_at_intel>	I second that
+18:13:16 <bdbaddog>	Being the eternal optimist, if we can resolve what needs doing tomorrow, it could be done by friday.
+18:13:17 <garyo-home>	Greg: could you do the 1.3->2.0 stuff on a branch??
+18:13:43 *	sk likes the branch idea, if that works
+18:13:49 <GregNoel>	No.  It's massive changes; it needs to be done on the trunk.  No merges after it's done.
+18:14:14 <GregNoel>	Probably over 30% of the code lines will be touched.
+18:14:28 <garyo-home>	Greg: I understand, just did that on my work codebase.
+18:14:59 <garyo-home>	ok, let's see where we can get soon, but Greg I wouldn't hold my breath for it.
+18:13:42 <garyo-home>	bdbaddog: I will see if I can get any insight into my issues ASAP.
+18:13:32 <sk>	jason, can you irc 11:00 PDT / 13:00 CDT ?
+18:13:48 <Jason_at_intel>	yes
+18:15:05 <sk>	okay, i'll try to prep for tomorrow
+18:15:14 <garyo-home>	ditto
+18:15:19 <sk>	bill, bring your laptop, you can irc in from the guest wifi
+18:15:34 <sk>	and we can break at some appropriate time to grab lunch
+18:15:55 <garyo-home>	I'll try to hang out on irc tomorrow too
+18:16:00 <bdbaddog>	SK: will do
+18:16:05 <bdbaddog>	SK: 11am
+18:16:09 <sk>	yes
+18:16:05 <sk>	shuttle stop in ~1 minute
+18:16:23 <sk>	excellent work folks, many thanks
+18:16:26 <Jason_at_intel>	great see you tomorrow then
+18:16:32 <sk>	tomorrow
+18:16:39 <sk>	Jason_at_intel:  you're CDT?
+18:16:59 <Jason_at_intel>	yes.. IL
+18:17:14 <Jason_at_intel>	else i would stop by google
+18:17:28 <garyo-home>	yeah, me too except wrong coast :-)
+18:16:34 <GregNoel>	Two weeks for next meeting?
+18:16:40 <garyo-home>	good for me
+18:16:52 <sk>	two weeks next meeting
+18:17:12 <sk>	pretty amazing to have all the backlog cleared...
+18:17:28 <bdbaddog>	sk: Agreed Good work by All
+18:17:48 <garyo-home>	ok, see you on irc tmw
+18:17:54 *	GregNoel brb, somebody at door
+18:18:01 <sk>	GregNoel:  many, many thanks for being the main driver for organizing and keeping all of this categorization on task over the last year
+18:18:22 <sk>	i have little doubt that we wouldn't have gotten this taken care of without you!
+18:18:37 <garyo-home>	sk: well said.
+18:19:39 <bdbaddog>	sk: Cheers for Greg!
+18:20:17 <Jason_at_intel>	agreed
+18:21:24 *	GregNoel has been marked as being away
+18:26:55 <garyo-home>	ok, bye 4 now
+18:27:04 *	garyo-home has quit ("ChatZilla 0.9.84 [Firefox 3.0.10/2009042316]")
+18:27:17 *	Jason_at_intel has quit ("ChatZilla 0.9.84 [Firefox 3.0.7/2009021910]")
+18:29:13 <bdbaddog>	bye
+18:29:18 *	bdbaddog has quit ("ChatZilla 0.9.84 [Firefox 3.0.10/2009042315]")
+18:42:45 *	sk has quit (Read error: 110 (Connection timed out))

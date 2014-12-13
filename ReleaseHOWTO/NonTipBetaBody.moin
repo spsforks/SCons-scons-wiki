@@ -1,0 +1,61 @@
+A beta release is prepared and published when the branch has stabilized enough that it's worth exposing to a wider audience.
+
+If you want a checklist you can mark off as you go, cut-n-paste these contents.
+
+<<TableOfContents>>
+
+<<Include(../InitSVN)>>
+{{{
+  $ VERSION=3.2.1.beta.yyyymmdd
+}}}
+
+=== Check Out Branch ===
+<<Include(../CheckOutNonTip)>>
+
+=== Edit Configuration Files ===
+FIXME
+
+=== Update Release Values ===
+Verify that the `release_level` variable in `ReleaseConfig` is being set to `'beta'`.
+<<Include(../UpdateFiles)>>
+
+=== Confirm Users' Guide is OK ===
+<<Include(../UpdateGuide)>>
+
+=== Commit Branch ===
+Create `log.file` ... FIXME
+
+<<Include(../Commit)>>
+
+=== Run Regression Tests ===
+The SCons Build``Bot will usually be monitoring this branch, so all you have to do is wait until the [[http://buildbot.scons.org/console| BuildBot display |target=_blank]] for the commit from the previous step shows that all the regression tests have been run.  On the other hand, if you're feeling bored, you can run the regression tests while you're waiting... ;-)
+
+<<Include(../RegressionTests)>>
+
+If the regression tests fail, fix the problem in the branch following your usual development practices and start the flow again.
+
+=== Build Candidate Packages ===
+<<Include(../Bootstrap)>>
+
+=== Test Candidate Packages ===
+<<Include(../TestCandidates)>>
+
+If any of the candidate packages fail, fix the problem in the branch following your usual development practices and start the flow again.
+
+=== Tag the Release ===
+<<Include(../TagRelease)>>
+
+=== Archive Candidate Packages ===
+<<Include(../ArchivePackages)>>
+
+=== Update SourceForge ===
+<<Include(../UpdateSourceForge)>>
+
+=== Update scons.org ===
+<<Include(../UpdateSConsOrg)>>
+
+=== Update Tigris.org ===
+<<Include(../UpdateTigris)>>
+
+=== Announce ===
+<<Include(../AnnounceCheckpoint)>>

@@ -1,0 +1,7 @@
+#acl PageReviewersGroup:read,write,delete,revert
+
+The following list of users can review and approve queued changes:
+
+ * GaryOberbrunner
+ * WilliamDeegan
+ * WikiAdminGroup

@@ -1,0 +1,5 @@
+Hello! My name is Phillip Martin, and I am the main developer of [[http://aztec.sourceforge.net/|Aztec]], a free 3D modelling tool. Living on the east coast of Australia, I tap away at Aztec in my spare time, between work, church, tennis and sculpting.
+
+Aztec recently moved to SCons for its build system, since it is the only tool that we could find that built properly using [[http://www.mingw.org|MingW]] and [[http://msdn.microsoft.com/visualc/|MSVC]] on Windows, and also built on linux and MacOSX.
+
+Congratulations to the SCons team, and a very large thankyou from me for creating such a great and useful tool.

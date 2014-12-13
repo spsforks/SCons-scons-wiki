@@ -1,0 +1,13 @@
+#acl ApprovedGroup:read,write,delete,revert
+
+The following list of users can edit without approval:
+
+ * WilliamDeegan
+ * GaryOberbrunner
+ * AnatolyTechtonik
+ * DirkBaechle
+ * EvanDriscoll
+ * AlexBurton
+ * ptomulik
+ * RusselWinder
+ * DavideCoppola

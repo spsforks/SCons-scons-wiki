@@ -1,0 +1,317 @@
+#format irc
+17:27:40 *	garyo-home (n=chatzill@209-6-158-38.c3-0.smr-ubr3.sbo-smr.ma.cable.rcn.com) has joined #scons
+18:58:18 <garyo-home>	Hi folks; who's here so far?
+19:00:12 *	stevenknight (n=stevenkn@c-98-234-62-147.hsd1.ca.comcast.net) has joined #scons
+19:00:27 <stevenknight>	hello again
+19:00:39 <garyo-home>	Hi Steven.
+19:02:16 <stevenknight>	do we have a quorum?
+19:02:25 <garyo-home>	Just me and you so far I think.
+19:02:31 <stevenknight>	fair enough
+19:02:52 <garyo-home>	We can look at the ParseConfig one.  Good patience with that one!
+19:03:01 <garyo-home>	(1500)
+19:04:56 <stevenknight>	thnx
+19:05:26 <garyo-home>	Cygwin actually does the same thing.
+19:05:27 <stevenknight>	greg's got a point re: translating paths that come from anywhere outside, not just ParseConfig
+19:05:29 *	Greg_Noel is no longer marked as being away
+19:05:31 <Greg_Noel>	Hey, it's after 19h00; I'm late
+19:05:41 <garyo-home>	Hi Greg.
+19:05:44 <stevenknight>	so it is...  :-)
+19:06:01 <garyo-home>	We're just looking at 1500 (ParseConfig and msys)
+19:06:30 <garyo-home>	If the mapping can always be done backwards, we could just have a .msys_path like .win32_path.
+19:06:43 <Greg_Noel>	OK, I'm there.
+19:06:47 <stevenknight>	no, that's the reverse of what he wants
+19:06:55 <stevenknight>	this is on input, not output
+19:07:24 <stevenknight>	i agree that a .msys path might be useful, but that's orthogonal
+19:07:45 <stevenknight>	right now i'm leaning towards 2.0
+19:07:45 <garyo-home>	Maybe not though.  On msys, shouldn't gcc be called with all msys paths?
+19:07:49 <Greg_Noel>	If I understand what Steven wrote, it should be done when the name is looked up (i.e., in Entry())
+19:08:16 <stevenknight>	i think Greg's right in larger sense
+19:08:26 <stevenknight>	but i'm more nervous about unintended side effects there
+19:08:42 <stevenknight>	for now, i think we mark it 2.0 p3
+19:08:46 <garyo-home>	Yes, you need to translate msys -> win32, but maybe also win32 -> msys.
+19:08:52 <Greg_Noel>	I'll go with that.
+19:08:54 <stevenknight>	and the implementation can be hashed out by whoever gets stuck with it
+19:08:57 <garyo-home>	But anyway I agree w/ 2.0 p3 unknown person.
+19:09:06 <stevenknight>	garyo, you might be right re: needing to pass msys paths to some tools
+19:09:19 <stevenknight>	done
+19:09:26 <stevenknight>	1500: 2.0 p3 draft_choice_to_be_named_later
+19:09:42 <garyo-home>	2176 consensus 1.0.x p2 ludwig?
+19:09:42 <Greg_Noel>	Ludwig
+19:09:43 <stevenknight>	cool
+19:09:48 <Greg_Noel>	He's said he plans to hang around
+19:10:12 <stevenknight>	2176 done
+19:10:17 <Greg_Noel>	2177: Don't get me wrong; I think it should be applied ASAP.  It's just that niggling little thing about the policy.  Steve's point about the policy evolving is a good one, and I have to admit that the rebuild would be for a pretty rare corner case, so I'm not going to argue for 2.0 very hard (i.e., not really at all).  And let's not forget that it gives the user a very cool way of seeing what SCons thinks is in the directory.  I do worry about it not being sorted; I think the test harness has sorting turned on and I don't know if it's on normally.
+19:11:02 <garyo-home>	Sorting is vital.  Exceptions are OK as long as they're properly documented, IMHO.
+19:11:17 <garyo-home>	(Exceptions... to the no-rebuild policy)
+19:11:26 <stevenknight>	agree re: sorting
+19:11:52 <stevenknight>	and re: exceptions
+19:12:04 <stevenknight>	my only hesitation is that it does start down the slippery slope
+19:12:07 <Greg_Noel>	I think we need to apply the patch and then try it out under some not-test conditions to see if the names are sorted.
+19:12:09 <garyo-home>	If no-rebuild were really a showstopper for someone we could show them how to turn it off.
+19:12:22 <garyo-home>	turn this feature off.
+19:12:27 <stevenknight>	right
+19:12:48 <stevenknight>	but turn it off by making the sorting configurable?  or by showing them how to modify that spot in the code?
+19:12:55 <stevenknight>	making it configurable complicates applying the patch a little...
+19:13:15 <garyo-home>	IMHO: modify the code.  I think nobody will complain and we won't have to do it.  Configurability would be a waste.
+19:13:20 <Greg_Noel>	No, only sort when calculating the contents, not when using the children.
+19:14:09 <stevenknight>	hmm, i think we've had this discussion re: directory sorting before
+19:14:10 <Greg_Noel>	I agree with Gary FOR THIS CASE.
+19:14:42 <Greg_Noel>	It's only significant for directories
+19:15:07 <Greg_Noel>	the order of the children doesn't matter
+19:15:05 <garyo-home>	I'm not worried about slippery slope; as long as we try hard not to cause rebuilds, then most releases won't (because of the policy).  If we end up with too many of those, we batch them up.
+19:15:25 <stevenknight>	garyo:  agreed
+19:15:39 <garyo-home>	greg: right, like the order of children of an Alias doesn't matter.  Just the sig.  I agree.
+19:15:49 <stevenknight>	okay, i'm with you guys
+19:15:58 <garyo-home>	OK, sounds like we're all on board for 1.0.x p2(or p1)
+19:16:06 <stevenknight>	2177:  1.0.x p[12] anyone
+19:16:17 <Greg_Noel>	p2, p1 is for emergencies
+19:16:24 <stevenknight>	suppose we ought to make "anyone" more specific....
+19:16:25 <Greg_Noel>	Ludwig
+19:16:40 <garyo-home>	either will get done (p1 or p2), I say p2.
+19:16:41 <stevenknight>	Ludwig++
+19:16:46 <garyo-home>	fine.
+19:16:49 <stevenknight>	1.0.x p2 Ludwig
+19:16:49 <Greg_Noel>	done
+19:16:50 <stevenknight>	done
+19:16:54 <stevenknight>	2178:
+19:17:05 <Greg_Noel>	consensus
+19:17:17 <garyo-home>	sure.  p3, split the difference?
+19:17:24 <stevenknight>	2.0 p3 Ludwig
+19:17:25 <stevenknight>	done
+19:17:31 <stevenknight>	2179:
+19:17:35 <Greg_Noel>	Will the 2.3 floor be in 1.0.1?
+19:17:43 <garyo-home>	whole rest of the page is consensus.
+19:17:50 <stevenknight>	cool
+19:17:51 <stevenknight>	go us
+19:18:02 <garyo-home>	Greg: I didn't think so...
+19:18:08 <stevenknight>	no, updating floor is what 2.0 is about
+19:18:19 <Greg_Noel>	warning
+19:18:26 <garyo-home>	But we could start warning maybe?
+19:18:35 <stevenknight>	we're already warning
+19:18:37 <Greg_Noel>	er, will the 2.3 warning be in 1.0.1?
+19:18:48 <stevenknight>	if we've settled on 2.3
+19:18:49 <Greg_Noel>	but for 2.2
+19:19:12 <stevenknight>	i haven't yet been compelled that 2.3 gives us that much more than 2.2
+19:19:14 <garyo-home>	I'm staying out of this one this time.
+19:19:30 <stevenknight>	so far it's the tarfile module and a couple of Ludwig's patches
+19:19:36 <stevenknight>	am i overlooking anything?
+19:19:48 <garyo-home>	tarfile is not insignificant though.
+19:19:59 <stevenknight>	true
+19:20:07 <Greg_Noel>	Well, it seems to be the floor for a lot of other Python-based projects; go with the flow
+19:20:25 <stevenknight>	why start now?  :-)
+19:20:32 <Greg_Noel>	point
+19:20:48 <bdbaddog>	I vote for 2.3
+19:20:51 <bdbaddog>	:)
+19:20:57 <Greg_Noel>	Hi, Bill
+19:21:00 <stevenknight>	i'm not balking at tarfile per se
+19:21:01 <garyo-home>	Google says 19000 hits for "oldest supported python version 2.2" but 96,000 for "... 2.3". :-)
+19:21:16 <stevenknight>	it's the idea that we're going to let what other modules do/don't use decide for us
+19:21:35 <stevenknight>	instead of making the decision based on the actual underlying features supported
+19:21:40 <stevenknight>	(or by real user data, which we don't have)
+19:22:22 <stevenknight>	and for "oldest supported python version 1.5."  one hit?  us?
+19:22:26 <bdbaddog>	I still haven't gotten any responses in the couple of emails I floated to the user mailing list indicating that they were unable to move forward to any particular version of python for use by the build tools.
+19:22:30 <stevenknight>	:-)
+19:22:37 <Greg_Noel>	The problem is that it's a decision based on positioning from next year; all we can do is guess.
+19:22:58 <Greg_Noel>	I just think 2.3 will be a better floor by then.
+19:23:37 <stevenknight>	well, shall we open up the "2.0 time frame" can of worms too, then?
+19:23:52 <bdbaddog>	even if it was today. I think 2.3 is a good floor. what distros do you exclude?  Also take into account that any projects (opensource) which will use scons to build themselves will only be released with newer versions of current distros.
+19:23:56 <stevenknight>	greg, I know you have it in mind for ~6 months from now, right?
+19:23:58 <Greg_Noel>	No, let's drop it.  I was just curious.
+19:24:22 <Greg_Noel>	2.0 in six months? About right.
+19:24:30 <garyo-home>	bdbaddog: RHEL3 I think has 2.2.  But that was 2003 or earlier.
+19:25:10 <bdbaddog>	yup, and as I said, no projects which are on rhel3 will be updated, so requiring newer python won't be barier to distro builders.
+19:25:24 <Greg_Noel>	Figure one month for 1.0.1 and another for 1.0.2; two months for 1.1; two more for 2.0
+19:25:39 <garyo-home>	at a bare minimum!
+19:26:03 <Greg_Noel>	yeah, that's pushing it, all right, but it's what you've said you want to do.
+19:25:56 <bdbaddog>	you see 2.0 as a linear progression from 1.1 ?
+19:26:18 <garyo-home>	me?
+19:26:20 <Greg_Noel>	How couldn't it be?
+19:26:33 <Greg_Noel>	you == you guys
+19:26:46 <bdbaddog>	(you = greg noel)
+19:26:49 <bdbaddog>	sorry bout that.
+19:27:21 <garyo-home>	greg: I think it's aggressive, but let's see what our newly expanded team can get done.
+19:27:37 <Greg_Noel>	No, I originally figured a year for 1.x cycles; you guys have wanted it faster.
+19:27:22 <bdbaddog>	I see 2.0 branched from 1.0, work removing 1.5.2 limitations started, in parallel 1.0.1 and 1.1 getting merged to 2.0. 2.0 in a few months.
+19:28:10 <Greg_Noel>	bdbaddog, ain't gonna happen; not enough resources to work two branches.
+19:28:16 <garyo-home>	bdbaddog: +1 on branching for 2.0 soonish.  But not too soon because of possible merge headaches.
+19:28:19 <stevenknight>	but a year based on...?  a specific set of features that merit 2.0?  fixing "all" of the 1.x issues?
+19:29:00 <Greg_Noel>	There are too many issues in 1.x now; fixing all of them would take two years.
+19:29:10 <garyo-home>	let's focus on some bugs now.  I don't think we can decide 2.0 release date tonight.
+19:29:11 <stevenknight>	agreed
+19:29:16 <stevenknight>	but
+19:29:20 <stevenknight>	okay, garyo's right
+19:29:24 <stevenknight>	take this to the ML
+19:29:28 <Greg_Noel>	works
+19:29:29 <bdbaddog>	:)
+19:29:45 <stevenknight>	where were we?
+19:29:52 <garyo-home>	The 2006h1 sheet
+19:30:01 <bdbaddog>	should I float another can you move to 2.2,2.3,2.4,2.5 python for a new release mail?
+19:30:06 <Greg_Noel>	1377
+19:30:12 <Greg_Noel>	oops, 1388
+19:30:19 <stevenknight>	bdbaddog:  hold off, don't think we'll get much better info than last time
+19:30:21 <garyo-home>	bdbaddog: can only help to get us some real user info.
+19:30:38 <garyo-home>	I defer to steven.
+19:31:06 <garyo-home>	Greg: is there a Poll module for moinmoin?
+19:31:22 <Greg_Noel>	Um, not sure; I think there's something
+19:31:48 <stevenknight>	doesn't it RSS feed?  I think i've seen Google Reader offer to let me subscribe
+19:32:00 <garyo-home>	anyway, 1388 should be 2.0 unless it's a special case that can be addressed earlier.
+19:32:03 <stevenknight>	or maybe that's GR polling...
+19:32:16 <garyo-home>	stevenknight: sorry, I meant a way to take a user poll with questions and a graph of results.
+19:32:17 <stevenknight>	yes, 2.0
+19:32:18 <stevenknight>	p2
+19:32:25 <stevenknight>	ah
+19:32:38 <stevenknight>	i don't know what I was thinking, Unicode getting "solved" in 1.x...
+19:32:42 <Greg_Noel>	1388 needs to know what the system encoding is; that's a function in 2.3
+19:32:47 <stevenknight>	1388:  2.0 p2 hero
+19:32:53 <garyo-home>	ok, 1388 2.0 p2 someone.
+19:32:56 <Greg_Noel>	done {;-}
+19:33:13 <garyo-home>	1392: Greg, look again?
+19:33:25 <stevenknight>	1392:  1.x p3 me
+19:33:40 <Greg_Noel>	garyo-home, look at what?
+19:33:43 <garyo-home>	(oh, you already did.)
+19:34:00 <Greg_Noel>	done
+19:34:01 <garyo-home>	never mind.  I think you had an out-of-place line in the ssheet or something.  Or maybe it was me.
+19:34:19 <Greg_Noel>	I moved it just before we started.
+19:34:34 <garyo-home>	1399 closed, 1409?
+19:34:38 <garyo-home>	Sorry, 1402
+19:35:05 <garyo-home>	Steven: I'd really like the vstudio stuff.  There's some work already done.  Should it wait for 1.x?
+19:35:15 <garyo-home>	(vsvars.bat etc.)
+19:35:46 <stevenknight>	garyo-home:  pretty sure it won't be ready in the 1.0.x time frame
+19:35:56 <stevenknight>	unless you're referring to specific issues with patches that could integrated early
+19:36:01 <garyo-home>	ok, 1.x then.  It makes more sense there anyway.
+19:36:19 <stevenknight>	1402:  1.x p2 me?
+19:36:22 <garyo-home>	No, I mean ripping out all the registry junk and just parsing the output of vs/vcvars.bat.
+19:36:31 <Greg_Noel>	all the VisualStudio stuff is 'anytime'
+19:36:32 <garyo-home>	1402: 1.x p2 steven.
+19:36:36 <stevenknight>	that would be a god intermediate step
+19:36:55 <stevenknight>	good
+19:36:59 <stevenknight>	1406:
+19:37:22 <garyo-home>	I don't like the submitted patch.
+19:37:28 <garyo-home>	Too specialized.
+19:37:48 <stevenknight>	agreed
+19:37:54 <garyo-home>	Has anyone retried it recently to see if it's still broken?
+19:37:58 <stevenknight>	research jim
+19:38:03 <garyo-home>	OK.
+19:38:05 <Greg_Noel>	done
+19:38:10 <stevenknight>	1417: 
+19:38:31 <stevenknight>	research me VisualStudio keyword
+19:38:37 <Greg_Noel>	anytime, stevenknight, VisualStudio
+19:38:45 <Greg_Noel>	all the VisualStudio stuff is 'anytime'
+19:39:04 <Greg_Noel>	meaning not tied to a release schedule
+19:39:00 <stevenknight>	done
+19:39:06 <stevenknight>	1418:  research david
+19:39:15 <stevenknight>	Greg_Noel:  right
+19:39:19 <garyo-home>	That's not 100% right, the actual problem is you can't use $SOURCES.(any-attr) if your source list may be empty.
+19:39:20 <Greg_Noel>	done
+19:39:28 <garyo-home>	Sorry I'm still on 1417 here.
+19:39:55 <garyo-home>	I'm OK w/ 1418 research david though.
+19:40:36 <Greg_Noel>	1417: garyo-home, is that true?
+19:41:17 <garyo-home>	Sure, because it expands to an empty list (None) which has no .windows attribute.
+19:41:35 <Greg_Noel>	Not empty list []?
+19:41:52 <stevenknight>	ouch, that fact eluded me.  that's bad
+19:41:53 <garyo-home>	[].windows wouldn't work either.
+19:42:01 <Greg_Noel>	That could be an easy fix, if that's all that's wrong.
+19:42:17 <garyo-home>	Expand to something other than None or emptylist?
+19:42:27 <Greg_Noel>	Doesn't it iterate over the list, applying the attribute?
+19:42:53 <garyo-home>	Don't know.  Steven?
+19:42:56 <stevenknight>	it should
+19:43:08 <stevenknight>	they're supposed to be a list like object that does that
+19:43:15 <stevenknight>	but i could see that the expansion order might be wrong
+19:43:28 <Greg_Noel>	research, stevenknight?
+19:43:28 <stevenknight>	and it might "efficiently" return an actual list, not the object
+19:43:46 <stevenknight>	at some point where it then tries to apply the attribute too late
+19:43:49 <stevenknight>	yes, research stevenknight
+19:43:53 <garyo-home>	ok
+19:43:55 <Greg_Noel>	done
+19:44:03 <Greg_Noel>	That endeth this list...
+19:44:10 <garyo-home>	nice!
+19:44:11 <stevenknight>	garyo:  good catch
+19:44:14 <garyo-home>	thx
+19:44:21 <stevenknight>	all right, done with 2006
+19:44:36 <Greg_Noel>	garyo++
+19:44:50 <stevenknight>	everyone have time to wade into the 1.{0.x,x} re-triaging?
+19:44:54 <bdbaddog>	gotta run.
+19:44:58 *	bdbaddog (n=bdeegan@adsl-71-131-3-114.dsl.sntc01.pacbell.net) has left #scons
+19:44:59 <garyo-home>	Sure, a bit.
+19:45:10 <Greg_Noel>	'nite, Bill
+19:45:31 <Greg_Noel>	I have all night, until my wife wants to watch Olympics again...
+19:47:48 <Greg_Noel>	Gary, Steven and I seem to be in agreement for most of the 1.0 retriage issues; if you concur, we're done.
+19:47:54 <stevenknight>	greg+gary:  looks like a lot of consensus in the 1.0.x retriage
+19:47:57 <stevenknight>	done
+19:48:04 <garyo-home>	What do we need for 2071: do we make up our own or use an existing one?  I have an old emacs release I signed for FSF we could use.
+19:48:17 <garyo-home>	From my quick look, I don't disagree w/ any of them.
+19:48:44 <stevenknight>	2071:  there's an existing SCons release that assigns ownership to SCons Foundation
+19:48:51 <stevenknight>	two versions, one for employer, one for employee
+19:48:59 <stevenknight>	because it assigns ownership it scares corporate lawyers
+19:49:20 <garyo-home>	great.  So it's just getting people signed up?
+19:49:31 <stevenknight>	if we go with our current one
+19:49:36 <garyo-home>	I think I already signed one, now that I think about it.  ???
+19:49:47 <stevenknight>	we can make it less scary by finding a version that lets them just license to us under our same MIT trms
+19:49:52 <stevenknight>	garyo-home:  yes, youdid
+19:50:13 <stevenknight>	needs some research time to google for examples of other projects who have done that
+19:50:26 <stevenknight>	and maybe run it by our SFLC lawyer
+19:50:34 <Greg_Noel>	I feel left out; nobody asked me ;-(
+19:50:45 <garyo-home>	it was a long long time ago.
+19:51:08 <stevenknight>	yes, it was enough of a bother relative to the benefit we were getting that i got lazy and dropped it
+19:51:24 <Greg_Noel>	There are several samples on the net; I found one for Python and Mozilla pretty easily.
+19:51:25 <stevenknight>	i mean, it involves talking to lawyers... :-/
+19:51:49 <stevenknight>	i thought those were ownership agreements
+19:51:53 <stevenknight>	bt that's from a long time ago
+19:52:02 <stevenknight>	so i could be out of date
+19:52:43 <garyo-home>	ok, well glad we have something at least.
+19:52:51 <Greg_Noel>	IANAL, but I think all it has to do is agree to license under MIT terms
+19:53:00 <stevenknight>	yes, that's right
+19:53:23 <garyo-home>	Wow, there's quite a long retriage list for 1.0.x.
+19:54:00 <stevenknight>	yeah
+19:55:28 <stevenknight>	i'm thinking we should take this part off line
+19:55:33 <garyo-home>	too much for me tonight.
+19:55:34 <stevenknight>	rather than get started on it right now
+19:55:37 <stevenknight>	exactly
+19:55:50 <stevenknight>	greg, i see you've started on the spreadsheet
+19:55:54 <stevenknight>	if you can do your update
+19:55:56 <Greg_Noel>	Maybe meet again tomorrow?
+19:56:05 <garyo-home>	I'll work on that for next week though, as well as actually getting some contributions in :-/
+19:56:11 <stevenknight>	and gary, if you have time to at least skim it in the next day or so for any places where you disagree with greg+me?
+19:56:17 <Greg_Noel>	Actually, I've been through it once, but I only annotated those I thought should change
+19:56:19 <garyo-home>	yes, definitely.
+19:56:21 <stevenknight>	me too re: contributions
+19:56:42 <garyo-home>	good.  Next week, same time, same place?
+19:56:59 <stevenknight>	works for me, so far as i know
+19:57:03 <Greg_Noel>	If there's a consensus of three, whoever's the third should just do it.
+19:57:05 <stevenknight>	we're going to be in the middle of moving again, unfortunately
+19:57:13 <Greg_Noel>	again?
+19:57:15 <stevenknight>	Greg_Noel:  just do it ++
+19:57:19 <stevenknight>	yes
+19:57:24 <stevenknight>	our landlord is in foreclosure
+19:57:25 <garyo-home>	makes sense to me too.
+19:57:27 <stevenknight>	welcome to california
+19:57:39 <Greg_Noel>	But don't californicate...
+19:57:40 <garyo-home>	Steven: right, you were wrestling with that last week.  
+19:57:44 <stevenknight>	LOL
+19:57:49 <garyo-home>	Too bad!
+19:58:07 <garyo-home>	Maybe your new place will be better anyway?
+19:58:07 <stevenknight>	yeah, we ended up finding a better place, but still have the hassle now of actually moving
+19:58:12 <garyo-home>	:-)
+19:58:38 <garyo-home>	well good luck with it.
+19:58:46 <stevenknight>	thnx
+19:58:51 <Greg_Noel>	When's the deadline to move?  Should we consider delaying 1.0.1 until the end of the week?
+19:58:51 <garyo-home>	I'm going to get some sleep now, g' night.
+19:59:06 <stevenknight>	no, keep it on schedule
+19:59:21 <Greg_Noel>	ok, that makes triaging harder, but we'll do what we can.
+19:59:34 <Greg_Noel>	Gary, you still there?
+19:59:40 <garyo-home>	yes.
+20:00:12 <Greg_Noel>	Oh, I already said that; old age: I'll just repeat that if you form the consensus, just mark the issue.
+20:00:21 <garyo-home>	Will do.
+20:00:29 <Greg_Noel>	then g'night all
+20:00:35 <garyo-home>	ok, c u later.
+20:00:44 <stevenknight>	okay, i'm going to go see if i can find the right combination of ubuntu hardy packges to build the doc...
+20:00:47 *	Greg_Noel has been marked as being away
+20:00:54 <stevenknight>	and then maybe get a checkpoint release out
+20:01:00 <stevenknight>	'night
+20:01:09 *	stevenknight has quit ("Leaving")
+20:01:15 <garyo-home>	Steven: what about my pkg list on the wiki?
+20:01:18 <garyo-home>	Oh well, he's gone.
+20:01:21 <Greg_Noel>	too late
+20:01:30 <garyo-home>	ok, bye now.
+20:01:35 <Greg_Noel>	'nite
+20:01:40 *	garyo-home has quit ("ChatZilla 0.9.83 [Firefox 3.0.1/2008070208]")

@@ -1,0 +1,20 @@
+#acl WikiEditorsGroup:read,write,revert All:read
+
+~+Sorry, '''the application period has closed''' and no more proposals are being accepted.  At the end of the evaluation period, Google accepted three student proposals to work for us this summer:+~
+
+ Ludwig Hähne:: [[/LudwigHaehne|Add Memory Introspection Facility]]: a facility that assists users and developers in reducing memory consumption of software builds.
+
+ Mateusz Gruca:: [[/MatiGruca|Comments Stripping Framework and Python Binary Builder]]: more reliable signature checking system and easier Python applications installation.
+
+ Nathan Brown:: [[/NathanBrown|Windows Improvements and VHDL Builder]]: Windows Installer improvements, standalone executable, and VHDL builders.
+
+~+We appreciate your interest.  If you'd still like to help out, don't hesitate to contact us.  Although we can't pay you, work experience in an open source project is a valuable addition to your résumé.+~
+
+== Welcome to the Google Summer of Code™ for 2008 ==
+
+~+This is the SCons idea page for the [[http://google.org|Google]] [[http://code.google.com/soc/2008|2008 Summer of Code]]. If you're a Python programmer and don't know about SCons, let us [[/Introduction|introduce ourselves]] and tell you why we are such a cool project to work for. If you're a student with Python experience and you find a project that interests you, look at the [[/Proposal|process to submit a proposal]].+~
+## There's also a copy of the [:/Announcement:announcement] that we sent out originally about our participation.
+
+~+Otherwise, just dive right in! Each idea listed below has only a short description of the task; if there's more information beyond the few paragraphs here, it will be in a separate page. And if you think of an idea that's not listed here, don't hesitate to suggest it—it's not possible that we've thought of all the good ideas!  Just bring it up on the [[http://scons.tigris.org/servlets/ProjectMailingListList|dev@scons mailing list]] and we'll be happy to discuss it.+~
+
+<<Include(/Ideas)>>

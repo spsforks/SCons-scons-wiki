@@ -1,0 +1,552 @@
+#format irc
+16:49:02 *	garyo (n=garyo@209-6-36-50.c3-0.smr-ubr1.sbo-smr.ma.cable.rcn.com) has joined #scons
+16:53:33 *	sgk (n=sgk@c-71-204-129-67.hsd1.ca.comcast.net) has joined #scons
+16:54:27 *	Jason_at_Intel (n=chatzill@12.18.240.224) has joined #scons
+16:54:37 <sgk>	GregNoel:  i'll be a bit late getting back to the meeting, ~1705 - 1710
+16:54:48 <Jason_at_Intel>	hello
+16:55:36 <garyo>	Hi folks
+16:55:46 <Jason_at_Intel>	Hi Gary!
+17:00:52 *	You are no longer marked as being away
+17:00:58 <GregNoel>	Hi, all.  It's raining in San Diego and I've already had a few power fluctuations today (but no trips yet, knock on wood).
+17:00:59 *	GregNoel raps smartly on his head
+17:00:59 <GregNoel>	Ow!  In any event, if I suddenly drop off-line, assume I've lost power and I'll get back as soon as I can.
+17:01:51 <garyo>	Hi Greg.
+17:08:44 <garyo>	SO folks, on to the bugs?
+17:09:09 <sgk>	hey all
+17:09:16 <Jason_at_Intel>	Hi steve!
+17:09:21 <GregNoel>	Ah, welcome back.
+17:09:23 <garyo>	Hi Steve
+17:09:25 <GregNoel>	Shall we get started?  2534 is first up.
+17:09:43 <garyo>	George Foot's comment seems apropos.  Doc p3?
+17:10:03 <GregNoel>	No, Steven thought it was a bug last time.
+17:10:33 <garyo>	OK I'm confused, the ssheet note says default type is Entry, but I think it's File.
+17:10:43 <garyo>	Steven?
+17:10:52 <GregNoel>	Steven?
+17:10:59 <Jason_at_Intel>	I thought this was to be researched
+17:11:21 <garyo>	I like that: steven, research.
+17:11:30 <sgk>	sorry, catching up on the conversation
+17:11:35 <sgk>	been a hellish day
+17:11:40 <garyo>	sorry 2 hear that
+17:11:49 <garyo>	I have a lot of those these days :-/
+17:11:55 <sgk>	ooo sick; power outage; etc.
+17:12:29 <GregNoel>	My lights just flickered, so I can empathize (not sympathize)
+17:12:21 <sgk>	2534:  think we should give it to me to research
+17:12:25 <garyo>	+1
+17:12:37 <GregNoel>	done
+17:12:50 <GregNoel>	1910, 2361, 780, 914, 1187, 1745, 1883, 1945: bypass for lack of comments
+17:12:50 <GregNoel>	(Yes, Steven, 914 reluctantly)
+17:12:50 <GregNoel>	2058 consensus 2.0 p1 stevenknight
+17:12:50 <GregNoel>	2070 consensus 2.0 p1 stevenknight
+17:12:50 <GregNoel>	2096, I think Gary needs to agree, but otherwise consensus 2.x p4 +sconf_revamp
+17:12:50 <GregNoel>	2249
+17:13:27 <Jason_at_Intel>	woo
+17:14:10 <garyo>	2096: I agree, 2.x p4
+17:14:52 <GregNoel>	2096, done
+17:13:47 <sgk>	greg re: 914
+17:13:53 <GregNoel>	yes?
+17:13:58 <sgk>	how about if we make that future p4 or something so it doesn't get lost
+17:14:07 <sgk>	agree that the general concept of XML for results is good
+17:14:18 <sgk>	but nothing is burning for it right now
+17:14:33 <GregNoel>	future p4 is off the radar, but I'll go along.
+17:15:19 <GregNoel>	914, other consensus?
+17:15:30 <garyo>	agree w/ 914
+17:15:32 <sgk>	future p3, then
+17:15:37 <GregNoel>	done
+17:16:05 <garyo>	My Issue List query doesn't match the spreadsheet today :-/
+17:16:58 <GregNoel>	garyo, a bunch of issues from last time are still there, formerly Steven's research issues.
+17:16:18 <sgk>	2249:  research bdbaddog (since he volunteered)
+17:16:26 <GregNoel>	done
+17:16:58 <garyo>	OR: 2249: ask OP if it still happens.
+17:17:34 <sgk>	2249:  that's a reasonable suggestion for the update
+17:17:44 <garyo>	It's a year old and vs_revamp is better.
+17:17:49 <sgk>	yep
+17:18:11 <sgk>	2249:  research bdbaddog, comment suggests asking OP
+17:18:17 <garyo>	+1
+17:18:23 <GregNoel>	done
+17:18:39 <GregNoel>	2304
+17:18:39 <sgk>	2304:  research SK
+17:18:42 <Jason_at_Intel>	I should comment on 2304, I might have a work around for this one, but i have to finish the testing of this in Parts yet
+17:19:19 <GregNoel>	I don't believe that's possible
+17:18:59 <sgk>	Jason_at_Intel:  sounds good
+17:19:17 <garyo>	OK, let's assign it to jason to research?
+17:19:33 <Jason_at_Intel>	it will probably need a patch to the File object
+17:19:45 <garyo>	???
+17:19:45 <sgk>	GregNoel: re your comment:  agreed we may not be able to build on top of the locked executable
+17:19:51 <GregNoel>	rebuilding a program as the same time you're running it is NOT a good idea, no matter where or when.
+17:20:00 <sgk>	but we should handle the error gracefully and not die
+17:20:04 <garyo>	Of course not on Windows, but at least interactive mode could recover.
+17:20:10 <Jason_at_Intel>	I agree with that.. but the system should  not die
+17:20:24 <sgk>	you should be able to stay in interactive mode and build other things
+17:20:33 <sgk>	or rebuild the same executable next time
+17:20:31 <garyo>	ok we all agree.  research jason?
+17:20:31 <GregNoel>	On *IX, the file is overwritten, so the code will change out from under the running program.  NOT a good idea.
+17:20:36 <Jason_at_Intel>	Scons dies with the unlink Action()
+17:21:01 <garyo>	Greg: on *IX I do this all the time, multiple times daily.  And yes, sometimes I pay the price. :-)
+17:21:23 <sgk>	agreed, but people do things like this, so the question is how do we want to handle it?
+17:21:26 <GregNoel>	consensus?
+17:21:37 <sgk>	research Jason_at_Intel if he's up for it
+17:21:39 <sgk>	otherwise SK
+17:21:47 <garyo>	Recover as best as possible, with build failure msg.  Just the same as "out of disk space."
+17:22:01 <Jason_at_Intel>	basically
+17:22:11 <garyo>	jason, will you take it on?
+17:22:16 <Jason_at_Intel>	Sure
+17:22:19 <GregNoel>	OK
+17:22:20 <garyo>	ok, done
+17:22:25 <sgk>	Jason_at_Intel++
+17:22:39 <GregNoel>	2347 consensus 2.x p3 +symlink
+17:22:39 <GregNoel>	2536
+17:22:57 <sgk>	i like greg's suggestion of research OP
+17:23:17 <GregNoel>	so do I, or I wouldn't have suggested it. {;-}
+17:23:36 <garyo>	Yeah, makes sense 2 me too.
+17:23:39 <sgk>	done
+17:23:49 <GregNoel>	done
+17:23:53 <GregNoel>	2537 FIXED (thanks, Steven!)
+17:23:53 <GregNoel>	2538 I don't like anytime issues assigned to Steven, but I'll go with the flow
+17:24:06 <sgk>	agreed on both counts
+17:24:21 <sgk>	done
+17:24:25 <sgk>	?
+17:24:36 <GregNoel>	consensus?
+17:24:50 <garyo>	ok
+17:24:56 <GregNoel>	done
+17:24:59 <GregNoel>	2540 FIXED (thanks, Steven!)
+17:24:59 <GregNoel>	(We've achieved the minimal target for today; congratulations to us!)
+17:24:59 <GregNoel>	2541, 2542, 2545: bypass for lack of comments
+17:24:59 <GregNoel>	2546 consensus WONTFIX
+17:24:59 <GregNoel>	2547, 2548, 2549: bypass for lack of comments
+17:24:59 <GregNoel>	(We've achieved the nominal target for today; I suppose congratulations are due, but it seems rather empty since we'll see so many again next time.)
+17:24:59 <GregNoel>	2550, 2551, 2552, 2553, 2554, 2555, 2556 (so close!), 2557: bypass for lack of comments
+17:24:59 <GregNoel>	And that's all for today...  Is there any discussion needed about releasing 1.3?  With the checkpoint released today, plan for two weeks, so about January 31st?  (That is, a year late...)
+17:25:18 <garyo>	Steven, I can work that kind of thing in the bg so if it becomes a timesink let me know.
+17:25:53 <sgk>	garyo:  the irc channel?
+17:25:57 <garyo>	sgk: yes.
+17:26:22 <sgk>	cool, i'll take you up on that if it gets thorny
+17:26:28 <garyo>	np
+17:25:45 <garyo>	Greg: I think since this ckpoint is very minimally different from the last except doc, a week is enough.  Just my opinion though.
+17:26:59 <GregNoel>	garyo, yes, but only if it's really pushed on the mailing lists to get the maximal feedback.
+17:27:18 <garyo>	I'm itching to get 1.3 out.  I think we've checkpointed it to death.  Greg: great idea re: ML pushing.  I will do that.
+17:27:22 <bdbaddog>	Greetings.. sorry I'm late..
+17:27:53 <garyo>	Hey Bill!  Good job getting both checkpoints out!
+17:27:40 <Jason_at_Intel>	so what is holding up 1.3
+17:27:52 <Jason_at_Intel>	I am sort of for making it happen
+17:27:36 <sgk>	should we try to look at some of the issues that have two consensus comments?
+17:27:54 <GregNoel>	sgk, cherry-pick away...
+17:28:02 <sgk>	if others add "verbal" consensus we won't have to revisit so many
+17:29:09 <GregNoel>	that was the point of the fusillade, so if you want to try to get verbal consensus to get rid of them, I'm all for it.
+17:28:18 *	sgk scrolls back in the spreadsheet...
+17:29:08 <sgk>	2547 and 2548:  future p1 +java
+17:29:10 <sgk>	any objections?
+17:29:56 <GregNoel>	2547, 2548, I'll go along; any others?
+17:29:37 <sgk>	hang on, table 2547 and 2548, let's finish the 1.3 discussion first
+17:30:36 <garyo>	2547,2548: I'm fine w/ future p1 +java.  sigh. :-)
+17:31:04 <GregNoel>	2547, 2548, that's three; done
+17:28:20 <garyo>	Jason: we just need to let Bill's last checkpoint stew for long enough to make sure it's not got horrible bugs.
+17:28:45 <Jason_at_Intel>	ok
+17:29:10 <garyo>	That's why I say 1 week, not the usual 2.  Bill, opinion on how long to let the checkpoint stew?
+17:29:43 <bdbaddog>	We going with 2 weeks again (of stew time)?  I'd be up for shorter, but I don't remember what changes between last checkpoint and this one was, if mostly doc, then 1week is good by me.
+17:30:05 <sgk>	1 week seems good to me
+17:30:12 <garyo>	I put in one significant fix to detect 64 vs. 32 bit OS default.  That's it I think.
+17:30:16 <bdbaddog>	O.k. so 1/24/2010
+17:30:30 <sgk>	i'm anticipating more users and problem reports when we officially release 1.3 regardless of whether it's 1 or 2 weeks
+17:30:46 <garyo>	sgk: I agree, that's another reason to get it out sooner.
+17:30:57 <sgk>	at this point an extra week soaking 1.3 checkpoints isn't the crucial difference between success and failure
+17:30:57 <garyo>	So we can do 1.3.1 sooner :-/
+17:31:20 <sgk>	right, we should be ready to jump on 1.3 bug reports and prep 1.3.1
+17:31:24 <sgk>	my gut says about a month after
+17:31:44 <garyo>	sgk: maybe, let's see.
+17:31:23 <garyo>	ok, is that consensus?  Next weekend is 1.3?
+17:31:56 <Jason_at_Intel>	I agree... get 1.3 out earlier and let a 1.3.1 fix issues found in 1.3.. this way more people will test it
+17:31:57 <garyo>	But we can start on the 2.0 work immediately.
+17:32:01 <sgk>	i'll be happy to be wrong and go straight to 2.0... :-)
+17:32:12 <GregNoel>	yep
+17:32:20 <bdbaddog>	so at 1.3 release we create a 1.3 branch?
+17:32:32 <bdbaddog>	and trunk becomes pre-2.0 ?
+17:32:32 <GregNoel>	Er, SVN doesn't work that way.
+17:32:45 <GregNoel>	No need to branch until you need it.
+17:32:56 <GregNoel>	If you know what I mean.
+17:33:24 <sgk>	either way it'd have the same effect
+17:33:31 <bdbaddog>	so just cp and then branch from that if needed?
+17:33:35 <garyo>	Sure, but we might as well create it when we do 1.3 so people have an official place to work on 1.3.1 rather than making the first person to fix something have to create it.
+17:33:45 <sgk>	i can see an argument for branching right away because I doubt we'll get through a big change like vs_revamp in 1.3 unscathed
+17:33:46 <garyo>	That's how I usually do it.
+17:33:59 <sgk>	what garyo said
+17:34:01 <Jason_at_Intel>	it seems we woudl want to make a 1.3 branch and have truck be 2.0.. and make a 1.3.1 branch we add patches to for a 1.3.1 drop
+17:34:06 <bdbaddog>	+1 for branching 1.3 at 1.3 release.
+17:34:20 <sgk>	okay, let's go for it (scm orthodoxy be damned...  :-))
+17:34:21 <garyo>	Just cp trunk to tag, then cp tag to branch.  And yes, trunk becomes pre-2.0.
+17:34:25 <bdbaddog>	there'd be a 1.3 release, and a 1.3 branch
+17:34:34 <bdbaddog>	+1 garyo's description.
+17:35:01 <GregNoel>	So branch trunk to branches/1.3.fixes or some such?  Sure, why not?  Branches are cheap.
+17:35:30 <GregNoel>	... or branch release?  That should be discussed.
+17:34:55 <bdbaddog>	so then BB does trunk? and/or 1.3?
+17:35:27 <garyo>	what's BB, Bill?
+17:35:32 <bdbaddog>	BuildBot
+17:35:36 <garyo>	ah yes.
+17:35:49 <garyo>	Good question.
+17:36:06 <garyo>	Is it realistic to want both?
+17:36:19 <GregNoel>	BB already does trunk, checkpoint, release, and branches/*, so what are you saying?
+17:36:40 <garyo>	Really?  I didn't know that.  In that case, just carry on.
+17:37:07 <sgk>	yeah, GregNoel added mutliple branch support
+17:37:25 <sgk>	surprised me too, but it tested all of bdbaddog's recent checkpoint patches
+17:39:02 <bdbaddog>	Way to go Greg!
+17:37:31 <garyo>	Cool, is that just in our BB or sent upstream?
+17:38:02 <GregNoel>	It's one of the examples in the BB manual, so I think they know about it.
+17:38:13 <garyo>	good.
+17:38:31 <garyo>	OK, sounds like most of a plan!
+17:38:44 <bdbaddog>	:)
+17:38:37 <sgk>	go 1.3!
+17:39:01 <GregNoel>	Geaux Saints!
+17:38:58 <garyo>	Yeah!  And thanks bdbaddog for all the grunt work on the checkpoints!
+17:39:15 <sgk>	okay, and we have consensus on 2547, 2548
+17:39:20 <sgk>	on to more of the issues?
+17:39:34 <bdbaddog>	sure.
+17:39:36 <GregNoel>	any others you want to cherry-pick?
+17:40:17 <garyo>	how about 2556?
+17:40:17 <sgk>	2556:  send it back to OP for test case?
+17:40:23 <sgk>	jinx
+17:40:42 <garyo>	OK, 2556 came from a ML discussion.  I'll ask him to paste in the testcase.
+17:41:56 <GregNoel>	2556, should we close it and ask him to reopen when he adds the test case?
+17:42:14 <sgk>	2556:  sure, that works
+17:42:14 <garyo>	Nah, I'll just comment on the tkt as is.
+17:42:37 <GregNoel>	(is there such a thing as a reverse jinx?)
+17:42:23 <garyo>	I asked him to report it anyway.
+17:42:27 <sgk>	oh, okay
+17:41:17 <GregNoel>	done
+17:40:27 <Jason_at_Intel>	2542?
+17:40:40 <sgk>	and 2557:  conensus 2.1 p2 rob?
+17:41:13 <garyo>	+1 on 2557.
+17:41:17 <GregNoel>	done
+17:41:29 <sgk>	cool
+17:41:40 <sgk>	i have another topic if we're (nominally) done with issues for this week
+17:41:51 <garyo>	shoot
+17:42:48 <sgk>	next topic:  scrapping runtest.py in favor of using unittest as the harness
+17:43:06 <GregNoel>	Ulp.
+17:43:28 <sgk>	turned out to be pretty easy to do
+17:43:51 <sgk>	or at least to prototype
+17:43:57 <GregNoel>	How would it work?
+17:44:09 <sgk>	well, that's why i want to discuss it
+17:44:29 <Jason_at_Intel>	you mean the python unit test lib?
+17:44:12 <garyo>	sgk: Can you reuse all the stuff in QMTest/ dir?  There's a lot of value in there.
+17:44:31 <garyo>	(e.g. TestSCons.py, TestCmd.py)
+17:44:39 <sgk>	garyo:  yeah, that stuff all stays
+17:44:50 <garyo>	ok, good.
+17:44:56 <sgk>	those are basically test fixtures
+17:45:11 <sgk>	what i prototyped was a simple shotgun marriage
+17:45:27 <sgk>	where unittest still calls out (using subprocess) to execute individual test scripts like today
+17:45:35 <sgk>	but it reports the results back using unittest conventions
+17:45:46 <sgk>	so it looks like a python unittest for reporting
+17:45:55 <sgk>	but is (at least for now) still just executing scripts
+17:46:04 <bdbaddog>	does that enable/block parallel testing?
+17:46:23 <sgk>	unfortunately, it looks like unittest itself doesn't enable parallel testing
+17:46:27 <sgk>	so it's orthogonal
+17:46:48 <sgk>	i.e. this change doesn't make parallel testing more or less likely
+17:46:46 <garyo>	So the main benefit is prettier output?
+17:47:14 <sgk>	yeah, this is why I was a little... hesitant... when the idea of unittest seemed to get a positive reaction from you guys a few weeks back
+17:47:19 <sgk>	(iirc)
+17:47:29 <Jason_at_Intel>	Do you have thie prototyped checked in?
+17:47:45 <GregNoel>	Hmmm...  I'd have to think about this.  Why don't you add it to SConsTestingRevisions in the wiki?
+17:47:33 <bdbaddog>	upside is less infrastructure to maintain?
+17:47:49 <sgk>	right, runtest.py is all homebrew, this leverages unittest
+17:48:16 <sgk>	but that doesn't necessarily seem like a really compelling reason to switch
+17:48:06 <Jason_at_Intel>	I coudl use it in Parts i think to handle some cases that are hard to handle with a straight unittest code
+17:48:27 <garyo>	runtest.py is only 834 lines, not huge.
+17:48:31 <GregNoel>	You'd still need a test runner, but it wouldn't be as complex...  I still need to think about it.
+17:48:55 <sgk>	okay, the code isn't much, I'll add it to the wiki and send out something to the ML for discussion
+17:49:12 <bdbaddog>	sounds good. then we can play with it (time allowing)..
+17:49:16 <garyo>	sgk: my biggest beef with QMtest was managing stdout/stderr when debugging tests (not just running them where you always want it hidden).
+17:49:30 <GregNoel>	concur
+17:49:32 <garyo>	Would unittest maybe help?
+17:49:31 <sgk>	garyo:  this doesn't solve that
+17:49:37 <garyo>	oh well.
+17:49:45 <sgk>	you're still running external scripts and having to capture the output
+17:49:51 <sgk>	what I could do about that, though....
+17:50:05 <sgk>	is expose the Trace() function as a supported part of the API
+17:50:24 <sgk>	that writes to /dev/tty on POSIX and con on Windows
+17:50:34 <sgk>	so you can at least add debug prints easily
+17:50:18 <garyo>	That'd help somewhat.
+17:50:41 <Jason_at_Intel>	unittest makes it easy to set up a structure to run on a give test at a time
+17:51:03 <garyo>	runtest.py can do that too.
+17:51:02 <sgk>	okay, follow-on test discussion:
+17:51:28 <sgk>	all the in-line test code in strings
+17:51:44 <sgk>	which makes it a pain to read the test code
+17:51:51 <sgk>	and complicates going forward to Python 3.0
+17:51:58 <garyo>	plus most of them are big regexes now anyway :-)
+17:52:17 <garyo>	you have a solution?!
+17:52:38 <sgk>	yeah, i think so
+17:52:52 <sgk>	we change the unit of test granularity from individual files to directories
+17:53:21 <sgk>	each directory is a test config with the input SConstruct *.c etc. files checked in directly
+17:52:30 <loonycyborg>	sgk: btw how exactly you're planning to upgrade to python3?
+17:52:52 <GregNoel>	Hi, Sergey; thanks for being with us again!
+17:52:54 <garyo>	Hi Sergey
+17:52:58 <sgk>	Sergey++
+17:53:13 <loonycyborg>	That'll require all SConstruct files moved to python3 too.
+17:53:23 <GregNoel>	directories, erk..
+17:53:48 <bdbaddog>	That's the way I usually setup regressions for my clients.. so I'm all for that.
+17:53:49 <garyo>	radical!
+17:54:01 <bdbaddog>	A dir per test. or group of tests?
+17:53:47 <sgk>	the test script(s) within a directory have identifying prefixes
+17:54:08 <sgk>	so you can actually have multiple individual tests re-using the same config (directory)
+17:54:32 <sgk>	the test infrastructure copies the directory contents (except for test scripts and .svn directories) to the temp dir to run the test
+17:54:41 <loonycyborg>	You could as well make a full api overhaul coincide with moving to python3 :P
+17:55:10 <sgk>	loonycyborg:  that's actually worth considering
+17:55:26 <sgk>	at least, maybe use it as a clean way to shed some of the cruftier parts of the current API
+17:55:25 <garyo>	sgk: I get it -- so even sub/a/b kind of things just get checked in.
+17:55:38 <sgk>	garyo:  right
+17:55:48 <sgk>	i think it makes the test configurations more comprehensible
+17:55:52 <bdbaddog>	I've very tired of having to put all the files in strings in the tests..
+17:56:00 <sgk>	yep
+17:56:12 <garyo>	sgk: I think there are still some cases where files have to be dynamically created etc. but a small %age, so this would clean up a lot.
+17:56:22 <sgk>	right, it also doesn't completely solve things like updating files as an intermediate step
+17:56:55 <garyo>	But what about testing stdout/stderr?  Special files to represent expected output?
+17:57:16 <sgk>	yeah, those could either be checked in as .golden files or something
+17:57:29 <sgk>	or else those can stay in-line if it makes more sense to not clutter the config
+17:57:17 <bdbaddog>	"golden" files in my industry..
+17:57:39 <Jason_at_Intel>	gold files here :-)
+17:57:44 <sgk>	i think that's less of a problem since they're (typically) not actually code
+17:58:03 <garyo>	Cool.  With regex semantics I assume.  I want to think about this, but it seems very sensible on the face of it.
+17:58:17 <GregNoel>	concur w/ garyo
+17:58:32 <sgk>	okay, let's let it sink in for a bit
+17:58:40 <bdbaddog>	+1 for me. I'm all for it.
+17:58:49 <garyo>	I'll pick a few tests randomly to see how they'd look.
+17:58:51 <sgk>	if we want to go forward with it, i'm looking for a read on the right priority
+17:58:59 <GregNoel>	I think adding it to the existing wiki page for testing cleanup is the first step.
+17:59:01 <sgk>	we could actually also do it incrementally
+17:59:17 <garyo>	sgk: +1
+17:59:20 <Jason_at_Intel>	incrementally ++
+17:59:25 <GregNoel>	that's why I suggest the wiki page, so we could break down what can be done first
+17:59:36 <sgk>	sure
+17:59:44 <GregNoel>	... and add a discussion page to the wiki page...
+17:59:53 <garyo>	If you can make the test runner run these, that would be a great step.
+17:59:50 <sgk>	my rough idea for incremental is
+18:00:03 *	sgk decides to save that for the wiki page...
+17:59:50 <bdbaddog>	BTW.. are we due for a moin moin update?
+18:00:10 <garyo>	bdbaddog: are we?  I can do that if needed.
+18:00:30 <GregNoel>	moin, long overdue; they're at 1.9 already...
+18:00:45 <garyo>	OK, I'll look into it in the next wk or 2.
+18:00:50 <sgk>	garyo:  thnx
+18:01:15 <GregNoel>	garyo, please coordinate with me, so we can upgrade at the same time.
+18:01:16 <Jason_at_Intel>	<wishing the Tigris wiki site would be upgraded >
+18:01:34 <garyo>	Greg: will do.
+18:01:09 <sgk>	what should be my top priority right now?  the legal stuff?
+18:01:53 <garyo>	Steven: what are the choices?
+18:02:23 <GregNoel>	sgk, I nominate finishing out any 1.3 stuff, then the legal stuff, then the 2.0 stuff
+18:02:48 <sgk>	legal stuff, 1.3 stuff, 2.0 stuff, test infrastructure, performance graph stuff
+18:03:11 <Jason_at_Intel>	greg++
+18:03:11 <sgk>	actually, i don't have any 1.3 issues on my list at the moment
+18:03:32 <GregNoel>	yeah, but something might appear.  set the priorities now.
+18:03:17 <garyo>	ok, get the legal stuff done with.  I don't think you have any significant 1.3 todos.
+18:03:41 <garyo>	GregNoel++
+18:03:39 <sgk>	oh, also string template refactoring
+18:04:03 <GregNoel>	what refactoring?
+18:04:23 <sgk>	re-doing subst() and subst_list() for performance
+18:03:53 <garyo>	2526?
+18:04:06 <sgk>	yeah
+18:04:27 <garyo>	My opinion: too late for 1.3, it could introduce new bugs.
+18:04:36 <sgk>	using the same generatl technique of string.Template in the Python lib
+18:04:46 <sgk>	oh, definitely not that for 1.3
+18:05:10 <sgk>	don't want to derail that train
+18:05:06 <bdbaddog>	I think for 1.3, only doc bugs and regressions..
+18:05:20 <garyo>	ok, so make 2526 2.1 then.
+18:05:51 <bdbaddog>	are you on to another spreadsheet?
+18:06:08 <garyo>	(No, I just brought up all Steven's issues.)
+18:06:15 <bdbaddog>	ahh o.k.
+18:05:56 <garyo>	So I'm with Greg: any 1.3 issues, then legal stuff, then 2.0 stuff.
+18:06:50 <sgk>	okay, i think i'm set then
+18:06:57 <garyo>	excellent.
+18:06:58 *	sgk grits his teeth in anticipation of talking to lawyers
+18:07:37 <garyo>	On a totally unrelated note, my Nexus One is the most awesome pocket computing device ever made.  Google ftw!
+18:08:30 <sgk>	garyo:  i'm totally digging mine.  the keyboard interface is good for you?
+18:08:59 <garyo>	sgk: yes, no problems at all.
+18:07:41 <GregNoel>	I'd also reconsider the 1.3 all-doc issues (upgrading the user's guide) and see if they can be done for 2.0, but have Steven parcel them out to sucke, ah, people of his choice.
+18:08:14 <garyo>	Good point Greg -- we need to move the rest of the 1.3 issues forward.  Can you do that?
+18:08:34 <GregNoel>	For everything except the doc, yes, I have a policy I apply.
+18:08:41 <garyo>	Now that the doc procedure is improved I should be able to help there.
+18:08:56 *	sgk remembers that he has to write up that README...
+18:09:35 <garyo>	re: doc readme: yes please.
+18:09:57 <sgk>	k, that's probably P(-1) for me then
+18:10:03 <sgk>	the legal stuff is all P0
+18:10:08 <GregNoel>	(For what it's worth, the policy is to move the issues forward to the next point release, but bump their priority by one so they'll get more consideration at the next level.)
+18:10:29 <garyo>	Sensible.
+18:10:30 <sgk>	sounds good
+18:11:02 <GregNoel>	Is applying for a group also p0?
+18:11:15 <sgk>	i suppose so
+18:11:28 <GregNoel>	I'm in agreement then.
+18:11:25 <garyo>	Are we going to get kicked out or something if we don't apply?
+18:11:51 <garyo>	If so, then I agree.  This channel works nicely.
+18:12:02 <sgk>	garyo:  i don't think we're going to get kicked out
+18:12:17 <sgk>	but we're restricted in what we can do administratively
+18:12:25 <GregNoel>	garyo, no, we're grandfathered, since our channel was formed 6+ years ago, and the policy is only 4 years old.
+18:12:46 <GregNoel>	but it would be good to abide by the policy.
+18:12:52 <sgk>	it was a bit of a hassle to transfer ownership from TTimo to me because we don't fully exist under the new rules
+18:13:05 <garyo>	Makes sense to get it done then.
+18:13:23 <GregNoel>	can at least start the process to show good faith.
+18:13:42 <sgk>	BTW, GregNoel:  i looked around at some other channels
+18:14:00 <sgk>	it seems like using | as the separator between sections of the topic is more the norm than -
+18:14:10 <GregNoel>	OK, wilco
+18:14:51 *	sgk has changed the topic to: SCons | building software, better | http://www.scons.org | next bug triage party is Tue 2 Feb 2010 17h00 US/Pacific
+18:14:55 <garyo>	Greg, guess your power held out today!
+18:15:01 <GregNoel>	so far...
+18:14:50 <GregNoel>	Next party on Groundhog's day?
+18:15:15 <sgk>	excellent!  we can have the next bug party over and over and over again...
+18:15:24 <garyo>	:-)
+18:15:49 <GregNoel>	sgk, ++
+18:15:36 <GregNoel>	Ten points to anybody who can spell where the Groundhog's Day official celebration is held...
+18:15:47 <sgk>	Punxatawney PA
+18:15:47 <garyo>	punxatawney
+18:16:04 <garyo>	sgk: you win
+18:16:05 <GregNoel>	jinx, you guys are too good.
+18:16:20 <garyo>	I was a spelling bee kid in my youth
+18:16:41 <Jason_at_Intel>	:-) I was not :-)
+18:17:03 <GregNoel>	It's not far from where my wife grew up, so she can frustrate me by spelling it...  all I can manage is punx*
+18:16:39 <bdbaddog>	And a the groudhog's name?
+18:16:44 <sgk>	Phil
+18:16:44 <garyo>	phil
+18:16:59 <bdbaddog>	:)
+18:17:03 <Jason_at_Intel>	look at the trivial buffs
+18:17:09 <GregNoel>	yes, Phill
+18:17:16 <sgk>	damn, the amount of grey matter garyo and i have devoted to this stuff is scary
+18:17:22 <GregNoel>	(two ll's I think)
+18:17:33 <garyo>	two Ls: I doubt it.
+18:18:13 <GregNoel>	oops, the wife agrees.
+18:18:18 <GregNoel>	mea culpa.
+18:18:35 <garyo>	anyway, bdbaddog: can you manage the release cycle?  If so, how can I help?
+18:19:00 <bdbaddog>	as far as building and pushing the packages, no prob.
+18:19:16 <garyo>	OK, I can help w/ release announcements etc.
+18:19:22 <bdbaddog>	might need some help on the create 1.3 branch commands.
+18:19:32 <garyo>	np, just ask.
+18:19:45 <Jason_at_Intel>	Steve: code review? good time to talk ?
+18:20:30 <sgk>	Jason_at_Intel:  let's set up something for next week
+18:21:11 <Jason_at_Intel>	Steve.. I have a check in to sync with teh public drop yet... but that sounds good
+18:21:24 <Jason_at_Intel>	do we want anyone else to be part of this?
+18:21:30 <Jason_at_Intel>	such as Gary or Greg?
+18:21:58 <garyo>	If I can get out there I'd love to.  I don't get to travel much these days... hopefully spring will slow down @ work a little.
+18:22:05 <sgk>	garyo/GregNoel/bdbaddog:  any of you interested in participating in discussion of how to integrate Parts ?
+18:22:16 <bdbaddog>	for 3.0?
+18:22:27 <Jason_at_Intel>	or 2.x
+18:22:31 <sgk>	not sure, that needs discussion
+18:22:34 <bdbaddog>	:)
+18:22:37 <Jason_at_Intel>	depending on what people think
+18:22:39 <sgk>	what it should ultimately look like, time frame, etc.
+18:22:45 <garyo>	I am, especially the toolchain part of it.
+18:22:55 <garyo>	(or merge it w/ other toolchain ideas)
+18:22:59 <sgk>	right
+18:23:16 <bdbaddog>	is there a wiki page to bring me up to speed?
+18:23:19 <sgk>	k, i'm thinking we should structure it like a subproject for now?
+18:23:24 <Jason_at_Intel>	can i set up a phone conference for this.. talk is better for me
+18:24:05 <Jason_at_Intel>	I can set up one through work
+18:24:13 <Jason_at_Intel>	as this is a work task for me :-)
+18:23:45 <bdbaddog>	I hate talking.. IM is my friend.
+18:24:05 <GregNoel>	I hate talking AND typing.. Mail is my friend.
+18:24:13 <bdbaddog>	GN: :)
+18:23:31 <garyo>	skype is good
+18:24:17 <sgk>	i'm okay w/phone or skype so long as someone volunteers to take good notes
+18:24:27 <sgk>	the best thing about IM to me is the log
+18:24:33 <garyo>	That's a really good point.
+18:24:45 <Jason_at_Intel>	and that is fine.. but teh review will be slow and long
+18:25:01 <sgk>	we may want a mix of the two
+18:25:07 <garyo>	We need to prepare first so we can go faster.
+18:25:19 <sgk>	(garyo:  good point re: prep)
+18:25:10 <sgk>	how about start w/voice or skype
+18:25:35 <sgk>	since the first conversations will be a little more brainstorm-y
+18:26:02 <sgk>	and (maybe) transition to irc if we start settling on things and only have to iron out details
+18:26:01 <Jason_at_Intel>	this sound reasonable... get our ducks in a row...
+18:26:16 <garyo>	ok w/ me
+18:26:18 <sgk>	over time, i mean, not within one session
+18:26:46 <GregNoel>	(YouTube, anyone? {;-})
+18:26:59 <sgk>	okay, so the action item is that Jason_at_intel and I set up a time for a voice / skype chat next week
+18:27:07 <bdbaddog>	I'd say write something up on the wiki, give us a week on email list, then conf call.
+18:27:16 <sgk>	open invitation to the conf. call
+18:27:24 <garyo>	Sounds good.
+18:27:34 <sgk>	w/approval of course
+18:27:42 <sgk>	and we'll figure out the record-keeping by then
+18:27:51 <sgk>	and try to have some agenda ahead of time
+18:27:58 <bdbaddog>	k.
+18:28:13 <sgk>	based on that, i'm thinking it makes more sense for Jason_at_intel and i to organize next week
+18:28:22 <sgk>	with a target of the conf. call the week following
+18:28:23 <Jason_at_Intel>	SO steve you will give me an e-mail?
+18:28:38 <GregNoel>	Maybe agenda in a spreadsheet, so we can note/comment in advance?
+18:29:07 <sgk>	GregNoel:  good idea re: the spreadsheet, that's working well here
+18:28:52 <sgk>	Jason_at_Intel:  send me something on Monday to get the ball rolling
+18:28:53 <garyo>	Jason: it's still @ parts.tigris.org/... right?
+18:29:02 <Jason_at_Intel>	yep
+18:29:15 <garyo>	I have a note I'm supposed to review ConfigToolsandChainNotes there
+18:31:13 <Jason_at_Intel>	ya... reading the document  i have would be nice start
+18:31:22 <Jason_at_Intel>	even if it a little out of date ina few places
+18:29:07 <Jason_at_Intel>	big update coming
+18:29:29 <Jason_at_Intel>	major reporting /coloring/logging overhaual
+18:29:29 <sgk>	Jason_at_intel:  is Parts attracting many users?
+18:29:50 <Jason_at_Intel>	I get odd mails here and there .. have a few bugs
+18:29:43 <garyo>	sgk: I'd suggest a Wave but not everyone has it or knows how to use it
+18:30:13 <GregNoel>	A wave would be good, actually, maybe for the comments and notes?
+18:30:05 <Jason_at_Intel>	It is beta.. or not 1.x yet... so people are holding off
+18:30:03 <bdbaddog>	I have wave.
+18:30:08 <bdbaddog>	can invite everyone else..
+18:30:09 <sgk>	garyo:  are you actively using wave?
+18:30:18 <garyo>	no, nobody else I know has it
+18:30:21 <sgk>	hmm
+18:30:29 <garyo>	a one-user wave is kinda lonely
+18:31:10 <GregNoel>	"Wave without a shore"
+18:31:03 <sgk>	i haven't had a good excuse to really try to use it
+18:31:37 <bdbaddog>	I don't see any of you guys in my wave contact list.
+18:32:04 <garyo>	how do I add you or vice versa?
+18:32:09 <Jason_at_Intel>	Is Wave any good?
+18:32:16 <bdbaddog>	I'm on as bdbaddog.at.gmail.com
+18:32:17 <garyo>	don't know yet
+18:32:29 <bdbaddog>	try adding me as a contact under wave.
+18:32:29 <Jason_at_Intel>	it seemed sort of in the works
+18:32:41 <garyo>	just did it
+18:32:52 <garyo>	I'm gary.oberbrunner.at.gmail.com
+18:32:54 <sgk>	bdbaddog:  have you been using it regularly?  how's the stability for you?  in which browser?
+18:33:04 <bdbaddog>	haven't been, Firefox..
+18:33:41 <bdbaddog>	Grey, Jason, Steven, do you all have wave accounts?
+18:34:08 <sgk>	i do on my google account but not my external gmail account
+18:34:18 <GregNoel>	Grey===Greg?  No, not a permanent one
+18:35:02 <bdbaddog>	GregNoel: oopsie...
+18:34:26 <Jason_at_Intel>	I need to be invited it says
+18:34:39 <bdbaddog>	email accouts for invites?
+18:35:00 *	sgk just realizes that his macbook pro is still running Firefox 2.0.x...  :-/
+18:35:01 <Jason_at_Intel>	jasonk512.at.aol.com
+18:35:19 <bdbaddog>	aol.. really? ;)
+18:35:52 <garyo>	aol omg!
+18:35:28 <Jason_at_Intel>	it for the junk mail
+18:35:26 <bdbaddog>	just sent an invite 2 u.
+18:35:29 <sgk>	sweet
+18:35:40 <bdbaddog>	Steven - do you have an acct?
+18:35:54 <sgk>	bdbaddog:  sure, add sguireknight.at.gmail.com
+18:36:20 <bdbaddog>	says "user does not have a wave account"
+18:36:32 <sgk>	oh, sorry, still need invite
+18:36:53 <bdbaddog>	done.
+18:36:57 <bdbaddog>	sgk: sent.
+18:37:08 <bdbaddog>	though it says the invites won't be sent immediately.
+18:37:30 <garyo>	I guess I don't have any invites to give out :-(
+18:37:34 <bdbaddog>	GregNoel: Did u neeed one?
+18:37:35 <GregNoel>	Try inviting gregnoel.at.tigris.org and see if it sends me one (eventually)...
+18:37:37 <bdbaddog>	I have 30 left.
+18:37:54 <bdbaddog>	GregNoel: added to invite list..
+18:37:58 <bdbaddog>	29 left.
+18:38:19 <garyo>	cool, this should be fun.  we'll learn something anyway.
+18:38:27 <bdbaddog>	k. I'm outta here for tonight. will be interesting to see if wave is useful for this.
+18:38:41 <garyo>	yup, me too, have to find out who won in MA special election.
+18:39:01 <bdbaddog>	GregNoel: Let Steven and/or  I know the dates you'll be up if you'd like to get together when you're up..
+18:39:22 <GregNoel>	bdbaddog, wilco
+18:39:03 <Jason_at_Intel>	so have i been added?
+18:39:07 *	sgk gets a shoeshine while waiting for the invite to show up
+18:39:47 <bdbaddog>	Gnight all!
+18:39:56 <sgk>	bdbaddog:  good night, thanx for the checkpoints
+18:40:14 <Jason_at_Intel>	bddaddog: night!
+18:40:23 <garyo>	see you folks on the ML...
+18:40:26 *	GregNoel has new mail...
+18:41:18 <GregNoel>	Hey, Rob is still around; he just corrected that spelling error
+18:41:40 <garyo>	GregNoel: good to know.
+18:41:54 <garyo>	anyway, time for bed I guess, here on the benighted east coast.
+18:42:18 <garyo>	take care folks, see you soon
+18:42:25 <Jason_at_Intel>	if you get a chance gary.. read that document :-)
+18:42:25 *	garyo (n=garyo@209-6-36-50.c3-0.smr-ubr1.sbo-smr.ma.cable.rcn.com) has left #scons
+18:42:46 <sgk>	good night.  Geaux Saints!
+18:43:22 <Jason_at_Intel>	Night all.. till next time
+18:43:50 <GregNoel>	No invitation...  I'll keep an eye out.
+18:43:51 *	Jason_at_Intel has quit ("ChatZilla 0.9.86 [Firefox 3.5.3/20090824101458]")
+18:43:57 <GregNoel>	G'night all.
+18:46:39 *	You have been marked as being away
+18:49:33 *	loonycyborg has quit ("Zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz")
+18:49:45 *	sgk (n=sgk@c-71-204-129-67.hsd1.ca.comcast.net) has left #scons
+18:51:22 *	bdbaddog (n=bdeegan@adsl-71-131-11-120.dsl.sntc01.pacbell.net) has left #scons

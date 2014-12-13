@@ -1,0 +1,389 @@
+#format irc
+13:05:55 *      Azverkan (n=fakeuser@209.172.105.155) has joined #scons
+16:48:00 *      stevenknight (n=stevenkn@nat/google/x-46e723d28b1b3479) has joined #scons
+16:55:25 <stevenknight> GregNoel:  are you here yet?
+16:55:53 *      garyo-home (n=chatzill@209-6-158-38.c3-0.smr-ubr3.sbo-smr.ma.cable.rcn.com) has joined #scons
+16:58:09 <garyo-home>   hi folks
+16:58:45 <stevenknight> hi gary
+16:58:57 <stevenknight> Greg doesn't seem to be here yet
+16:59:55 <garyo-home>   ok, I'm just starting in on the spreadsheet.
+16:59:55 <GregNoel>     Hello, am I late?
+17:00:01 <garyo-home>   nope, just in time.
+17:00:09 <stevenknight> hi Greg
+17:00:26 <GregNoel>     We have relatives in town; we were out with them and just got back.
+17:00:41 <stevenknight> ah, special thanks for making it, then
+17:00:56 <GregNoel>     Give me a sec to get set up
+17:00:47 <stevenknight> hope we're not taking you away too much
+17:01:06 <GregNoel>     No, we'll see them again tomorrow.
+17:02:13 <stevenknight> BTW, on the ReadWrite page, the 2007 Q1 link takes you to the same sheet as the Q4 link
+17:02:16 <stevenknight> or takes me there, anyway
+17:02:46 <stevenknight> unlikely we'll get that far today, of course, but for next week
+17:03:07 <GregNoel>     Yeah, the spreadsheet isn't ready yet.
+17:03:02 <garyo-home>   Unfortunately I only have 45 min tonight :-(
+17:03:14 <GregNoel>     OK, I'm ready
+17:03:22 <stevenknight> okay, 2061
+17:03:22 <GregNoel>     Why only 45 min?
+17:03:35 <garyo-home>   kid duty
+17:03:49 *      stevenknight nods knowingly...
+17:04:14 *      GregNoel gets to miss all that fun...
+17:04:21 <stevenknight> 2061:  1.x p3?
+17:04:24 <garyo-home>   Before we talk about the actual issues, can I ask about 1.x vs. 2.x in general?
+17:04:29 <GregNoel>     sure
+17:04:29 <stevenknight> sure
+17:04:33 <stevenknight> jinx
+17:04:33 <GregNoel>     jinx
+17:04:42 <garyo-home>   How much should we put into 1.x vs. deferring to 2.x?
+17:04:59 <GregNoel>     Depends on how long you expect 1.x to last
+17:05:02 <garyo-home>   2061 is easy, for instance.  But so are *lots* of others.
+17:05:07 <stevenknight> i think we'll need to rebalance 1.x once we get past 1.0 anyway
+17:05:16 <GregNoel>     stevenknight, true
+17:05:16 <garyo-home>   Greg: right.  Is there a 2.0 schedule?
+17:05:44 <garyo-home>   Are we thinking 2.0 this year for instance?
+17:05:46 <GregNoel>     None, other than some people say one month and some say one year.  Probably between the two.
+17:06:00 <stevenknight> yeah
+17:06:00 <garyo-home>   Greg: OK, that's sort of my thought too.
+17:06:13 <stevenknight> my best guess is some time in Q4
+17:06:19 <stevenknight> enough time for 1.x to soak
+17:06:22 <garyo-home>   OK, then I say 2061 should be 1.x.
+17:06:30 <stevenknight> i'm okay with gut feel
+17:06:41 <stevenknight> if we'd "like" something in 1.x for any reason, mark it as such
+17:06:55 <stevenknight> we'll end up with too much 1.x, but then we just re-prioritize those to make it manageable
+17:06:53 <GregNoel>     I assume that once 1.0 is out and we've killed a little more of the backlog, we'll look at 1.x (and maybe 2.x p1) and adjust.
+17:07:05 *      stevenknight agrees w/GregNoel
+17:07:15 <stevenknight> so 2061:  1.x p3
+17:07:43 <garyo-home>   stevenknight: ok
+17:07:48 <GregNoel>     Isn't 2061 the one that's just been on the mailing list?
+17:07:54 <stevenknight> 2062:  moot, I went ahead and checked in my fix about half an hour ago...  :-)
+17:08:06 <garyo-home>   2062: good
+17:08:19 <stevenknight> also already RESOLVED the issue
+17:08:26 <garyo-home>   2064 is also easy, so by same logic should be 1.x
+17:08:30 <stevenknight> 2064:  consensus 1.x p3
+17:08:31 <stevenknight> right
+17:08:46 <GregNoel>     ok
+17:08:51 <garyo-home>   2064 ok
+17:08:53 <stevenknight> 2065:  consensus 1.x p4, Rob Managan
+17:09:40 <garyo-home>   2066: VS8 is the current version, we should support it well if we can
+17:09:45 <garyo-home>   (though I don't use it yet)
+17:09:55 <stevenknight> 2066:  i'm conflicted
+17:10:09 <stevenknight> the fix looks like a no-brainer, but...
+17:10:11 <garyo-home>   Then let's do it in 1.x early on
+17:10:24 <garyo-home>   like 1.x p1?
+17:10:35 <stevenknight> yes, 1.x p1
+17:10:39 <GregNoel>     done
+17:10:47 <GregNoel>     next is consensus
+17:10:53 <garyo-home>   yes.
+17:10:55 <stevenknight> 2067:  consensus dup
+17:11:01 <garyo-home>   I'll take 2068, good idea.
+17:11:11 <stevenknight> 2068:  cool, thanks
+17:11:16 <garyo-home>   I'll take up details on the list.
+17:11:27 <stevenknight> i'd like p2 (since I need it too  :-))
+17:11:45 <garyo-home>   OK, fine w/ me.
+17:11:55 <stevenknight> excellent, we're cruising
+17:12:02 <GregNoel>     done with the "current" spreadsheet, then; move on to the next?
+17:12:03 <stevenknight> on to 2007 q4?
+17:12:47 <stevenknight> 1740:  consensus research, David
+17:12:51 <GregNoel>     done
+17:13:15 <stevenknight> 1741:  1.x p3, stevenknight
+17:13:27 <garyo-home>   ok w/ me
+17:13:28 <GregNoel>     ok
+17:14:05 <garyo-home>   1742 is a subprocess issue or something?
+17:14:36 <GregNoel>     I saw it as an issue with assuming that setting CC forced the C compiler selection
+17:14:48 <stevenknight> 1742:  i'm concerned it's a real problem that happens to be triggered by his weird stripped down CC = ''
+17:14:59 <stevenknight> hmm, let me look at it again w/that in mind -- hang on...
+17:15:26 <garyo-home>   That code doesn't look right to me; the high 8 bits are supposed to be spawn status, the low 8 bits are return code
+17:15:54 <garyo-home>   (or other way around, sorry)
+17:16:03 <stevenknight> but if it that code were that blatantly wrong, a lot of stuff would fail, not just this edge case
+17:16:20 <garyo-home>   stevenknight: yeah, I take it back -- it's OK as written
+17:16:30 <stevenknight> i think the real problem here is that this compilation setting definitely shouldn't succeed
+17:16:42 <stevenknight> but we pass back a return value that suggests the test passed
+17:16:56 <GregNoel>     No, setting CC is ignored, so TryXXX will succeed.
+17:17:14 <GregNoel>     He's expecting that setting CC will _disable_ the C compiler
+17:17:30 <garyo-home>   anyway, research is needed.
+17:17:58 <GregNoel>     I'll take it.
+17:18:01 <garyo-home>   But has to be fixed by 1.x one way or another, so that's my vote.
+17:18:12 <stevenknight> okay, i can go with 1.x
+17:18:16 <GregNoel>     done
+17:18:39 <garyo-home>   1745, VS junk
+17:18:54 <stevenknight> 1745:  basically, i'm going to take everything VS-related as research
+17:19:04 <garyo-home>   OK w/ me, this is super low pri.
+17:19:24 <GregNoel>     ok, stevenknight, research
+17:19:39 <stevenknight> yeah, i'm just going to revamp VS support pretty heavily
+17:19:44 <garyo-home>   1746: untangle threaded output
+17:19:55 <garyo-home>   This is really hard, and error-prone.
+17:20:15 <GregNoel>     It's a dup; mark it and triage that one.
+17:20:21 <stevenknight> i'm okay with dup
+17:20:21 <garyo-home>   2.x p3?
+17:20:28 <stevenknight> 2.x p3
+17:20:29 <garyo-home>   (ok, dup)
+17:20:37 *      bdbaddog (n=bdeegan@adsl-71-131-1-136.dsl.sntc01.pacbell.net) has joined #scons
+17:20:38 <stevenknight> on 1183 is fine
+17:20:44 <stevenknight> hey bill
+17:20:48 <GregNoel>     hi, bill
+17:20:50 <stevenknight> we're on th 2007 q4 spreadsheet
+17:20:52 <bdbaddog>     Hi.
+17:20:57 <stevenknight> #1746, line 51
+17:21:00 <garyo-home>   Hi, Bill.
+17:21:02 <bdbaddog>     oh yeah. forgot there's a bug party.
+17:21:22 <bdbaddog>     I've gotta hit the road in like 10 minutes. So I'll be of no help today. sorry.
+17:21:22 <stevenknight> no problem, you're obviously welcome if you have cycles
+17:21:34 <stevenknight> that's cool
+17:21:34 <GregNoel>     2.x p3 on 1183; agreed.
+17:21:40 <stevenknight> done
+17:22:08 <stevenknight> 1747:  documentation, 1.0 p5 (like a lot of other doc issues)
+17:22:17 <GregNoel>     ok, done
+17:22:24 <garyo-home>   I seem to have a few doc things; assign it to me.
+17:22:47 <stevenknight> 1748:  1.x p2 -- our code looks like it handles this right
+17:22:56 <stevenknight> i really suspect this is in custom code for this project
+17:23:15 <garyo-home>   Push back, ask for testcase?
+17:23:24 <stevenknight> hmm, not a bad idea
+17:23:41 <stevenknight> oh, wait, unfortunately i think this is one where the *user* of a project submitted something to us
+17:23:54 <stevenknight> that does suggest pushing it back, having him contact the original project
+17:24:17 <stevenknight> i'll go ahead and answer the bug to that effect
+17:24:26 <GregNoel>     how about me, research, and I'll untangle it.
+17:24:32 <GregNoel>     I can try a test case.
+17:24:55 <stevenknight> if you want, sure, go ahead
+17:25:21 <GregNoel>     done; next?
+17:25:22 <stevenknight> 1.x, p2, greg -- done
+17:25:40 <stevenknight> 1751:  1.x p3, me
+17:25:49 <stevenknight> i think it's related to the other above, and #2015
+17:25:50 <GregNoel>     done
+17:25:50 <garyo-home>   agreed
+17:26:12 <stevenknight> 1753:  visual studio:  research, stevenknight
+17:26:15 <garyo-home>   1753: dup?
+17:26:27 <stevenknight> maybe, just assign it to me and i'll take care of it if so
+17:26:34 <GregNoel>     done
+17:26:55 <stevenknight> 1754:  i think i put my comment on the wrong item, i think i intended that for 1753
+17:27:26 <garyo-home>   1754 looks right to me.
+17:27:29 <garyo-home>   not a bug.
+17:28:03 <GregNoel>     not a bug, a feature request.
+17:28:18 <stevenknight> right, maybe for a --clobber that will remove .sconsign*
+17:28:21 <stevenknight> or some such
+17:28:23 <garyo-home>   (I put my .sconsign and .sconf_temp stuff in my build dir, that way if I wipe that out I start from scratch.)
+17:28:29 <stevenknight> good idea
+17:28:39 <garyo-home>   stevenknight: ok w/ that I guess
+17:28:52 <GregNoel>     scons -ccc
+17:28:58 <garyo-home>   :-/
+17:29:06 <stevenknight> sure, i could go with that
+17:29:15 <stevenknight> either way, FEATURE...
+17:29:16 <stevenknight> 2.x?
+17:29:20 <garyo-home>   2.x
+17:29:24 <stevenknight> p3
+17:29:25 <GregNoel>     We discussed this once before
+17:29:34 <GregNoel>     ok, 2.x p3
+17:29:44 <stevenknight> probably, they all start to blur after a while...  :-)
+17:30:05 <stevenknight> 1755:  1.x p4, Greg
+17:30:14 <GregNoel>     1755, consensus
+17:30:30 <garyo-home>   ok
+17:30:34 <stevenknight> 1760:  research, Rob
+17:30:38 <GregNoel>     yes
+17:30:56 <garyo-home>   ok
+17:30:56 <stevenknight> 1761:  gary, you okay with 1.x p3?
+17:31:01 <stevenknight> and still on your plate
+17:31:15 <garyo-home>   ok, I'll try to do it.
+17:31:19 <garyo-home>   It would be cool.
+17:31:28 <stevenknight> yes
+17:31:27 <GregNoel>     done
+17:32:02 <GregNoel>     484 (actually 1762)
+17:32:09 <garyo-home>   1762: general problem with ancient OSes (IRIX tar is even worse)
+17:32:18 <stevenknight> 1762:  1.x p4, Greg, dup to 484 as you see fit
+17:32:38 <GregNoel>     Tar will be replaced by tarfile as soon as 1.5.2 is obsolete
+17:32:43 <GregNoel>     I already have it working
+17:32:47 <garyo-home>   yay
+17:33:08 <stevenknight> i thought tarfile didn't show up until like Python 2.4
+17:33:22 <GregNoel>     I have backported it to 2.2
+17:33:38 <stevenknight> GregNoel++
+17:33:59 <stevenknight> and i was wrong anyway, it's 2.3
+17:34:01 <stevenknight> cool
+17:34:06 <GregNoel>     but I couldn't backport it to 1.5.2; too many @staticfoo annotations
+17:34:14 <stevenknight> makes sense
+17:34:27 <stevenknight> so this definitely 2.x, but high priority
+17:34:35 <GregNoel>     agreed
+17:34:26 <garyo-home>   1763: I think is user error.
+17:34:35 <garyo-home>   He wants this to work:
+17:34:42 <garyo-home>     cplusplus = __import__('g++', globals(), locals(), [])
+17:34:51 <garyo-home>   (sorry I'm getting ahead)
+17:34:56 <stevenknight> 162:  2.x p2, or even p1, your call
+17:34:59 <stevenknight> 1762 that is
+17:35:21 <stevenknight> 1763:  oh, did i misread it?
+17:35:31 <stevenknight> I thought he was complaining about the Tool() call within the .generate() function
+17:35:44 <garyo-home>   Seems like he thinks tools should appear in sys.path.
+17:35:48 <GregNoel>     1763, agreed
+17:36:06 <garyo-home>   Give 1763 to me and I'll reply to it, see if I can clear up the confusion.
+17:36:15 <stevenknight> 1763:  okay
+17:36:20 <garyo-home>   I have new doc for site_scons which should help anyway.
+17:36:38 <GregNoel>     done
+17:36:57 <stevenknight> 1764:  solaris
+17:37:12 <stevenknight> and shall we see if maxim can become the solaris guy?
+17:37:25 <stevenknight> meant to say:  1764:  research
+17:37:29 <GregNoel>     works for me; will you talk to him?
+17:37:36 <stevenknight> ok
+17:38:04 <GregNoel>     research, stevenknight, hand off to maxim
+17:38:27 <stevenknight> done
+17:38:51 <stevenknight> 1766:  2.x p3?
+17:39:03 <garyo-home>   what about 1765
+17:39:10 <garyo-home>   future/p1?
+17:39:25 <stevenknight> sorry, 1765:
+17:39:47 <stevenknight> future p1 stevenknight
+17:39:48 <GregNoel>     1765, future, p1
+17:40:14 *      bdbaddog has quit ("Leaving.")
+17:40:30 <stevenknight> done
+17:40:41 <GregNoel>     1766
+17:40:45 <stevenknight> 1766:  2.x p3?
+17:40:50 <garyo-home>   1766: not really a bug, is it?
+17:40:59 <stevenknight> it's weird
+17:41:16 <garyo-home>   stevenknight: sure is, but is it a bug?
+17:41:16 <stevenknight> he gives it one .class file as a target and --debug=tree shows him the dependencies of another
+17:41:37 <garyo-home>   ok, I can see it being confusing.
+17:41:48 <GregNoel>     They're circularly dependent, so it's doing the right thing there
+17:42:07 <stevenknight> i think it's because it's showing the "primary" dependency of the executor that creates all of the [ABC].class files
+17:42:08 <GregNoel>     but it should also report on B.class and C.class with the same tree
+17:42:20 <garyo-home>   GregNoel: ideally yes
+17:42:23 <stevenknight> right
+17:42:43 <garyo-home>   anyway, I can't see putting it in 1.x
+17:42:55 <stevenknight> 2.x p3, me?
+17:42:56 <GregNoel>     Make it dependent on batch builders and review when that is fixed.
+17:43:09 <garyo-home>   ok w/ me
+17:43:49 <garyo-home>   1769: 1.x p2?
+17:43:55 <GregNoel>     do we want to triage 1086 now (batch builders) as 2.x p3?
+17:44:31 <garyo-home>   GregNoel: batch has to be in 2.x IMHO
+17:44:31 <stevenknight> 1086:  i see that as 1.x
+17:44:56 <GregNoel>     a small conflict ...
+17:45:06 <garyo-home>   stevenknight: is it possible to get into 1.x?  If so, go for it!
+17:45:14 <stevenknight> i think so
+17:45:23 <garyo-home>   Huge performance win
+17:45:23 <stevenknight> people have been waiting a long time for it
+17:45:29 <stevenknight> and it would be a huge performance win
+17:45:33 <garyo-home>   :-)
+17:45:39 <stevenknight> give it to me for 1.x
+17:45:48 <stevenknight> and i'll definitely push it out (again) if it's too hairy
+17:45:46 <GregNoel>     what priority?
+17:45:49 <stevenknight> p2
+17:45:53 <GregNoel>     done
+17:46:21 *      GregNoel thinks stevenknight is crazy...
+17:46:43 *      stevenknight thinks so, too
+17:46:13 <stevenknight> 1769:  greg and i said future, gary you suggested 1.x
+17:46:45 <garyo-home>   Greg wants to do it right, I want to hack it so it works. :-)
+17:47:03 <garyo-home>   ... but then let Greg do it right later.
+17:47:10 <GregNoel>     hmmm...
+17:47:27 <garyo-home>   but whatever you guys think on this one.
+17:47:36 <stevenknight> i'm agnostic, so i'm content letting you two fight it out...  :-)
+17:47:49 <garyo-home>   in that case Greg it's up to you.
+17:47:49 <GregNoel>     Maybe Gary and I should talk about this off-line
+17:47:58 <garyo-home>   So future it is.
+17:48:02 <GregNoel>     done
+17:48:09 <stevenknight> okay
+17:48:35 <stevenknight> 1772:  this sounds pretty serious, but beyond 1.0
+17:48:39 <stevenknight> so 1.x p2 (if not p1)
+17:48:52 <garyo-home>   agreed
+17:48:56 <GregNoel>     1.x p2
+17:49:00 <stevenknight> done
+17:49:11 <stevenknight> 1831:  realized we can probably close this out with reference to Progress()
+17:49:21 <garyo-home>   yes, I do it now that way.
+17:49:22 <stevenknight> which provides a hook for the user to print out the target
+17:49:40 <garyo-home>   I've even posted my progress func on the list iirc.
+17:49:49 <stevenknight> I'll go ahead and close this out real time while we continue
+17:49:57 <GregNoel>     done
+17:50:30 <stevenknight> 1832:  moot, David Cournapeau already dup'ed it to 2004
+17:50:49 <garyo-home>   good.
+17:51:17 <GregNoel>     1833
+17:52:07 <stevenknight> 1833:  assign to me (i have some other --debug=explain work already on my plate)
+17:52:12 <stevenknight> 1.x
+17:52:22 <GregNoel>     ok, what priority?
+17:52:22 <stevenknight> p4 because it's back-burner for David?
+17:52:38 <GregNoel>     done
+17:53:18 <garyo-home>   1838 seems familiar?
+17:53:31 <stevenknight> 1838:  think i fixed that when I did Value nodes recently
+17:53:41 <stevenknight> i'm inclined to close it on that basis
+17:53:42 <garyo-home>   ah yes, now I remember.
+17:53:57 <stevenknight> but that's without hard evidence that it's the same problem
+17:54:12 <garyo-home>   Sohail can reopen if it doesn't work on next release.
+17:54:24 <GregNoel>     ok
+17:55:08 <GregNoel>     1842
+17:55:21 <garyo-home>   is that Fortran problem or something else?
+17:55:23 <stevenknight> okay, I'll close it -- i didn't notice it's Sohail, that makes it all right to close it unilaterally... :-)
+17:55:45 <stevenknight> 1842 sounds really weird to me
+17:56:09 <garyo-home>   Must be Fortran; I say David should look at it.
+17:56:22 <garyo-home>   1.x p3 for him
+17:56:30 <GregNoel>     done
+17:56:34 <stevenknight> done
+17:56:59 <stevenknight> 1844:  1.x p2, we should do right by 64-bit systems
+17:57:08 <stevenknight> i'll be glad to take it
+17:57:12 <garyo-home>   ok w/ me
+17:57:35 <GregNoel>     ok, make 20xx a dup?
+17:58:04 <garyo-home>   ok
+17:58:37 <stevenknight> done
+17:58:41 <GregNoel>     1862
+17:58:42 <garyo-home>   1862: 1.x p3, consensus?
+17:58:46 <stevenknight> yes
+17:58:49 <GregNoel>     done
+17:59:06 <garyo-home>   1869: 2.x p3?
+17:59:07 <stevenknight> 1869:  i said 1.x but could easily go 2.x
+17:59:10 <stevenknight> done
+17:59:11 <stevenknight> 2.x p3
+17:59:27 <GregNoel>     ok
+17:59:38 <stevenknight> 1771:  same, i put down 1.x but don't feel strongly about it
+18:00:15 <garyo-home>   I'm not a Java guy so I'll stay out of 1771, and now I'm about to turn into a pumpkin.  I'll leave my window open so I can review the rest of the goodies :-)  See you guys later...
+17:59:40 <Azverkan>     brandon here, fyi re 1844 the entire windows registry is screwy in 64 bit python, not just the visual studio stuff
+18:00:26 <Azverkan>     it should probably fixed in the upstream registry package somehow
+18:00:39 <garyo-home>   Azverkan: that is a good idea.
+18:00:43 <stevenknight> hi brandon
+18:01:00 <Azverkan>     at work so I'm just watching
+18:01:01 <stevenknight> agree re: some more comprehensive fix in how we deal with the registry
+18:01:27 <stevenknight> wrap up all of these in a function that will look in both 32-bit and 64-bit locations
+18:01:36 <stevenknight> without having to sprinkle that logic all over the rest of the modules
+18:01:36 <GregNoel>     (1771 isn't a registry problem, do you mean 1869?)
+18:01:50 <Azverkan>     1844
+18:03:31 <GregNoel>     ah, way back there...
+18:04:36 <stevenknight> okay, back to 1771:
+18:04:51 <stevenknight> 2.x p2?
+18:05:40 <GregNoel>     I'm torn
+18:06:32 <GregNoel>     It does seem specialized, so 2.x p2 is reasonable.
+18:06:50 <stevenknight> okay, let's go with that
+18:06:54 <GregNoel>     ok
+18:07:07 <GregNoel>     Next spreadsheet?
+18:07:07 <stevenknight> on to 2007q3?
+18:08:01 <stevenknight> 1687:  INVALID or else a doc issue w.r.t. SideEffect() files not getting cleaned
+18:08:16 <stevenknight> i didn't look to see what (if anything) we say about that...
+18:08:49 <GregNoel>     However, the TeX builders now are using SideEffect to specify optional files; that was in a REVIEW not too long aga
+18:08:53 <GregNoel>     ago
+18:09:08 <stevenknight> um, grep SideEffect Tools/*tex*.py turns up nothing
+18:09:16 <stevenknight> the TeX tools are using emitters, not SideEffect
+18:09:29 <GregNoel>     Well, it's what Rob said he was doing...
+18:09:53 <stevenknight> oh, maybe that's in a pending patch -- let me do another quick search
+18:10:32 <stevenknight> hmm, still not finding anything like that
+18:10:35 *      GregNoel is doing a search of his own...
+18:10:56 <stevenknight> was he saying SideEffect as in the function, or "side effect" as in colloquial expression for "additional files created by TeX"
+18:12:50 <GregNoel>     Hmmm...  Not sure.  I read it as "SideEffect" but he could have just been imprecise.
+18:13:46 <GregNoel>     There's no internal API for side effects; the only entry is SideEffect(), so your search is sufficient
+18:14:20 <stevenknight> well, even if TeX starts using it (i could see that for things like logs) i think the right way to handle it would be to also specify Clean() on the SideEffect() files
+18:14:21 <GregNoel>     I guess that makes it a doc issue.
+18:14:32 <stevenknight> okay, 1.0 p3 doc
+18:14:53 <GregNoel>     ok, I'll write it up that way.
+18:15:08 <stevenknight> done
+18:15:21 <stevenknight> 1689:  1.x p2, who?
+18:16:31 <GregNoel>     not me.  I'm curious about it, but I think I'm too UNIX-centric
+18:16:58 <stevenknight> hmm, i think Gary might be off with the kids, and we're only on our second issue in this spreadsheet
+18:17:08 <stevenknight> shall we call it a night?
+18:17:16 <GregNoel>     I'm willing
+18:17:38 <stevenknight> okay, sounds good
+18:17:52 <GregNoel>     With three sets of relatives in town these past few days, I didn't get much farther than we are now
+18:18:05 <stevenknight> not bad, though, we made pretty good progress
+18:18:19 <stevenknight> any conflict for you w/next Monday same time (17h00)?
+18:18:39 <GregNoel>     No, I don't think so; let me check
+18:19:22 <GregNoel>     Monday the 2nd is good for me
+18:19:43 <stevenknight> okay, that'll be the stake in the ground
+18:19:58 <GregNoel>     OK, I'll publish it
+18:20:12 <stevenknight> do you have cycles to update the bugs or shall I handle that translation?
+18:20:26 <GregNoel>     I'll get some spreadsheets for the next couple of times as well
+18:20:38 <GregNoel>     No, I can handle it as long as my network is alive
+18:20:45 <stevenknight> still flaky?
+18:21:07 <GregNoel>     Much better, but bandwidth is down
+18:21:34 <GregNoel>     There were probably some burned wires that haven't been replaced yet
+18:21:38 <stevenknight> yow
+18:22:01 <stevenknight> all right, i'm off to get back to other things
+18:22:11 <stevenknight> many thanks...
+18:22:11 <GregNoel>     ok, cul
+18:22:27 *      GregNoel has been marked as being away
+18:22:34 *      stevenknight has quit ("Leaving")
+18:54:11 *      garyo-home has quit ("ChatZilla 0.9.82.1 [Firefox 2.0.0.14/2008040413]")
+21:28:01 *      Azverkan has quit ("[BX] Time to make the donuts")

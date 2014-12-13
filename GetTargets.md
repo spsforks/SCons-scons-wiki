@@ -1,0 +1,23 @@
+
+You want to get the list of targets the user entered on the command line so you can preprocess them for some reason. 
+
+This example shows how you can prevent a target ('.' in this case) from being used: 
+
+
+```txt
+ import SCons.Script
+ import sys
+
+ all_args = sys.argv[1:]
+ parser = SCons.Script.OptParser()
+ options, targets = parser.parse_args(all_args)
+ #print `targets`
+
+ if ('.' in targets):
+   print "You may not use '.', please use 'all' or name a specific target."
+   Exit(0)
+
+ env = Environment()
+ env.Alias('all', ['.'])
+```
+(What about COMMAND_LINE_TARGETS? [http://www.scons.org/doc/0.96.95/HTML/scons-user/x1301.html](http://www.scons.org/doc/0.96.95/HTML/scons-user/x1301.html) ) 

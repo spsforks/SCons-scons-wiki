@@ -1,0 +1,153 @@
+= How To Write a Good Proposal =
+This page outlines what is needed in a proposal that will be acceptable to SCons.  For a source of potential tasks, look at the [[GSoC2008|ideas page]].  You can also look at the [[GSoC2008/Mentors|mentors page]] for information about the people who will be doing the evaluations.
+
+== The Process ==
+
+You don't necessarily have to do all these steps in exactly the order that they are given here, but some parts need to be done before others, so this is a reasonable sequence to do it.
+
+'''Don't be intimidated.'''  First and foremost, don't let the apparent complexity of this process scare you away.  Preparing a proposal may look like a lot of unnecessary hard work, but if you want to be accepted (by __''any''__ organization, not just SCons), you'll have to do it eventually in one way or another, so you may as well get it done and have it out of the way.  Moreover, you'll find that it's not as difficult as you might think; if you know in your mind what you want to do, this process is just a matter of filling in the blanks.  (And if it isn't clear in your mind, this process will help clarify it.)
+
+'''Check the requirements.''' Make sure you meet the [[GSoC2008/Proposal#requirements|requirements]] below.  If you can't meet the requirements, you will eventually be disqualified, no matter how good the proposal is.  And look at the [[GSoC2008/Proposal#groundrules|ground rules]] below as well to see if any of those might cause problems for your project.
+
+'''Float your idea.'''  If you aren't already subscribed, sign up to receive the [[http://scons.tigris.org/servlets/ProjectMailingListList|dev@scons mailing list]].  Write a short note to the mailing list and tell us what you're thinking about doing.  Or you can try contacting one of the [[GSoC2008/Mentors|mentors]] who you think might be interested in the topic, but realize that you'll probably need to discuss your proposal on the mailing list eventually, so you can save some time by starting there.  If the response is favorable, go ahead and start preparing the proposal.
+
+'''Prepare your proposal.'''  If you don't already have one, you will need a [[UserPreferences|wiki account]] to submit a proposal.  To create your project page, you __''must''__ be logged in.  Place a WikiName (a good choice is your account name, for example, {{{YourName}}}) in the box and press the button:<<SConsProposal(GSoC2008/Template,Create Proposal,GSoC2008)>>
+
+This will create an empty proposal outline in {{{GSoC2008/YourName}}}.  Edit the page and put your proposal in it.  Use the [[GSoC2008/Proposal#proposal|proposal guidelines]] below to help you in determining what to put under each topic.
+
+'''Get feedback.'''  Once the proposal has enough information in it to make discussion feasible, drop a note to the [[http://scons.tigris.org/servlets/ProjectMailingListList|dev@scons mailing list]] and tell us about it.  Again, you can contact a [[GSoC2008/Mentors|mentor]] directly, but you will certainly want feedback from more than one mentor and they will be found on the mailing list.  We believe in a lot of interaction to get the best proposal possible, so be prepared to defend your proposal, but expect that a number of changes, potentially major, will probably be needed.
+
+'''Apply at Google.'''  __''Make sure you apply in time.''__  Although we will continue to work with you and your proposal through the evaluation period, you will need to submit a formal application to Google prior to the end of the __application__ period.  Hopefully, the proposal will be in good shape by then, but even if it isn't, go with what you have.
+
+If you don't already have one, you will need a [[https://www.google.com/accounts|Google account]] (depending upon the type of account you want, this can take a day or two, so don't wait until the last minute to get one).  To apply as a student, follow the steps in [[http://groups.google.com/group/google-summer-of-code-announce/web/guide-to-the-gsoc-web-app-for-student-applicants|Google's introductory page for sudents]].  Finally, [[http://code.google.com/soc/app.html|fill in the application]] as directed by the template, using the abstract and the detailed description from the wiki application.  (Note that Google limits these fields to 7500 characters, so you may need to edit them down to fit.)  Be sure to include a link to the full proposal.
+
+'''Keep working until the end.'''  Don't stop working on your proposal in the wiki until the evaluations are in and the rankings are set.  In other words, you can keep enhancing your proposal almost up to the end of the evaluation phase.  Take advantage of this opportunity to sharpen and clarify your proposal; it may make a difference in your ranking, and thus whether or not you make the cut.
+
+<<Anchor(requirements)>>
+== Requirements ==
+As a student, you must be willing to meet the following requirements, in addition to the [[http://code.google.com/support/bin/topic.py?topic=10730|Google eligibility requirements]]:
+ 1. '''You must not overbook yourself.''' Working on your SCons project should be your main activity for the entire summer.
+
+ 1. You must be prepared to stay in regular contact with your mentor via email, IRC, or other mutually-agreed method.
+
+ 1. You must already know Python and you should have at least cracked open the code and taken a look inside so that you have an understanding of the codebase with which you will be working.
+
+ 1. You will be expected to learn how to use the needed developer tools if you don't already know them, including [[http://subversion.tigris.org|Subversion]] and [[http://www.codesourcery.com/qmtest/|QMTest]].
+
+ 1. You must be willing to discuss what you are doing on the SCons mailing lists.   You will be expected to submit a status report to the developers' mailing list at least weekly.  At a minimum, the status report should contain these three points:
+   * What did you do this week?
+   * What problems are you having (if any)?
+   * What do you plan to do next?
+
+By far the most important item is the first. Google pays for twelve weeks, five days a week, eight hours a day.  We can be flexible to some extent to allow for vacations and the like, but if you can't provide us with 480 hours before the completion deadline, save us both some time and don't apply.
+
+<<Anchor(groundrules)>>
+== Ground Rules ==
+You can submit more than one proposal, but it's better to pick something where you feel that you can do a great job, and concentrate on writing one outstanding proposal, with lots of detail about what you plan to accomplish.
+
+The results must be maintainable and clean.  If you submit a quick hack or something we would have to rewrite from scratch, we will not accept the project as completed, even if the code works as advertised.  We would rather have a maintainable, clean, and incomplete piece of code that we could extend than a complete but unmaintainable piece of code.
+
+Do your own work.  On the one hand, don't hesitate to ask the community for assistance, but on the other hand, don't expect us to debug your code for you.
+
+The results must be released under the terms of the [[http://www.opensource.org/licenses/mit-license.php|X/MIT Open Source License]].  If you are planning to incorporate material from any other source (including translations and transliterations), the source must have a compatible license.
+
+<<Anchor(proposal)>>
+== Proposal Template ==
+
+Don't underestimate the value of a good proposal.  Be prepared to spend quite a bit of time on it as it is a major element by which you are judged.  Take the time to dot your ''i''``'s and cross your ''t''``'s and use the correct terminology because you can be sure that you're competing against others who will do so.  And if the proposal is interesting but not complete in some way, be prepared to spend even more time with the mentors to expand and refine the proposal into something we can sponsor.
+
+The more thoroughly you demonstrate an understanding of SCons and the work entailed by your proposal, the greater the chance that we'll accept it. Your proposal needs to convince us that you understand what needs to be done and that you have the skills to do it.  Don't just repeat what we already have on the ideas page; show some insight into the why and how of the problem.
+
+Proofread and spellcheck your proposal, then have someone else check it. Yes, this isn't an English contest and not everyone is a native speaker, but if the application is misspelled, uses incorrect syntax or semantics, or just is hard to understand, the mentors are less likely to look upon it kindly.  We're primarily an English-speaking team and will expect you to be able to write good code comments, documentation, email messages, and IRC chat in English.  Plus, communication skills are important in distributed development such as you see in open source projects, and this is one of the few chances the mentors will have to evaluate that.  Moreover, it's not uncommon for a better-written proposal to trump a better proposal even in the commercial world, so it's worth making sure that your proposal is the best you can make it.
+
+A strong proposal will cover the relevant portions of this information:
+
+ * '''Project Title''' - Should be short, direct, and to the point.  Follow the title by a __''short''__ paragraph introducing the project.
+
+ * '''Contact Information''' - Name, email, and timezone at a minimum.  Other information, such as a phone number, home page, or IM handle, is at your discretion.  Proposals will be visible in the wiki and are potentially visible to spambots, so don't put in anything that you don't want publicly known.  In particular, consider obscuring your email address so it won't be picked up by spammers.
+
+ * '''Abstract.'''  This is the portion that should be placed in the "Abstract" section of the Google application form.  Google will publish the abstract of accepted proposals, so write this section with an eye toward someone who knows little or nothing about SCons.
+
+  * '''Overview''' - Three or four paragraphs describing what the project will do.  Obviously, conciseness counts, but it should be complete enough to show the full scope of the work.  Use your own words; it's important to show us that you understand what you write and are not just parroting back what you found somewhere else.
+
+  * '''Benefits''' - A good project will be both fun (for you) and generally useful (to users).  Tell us what advantage this will have for the SCons community.
+
+ * '''Detailed Description''' - This section should be one to four pages on what the project entails.  This is the portion that should be placed in the "Detailed Description" section of the Google application form.  Google does not publish the project details section, but will sometimes use it to determine whether or not to allocate a slot; good information about a project will improve our chances of getting a slot that we can use to sponsor you.
+
+ . In general, you can't be too detailed, but stay focused; a rambling fifteen-page document doesn't help your cause, either.  If you have an external design document that covers some aspects of these elements, you can provide a link to it so we can look up details if we wish, but remember that the proposal itself must be self-sufficient and include all the elements in enough depth so that we can evalutate it.  In other words, links should refer to __supportive__ material, not material that is required to understand the proposal.
+
+ . Overall, the project details should include most of these elements:
+
+  * '''Analysis''' - What the completed project will provide.  Explain to us your take on the problem and how you would solve it.  "This could be implemented with that technique."  "This API will offer that functionality."  If you don't know, say so.  "I need to research these areas."  "I'll need help sorting that out."
+
+  * '''Compatibility''' - SCons takes backward compatibility very seriously, so include a review of existing SCons features that will be affected and explain how your new work will coexist with that functionality.
+
+  * '''Techniques''' - This is where you describe any unusual approaches, specialized algorithms, or outside tools. If there are shortcomings in the existing technique that must be overcome, this is the place to discuss them.  In general, don't spend a lot of effort here; a few sentences saying what it is and how you would use it, plus a link or two, is usually all that is needed.  If the technique is new research or otherwise academic in nature, consider using the next section.
+
+  * '''References''' - Include academic references, such as links or __''brief''__ quotes, which back up your ideas. That kind of stuff impresses us.  On the other hand, do '''not''' include a dozen pages of reference materials; we won't read it.  Summarize.  If the project is related to research already in progress at your school, tell us how you are involved; it allows us to evaluate your approach, as well as giving us the assurance that you are serious about your topic and have already done background work.
+
+  * '''Plan''' - This is where you tell us what you want to do, and is probably the most important part of the proposal.  On the one hand, don't skimp in your discussion here: we can't read minds, so you need to be clear and complete; on the other hand, stay focused: snowing us with unnecessary detail is not appreciated.  Sometimes the best way to keep the topic clear yet concise is with a short, well-chosen example, usually just a few lines long.
+
+  . Consider the organization of your plan carefully.  It's often best to separate the discussion by component.  If your project can not be logically divided that way, consider discussing the features in the order in which they will be used.  Of course, you may find that another order entirely works best for your specific project.  Select the organization that provides the greatest clarity.  If you find that you are getting involved in too much detail for part of your proposal, put an overview here and move the supporting details into an appendix; that is, state the theorem here and the proof in an appendix.
+
+  . Describe what you're going to do and how you think you will do it, and even what you will do if your initial approach does not work.  If there are interactions between components, give a sketch of the anticipated API.  Include how your project will fit into SCons, what modules or components of SCons will be affected, and any tradeoffs involved.
+
+ * '''Scope of Work.'''  Whereas the plan discusses concepts and global ideas, this section describes __''what''__ you will provide and __''when''__ you will provide it.  Once you have some idea of what you'd like to do in the plan, you need to begin figuring out if you can implement it in time.  The plan and the schedule evolve together so that what you propose will be feasible.  (It's OK to have a plan that can't all be accomplished, but then you need to identify what piece(s) can be accomplished, and provide a schedule for that.)
+
+ . One technique for figuring out a schedule is to ask yourself four questions:
+  . 1. How much of the plan can I do in an hour?
+  . 2. How much of the plan can I do in a day?
+  . 3. How much of the plan can I do in a week?
+  . 4. How much of the plan can I do in a month?
+
+ . Usually, you'll find that you have a good grasp on what you can do in a short time, but the longer term will be fuzzier.  Use the long-term answer as a sanity check on where you should be going, but schedule what you know can be done in a day or a week, figure out a deliverable to mark the milestone (it could be as simple as a check-in of code or documentation), and repeat the process assuming that the previous piece is in place.  Even a very large functionality can be broken down into smaller pieces this way; just demonstrating that the first N functional tests pass is a useful minor deliverable.
+
+ . In general, deliverables are organized by component, while schedule is organized by time, but this is not absolute and alternative organizations are possible.  The deliverables should be tied to the schedule; on average, a major deliverable should be provided at least every two or three weeks, with minor deliverables more frequently.
+
+  * '''Deliverables''' - It is very important to list quantifiable results here, such as "Implement new feature X" or "Improve Y and Z to do foo" or "Speed up bar by A%".  Deliverables must also include tests and documentation, and remember that tests must be delivered first, before what they test is coded.
+
+  * '''Project Schedule''' - How long will the project take? Provide an estimated timeline, so we know what to expect. In general, tests should be one of the first things done, before the start of coding. And give yourself some slack to allow for unexpected developments. '''This is, arguably, one of the most important sections, so do not overlook it!'''
+
+  . You'll have a lot to learn before you can begin coding your project, so plan to spend some time orienting yourself.  And there will need to be some time while others try out your results and report bugs and other problems that will need to be fixed.  Think about this when creating your schedule.  Remember, no project is trivial—all of them represent a significant investment of time and effort.
+
+  . And don't forget the community bonding period between acceptance and the official start of coding.  This is an ideal time to interact with the SCons community, to gain consensus for your approach, and to refine your ideas.  It can't be over-emphasized how slow this process can be; often it can take days to get replies on a single point, so you should still have plenty of time to deal with schoolwork while you're waiting.  If you allocate the whole community bonding period for clarifying what you will do, you might have consensus and an outline of your design by the start of coding, so you can spend your summer writing code instead of rewriting code.
+
+ * '''Constraints''' - This section is for things that could impact what you do during the summer.
+
+  * '''Availability''' - Please include any information on your summer plans which might be relevant to planning development.  This might be finals, vacations, outside work (including schoolwork), conferences you plan to attend, or anything that might affect your ability to work on your project.  In a lot of cases, we can schedule around problems, but only if we know about them in advance.
+
+  * '''Other Proposals''' - If you submit multiple proposals (either to SCons or to other organizations), tell us about them. If you have a preference for a particular proposal or particular organization, tell us that, too.  It won't affect your ranking, and it will give us a chance to try and get you the project you prefer.
+
+ * '''Brief Biography''' - Who are you? What interests you? What makes you the best person to work on this project?
+  * A short resumé or CV is appropriate, but informal is both fine and preferred.
+  * Focus on __''relevant''__ prior experience that would make you the best choice.  If you have prior open source experience, particularly if we can look at your submitted code, be sure to cite that.
+  * If you know anyone in open source who can vouch for your code quality and/or diligence, use them as a reference.
+  * Include anything else you'd like us to know.
+
+== Suggestions ==
+The following tips, although not required, will give you the best chance of having your proposal accepted. Note that the first six points are effectively identical to the advice in the ''Writing Your Application'' section of [[http://code.google.com/p/google-summer-of-code/wiki/AdviceforStudents|Google's Advice for Students page]] (we both started with the same source material).
+
+ 1. '''Promote your idea''' - Describe your idea in detail.  What is its ultimate goal?  What components will it have? How does it benefit the project itself and the SCons community?  How do you plan to achieve completion of your project?  If a specification already exists, what will you do that will go above and beyond expectations?
+
+ 2. '''Promote yourself''' - Convey your passion for the project.  Talk about what makes ''you'' stand out from the rest of the crowd.  Talk about your past experiences, what makes you tick. Why are you interested in open source software, and SCons in particular?  What interests do you have, and how do these interests relate to SCons?  There is a basic assumption that people applying for Summer of Code have at least some programming skills already, so rather than a lot of time elaborating on these (though by all means, do tell us what you know), spend time talking about ''you''.
+
+ 3. '''Show enthusiasm''' - Summer of Code is a very exciting opportunity, and SCons is an extremely exciting project to work on.  We're not looking for people who want a summer job to pass the time; we're looking for devoted people who are excited about SCons and about open source, who will remain part of our community even after the project is done.
+
+ 4. '''Tailor your application to the project''' - Some people may send applications to more than one project, and copy/paste large parts (or even the entirety) from one application to the next. It is painfully obvious when this is done, and it is a sure-fire way for your application not to be taken seriously. Each application you send should be targeted and tailored for the specific mentoring organization and project to which you are applying.
+
+ 5. '''Get feedback from the community''' - Discussing your idea with some established SCons folks is __''highly recommended''__.  Try to have your application reviewed by someone before you submit it, whether that be the mentor for a particular project or a person with expertise in a certain area. If your idea duplicates existing efforts or code (and does not provide a very convincing reason for doing so), it will be rejected. Don't be afraid to ask the community for help; we want you to succeed just as much as you do.
+
+ 6. '''Don't wait until the last minute''' - Applications received in the beginning of the submission process will generally be reviewed more thoroughly than those received in the last hours before the interface closes.  Mentors are also more eager to read applications in the beginning and suggest revisions to make your proposal more acceptable. Start preparing your proposal when you first hear of Summer of Code, not a day or two before the deadline.  Start planning your application as soon as possible!  Even start working on the project; if you can offer some preliminary results to show that your project will succeed, your chances of being accepted are improved.
+
+ 1. '''Be bold''' - Do you have a brilliant idea that's not on the ideas page? Great! Don't be afraid to suggest innovative and ambitious approaches to solve hard problems.  Ultimately, we're looking for new major contributors for our projects and a bold proposal makes us think you might be a candidate.  If you know enough about SCons to suggest an interesting project, that lets us know you're serious about us, and in turn, makes us more likely to pick you.
+
+ 1. '''Be realistic''' - Google requires you to __''complete''__ a project by the deadline; don't be so bold that your proposal can't be finished.  If you think the project as suggested is too large and you can only feasibly complete part of it, make sure your proposal covers a reasonable subset of the functionality (that is, something which is useful without the rest of the project being implemented).  Or consider proposing a prototype that can be extended as time permits.  In general, we'd rather you had time left over at the end that you could spend on polishing (or working on some other task) rather than running out of time.
+
+ 1. '''Be original''' - Many students submit nearly-identical proposals based on recent "hot" papers from academic publications.  Such a proposal is a reasonable thing to suggest (we do want to stay current in our implementation techniques), but if you do make a proposal based on a current hot area, make sure to make another application in an unrelated area, because you'll have plenty of competitors.  It seems counter-intuitive, but the best applications we've received haven't remotely resembled any of the ideas on the ideas page.  Since SCons is a general-purpose tool, it's applicable in many areas, so we tend not to have the same limited list of objectives that a single-purpose GSoC project might have.
+
+ 1. '''Be sooner''' - If you are ''already'' a contributor to SCons, your odds improve tremendously.  Contribute in any way you can, but if you can, submit a few patches.  Having a proven track record of code is a great indication that you will deliver some value in a GSoC project.  That way, by the time the selection rolls around, you'll be a known quantity.
+
+ 1. '''Do your homework''' - Browse accepted applications from previous years.  Google maintains links for accepted proposals from past years (look in the '''about''' page for each organization); feel free to look at these to get a feel for things your application should cover.
+
+== Acknowledgments ==
+Some of the material above is adapted from writings by the fine folks at [[http://drupal.org/|Drupal]] and [[http://adiumx.com/|Adium]], by Josh Berkus of the [[http://postgresql.org/|PostgreSQL Project]], and by Thiago Macieira of [[http://kde.org/|KDE]].  We thank them for allowing us to use it.

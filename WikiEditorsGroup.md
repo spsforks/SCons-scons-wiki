@@ -1,0 +1,25 @@
+
+
+### Users who are trusted as editors of infrastructure pages
+
+People on this list are allowed to edit "infrastructure" pages, like the [FrontPage](FrontPage), which provide structure and direction to the wiki.  As a side-effect of this trust, they do not have to answer _textchas_, those little questions that show up when you try to make a change of some kind. 
+
+To be added to this list, contact one of the people already listed, or ask on a mailing list.  You will have to convince us (a) that you are a real human being and not a bot, (b) that you have contributed value to the wiki already, and (c) that you have a good password (don't reveal it! just explain why you think it's strong).  It helps if you have a home page (a page with the same name as your account name) that tells us a little something about you. 
+
+Any account that's used for spamming will be ruthlessly removed from the list without warning. 
+
+* [StevenKnight](StevenKnight) 
+* [GaryOberbrunner](GaryOberbrunner) 
+* [WilliamDeegan](WilliamDeegan) 
+* [DanCrosta](DanCrosta) 
+* [AnthonyRoach](AnthonyRoach) 
+* [MaciejPasternacki](MaciejPasternacki) 
+* [ThomasFischer](ThomasFischer) 
+* [DarbyMitchell](DarbyMitchell) 
+* [MatthewNicholson](MatthewNicholson) 
+* [MortenPetersen](MortenPetersen) 
+* [SohailSomani](SohailSomani) 
+* [JohnPye](JohnPye) 
+* [MarianneGagnon](MarianneGagnon) 
+* techtonik 
+* [DirkBaechle](DirkBaechle) 

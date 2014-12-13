@@ -1,0 +1,32 @@
+An alpha release is a quick-n-dirty way of getting out initial releases for testing.  It can be done at any point, even from a read-only tree, as there's no requirement for committing the branch when the process is completed.
+
+If you want a checklist you can mark off as you go, cut-n-paste these contents.
+
+<<TableOfContents>>
+
+<<Include(../InitSVN)>>
+{{{
+  $ VERSION=3.2.1.alpha.yyyymmdd
+}}}
+
+=== Check Out Branch ===
+<<Include(../CheckOutNonTip)>>
+
+=== Update Release Values ===
+Verify that the `release_level` variable in `ReleaseConfig` is being set to `'alpha'`.
+<<Include(../UpdateFiles)>>
+
+=== Run Regression Tests (Optional) ===
+Since an alpha package is intended to be transient, only useful for a short time, running the regression tests may not be necessary.
+
+<<Include(../RegressionTests)>>
+
+=== Build Candidate Packages ===
+<<Include(../Bootstrap)>>
+
+=== Test Candidate Packages (Optional) ===
+Since an alpha package is intended to be transient, only useful for a short time, testing the packages may not be necessary.
+<<Include(../TestCandidates)>>
+
+=== Make Available ===
+TO BE ADDED LATER; if you have some good words for this topic, please edit [[ReleaseHOWTO/NonTipAlphaBody]] and put them in.

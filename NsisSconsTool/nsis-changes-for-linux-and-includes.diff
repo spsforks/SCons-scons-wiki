@@ -1,0 +1,173 @@
+Index: build/scons_tools/nsis.py
+===================================================================
+--- build/scons_tools/nsis.py
++++ build/scons_tools/nsis.py
+@@ -33,9 +33,11 @@
+ #import SCons.Sig
+ import os.path
+ import glob
++import platform
+ 
++is_linux = (platform.system() == 'Linux')
+ 
+-def nsis_parse( sources, keyword, multiple ):
++def nsis_parse( sources, keyword, multiple, nsisdefines ):
+   """
+   A function that knows how to read a .nsi file and figure
+   out what files are referenced, or find the 'OutFile' line.
+@@ -47,27 +49,44 @@
+   just want the first one.
+   """
+   stuff = []
++  current_ignored = 0
+   for s in sources:
+     c = s.get_contents()
++    linenum = 0
+     for l in c.split('\n'):
+-      semi = l.find(';')
+-      if (semi != -1):
+-        l = l[:semi]
+-      hash = l.find('#')
+-      if (hash != -1):
+-        l = l[:hash]
+-      # Look for the keyword
+-      l = l.strip()
+-      spl = l.split(None,1)
+-      if len(spl) > 1:
+-        if spl[0].capitalize() == keyword.capitalize():
+-          arg = spl[1]
+-          if arg.startswith('"') and arg.endswith('"'):
+-            arg = arg[1:-1]
+-          if multiple:
+-            stuff += [ arg ]
+-          else:
+-            return arg
++      linenum += 1
++      try:
++        semi = l.find(';')
++        if (semi != -1):
++          l = l[:semi]
++        hash = l.find('#')
++        if (hash != -1):
++          l = l[:hash]
++        # Look for the keyword
++        l = l.strip()
++        spl = l.split(None,1)
++        if len(spl) == 1 and current_ignored > 0 and spl[0].capitalize() == '!endif':
++          current_ignored -= 1
++        elif len(spl) > 1:
++          if current_ignored > 0 and spl[0].capitalize() in [ '!ifdef', '!ifmacrodef', '!ifndef' ]:
++            current_ignored += 1
++          elif current_ignored == 0 and spl[0].capitalize() == '!ifdef' and spl[1] not in nsisdefines:
++            current_ignored += 1
++          elif current_ignored == 0 and spl[0].capitalize() == '!ifndef' and spl[1] in nsisdefines:
++            current_ignored += 1
++          elif current_ignored == 0 and spl[0].capitalize() == keyword.capitalize():
++            arg = spl[1]
++            if keyword.capitalize() == 'File' and arg.lower().startswith('/oname') and len(spl) > 1:
++              arg = spl[2]
++            if arg.startswith('"') and arg.endswith('"'):
++              arg = arg[1:-1]
++            if multiple:
++              stuff += [ arg ]
++            else:
++              return arg
++      except:
++        print "in %(source)s, line %(linenum)d\n" % { 'source': s, 'linenum': linenum }
++        raise
+   return stuff
+ 
+ 
+@@ -94,7 +113,7 @@
+   return filename
+ 
+ 
+-def nsis_scanner( node, env, path ):
++def nsis_scanner( node, env, path, source_dir = None):
+   """
+   The scanner that looks through the source .nsi files and finds all lines
+   that are the 'File' command, fixes the directories etc, and returns them.
+@@ -103,16 +122,34 @@
+   if not node.exists():
+     return []
+   nodes = []
+-  source_dir = node.get_dir()
+-  for include in nsis_parse([node],'file',1):
++  if source_dir is None:
++    try:
++      source_dir = env['NSISSRCDIR']
++    except:
++      source_dir = node.get_dir()
++  for include in nsis_parse([node],'file',1, env['NSISDEFINES']):
+     exp = nsis_path(include,env['NSISDEFINES'],source_dir)
+     if type(exp) != list:
+       exp = [exp]
+     for p in exp:
+-      for filename in glob.glob( os.path.abspath(
++      for filename in env.Glob( os.path.abspath(
+         os.path.join(str(source_dir),p))):
+           # Why absolute path?  Cause it breaks mysteriously without it :(
+           nodes.append(filename)
++  for include in nsis_parse([node],'!include',1, env['NSISDEFINES']):
++    exp = nsis_path(include,env['NSISDEFINES'],source_dir)
++    if type(exp) != list:
++      exp = [exp]
++    for p in exp:
++      if p not in [ 'LogicLib.nsh', 'MUI2.nsh' ]:
++        # get ../bin/makensis and go up two directories
++        nsis_install_location = os.path.dirname(os.path.dirname(env['NSIS']))
++        filename = os.path.abspath(os.path.join(nsis_install_location, 'share', 'nsis', 'Include', p))
++        if not os.path.isfile(filename):
++          filename = os.path.abspath(os.path.join(str(source_dir),p))
++        # Why absolute path?  Cause it breaks mysteriously without it :(
++        nodes.append(filename)
++        nodes += nsis_scanner(env.File(filename), env, path, source_dir = source_dir)
+   return nodes
+ 
+ 
+@@ -121,7 +158,7 @@
+   The emitter changes the target name to match what the command actually will
+   output, which is the argument to the OutFile command.
+   """
+-  nsp = nsis_parse(source,'outfile',0)
++  nsp = nsis_parse(source,'outfile',0, env['NSISDEFINES'])
+   if not nsp:
+     return (target,source)
+   x  = (
+@@ -160,10 +197,15 @@
+       ret += ' '
+   if env.has_key('NSISDEFINES'):
+     for d in env['NSISDEFINES']:
+-      ret += '/D'+d
++      if is_linux:
++        ret += '-D'+d
++      else:
++        ret += '/D'+d
+       if env['NSISDEFINES'][d]:
+         ret +='='+quoteIfSpaced(toString(env['NSISDEFINES'][d],env))
+       ret += ' '
++  if is_linux:
++    ret += '-- '
+   for s in source:
+     ret += quoteIfSpaced(str(s))
+   return ret
+@@ -176,7 +218,7 @@
+                                  src_suffix='.nsi',
+                                  emitter=nsis_emitter)
+   env.Append(SCANNERS = SCons.Scanner.Scanner( function = nsis_scanner,
+-             skeys = ['.nsi']))
++             skeys = ['.nsi','.nsh']))
+   if not env.has_key('NSISDEFINES'):
+     env['NSISDEFINES'] = {}
+   env['NSIS'] = find_nsis(env)
+@@ -199,8 +241,9 @@
+         return None
+     except:
+       pass # Couldn't find the key, just act like we can't read the registry
++
+   # Hope it's on the path
+-  return env.WhereIs('makensis.exe')
++  return env.WhereIs('makensis' + env['PROGSUFFIX'])
+ 
+ def exists(env):
+   """

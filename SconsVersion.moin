@@ -1,0 +1,17 @@
+Ah! We don't really have a defined, public interface for this. We should have. In the meantime, you can use:
+
+{{{
+import SCons
+print SCons.__version__
+}}}
+
+(Where, of course, you can do whatever you like with the {{{SCons.__version__}}} string, not just print it.)
+
+If you are looking to ensure a certain version of SCons, use:
+
+{{{EnsureSConsVersion()}}}
+
+You use it thusly:
+{{{EnsureSConsVersion(0, 96, 93)}}}
+
+Credits: StevenKnight, TaybinRutkin

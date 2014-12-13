@@ -1,0 +1,6 @@
+Provided you have all of the necessary utilities installed, this should be a simple matter of:
+
+{{{
+  $ rm -rf build
+  $ python bootstrap.py
+}}}

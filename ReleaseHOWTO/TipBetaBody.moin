@@ -1,0 +1,156 @@
+{{{#!wiki warning
+These instructions use outdated workflow based on svnmerge tool.
+}}}
+
+This flow takes the available changesets in `trunk` and brings `checkpoint` up to date.  It assumes that `trunk` and `checkpoint` already exist and have been set up correctly.
+
+The `trunk` is the authoritative source for everything that goes in a release; only under exceptional circumstances are changes made to other branches.  The general rule is that a change is made to `trunk` and brought over to `checkpoint`.
+
+This flow assumes that any needed changesets are already in `trunk`; if not, you will need to commit a suitable changeset following your usual development practices.
+
+If you want a checklist you can mark off as you go, cut-n-paste these contents.
+
+<<TableOfContents(3)>>
+
+<<Include(../InitSVN)>>
+{{{
+  $ export RELEASE=3.2.0.beta.yyyymmdd
+}}}
+
+=== Send Starting Message ===
+[[ReleaseHOWTO/TipBetaBody|FIXME]] Send blurb out to release mailing list
+
+=== Check Out Trunk ===
+<<Include(../CheckOutTrunk)>>
+
+=== Check Out Checkpoint ===
+<<Include(../CheckOutCheckpoint)>>
+
+=== Determine Available Changesets ===
+[[ReleaseHOWTO/TipBetaBody|FIXME]] Use `svnmerge avail --log` instead of dry run.
+Use `svnmerge` to find out what changesets are available to be merged:
+
+{{{
+  $ cd checkpoint
+  $ svnmerge avail --log >../trunk/log.file
+  $ cd ../trunk
+}}}
+
+=== Edit Configuration Files ===
+The `commit.txt` file created in the previous step has the commit comments for all the applied changesets.  In theory, all of them have been included in the `trunk` files `src/CHANGES.txt`, `stc/RELEASE.txt`, and `src/Announce.txt`, but in practice, some of the information has not been included, so you will have to add it.  At the same time, you want to prepare a `log.file` that will be used as the commit comments.
+
+'''The `log.file` and `src/CHANGES.txt` files'''
+
+Both `log.file` and `src/CHANGES.txt` use similar formats.  Assuming `commit.txt` has three log entries, three from John Doe on two issues and two by Jim Smith on a single issue, `log.file` would look like this:
+{{{
+Rebased to trunk revision 54321:
+
+From John Doe:
+ - One item that was done by John Doe.
+ - Another item that was done by John Doe.
+
+From Jim Smith:
+ - Item done by Jim Smith.
+}}}
+
+In theory, the first section of `src/CHANGES.TXT` should already have the corresponding information.  If it does, steal it for `log.file`.  If it doesn't, add it to `src/CHANGES.txt`.  In the end, the items in `src/CHANGES.txt` for John Doe and Jim Smith should have this information:
+{{{
+  From John Doe:
+
+    - One item that was done by John Doe with details and examples.
+
+    - Another item that was done by John Doe with details and examples.
+
+  From Jim Smith:
+
+    - Item done by Jim Smith with details and examples.
+}}}
+
+'''Verify the `src/RELEASE.txt` file'''
+
+In theory, the entries in `src/RELEASE.txt` should already summarize `src/CHANGES.txt` except that issues are summarized by topic and the names of contributors are collected in a section at the bottom.  In practice, not all of the entries have been transcribed.
+
+## Feel free to edit the opening paragraphs to draw attention to anything special or unusual about the release.  For example, if we specifically want people to test a new feature, or there is a really horrendous problem that this checkpoint fixes, an extra paragraph or two highlighting that would be appropriate.
+
+Since this is an announcement, try to edit down the `src/CHANGES.txt` descriptions so that, ideally, each item fits on a single line.  In general, get rid of examples and explanations.  The idea is to pique the reader's interest, not provide full documentation.  Still, use your judgment and feel free to leave in an explanation if it would be too confusing to shorten it.
+
+Try to reorganize the items so that, within each section, all of the Visual Studio items are listed together, all of the Java items are together, ''etc''.  More "important" (or visible) items should appear towards the top of each section.
+
+It's all right just to delete the description of something that's too difficult to explain and too minor to make much of a difference.
+
+Whether or not a given item belongs in "`NEW FUNCTIONALITY`" ''vs.'' "`CHANGED/ENHANCED`" ''vs.'' "`FIXED`" ''vs.'' "`IMPROVEMENT`" is a judgment call.
+
+In the final "Thanks to" paragraph, at a minimum list everyone in the `src/CHANGES.txt` file who contributed to the release, plus anyone else who (in your judgment) merits a mention even if they didn't contribute an actual patch.
+
+'''The `src/Announce.txt` file'''
+
+The `src/Announce.txt` file is the announcement used for production releases.  In theory, it summarizes `src/CHANGES.txt`, but like `src/CHANGES.txt`, entries may not have been transcribed.   Rather than trying to do the summarization all at once in a candidate release, it's better to do it incrementally while the changes to `src/CHANGES.txt` and `src/RELEASE.txt` are fresh in your mind.
+
+Under the topic "scheduled for next release" add anything that's expected to be a significant change.  To get a feel for what's in play, consult the tracker for issues scheduled for the next next release.  The quickest way of getting that list is to go to the `BugParty` wiki page and click on the "how we're doing" link.  On that report, click on the summary link at the bottom of the column for the next release.  Use the future tense for these items.
+
+Under the next topic, add any major items that aren't already included.  Use your judgment as to what to add, but if it's not something the user needs to know, don't include it, so things like performance improvements, code cleanup, typos, and minor enhancements don't make the cut.
+
+[[../TipBetaBody|FIXME]] expand this section
+
+=== Confirm Users' Guide is OK ===
+<<Include(../UpdateGuide)>>
+
+=== Commit Trunk ===
+This step is needed only if any `trunk` files were modified.  If nothing was changed, skip to the next step step.
+
+From within the `trunk` directory:
+
+Verify that `version_tuple` in `ReleaseConfig` has the correct release number and a release level of `'alpha'`.
+
+<<Include(../Commit)>>
+
+=== Merge Trunk into Checkpoint ===
+To merge the changes from the trunk into the `checkpoint` branch, run this command from within the `checkpoint` directory:
+
+{{{
+  $ svnmerge merge -b -S $SVN/trunk -f commit.txt
+}}}
+
+=== Resolve Conflicts ===
+<<Include(../Resolved)>>
+
+=== Update Release Files ===
+Verify that the `version_tuple` in `ReleaseConfig` says `'beta'` or `'candidate'` as desired.
+
+From within the `checkpoint` directory:
+
+<<Include(../UpdateFiles)>>
+
+=== Commit Checkpoint ===
+[[ReleaseHOWTO/TipBetaBody|FIXME]]
+
+{{{
+  $ svn commit -m"Update checkpoint branch for $VERSION; see CHANGES.txt for details."
+}}}
+
+#### Preliminaries complete; ready to build ####
+
+<<Include(../BuildAndTest)>>
+<<Include(../Prepare)>>
+
+=== Tag the Release ===
+From within the `checkpoint` directory:
+
+{{{
+  $ svn cp . $SVN/tags/$VERSION
+}}}
+
+=== Archive Candidate Packages ===
+<<Include(../ArchivePackates)>>
+
+=== Update SourceForge ===
+<<Include(../UpdateSourceForge)>>
+
+=== Update scons.org ===
+<<Include(../UpdateSConsOrg)>>
+
+=== Update Tigris.org ===
+<<Include(../UpdateTigris)>>
+
+=== Announce ===
+<<Include(../AnnounceCheckpoint)>>

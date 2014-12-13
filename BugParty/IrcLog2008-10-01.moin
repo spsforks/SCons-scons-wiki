@@ -1,0 +1,211 @@
+#format irc
+16:50:28 *	garyo-home (n=chatzill@209-6-158-38.c3-0.smr-ubr3.sbo-smr.ma.cable.rcn.com) has joined #scons
+17:58:21 *	stevenknight (n=stevenkn@69.36.227.130) has joined #scons
+17:58:47 <stevenknight>	hey all
+17:59:09 <garyo-home>	Hi Steven; I'
+17:59:11 <garyo-home>	m here
+17:59:40 <garyo-home>	I've been working on a SCons talk for end of next week.  I'll share it when I'm done.
+17:59:48 <stevenknight>	cool
+18:00:08 <stevenknight>	i've got slides from about three talks that i need to make public
+18:00:18 <stevenknight>	iirc you asked me for some awhile back and i never got back to you... :-(
+18:00:26 <garyo-home>	true...
+18:00:51 <garyo-home>	if you have any you'd like to send my way feel free, though at this point i think I have enough (about 26 slides for an hour talk)
+18:00:56 *	GregNoel is no longer marked as being away
+18:01:11 <GregNoel>	Hi, I'm here...
+18:01:16 <garyo-home>	Hi, Greg.
+18:01:21 <stevenknight>	hi greg
+18:01:26 <stevenknight>	garyo:  what's the audience?
+18:02:02 <garyo-home>	about 20 people, small company developers.  It's a group of companies under the same investor umbrella.
+18:02:17 <stevenknight>	actually, we should probably start, i'm on the shuttle but only for ~30 more minutes
+18:02:26 <stevenknight>	garyo-home:  so kind of a general intro?
+18:02:27 <garyo-home>	ok I'm ready.
+18:02:39 <GregNoel>	2201
+18:02:46 <garyo-home>	yes, intro but technical.  Focus on cross-platform.  Yes, 2201.
+18:03:12 <GregNoel>	Steven says invalid, but I don't know his reasons.
+18:03:00 <stevenknight>	2201:  consensus invalid?  jean can re-open if he comes up with a case
+18:03:18 <GregNoel>	ah
+18:03:12 <garyo-home>	yes.
+18:03:22 <GregNoel>	ok, done
+18:03:32 <stevenknight>	i was going from your comment, actually
+18:03:34 <GregNoel>	2217: Gary, how does one 'wrap things up with subprocess' when it's a Python action?  External commands can use subprocess, I expect, but I don't see how to do it with a Python action.
+18:03:37 <stevenknight>	2217:  consensus wontfix
+18:04:14 <garyo-home>	2217: right, subproc would only work to fork external actions.  No way to multiprocess pure python.
+18:04:23 <garyo-home>	Especially with chdir!
+18:04:04 <stevenknight>	i think you could do it by forking a process for each worker thread
+18:04:25 <stevenknight>	and sending some indication to "execute this python action"
+18:04:35 <stevenknight>	but it would be really hairy to work out the details
+18:04:37 <stevenknight>	and not worth it
+18:04:41 <garyo-home>	right, not worth it!
+18:04:47 <GregNoel>	concur
+18:04:48 <stevenknight>	agree re: especially chdir
+18:04:51 <stevenknight>	okay, done
+18:05:00 <garyo-home>	2219, I did it
+18:05:04 <stevenknight>	2219:  garyo++
+18:05:11 <GregNoel>	ditto
+18:05:14 <garyo-home>	thx
+18:05:21 <garyo-home>	too cool to pass up
+18:05:21 <GregNoel>	2220
+18:05:21 <GregNoel>	Gary, unfortunately, Repository() won't map subdirectories; it only maps some directory to the top of the build.  And I'm pretty sure it's not working as designed; it certainly surprised me.
+18:05:21 <GregNoel>	Steven, maybe I have a convert's fervor, but you did such a good job of convincing me, that I don't believe that Repository() is sufficient for all cases.  The case of a variant in a repository is the killer; the search order is context-dependent.
+18:05:21 <GregNoel>	(If you want to propose some new mechanism, I'll be happy to shoot holes in it... {;-})
+18:05:21 <GregNoel>	It's easy enough to characterize what happened: add a source/foo.c and try to build it as Object('generate/foo.c').  SCons removes it before trying to build it.  That is, SCons is treating it like a target, even though there's no source in the 'include' directory.
+18:05:21 <GregNoel>	I can add the failing SConstruct to the issue or create a new issue if you want.
+18:05:25 <garyo-home>	2220?
+18:06:06 <stevenknight>	Greg:  cool, please add th failing SConstruct
+18:06:10 <stevenknight>	let me research
+18:06:23 <GregNoel>	OK, research, Steven?
+18:06:25 <garyo-home>	sounds like consensus to me
+18:06:41 <stevenknight>	the approach we've had success with on the Chromium (a.k.a. Google Chrome) build is to use addRepository() (internal method)
+18:07:06 <stevenknight>	to hook up "source" directories to arbitrary build directories
+18:06:54 <garyo-home>	Chrome is using scons?
+18:07:05 <GregNoel>	Why else would they hire him? {;-}
+18:07:17 <stevenknight>	yes, Chrome is using SCons
+18:07:28 <stevenknight>	although the current release version is still pure Visual Studio
+18:07:25 <garyo-home>	can I say that in my talk?
+18:07:47 <stevenknight>	yes, it's public knowledge (it's even in wikipedia!)
+18:07:59 <stevenknight>	(and they wouldn't let them put it there if it weren't true!)
+18:08:08 <GregNoel>	suuuuuure
+18:08:11 <garyo-home>	:-/
+18:08:24 <stevenknight>	Google Earth is also built with SCons
+18:08:31 <garyo-home>	nice!
+18:08:44 <garyo-home>	ok, 2221?
+18:08:55 <stevenknight>	pretty much all Google client-side apps are or will be SCons
+18:09:08 <stevenknight>	("client-side" == Google for "runs on the user's system, not on a server")
+18:09:15 <garyo-home>	yup, I got that.
+18:09:24 <stevenknight>	it threw me when i got here
+18:09:19 <GregNoel>	2221, I see 2145 is already assigned to Steven for research; shall I assume that both of them should be set to 1.2 p3?  (It would clear off one of your pending research issues, Steven...)
+18:09:25 <stevenknight>	anyway
+18:09:33 <stevenknight>	yes, 1.2 p3
+18:09:44 <GregNoel>	ok, done
+18:10:06 <stevenknight>	2222:
+18:10:17 <garyo-home>	2222: mark me as cc and I'll watch it.
+18:10:25 <GregNoel>	done
+18:10:35 <stevenknight>	done
+18:10:39 <garyo-home>	(I'll have to make sure my issue query finds issues w/ me as cc...)
+18:11:14 <GregNoel>	If it doesn't, the BugSchedule query does.
+18:11:18 <garyo-home>	2223: seems like David was working on this on the ML.  Side effects might be the way to go?
+18:11:32 <GregNoel>	2223, consensus David, but when?
+18:11:23 <stevenknight>	2223:  2.x, p2, david?
+18:11:34 <garyo-home>	I'm fine w/ that.
+18:11:41 <GregNoel>	done
+18:11:43 <garyo-home>	2.x p2 fine w/ me
+18:12:04 <GregNoel>	2224
+18:12:09 <stevenknight>	2224:  1.2 p2 david
+18:12:11 <garyo-home>	2224: grr I need to get my buildbot vm up.  I'll try vs_revamp on another windows machine soon.
+18:12:22 <garyo-home>	yes, 1.2 p2 david.
+18:12:27 <GregNoel>	done
+18:12:42 <GregNoel>	And that's the current spreadsheet!
+18:12:24 <stevenknight>	you'll probably run into the problems i had
+18:12:32 <stevenknight>	and the reasons he withdrew it from 1.1
+18:12:46 <stevenknight>	the other tool modules like mslink still call old code to find and set versions
+18:12:50 <stevenknight>	and that gums up his stuff
+18:12:56 <stevenknight>	i don't think it'll be too bad to fix
+18:13:11 <garyo-home>	I'll see if I can help, I think it's important.
+18:13:19 <stevenknight>	agreed re: important
+18:13:22 <garyo-home>	Just need to get a clean windows box to work on.
+18:13:35 <stevenknight>	1.1 is about to go release candidate, though, hence 1.2
+18:13:42 <stevenknight>	(should have RC'ed already...)
+18:13:42 <garyo-home>	yes, that's OK.
+18:13:59 <stevenknight>	on to 2005?
+18:14:06 <stevenknight>	as in 2005[hq]x?
+18:14:09 <garyo-home>	Too bad about my 1.1 issues... all will get deferred to 1.2.
+18:14:15 <stevenknight>	mine too
+18:14:22 <garyo-home>	I can't edit the 2005h2 ssheet, but others are fine.
+18:14:33 <stevenknight>	i had editing problems too
+18:14:50 <stevenknight>	i was able to edit 2005q1
+18:15:25 <GregNoel>	The "share" toggle wasn't selected, although I've checked on it before; I set it now for sure, so it should be OK
+18:15:36 <garyo-home>	I don't think I can edit any of them, I'll try again now.
+18:15:53 <stevenknight>	GregNoel:  i did get in to 2005h2 shortly before the meeting, thanks
+18:16:03 <GregNoel>	make sure you follow the "edit" link _first_
+18:17:04 <garyo-home>	well, doesn't work for me yet, but that's OK for now, let's look at a few of them.
+18:17:18 <stevenknight>	i have less than 10 minutes (closer to five), since we haven't pre-edited how can we make best use of the time?
+18:17:34 <garyo-home>	we're doing h2, right?
+18:17:39 <GregNoel>	yes
+18:17:42 <stevenknight>	2005h2 yes
+18:17:54 <garyo-home>	I agree w/ you guys on the first 2
+18:18:08 <garyo-home>	1259, 1209
+18:18:15 <stevenknight>	okay, 1259:  worksforme done
+18:18:26 <stevenknight>	1209:  dup 324, done
+18:18:35 <GregNoel>	Steven, should we move the schedule to Mondays?
+18:18:44 <stevenknight>	1210:  i agree w/research
+18:18:47 <stevenknight>	schedule:
+18:18:55 <stevenknight>	sorry, i should have weighed in
+18:19:09 <stevenknight>	day of the week is less an issue for me than time
+18:19:14 <GregNoel>	1210, but who?
+18:19:29 <stevenknight>	i have to get on the shuttle ~17:15-17:30 PDT
+18:19:36 <stevenknight>	and off ~18:30-19:00 PDT
+18:19:56 <stevenknight>	i've started biking to/from the shuttle, so it's 30 minutes off-line
+18:19:57 <GregNoel>	I meant the release schedule: from Sat to Mon
+18:20:04 <stevenknight>	oh!
+18:20:08 <stevenknight>	heh
+18:20:15 <stevenknight>	yes, Monday for those
+18:20:38 <GregNoel>	OK, I'll update the roadmap page
+18:20:51 <garyo-home>	1210: I think it should be low priority, but research means look into it now.  I vote *not* research but 2.x or something
+18:21:00 <stevenknight>	1210:  i'd rather it be someone else
+18:21:22 <stevenknight>	i think it needs some thinking unencumbered by my knowledge of the Dir node code
+18:21:39 <GregNoel>	(We'll have to slip 1.1 by a few days)
+18:21:47 <stevenknight>	right re: 1.1 slip
+18:21:59 <stevenknight>	1210:  shall we see if bill can take it?
+18:22:04 <garyo-home>	Probably just look at the dir after each removal, and if dir is empty and under a build dir, remove dir.
+18:22:12 <garyo-home>	(after each FILE removal, sorry)
+18:22:52 <GregNoel>	You'd have to keep track of whether it was both a build dir and a src dir
+18:23:11 <garyo-home>	1210: I don't think it's important enough to assign a resource now.  (And Greg: yes, there are complications.  I'm not voluteering...)
+18:23:19 <stevenknight>	right, and since so much dir behavior is implicit,
+18:23:39 <stevenknight>	figuring out what is or isn't "build dir" vs. "src dir" has the potential for odd heuristics
+18:23:50 <GregNoel>	Since Steven is about to turn into a pumpkin, this is a bad time to be designing.
+18:23:55 <stevenknight>	1210:  2.x, future draft pick
+18:24:01 <GregNoel>	done
+18:24:43 <stevenknight>	1213:  research (decide if it's still a problem)
+18:24:50 <GregNoel>	1213, bypass for today?
+18:24:56 <garyo-home>	Yes, I'll research that one (1213)
+18:24:57 <stevenknight>	sure, bypass
+18:25:03 <stevenknight>	er, i meant, garyo!
+18:25:04 <GregNoel>	which?
+18:25:09 <stevenknight>	1213
+18:25:15 <stevenknight>	1213 garyo, done
+18:25:16 <garyo-home>	I'll look at it.
+18:25:18 <garyo-home>	quick test.
+18:25:26 <GregNoel>	ok, garyo, research
+18:25:33 <stevenknight>	8:  greg, you want it to see the -include in CCFLAGS and deduce the dependency?
+18:25:59 <GregNoel>	yes
+18:25:56 <stevenknight>	there's another issue i just looked at that takes the other approach,
+18:26:04 <stevenknight>	adding a *FORCEINCLUDE variable
+18:26:12 <stevenknight>	that you set and then it adds the -include flag to the command line
+18:26:19 <GregNoel>	hmmm....
+18:26:21 <stevenknight>	like we do with CPPPATH and -I options e.g.
+18:26:26 <stevenknight>	i think that's more "sconsy"
+18:26:37 <garyo-home>	Agree w/ steven
+18:26:50 <GregNoel>	Would have to be parsed by MergeFlags()...
+18:27:11 <garyo-home>	I don't like looking at cmd lines to figure out deps
+18:26:57 <stevenknight>	okay, fifteen seconds...
+18:27:02 <stevenknight>	agreed re: MergeFlags()
+18:27:08 <stevenknight>	two weeks from now, I assume
+18:27:14 <stevenknight>	for next meeting
+18:27:15 <garyo-home>	ok see you then!
+18:27:16 <stevenknight>	later guys...
+18:27:18 <GregNoel>	bye
+18:27:20 *	stevenknight has quit ("Leaving")
+18:27:21 <garyo-home>	bye
+18:27:26 <garyo-home>	well that was short.
+18:27:40 <GregNoel>	Yeah, but we cleared the current issues
+18:27:50 <GregNoel>	I guess the meeting time is still a work in progress
+18:27:58 <garyo-home>	Greg, would you like to help me edit the 2006h2 sshet?  Send me a direct invite or something?
+18:28:16 <garyo-home>	Yes, time is a little early for me but we're hoping to get some Euro zone folks maybe?
+18:28:27 <GregNoel>	ok, I'll do that.  I'd really like to figure out why it's failing.
+18:28:44 <garyo-home>	The current issue sheet I never have any trouble with.
+18:29:00 <garyo-home>	But 2006h2 has never worked for me ever.
+18:29:02 <GregNoel>	I know there's a _long_ timeout if you view it and just close the page
+18:29:33 <garyo-home>	Could be it, but I don't think so.
+18:29:42 <GregNoel>	without going through the file->close selection, I mean
+18:30:33 <garyo-home>	Yes, I know.  (Just to be clear I'm talking about 200*5*h2 even though I said '06 above)
+18:31:13 <garyo-home>	Maybe a direct invite will work.
+18:31:28 <GregNoel>	I'll send you an individual invitation and we'll see if that works.  (I wonder if invitations age?  That's from six months ago...)
+18:31:39 <garyo-home>	Could be.
+18:32:00 <GregNoel>	OK, I'll do that
+18:32:09 <garyo-home>	OK, well if we're done for now maybe I'll try to make some progress on a bug or two.  And I'll add that doc line you were asking for :-)
+18:33:05 <GregNoel>	Yes...  Strangely enough, I wanted a rule like he described, and was annoyed that there was no way to do it.  This was a most elegant solution and should be documented.
+18:33:57 <garyo-home>	Will do.  See you on the ML...
+18:34:06 <GregNoel>	G'night
+18:34:10 <garyo-home>	bye now
+18:34:15 *	GregNoel has been marked as being away
+19:54:41 *	garyo-home has quit ("ChatZilla 0.9.83 [Firefox 3.0.3/2008092417]")

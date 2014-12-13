@@ -1,0 +1,315 @@
+Index: src/engine/SCons/Subst.py
+===================================================================
+--- src/engine/SCons/Subst.py	(revision 3186)
++++ src/engine/SCons/Subst.py	(working copy)
+@@ -193,7 +193,7 @@
+         # The map(self.func) call is what actually turns
+         # a list into appropriate proxies.
+         self.nodelist = SCons.Util.NodeList(map(self.func, list))
+-        self._create_nodelist = self._return_nodelist
++        self._create_nodelist = SCons.Util.WeakMethod(self._return_nodelist)
+         return self.nodelist
+     _create_nodelist = _gen_nodelist
+     
+@@ -592,9 +592,9 @@
+             self.gvars = gvars
+ 
+             if self.mode == SUBST_RAW:
+-                self.add_strip = lambda x, s=self: s.append(x)
++                self.add_strip = lambda x, s=SCons.Util.WeakProxy(self): s.append(x)
+             else:
+-                self.add_strip = lambda x, s=self: None
++                self.add_strip = lambda x, s=SCons.Util.WeakProxy(self): None
+             self.in_strip = None
+             self.next_line()
+ 
+@@ -714,11 +714,11 @@
+         def this_word(self):
+             """Arrange for the next word to append to the end of the
+             current last word in the result."""
+-            self.append = self.add_to_current_word
++            self.append = SCons.Util.WeakMethod(self.add_to_current_word)
+ 
+         def next_word(self):
+             """Arrange for the next word to start a new word."""
+-            self.append = self.add_new_word
++            self.append = SCons.Util.WeakMethod(self.add_new_word)
+ 
+         def add_to_current_word(self, x):
+             """Append the string x to the end of the current last word
+@@ -775,7 +775,7 @@
+                 if is_String(x):
+                     x = CmdStringHolder(x, literal)
+                 self[-1].append(x)
+-            self.append = self.add_to_current_word
++            self.append = SCons.Util.WeakMethod(self.add_to_current_word)
+ 
+         def literal(self, x):
+             try:
+Index: src/engine/SCons/Scanner/__init__.py
+===================================================================
+--- src/engine/SCons/Scanner/__init__.py	(revision 3186)
++++ src/engine/SCons/Scanner/__init__.py	(working copy)
+@@ -180,9 +180,9 @@
+         if callable(recursive):
+             self.recurse_nodes = recursive
+         elif recursive:
+-            self.recurse_nodes = self._recurse_all_nodes
++            self.recurse_nodes = SCons.Util.WeakMethod(self._recurse_all_nodes)
+         else:
+-            self.recurse_nodes = self._recurse_no_nodes
++            self.recurse_nodes = SCons.Util.WeakMethod(self._recurse_no_nodes)
+ 
+     def path(self, env, dir=None, target=None, source=None):
+         if not self.path_function:
+@@ -325,7 +325,7 @@
+ 
+         self.cre = re.compile(regex, re.M)
+ 
+-        def _scan(node, env, path=(), self=self):
++        def _scan(node, env, path=(), self=SCons.Util.WeakProxy(self)):
+             node = node.rfile()
+             if not node.exists():
+                 return []
+Index: src/engine/SCons/Scanner/Fortran.py
+===================================================================
+--- src/engine/SCons/Scanner/Fortran.py	(revision 3186)
++++ src/engine/SCons/Scanner/Fortran.py	(working copy)
+@@ -61,7 +61,7 @@
+         self.cre_incl = re.compile(incl_regex, re.M)
+         self.cre_def = re.compile(def_regex, re.M)
+ 
+-        def _scan(node, env, path, self=self):
++        def _scan(node, env, path, self=SCons.Util.WeakProxy(self)):
+             node = node.rfile()
+ 
+             if not node.exists():
+Index: src/engine/SCons/Scanner/ScannerTests.py
+===================================================================
+--- src/engine/SCons/Scanner/ScannerTests.py	(revision 3186)
++++ src/engine/SCons/Scanner/ScannerTests.py	(working copy)
+@@ -543,6 +543,18 @@
+         ret = s.function(n, env, ('foo5',))
+         assert ret == ['jkl', 'mno'], ret
+ 
++        # Verify that the scanner does not create reference cycles.
++        try:
++            import gc
++            import weakref
++        except ImportError:
++            pass
++        else:
++            id_s = id(s)
++            del s
++            gc.set_debug(gc.DEBUG_SAVEALL)
++            gc.collect()
++            assert id_s not in map(id, gc.garbage)
+         
+ 
+ class ClassicCPPTestCase(unittest.TestCase):
+Index: src/engine/SCons/Taskmaster.py
+===================================================================
+--- src/engine/SCons/Taskmaster.py	(revision 3186)
++++ src/engine/SCons/Taskmaster.py	(working copy)
+@@ -417,7 +417,7 @@
+         to the appropriate do-nothing method.
+         """
+         self.exception = (None, None, None)
+-        self.exception_raise = self._no_exception_to_raise
++        self.exception_raise = SCons.Util.WeakMethod(self._no_exception_to_raise)
+ 
+     def exception_set(self, exception=None):
+         """
+@@ -429,7 +429,7 @@
+         if not exception:
+             exception = sys.exc_info()
+         self.exception = exception
+-        self.exception_raise = self._exception_raise
++        self.exception_raise = SCons.Util.WeakMethod(self._exception_raise)
+ 
+     def _no_exception_to_raise(self):
+         pass
+@@ -478,7 +478,7 @@
+         self.order = order
+         self.message = None
+         self.trace = trace
+-        self.next_candidate = self.find_next_candidate
++        self.next_candidate = SCons.Util.WeakMethod(self.find_next_candidate)
+         self.pending_children = set()
+ 
+ 
+@@ -780,7 +780,7 @@
+         """
+         Stops the current build completely.
+         """
+-        self.next_candidate = self.no_next_candidate
++        self.next_candidate = SCons.Util.WeakMethod(self.no_next_candidate)
+ 
+     def cleanup(self):
+         """
+Index: src/engine/SCons/Environment.py
+===================================================================
+--- src/engine/SCons/Environment.py	(revision 3186)
++++ src/engine/SCons/Environment.py	(working copy)
+@@ -260,7 +260,7 @@
+         # Set self.env before calling the superclass initialization,
+         # because it will end up calling our other methods, which will
+         # need to point the values in this dictionary to self.env.
+-        self.env = env
++        self.env = SCons.Util.SafeWeakProxy(env)
+         UserDict.__init__(self, dict)
+ 
+     def __semi_deepcopy__(self):
+@@ -890,7 +890,7 @@
+ 
+         self.copy_from_cache = default_copy_from_cache
+ 
+-        self._dict['BUILDERS'] = BuilderDict(self._dict['BUILDERS'], self)
++        self._dict['BUILDERS'] = BuilderDict(self._dict['BUILDERS'], SCons.Util.WeakProxy(self))
+ 
+         if platform is None:
+             platform = self._dict.get('PLATFORM', None)
+@@ -1202,7 +1202,7 @@
+         except KeyError:
+             pass
+         else:
+-            clone._dict['BUILDERS'] = BuilderDict(cbd, clone)
++            clone._dict['BUILDERS'] = BuilderDict(cbd, SCons.Util.WeakProxy(clone))
+ 
+         # Check the methods added via AddMethod() and re-bind them to
+         # the cloned environment.  Only do this if the attribute hasn't
+Index: src/engine/SCons/SConf.py
+===================================================================
+--- src/engine/SCons/SConf.py	(revision 3186)
++++ src/engine/SCons/SConf.py	(working copy)
+@@ -623,7 +623,7 @@
+         """A wrapper around Tests (to ensure sanity)"""
+         def __init__(self, test, sconf):
+             self.test = test
+-            self.sconf = sconf
++            self.sconf = SCons.Util.WeakProxy(sconf)
+         def __call__(self, *args, **kw):
+             if not self.sconf.active:
+                 raise (SCons.Errors.UserError,
+Index: src/engine/SCons/Util.py
+===================================================================
+--- src/engine/SCons/Util.py	(revision 3186)
++++ src/engine/SCons/Util.py	(working copy)
+@@ -1497,6 +1497,84 @@
+     def __delattr__(self, name):
+         return self
+ 
++# WeakMethod to avoid reference cycles when bound methods are involved. The
++# reference to the object is held as a weak reference.
++# http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/81253
+ 
++try:
++    import weakref
+ 
++except ImportError:
++    def WeakMethod(f):
++        return f
++
++    def WeakProxy(o):
++        return o
++
++    def SafeWeakProxy(o):
++        return o
++
++else:
++    try:
++        class WeakMethod(object):
++            """
++            Object encapsulating a bound method with a weak reference to the
++            instance.
++            """
++            __slots__ = ('f', 'c')
++            def __init__( self , f ) :
++                """
++                Keep function and weak reference of instance object. If the
++                passed function is not a bound method, an AttributeError will be
++                raised.
++                """
++                self.f = f.im_func
++                self.c = weakref.ref( f.im_self )
++            def __call__( self , *arg ) :
++                """
++                Call the function and pass the reference to the instance. If the
++                instance is freed, an exception (which might be raised by the
++                called function) is raised which is not handled for performance
++                reasons.
++                'self.f(self.c(), *arg)' would be faster but is not supported in
++                Python 1.5.
++                """
++                try:
++                    return apply( self.f , ( self.c() , ) + arg )
++                except:
++                    if self.c() is None:
++                        raise ReferenceError, \
++                            "weakly referenced method instance no longer exists"
++                    else:
++                        raise
++
++    except NameError:
++        # Python 2.1 compliance (no new-style classes)
++        class WeakMethod:
++            def __init__( self , f ) :
++                self.f = f.im_func
++                self.c = weakref.ref( f.im_self )
++            def __call__( self , *arg ) :
++                try:
++                    return apply( self.f , ( self.c() , ) + arg )
++                except:
++                    if self.c() is None:
++                        raise ReferenceError, \
++                            "weakly referenced method instance no longer exists"
++                    else:
++                        raise
++
++    WeakProxy = weakref.proxy 
++
++    def SafeWeakProxy(o):
++        """
++        Return a weak proxy of the passed object. If the object is already a
++        weak proxy return it as-is.
++        """
++        try:
++            return weakref.proxy(o)
++        except TypeError:
++            return o
++
++
+ del __revision__
+Index: src/engine/SCons/Tool/__init__.py
+===================================================================
+--- src/engine/SCons/Tool/__init__.py	(revision 3186)
++++ src/engine/SCons/Tool/__init__.py	(working copy)
+@@ -486,13 +486,13 @@
+             tools = [tools]
+         if not SCons.Util.is_List(names):
+             names = [names]
+-        self.env = env
++        self.env = SCons.Util.WeakProxy(env)
+         self.tools = tools
+         self.names = names
+         self.methods = {}
+         for name in names:
+             method = ToolInitializerMethod(name, self)
+-            self.methods[name] = method
++            self.methods[name] = SCons.Util.WeakProxy(method)
+             env.AddMethod(method)
+ 
+     def remove_methods(self, env):
+Index: src/engine/SCons/Tool/CVS.py
+===================================================================
+--- src/engine/SCons/Tool/CVS.py	(revision 3186)
++++ src/engine/SCons/Tool/CVS.py	(working copy)
+@@ -41,7 +41,7 @@
+     """Add a Builder factory function and construction variables for
+     CVS to an Environment."""
+ 
+-    def CVSFactory(repos, module='', env=env):
++    def CVSFactory(repos, module='', env=SCons.Util.WeakProxy(env)):
+         """ """
+         # fail if repos is not an absolute path name?
+         if module != '':

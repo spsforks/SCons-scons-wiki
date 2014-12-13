@@ -1,0 +1,54 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>The SCons reST tool</title><link rel="stylesheet" href="scons.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="article" title="The SCons reST tool"><div class="titlepage"><div><div><h2 class="title"><a name="idm15562176"></a>The SCons reST tool</h2></div><div><div class="author"><h3 class="author"><span class="surname">Dirk Baechle</span></h3></div></div><div><p class="pubdate">2012-04-25</p></div></div><hr></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#basics">1. Basics</a></span></dt><dd><dl><dt><span class="section"><a href="#install">1.1. Install</a></span></dt><dt><span class="section"><a href="#activation">1.2. How to activate</a></span></dt><dt><span class="section"><a href="#requirements">1.3. Requirements</a></span></dt></dl></dd><dt><span class="section"><a href="#process">2. Processing documents</a></span></dt><dt><span class="section"><a href="#builders">3. All builders</a></span></dt><dt><span class="section"><a href="#more">4. Need more?</a></span></dt></dl></div><div class="section" title="1. Basics"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="basics"></a>1. Basics</h2></div></div></div><p>This tool tries to make working with docutils in SCons a little easier.
+It provides several toolchains for creating different output formats,
+like HTML or LaTeX, from a reST (reStructuredText) input file.
+</p><div class="section" title="1.1. Install"><div class="titlepage"><div><div><h3 class="title"><a name="install"></a>1.1. Install</h3></div></div></div><p>Installing it, requires you to copy (or, even better: checkout) the contents of the
+package's <code class="literal">rest</code> folder to
+</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p><span class="quote">&#8220;<span class="quote"><code class="literal">/path_to_your_project/site_scons/site_tools/rest</code></span>&#8221;</span>, if you need the reST Tool in one project only, or
+</p></li><li class="listitem"><p><span class="quote">&#8220;<span class="quote"><code class="literal">~/.scons/site_scons/site_tools/rest</code></span>&#8221;</span>, for a system-wide installation under your current login.
+</p></li></ol></div><p>For more infos about this, please refer to 
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>the SCons User's Guide, chap. 19.7 "Where to put your custom Builders and Tools" and
+</p></li><li class="listitem"><p>the SCons Tools Wiki page at <a class="ulink" href="http://scons.org/wiki/ToolsIndex" target="_top">http://scons.org/wiki/ToolsIndex</a>.
+</p></li></ul></div></div><div class="section" title="1.2. How to activate"><div class="titlepage"><div><div><h3 class="title"><a name="activation"></a>1.2. How to activate</h3></div></div></div><p>For activating the tool "rest", you have to add its name to the Environment constructor,
+like this
+</p><pre class="screen">env = Environment(tools=['rest'])
+</pre><p>On its startup, the reST tool tries to find an installed version of the <code class="literal">docutils</code> package by
+looking for the command-line tool <code class="literal">rst2html</code>. So make sure that it is added to your system's environment
+<code class="literal">PATH</code> and can be called directly, without specifying its full path.
+</p></div><div class="section" title="1.3. Requirements"><div class="titlepage"><div><div><h3 class="title"><a name="requirements"></a>1.3. Requirements</h3></div></div></div><p>For the most basic processing of reST to HTML/LaTeX/ODT, you need to have installed
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>the Python <code class="literal">docutils</code> package, and optionally
+</p></li><li class="listitem"><p>the <code class="literal">pygment</code> module for syntax highlighting in code blocks.
+</p></li></ul></div></div></div><div class="section" title="2. Processing documents"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="process"></a>2. Processing documents</h2></div></div></div><p>Creating a HTML or LaTeX document is very simple and straightforward. Say
+</p><pre class="screen">env = Environment(tools=['rest'])
+env.Rst2Html('manual.html', 'manual.rst')
+env.Rst2Latex('manual.ltx', 'manual.rst')
+</pre><p>to get both outputs from your source file <code class="literal">manual.rst</code>. As a shortcut, you can
+give the stem of the filenames alone, like this:
+</p><pre class="screen">env = Environment(tools=['rest'])
+env.Rst2Html('manual')
+env.Rst2Latex('manual')
+</pre><p>and get the same result. Target and source lists are also supported:
+</p><pre class="screen">env = Environment(tools=['rest'])
+env.Rst2Html(['manual.html','reference.html'], ['manual.rst','reference.rst'])
+</pre><p>or even
+</p><pre class="screen">env = Environment(tools=['rest'])
+env.Rst2Html(['manual','reference'])
+</pre><div class="important" title="Important" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Important</h3><p>Whenever you leave out the list of sources, you may not specify a file extension! The
+Tool uses the given names as file stems, and adds the suffixes for target and source files
+accordingly.
+</p></div><p>The rules given above are valid for all the Builders <code class="literal">Rst2Html</code>, <code class="literal">Rst2Latex</code> 
+and <code class="literal">Rst2Odt</code>. 
+</p></div><div class="section" title="3. All builders"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="builders"></a>3. All builders</h2></div></div></div><p>A simple list of all builders currently available:
+</p><div class="variablelist"><dl><dt><span class="term">Rst2Html
+</span></dt><dd><p>Single HTML file.
+</p></dd><dt><span class="term">Rst2Latex
+</span></dt><dd><p>Outputs a LaTeX file.
+</p></dd><dt><span class="term">Rst2Odt
+</span></dt><dd><p>OpenOffice output.
+</p></dd></dl></div></div><div class="section" title="4. Need more?"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="more"></a>4. Need more?</h2></div></div></div><p>This work is still in a very basic state and hasn't been tested well
+with things like variant dirs, yet. 
+There will definitely arise the need for
+adding features, or a variable. Let us know if you can think of a nice
+improvement or have worked on a bugfix/patch with success. Enter your issues at the
+Bitbucket bug tracker for the ReST Tool, or write to the User General Discussion
+list of SCons at <code class="literal">users@scons.tigris.org</code>.
+</p></div></div></body></html>

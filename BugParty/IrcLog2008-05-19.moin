@@ -1,0 +1,371 @@
+#format irc
+16:42:23 *      bdbaddog (n=bdeegan@adsl-71-131-1-136.dsl.sntc01.pacbell.net) has joined #scons
+17:25:45 *      stevenknight (n=stevenkn@69.36.227.130) has joined #scons
+17:26:25 <GregoryNoel>  That's three; where's Gary?
+17:26:39 <stevenknight> i think he said he might be late
+17:26:42 <stevenknight> putting the kids to bed
+17:26:56 <stevenknight> bill, you're not spinning tonight?
+17:27:22 <stevenknight> oh, wait, he's greyed out
+17:27:30 <stevenknight> who's the third?
+17:28:17 *      garyo-home (n=chatzill@209-6-158-38.c3-0.smr-ubr3.sbo-smr.ma.cable.rcn.com) has joined #scons
+17:28:25 <GregoryNoel>  You, me, Bill, and there's Gary.
+17:28:34 <stevenknight> hi Gary
+17:28:50 <garyo-home>   hi guys, I'm here for a little, then I'll have to put the kids to bed, then I'll be back.
+17:28:57 <GregoryNoel>  Anybody else here for the bug party?
+17:30:09 <GregoryNoel>  OK, the official start is here; shall we proceed?
+17:30:16 <stevenknight> let's go
+17:30:24 <stevenknight> starting with current...
+17:30:25 <stevenknight> 2048
+17:30:36 <GregoryNoel>  In the overlaps?
+17:31:00 <stevenknight> the "Current issues" spreadsheet?
+17:31:33 <GregoryNoel>  We should do the ones left over from last time first; it overlaps with the current issues
+17:31:49 <stevenknight> okay, point me to the list/spreadsheet you want to work from
+17:32:06 <garyo-home>   I guess that would be editlist2008, w/ 1874 first
+17:32:14 <GregoryNoel>  yep
+17:32:35 <stevenknight> go ahead, i've scrolled down
+17:32:45 <garyo-home>   ok, 1874: hasn't this been fixed multiple times before?
+17:33:10 *      bdbaddog has quit ("Leaving.")
+17:33:12 <GregoryNoel>  Yes
+17:33:14 <garyo-home>   I think I fixed it myself a long time ago.
+17:33:27 <garyo-home>   Should've made a better test case I guess.
+17:33:46 <GregoryNoel>  Bill just left, but he was going to bring it up for discussion on the mailing list
+17:34:03 <GregoryNoel>  did it ever happen?  I don't remember it.
+17:34:13 <garyo-home>   Don't think so.
+17:34:33 <GregoryNoel>  And Steven is right that one size does not fit all.
+17:34:59 <garyo-home>   I seem to remember that I fixed it by ignoring "suffixes" that were all numeric, that's probably why ".4g" fails that test.
+17:35:21 <garyo-home>   Does this just have to be configurable?
+17:35:31 <GregoryNoel>  I don't see how
+17:35:30 <stevenknight> I think give it back to Bill and/or recategorize it as a doc issue
+17:35:43 <GregoryNoel>  I like doc issue
+17:35:52 <garyo-home>   there could be a "force suffix" option or something?
+17:36:06 <GregoryNoel>  Hmmm
+17:36:09 <stevenknight> that's File("name-with.odd-suffix")
+17:36:31 <GregoryNoel>  good point
+17:36:32 <stevenknight> oh, you mean on the Builder
+17:36:46 <garyo-home>   yeah I guess
+17:37:00 <GregoryNoel>  OK, a doc issue assigned to??
+17:37:14 <garyo-home>   I don't think it's just doc, is it?
+17:37:35 <GregoryNoel>  "If you don't like the suffix, use File()"
+17:37:56 <garyo-home>   OK, I could live with that for now, but I'd like a better solution for 2.x
+17:38:15 <GregoryNoel>  I would, too
+17:38:10 <stevenknight> back to Bill to really discuss on the mailing list
+17:38:34 <stevenknight> and/or doc the File() workaround
+17:38:30 <GregoryNoel>  OK, I'll make it, what, research?
+17:38:37 <stevenknight> yeah, research
+17:38:40 <GregoryNoel>  done
+17:38:45 <GregoryNoel>  next?
+17:38:54 <stevenknight> 1883
+17:39:09 <stevenknight> damn, i answered this in the other spreadsheet as well
+17:39:14 <stevenknight> my comment in editlist2008 is off
+17:39:22 <stevenknight> the last time we put it in we did have instaler issues
+17:39:34 <GregoryNoel>  What's up with Nathan?
+17:39:37 <stevenknight> but it was because distutils changed the location to the script/ subdirectory at the same time
+17:39:45 <stevenknight> I don't think it had anything to do with this App Paths thing
+17:39:58 <stevenknight> ???
+17:40:01 <stevenknight> oh, GSoC?
+17:40:13 <GregoryNoel>  Yes, we talked about assigning it to him
+17:40:39 <stevenknight> ah, right
+17:40:42 <garyo-home>   1883: what does the patch really do?  I can't see it.
+17:41:20 <stevenknight> it adds an entry to the Windows registry
+17:41:48 <stevenknight> IIRC it ends up making it so you can execute scons.bat w/out having to have the directory in %PATH%
+17:42:17 <stevenknight> Nathan has been sending me status reports, but I've not been giving him adequate attention yet
+17:42:20 <garyo-home>   That would be good; maybe it sets cmd.exe's AppPath or something I guess
+17:42:22 <stevenknight> so we could definitely assign it to him
+17:42:45 <garyo-home>   I never use scons.bat, but I could do so for testing this.
+17:42:47 <GregoryNoel>  OK, what's his account?
+17:43:15 <stevenknight> i'll look it up
+17:43:20 <stevenknight> let's move on while i search
+17:43:32 <garyo-home>   1925, then?
+17:43:46 <GregoryNoel>  Add it to the spreadsheet when you find it; I'll take care of it later
+17:44:01 <stevenknight> okay
+17:44:07 <stevenknight> 1925:  research, me
+17:44:24 <GregoryNoel>  done; next?
+17:44:32 <garyo-home>   OK, but not for 1.0 though
+17:44:53 <stevenknight> definitely not 1.0
+17:45:01 <GregoryNoel>  probably 2.x
+17:45:07 <stevenknight> 1958:  Bill's volunteering, consensus research
+17:45:29 <GregoryNoel>  done
+17:46:11 <garyo-home>   2000: I say 1.x but not the approach in the patch; should really figure it out.
+17:46:28 <GregoryNoel>  when?
+17:46:56 <garyo-home>   Low priority, so could be 2.x as far as I care
+17:47:02 <GregoryNoel>  1.x? or move to 2.x?
+17:47:35 <garyo-home>   I say 2.x because it'll just slow down real work
+17:47:37 <stevenknight> agree w/Gary, 1.x, low priority...  P4?
+17:47:46 <GregoryNoel>  p5
+17:47:50 <stevenknight> fair enough
+17:47:57 <GregoryNoel>  done; next?
+17:47:59 <stevenknight> do i hear p6?
+17:48:08 <GregoryNoel>  (no such!)
+17:48:10 <garyo-home>   :-)
+17:48:19 <stevenknight> going once, twice.... sold!
+17:48:43 <garyo-home>   ok, 2001?  (remove max_drift)
+17:48:58 <stevenknight> 2001:  research
+17:49:00 <GregoryNoel>  Narrow use; 2.x
+17:49:08 <garyo-home>   I don't use it, but it was meant to support NFS.
+17:49:26 <stevenknight> i'm inclined to give it back to Ken and let him lead a ML discussion to find out who's actually using it
+17:49:29 <stevenknight> if anyone
+17:49:35 <GregoryNoel>  And NFS now uses deltas, so it doesn't happen any more.
+17:49:38 <garyo-home>   Actually Greg if it can give a 25% speedup, I say get rid of it sooner
+17:49:50 <stevenknight> speedup++
+17:50:01 <garyo-home>   1.x, p2?
+17:50:12 *      stevenknight agrees
+17:50:22 <GregoryNoel>  ok
+17:50:44 <garyo-home>   2003 is weird
+17:50:46 <stevenknight> 2003:  agree w/Greg, wontfix
+17:50:52 <stevenknight> agree w/Gary, weird
+17:51:07 <garyo-home>   wontfix
+17:51:11 <GregoryNoel>  done
+17:51:37 <GregoryNoel>  last one?
+17:51:59 <garyo-home>   This will get fixed someday by Greg+Gary tool rewrite, but what about the near term?
+17:52:39 <garyo-home>   We can't use his patch as is, people don't expect CCFLAGS to get clobbered.
+17:53:06 <GregoryNoel>  Maybe it should be set by c-common setup, whatever it's called.
+17:53:34 <GregoryNoel>  er, no, bad idea
+17:53:53 <stevenknight> hmm, i took a quick look last night and i think his narrow fix of having mingw reset $CCFLAGS solves his specific symptom nicely with little impact
+17:54:02 <GregoryNoel>  This happens because one compiler is configured and then another configured on top of it
+17:54:15 <stevenknight> agreed that's the larger issue
+17:54:20 <garyo-home>   Right, but what if user sets CCFLAGS and then applies Tool('mingw')?
+17:54:35 <GregoryNoel>  He gets what he pays for.
+17:54:44 <stevenknight> they're no worse off than lots of other things that get set
+17:54:52 <stevenknight> $CCCOM, $CFLAGS, etc.
+17:54:56 <garyo-home>   Hmm, OK I see your point.
+17:55:10 <stevenknight> all that has to wait until your tool rewrite
+17:55:17 <garyo-home>   OK, 1.x then.
+17:55:21 <stevenknight> but we can make this one situation better in the meantime
+17:55:26 <GregoryNoel>  OK, what priority?
+17:55:36 <stevenknight> p2 or p3
+17:55:58 <garyo-home>   p3, it's only that one tool in that one case
+17:56:02 <GregoryNoel>  done; on to the next spreadsheet
+17:56:02 <stevenknight> okay
+17:56:24 <stevenknight> Current Issues, right?
+17:56:26 <garyo-home>   I like Ken's patch in 2048
+17:56:44 <stevenknight> gary, you think 1.0?
+17:56:51 <GregoryNoel>  destab
+17:57:00 <stevenknight> as in 0.98.5?
+17:57:01 <GregoryNoel>  destableizing
+17:57:06 <stevenknight> right, i'm worried abou stability on it
+17:57:12 <garyo-home>   Look at the code; it only does changes that one case.  But 1.x is fine w/ me.
+17:57:16 <GregoryNoel>  (ok, I still can't spell)
+17:58:02 <garyo-home>   1953, my current bete noire...
+17:58:03 <GregoryNoel>  1.x, what priority?
+17:58:05 <stevenknight> 1.x, give it to me for integration
+17:58:20 <garyo-home>   2048: p3?
+17:58:24 <stevenknight> p2, i agree that the patch is nice (modulo stability)
+17:58:32 <garyo-home>   ok, p2
+17:58:36 <GregoryNoel>  2048, ok
+17:59:13 <garyo-home>   Can we put 1953 in 1.0?
+17:59:35 <garyo-home>   At least to see if that fixes the problem?
+17:59:37 <stevenknight> that code looks safe enough to me
+17:59:52 <stevenknight> and there needs to be a 0.98.5 for other reasons anyway
+17:59:55 <stevenknight> 1.0, p2
+17:59:55 <GregoryNoel>  it was off the top of my head; don't take it literally
+18:00:07 <stevenknight> right, but it's clear a problem
+18:00:24 <stevenknight> and you point to the right sort of solution, even if the code ends up a little different
+18:00:26 <garyo-home>   and it *has* to be a threading thing because otherwise that error could not occur
+18:00:28 <GregoryNoel>  it still leaves the race, it just covers up the symptoms
+18:00:36 <garyo-home>   Greg: that is true.
+18:01:05 <stevenknight> an ounce of image is worth a pound of performance...  ;-)
+18:01:33 <garyo-home>   I'll be back in a bit -- at least you're at the part of the spreadsheet where I did my homework now :-)
+18:01:34 <GregoryNoel>  Gary, have you tried it?
+18:02:21 <GregoryNoel>  Why don't we assign it to you for research; if it seems to kill the problem, we'll try it for 1.0
+18:02:30 <GregoryNoel>  And he's gone....
+18:02:37 <stevenknight> yeah
+18:02:40 <stevenknight> research, me
+18:03:00 <GregoryNoel>  OK, I'm sure Gary will be willing to test it
+18:03:11 <stevenknight> agree about the underlying race for NodeInfo still being there; I'll add comments to that effect
+18:03:24 <stevenknight> in get_ninfo(), not just here
+18:03:39 <stevenknight> and/or in NodeInfo.__init__() or some such
+18:03:48 <GregoryNoel>  works for me
+18:03:59 <stevenknight> okay, looks like we covered the next set of overlaps
+18:04:03 <stevenknight> 1874, 1883
+18:04:05 <GregoryNoel>  skipping the overlaps to 1967?
+18:04:27 <stevenknight> right 1967
+18:04:30 <stevenknight> consensus future
+18:04:37 <GregoryNoel>  done
+18:04:40 <stevenknight> do we need an assigee?
+18:05:03 <GregoryNoel>  for that far in the future? no, I don't think so.  what priority?
+18:05:18 <stevenknight> leave it p3
+18:05:24 <GregoryNoel>  done;next?
+18:05:41 <stevenknight> skip 2000, 2001
+18:05:49 <GregoryNoel>  I'll take 2007
+18:05:50 <stevenknight> 2007:  1.x, you
+18:05:53 <GregoryNoel>  done
+18:06:19 <stevenknight> 2010:  2.x consensus
+18:06:21 <stevenknight> leave unassigned?
+18:06:28 <GregoryNoel>  yes to both
+18:06:57 <GregoryNoel>  I want to get a keyword for all of these so we can triage them further as a group.
+18:07:06 <GregoryNoel>  and assign them then
+18:07:05 <stevenknight> good idea
+18:07:18 <stevenknight> 2014:  i'm torn
+18:07:39 <GregoryNoel>  I don't understand why it's needed
+18:08:04 <stevenknight> right now we assume that no one else has corrupted the tree in between runs
+18:08:08 <stevenknight> not unreasonably
+18:08:10 <GregoryNoel>  either you trust the sig or you don't.
+18:08:51 <GregoryNoel>  if you don't trust it, always recalc, fine.
+18:09:05 <GregoryNoel>  but if you're going to try for optimizations, you have to trust it
+18:09:21 <stevenknight> hmm, i do see your point
+18:09:26 <GregoryNoel>  that's why Decider() has such a range of options
+18:09:31 <stevenknight> this was a bigger problem back when we were using build signatures
+18:09:51 <GregoryNoel>  but they're going away
+18:10:00 <stevenknight> and we could use signatures from the .sconsign file assuming no file corruption
+18:10:01 <GregoryNoel>  don't throw good effort after bad
+18:10:40 <GregoryNoel>  Uh, which file corrupted?  .sconign?
+18:11:06 <stevenknight> no, you build
+18:11:28 <stevenknight> then someone corrupts your .obj file (or copies a trojan into it)
+18:11:48 <stevenknight> and we could see the .c file hasn't change, so we don't rebuild the .obj
+18:12:06 <stevenknight> but then *use* that corrupt .obj to link a .exe
+18:12:13 <stevenknight> so this verification would be
+18:12:15 <GregoryNoel>  The sig wouldn't match, oh, I see,
+18:12:29 <stevenknight> right
+18:12:38 <GregoryNoel>  The new sig wouldn't match, but the old one could.
+18:12:40 <GregoryNoel>  hmmm
+18:13:22 <stevenknight> right, it starts to use the .sconsign signatures as a weak bill-of-materials of sorts
+18:14:01 <stevenknight> before you use the built targets from last time, please make sure that you think they really do match what you thought you built
+18:13:49 <GregoryNoel>  How about a Decider(always-recalc)?
+18:14:17 <stevenknight> something like that
+18:14:34 <GregoryNoel>  I could understand that but I'd do it as a Decider()
+18:14:42 <stevenknight> give it to me, 1.x, p3
+18:14:49 <GregoryNoel>  done
+18:15:13 <stevenknight> if it fits in Decider I'll do it that way
+18:15:58 <stevenknight> hmm, looks like i'll be able to go beyond 6:30 tonight
+18:16:12 <GregoryNoel>  Keep pushing...
+18:16:16 <stevenknight> we're stuck in traffic
+18:16:32 <stevenknight> likely because of an accident... :-(
+18:17:05 <GregoryNoel>  (I'll tell you my stuck-in-traffic story some day)
+18:16:36 <GregoryNoel>  2015
+18:17:06 <stevenknight> 1.x, me, p3
+18:17:47 <GregoryNoel>  ok, getting that scan for the dir source really needs to be fixed
+18:18:46 <GregoryNoel>  2016, consensus
+18:19:22 <stevenknight> yeah, 2.x
+18:19:50 <GregoryNoel>  2020: this isn't tool config, why our plan?
+18:20:31 <GregoryNoel>  oops, screen update, nevermind
+18:21:03 <stevenknight> sorry, what are we on?
+18:21:08 <stevenknight> 2016 is consensus 2.x, yes?
+18:21:12 <stevenknight> and I have 2018 next
+18:21:52 <GregoryNoel>  Yeah, the spreadsheet is giving me partial screen updates
+18:22:06 <stevenknight> okay
+18:22:33 <stevenknight> i think 2018 is pretty straightforward
+18:22:43 <stevenknight> 1.x seems reasonable
+18:22:45 <GregoryNoel>  I'm pretty sure that blanks are compressed out of all cmd-STR variables
+18:23:12 <GregoryNoel>  But I've broken the case where I was doing it, so I'm not positive.
+18:23:10 <stevenknight> if you want to confirm that I'll support INVALID
+18:23:24 <GregoryNoel>  me, research?
+18:23:45 <stevenknight> done
+18:24:15 <GregoryNoel>  2020, you, as specified, done
+18:24:15 <stevenknight> 2020:  me, 1.x, p...2?
+18:24:49 <stevenknight> 2021:  1.x, anyone else's choice of priority
+18:25:07 <GregoryNoel>  These File/Dir conflicts are new; something started them.  p2 is probbly OK
+18:25:40 <stevenknight> 2021 is actually the --debug=time + --interactive bug, not File/Dir
+18:26:18 <GregoryNoel>  Yeah, I don't type fast enough
+18:26:49 <stevenknight> no problem, just want to make sure we're getting right info on the right bug
+18:27:01 <GregoryNoel>  2021 p2 unless it's not simple, then p3 or p4
+18:27:20 <stevenknight> agreed
+18:27:23 <GregoryNoel>  done
+18:27:55 <stevenknight> 2022:  agree w/your plan, let David prioritize it relative to his time and other Fortran work
+18:28:04 <GregoryNoel>  2023, you research for dup?
+18:28:37 <stevenknight> yes
+18:28:49 <GregoryNoel>  2022, funny screen updates again, done
+18:29:30 <stevenknight> no problem
+18:29:33 <stevenknight> 2029:
+18:29:46 <GregoryNoel>  not a lot of yacc users, 2.x?
+18:29:59 <stevenknight> i could go for that
+18:30:13 <GregoryNoel>  assign to Gary?
+18:30:14 <stevenknight> we can always move it up if there's a groundswell
+18:30:20 <GregoryNoel>  agreed
+18:30:21 <stevenknight> yes
+18:30:24 <GregoryNoel>  done
+18:31:00 *      GregoryNoel stays silent for 2036
+18:31:05 <stevenknight> 2036:  consensus 2.x p2
+18:31:19 <GregoryNoel>  done
+18:31:23 <stevenknight> i completely agree we're way overdue for a better way to do this
+18:31:37 <stevenknight> assign it to either me or you and we can work out a reasonable interface between us
+18:31:45 <stevenknight> i'd be happy to implement, though
+18:32:08 <GregoryNoel>  I don't like DESTDIR; too inflexible, but we can discuss that elsewhere
+18:32:21 <stevenknight> i think you're right
+18:32:29 <stevenknight> 2037:  TASK
+18:32:36 <stevenknight> it's not product code at all
+18:33:03 <stevenknight> let Sohail check it in himself and you (or anyone else) can hack on it as necessary
+18:33:12 <GregoryNoel>  done; I fiddled with it today
+18:33:14 <garyo-home>   hi guys I'm back
+18:33:24 <stevenknight> hey there
+18:33:33 <stevenknight> we're up to 2041 on the "Current issues" spreadsheet
+18:33:38 <GregoryNoel>  and there's some nice test code in the attachment; Hi, Gary...
+18:33:53 <stevenknight> just in time for you to weigh in on it, it's an intelc.py thing
+18:34:03 <garyo-home>   OK.  yep, that sounds like mine.
+18:34:32 <stevenknight> okay, we got past the traffic slowdown, i think i've got another 5-10 minutes
+18:34:52 <garyo-home>   Don't know if it has to be as complicated as that patch though; I might just add an option so user could specify if needed.
+18:35:03 <stevenknight> 2041:  assign to gary, 1.x, p...3?
+18:35:05 <garyo-home>   Anyway assign it to me, 1.x, p2 or p3
+18:35:11 <GregoryNoel>  p3
+18:35:24 <GregoryNoel>  done
+18:35:46 <stevenknight> skip next (OVERLAP)
+18:35:47 <stevenknight> 2043
+18:35:50 <garyo-home>   2043 seems like a side project to me
+18:35:56 <stevenknight> 2.x, p4
+18:36:01 <stevenknight> we have plenty of real work to do
+18:36:05 <garyo-home>   OK, 2.x p4
+18:36:21 <GregoryNoel>  done; when shall we three meet again?
+18:36:25 <stevenknight> if they want to actually do the work i'd be okay with it going in earlier, too
+18:36:36 <GregoryNoel>  in lightning, thunder, or in rain?
+18:36:38 <stevenknight> 2044:
+18:36:45 <stevenknight> 1.x, p2 (if not p1)?
+18:36:48 <garyo-home>   Yes, 2044 should be 1.x or earlier
+18:36:54 <stevenknight> i'd say 1.0 but it's potentially destabilizing
+18:36:54 <GregoryNoel>  uh, that was a left parenthesis...
+18:36:57 <garyo-home>   UNC paths are important
+18:37:20 <stevenknight> if you want we could make it 1.0 and i could take a look at how bad it would be
+18:37:36 <stevenknight> i can always decide to push it back
+18:37:42 <GregoryNoel>  research?  I don't want to commit to 1.0
+18:37:58 <garyo-home>   I can run it here too.  Let's just look at the code carefully before putting it in 1.0.
+18:38:06 <stevenknight> i'd prefere 1.x over research to make sure it stays on more visible lists
+18:38:17 <GregoryNoel>  1.x p1?
+18:38:19 <stevenknight> research suggests "back burner" to me w.r.t. actually allocating time
+18:38:19 <garyo-home>   Yes, don't make it research
+18:38:24 <stevenknight> yeah, 1.x p1
+18:38:33 <garyo-home>   OK w/ that
+18:38:39 <GregoryNoel>  No, research means "figure this out and assign it to a milestone"
+18:39:05 <GregoryNoel>  Can we meet again tomorrow briefly if we don't finish today?
+18:39:05 <garyo-home>   Greg: technically you're right but we're close to 1.0 now so there's not much research time left
+18:39:09 <stevenknight> i agree conceptually, but in practice I deal with 1.0 before research
+18:39:28 <garyo-home>   Yes, I can do tomorrow night for a little while.  I'll finish the spreadsheet too.
+18:39:48 <GregoryNoel>  Just for this spreadsheet
+18:40:00 <stevenknight> 2046:  consensus 1.x p4
+18:40:03 <stevenknight> i can do tomorrow
+18:40:05 <garyo-home>   right, that's the last bit: 2046 to the end
+18:40:27 <stevenknight> okay, last few minutes for me
+18:40:36 <stevenknight> tomorrow night:  17:00 or 17:30?
+18:40:52 <garyo-home>   17:00 is better for me I think
+18:40:58 <stevenknight> that's fine for me
+18:41:00 <GregoryNoel>  either is fine by me
+18:41:04 <stevenknight> 17:00
+18:41:09 <garyo-home>   ok, done, see you then
+18:41:13 <stevenknight> sounds good
+18:41:15 <stevenknight> many thanks
+18:41:24 <GregoryNoel>  17h00 to use the standard, such as it is...
+18:41:34 <stevenknight> 17h00...  :-)
+18:41:38 <garyo-home>   right.
+18:41:39 <GregoryNoel>  2047?
+18:41:57 <garyo-home>   That's the one that a user was complaining about, right?
+18:42:09 <garyo-home>   How about warning instead of erroring?
+18:42:11 <stevenknight> yeah
+18:42:29 <GregoryNoel>  I'll buy a warning
+18:42:36 <stevenknight> 1.0?
+18:42:42 <GregoryNoel>  hmmm
+18:43:02 <garyo-home>   As long as adding the warning and keeping going is easy, then 1.0, else 1.x.
+18:43:05 <stevenknight> i'm more comfortable with 1.x, but this is pretty annoying
+18:43:26 <stevenknight> me, 1.0, p2
+18:43:32 <GregoryNoel>  1.x p1; if he finishes early, we can reconsider
+18:43:33 <garyo-home>   Put it in for 1.0 but if it gets tricky then reschedule for 1.x
+18:43:36 <stevenknight> if it looks risky i'll push it out
+18:43:44 <stevenknight> agreed
+18:43:53 <GregoryNoel>  which?
+18:43:59 <stevenknight> coming up to the bus stop, catch you guys tomorrow
+18:44:01 <stevenknight> 1.0
+18:44:13 <garyo-home>   ok, have a good night Steven!
+18:44:17 <stevenknight> 2047:  1.0, p2
+18:44:18 <GregoryNoel>  Let's pick up here; cul
+18:44:18 <stevenknight> l8r
+18:44:22 *      stevenknight has quit ("Leaving")
+18:44:24 <garyo-home>   (pun not intended)
+18:44:47 <garyo-home>   ok Greg, I'll see you tomorrow as well.
+18:44:54 <GregoryNoel>  OK, cul
+18:45:02 <garyo-home>   bye

@@ -1,0 +1,7 @@
+env = Environment()
+
+#construct global env
+buildenv = env.Copy()
+buildenv.Append(CFLAGS = Split("-g -O2 -Wall"))
+
+buildenv.Program('hello', ['hello.c'])

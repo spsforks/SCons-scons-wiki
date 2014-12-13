@@ -1,0 +1,7 @@
+
+Verify that you have SVN and VERSION in your shell environment as described in the setup section above, then run this command: 
+
+
+```txt
+  $ svn cp . $SVN/tags/$VERSION -m"Tagging $VERSION"
+```

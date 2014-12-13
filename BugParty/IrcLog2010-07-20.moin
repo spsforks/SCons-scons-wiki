@@ -1,0 +1,320 @@
+#format irc
+16:50:31 *	Garyo (~chatzilla@209-6-36-50.c3-0.smr-ubr1.sbo-smr.ma.cable.rcn.com) has joined #SCONS
+16:55:03 *	jason_at_intel (~chatzilla@185.sub-75-205-7.myvzw.com) has joined #SCONS
+16:55:21 *	bdbaddog (~bdeegan@adsl-71-131-10-196.dsl.sntc01.pacbell.net) has joined #SCONS
+17:03:18 *	sgk (~sgk@nat/google/x-vdmoydnhvesvboyw) has joined #SCONS
+17:05:37 <GregNoel>	Are we ready to go?
+17:05:44 <Garyo>	i am
+17:05:47 <jason_at_intel>	Hi Steve, think we found the cause of the temp file issue
+17:05:53 <sgk>	ready when everyone else is
+17:05:54 <jason_at_intel>	I am ready
+17:05:57 <GregNoel>	1938 Gary took it
+17:05:57 <GregNoel>	1891
+17:06:06 <sgk>	i saw your mail, that sounds exactly like what's going on
+17:06:42 <Garyo>	1891?
+17:07:01 <GregNoel>	That's what's on the spreadsheet.
+17:06:56 <sgk>	sorry, that reply was to jason
+17:07:00 <jason_at_intel>	I think it just needs a fix to mslink
+17:07:08 <sgk>	jason, let's stick to the issue list and we can discuss the tempfile thing in turn
+17:07:21 <sgk>	or at the end if we haven't gotten to it
+17:07:17 <jason_at_intel>	yep
+17:07:27 <jason_at_intel>	so 1891
+17:07:34 <jason_at_intel>	I think we need to fix mslink.py
+17:07:41 <jason_at_intel>	and this will work
+17:08:12 <sgk>	that makes sense
+17:08:07 <Garyo>	Agree it can't be that hard.  Who has time?  Jason, would you like to take a crack at it?
+17:08:19 <jason_at_intel>	I would be happy to
+17:08:27 <Garyo>	2.1 p3 jason?
+17:08:33 <jason_at_intel>	I will try it out in the Parts mslink version
+17:08:53 <jason_at_intel>	that should be easy to map back to the SCons version
+17:09:10 <jason_at_intel>	since it just a new set of actions
+17:08:59 <sgk>	cool, thanks
+17:09:03 <sgk>	2.1 p3 jason sounds good to me
+17:09:06 <GregNoel>	done
+17:09:08 <GregNoel>	2153
+17:09:31 <sgk>	2153:  this is the email jason was referring to
+17:09:36 <jason_at_intel>	so I sent a mail on this to steve.. summarized here
+17:09:54 <sgk>	because long-line tempfiles get created as as a side effect of expanding ${TEMPFILE} in the command line
+17:10:12 <sgk>	the file gets created when we expand the line for display, too
+17:10:32 <sgk>	and since that display expansion doesn't actually get executed, the tempfile deletion never happens
+17:10:51 <Garyo>	hmm, makes sense.
+17:10:18 <jason_at_intel>	not sure on what is the best fix... thinking about MD5 the string to store the tempfile name in the env
+17:11:08 <sgk>	Jason, do you or your intern have cycles to work w/me on fixing this?
+17:11:16 <jason_at_intel>	Yep
+17:11:20 <sgk>	it might be a little involved, because it's not happening at the right time
+17:11:40 <sgk>	but i can provide direction, and if you two have time for the coding+testing, it'll go quicker than if it's on my plate
+17:11:43 <sgk>	okay, cool
+17:11:56 <jason_at_intel>	need to know if the env we pass to the action is unique or not
+17:12:02 <sgk>	2.1 p2 jason then
+17:12:10 <Garyo>	+1
+17:12:08 <GregNoel>	done
+17:12:14 <GregNoel>	2575 I can post the long comment, but I have commitments that will prevent me from taking much part in the discussion.
+17:12:44 <jason_at_intel>	honestly we have this fixed in Parts without a chdir
+17:13:02 <sgk>	for zip?  or a more general fix?
+17:13:07 <jason_at_intel>	it was so critical, we just made our own zipfile builder
+17:13:10 <Garyo>	I don't think it's too involved, but that's cause I'm pretty sure just passing a prefix or prefix to eliminate to the zipfile stuff is the way to go
+17:13:20 <jason_at_intel>	zipfile, tarfile bz2file
+17:13:31 <jason_at_intel>	it all the same basic code
+17:14:00 <jason_at_intel>	we can review it when i visit
+17:14:28 <sgk>	let's do that
+17:14:34 <Garyo>	I thought at least zipfile can already run w/o chdir
+17:14:32 <jason_at_intel>	I don't know if greg is in the CA area or not
+17:14:41 <jason_at_intel>	I take it he would want to have a say
+17:14:40 <sgk>	greg's in San Diego
+17:14:56 <jason_at_intel>	that pretty far south.. correct?
+17:15:08 <sgk>	yes, prohibitively so
+17:15:27 <jason_at_intel>	:-(.. want to meet the master himself :-)
+17:15:31 <sgk>	but we could at least start looking at it
+17:15:36 <jason_at_intel>	yep
+17:15:41 <Garyo>	How about Greg posting the long comment anyway so we can discuss the interface in the Zip builder, then use your code to implement?
+17:15:51 <sgk>	++
+17:15:59 <GregNoel>	Garyo, good idea
+17:16:08 <jason_at_intel>	sounds good
+17:16:23 <sgk>	leave it owned as issues@scons and revisit it after discussion?
+17:16:30 <Garyo>	I'm ok w/ that
+17:16:32 <GregNoel>	What to do with the issue in the meantime?
+17:16:46 <Garyo>	nothing?
+17:17:02 <GregNoel>	... with a meaning of review next time?
+17:16:59 <jason_at_intel>	is it research?
+17:17:22 <sgk>	yeah, either research or leave it as is, so we revisit it next time
+17:17:23 <Garyo>	I'm ok w/ research jason too -- that way we'll review it.
+17:17:47 <GregNoel>	research p1 then?
+17:18:02 <sgk>	done
+17:18:02 <GregNoel>	Who should own it?
+17:18:18 <sgk>	GregNoel until you post the comment, then re-assign to Jason?
+17:18:19 <Garyo>	Jason imho.  Jason, when's your meeting with sk?
+17:18:38 <jason_at_intel>	aug 18-19
+17:19:10 <jason_at_intel>	I get there aug 17.. . I forget what time.
+17:19:16 <jason_at_intel>	leave early on saturday
+17:19:27 <Garyo>	Anyway we have plenty of time to discuss on the ML
+17:18:53 <Garyo>	ok
+17:18:57 <sgk>	ok
+17:19:01 <GregNoel>	done
+17:19:04 <GregNoel>	1450
+17:19:22 <jason_at_intel>	ya so this bug
+17:19:54 <Garyo>	1450: Jason, do you have anything that would actually break?
+17:19:56 <jason_at_intel>	My concern is that the fix seems tied to a given version of mslink
+17:20:13 <jason_at_intel>	what about other tools?
+17:20:23 <Garyo>	Yeah, it's a fair point -- newlines in a command line makes me nervous too, even if it works now
+17:20:38 <jason_at_intel>	I might be missing something.
+17:20:46 <jason_at_intel>	but i think more testing is needed
+17:21:02 <Garyo>	Could have two versions TEMPFILE and TEMPFILESPACES or something (yuck)
+17:21:06 <jason_at_intel>	I am under the view that minus link
+17:21:11 <jason_at_intel>	most tools would take a file in a different way
+17:21:09 <sgk>	good lord, a command line that actually blows out the temp file limit?  131K characters?
+17:21:34 <Garyo>	sgk: I think it blows out the line length limit, hence the newlines.
+17:21:54 <Garyo>	and yes, that's a big cmd line! :-/
+17:22:02 <jason_at_intel>	per line
+17:22:03 <sgk>	the CMD line length limit is already exceeded, that's why it's getting put in the temp file
+17:22:12 <sgk>	i'm trying to figure out if there are two limits at work here
+17:22:43 <sgk>	or at least, our notion of the CMD line length is exceeded
+17:23:01 <sgk>	(bus coming in ~1-2 minutes, i'll have an interrupt)
+17:23:12 <Garyo>	The ticket says it generates LNK1170, a linker error (not cmd.exe)
+17:23:35 <sgk>	good point
+17:23:46 <sgk>	it's the linker that interprets the @tmpfile thing
+17:23:57 <sgk>	gotta run, biab
+17:23:59 *	sgk has quit (Quit: sgk)
+17:24:02 <jason_at_intel>	the fix was to make a new line before that link limit was hit
+17:25:28 <Garyo>	yes -- the fix in the post is to just join all the elements with newlines...
+17:25:57 <Garyo>	I just googled it and even vs2010 has this limit (128k chars on a line) and the suggested workaround is the same, use newlines
+17:26:17 <jason_at_intel>	I believe the icl, cl and link tools handle input files in this format
+17:27:05 *	sgk (~sgk@67.218.107.184) has joined #SCONS
+17:27:16 <sgk>	hello again
+17:27:18 <GregNoel>	So what to do with the issue?  We've pretty much reached the discussion limit.
+17:27:19 <Garyo>	right.  Your point is that TEMPFILE could be used for other tools which might barf on newlines, right?
+17:27:31 <jason_at_intel>	yep
+17:27:47 <Garyo>	I think either (a) an arg to TEMPFILE for what spacer to use, or (b) two versions of TEMPFILE
+17:28:05 <jason_at_intel>	... I think it would be easy to tweak tempfile to workaround this however.. I think
+17:28:20 <sgk>	yeah, we can make TEMPFILE configurable in some way
+17:28:31 <Garyo>	that'd be my 1st choice.
+17:28:58 <jason_at_intel>	if we can pass in a separator value to be used to the $Tempfile call.. i do stuff like this in Parts with the mappers objects
+17:29:07 <GregNoel>	So what to do with the issue?  We've pretty much reached the discussion limit.
+17:29:23 <sgk>	jason 2.1 p3 ?
+17:29:28 <jason_at_intel>	Since I seem to be fixing it.. I can take a stab at it
+17:29:40 <Garyo>	Jason, if you'll investigate it that'd be awesome.
+17:29:46 <GregNoel>	done
+17:29:52 <GregNoel>	2281 I'll go with research sk; what priority?
+17:30:11 <sgk>	i think it's a corner case, so I'd suggest p4
+17:30:19 <Garyo>	fine w/ me
+17:30:24 <GregNoel>	done
+17:30:34 <GregNoel>	2285
+17:30:53 <sgk>	2.1 p4 sk
+17:31:09 <GregNoel>	done
+17:31:11 <GregNoel>	2380
+17:31:11 <Garyo>	I think it has to be -- only you understand that stuff
+17:31:19 <sgk>	yeah
+17:31:21 <sgk>	:-(
+17:31:44 <jason_at_intel>	I woudl want to talk to you about this as well when i visit
+17:31:54 <Garyo>	2380?  Is it controversial?
+17:31:55 <sgk>	2380:  2.1 p4 ...  who?
+17:32:05 <jason_at_intel>	I want Scons to handle symlink and hardlinks on windows
+17:32:19 <jason_at_intel>	I Have it working.. but it really needs fixes in SCons
+17:33:04 <jason_at_intel>	then there is permission issues on windows.. so link might have to copy
+17:33:20 <Garyo>	I could do it but not for 2.1.  If it's me, it'd be 2.2 p3 garyo
+17:33:58 <Garyo>	(2380, not symlinks on windows of course)
+17:34:03 <sgk>	since it's low priority, 2.x p3 and punt on assigning someone for now?
+17:34:46 <GregNoel>	Hearing no objection, done
+17:34:50 <Garyo>	ok
+17:34:49 <GregNoel>	1745
+17:35:09 <Garyo>	see my comment
+17:35:16 <jason_at_intel>	ya.. but the issue is related to the File.<api> that needs to replace all os.<fileapi> calls
+17:35:38 <jason_at_intel>	:-)
+17:35:38 <sgk>	we've been loading up jason
+17:35:39 <Garyo>	jason, I think 1745 can be fixed w/o any of that.
+17:35:54 <sgk>	i see bdbaddog's signed in, is bill here?
+17:35:59 <bdbaddog>	yes
+17:36:48 <sgk>	bill, any of these look up your alley?
+17:36:20 <jason_at_intel>	why i think making all files precious is better than deleting them by default
+17:37:08 <Garyo>	ok, but the minimal change for 1745 is just to make the .ilk file a side effect.
+17:37:25 <sgk>	ah
+17:37:25 <jason_at_intel>	so is there anyway we can modify the object builder on windows?
+17:37:29 <Garyo>	Making incremental links work should maybe be a separate ticket.
+17:37:29 <bdbaddog>	so mslink emitter work then right?
+17:37:31 <jason_at_intel>	I am not sure where that is
+17:37:53 <Garyo>	bdbaddog: seems like it to me
+17:37:54 <sgk>	agree w/garyo re: a separate ticket for incremental links
+17:38:11 <jason_at_intel>	so this bug directly, is just a addition to .ilk files
+17:38:16 <jason_at_intel>	as a sideeffect
+17:38:24 <jason_at_intel>	given that the flags support it
+17:38:31 <bdbaddog>	are the .ilk's always generated?
+17:38:45 <bdbaddog>	or do some ms flags enable/disable them?
+17:38:46 <jason_at_intel>	there is some flag to force no incremental build
+17:38:47 <Garyo>	unless /noincremental or something like that
+17:39:08 <Garyo>	but I think it's ok to declare a side effect that doesn't get generated
+17:39:12 <Garyo>	(right?)
+17:39:28 <sgk>	i think so
+17:39:38 <GregNoel>	I think so, too
+17:39:18 <bdbaddog>	o.k. I can take it then.
+17:39:27 <Garyo>	thanks!
+17:39:38 <bdbaddog>	if the scope is .ilk's get deleted with --clean afterwards.
+17:39:54 <Garyo>	agreed, minimal scope
+17:39:59 <sgk>	yeah, if it turns into something bigger than that, we should re-review it
+17:40:04 <GregNoel>	milestone and priority?
+17:40:19 <Garyo>	2.1 p4, imho
+17:41:35 <sgk>	sounds good, bdbaddog++
+17:40:23 <sgk>	the only pitfall i can think of is if non-existent side-effect files trigger unnecessary rebuilds
+17:40:29 <sgk>	i don't think they do, but i don't remember
+17:40:47 <bdbaddog>	sgk: 99% sure you're right
+17:40:50 <Garyo>	sgk: I'm pretty sure not.
+17:41:06 <GregNoel>	sgk, I'm pretty sure they don't; that's why Russel uses them in the LaTeX builder.
+17:40:45 <sgk>	we should set a target date for 2.1
+17:40:23 <bdbaddog>	when are we thinking 2.1 will be?
+17:40:50 <sgk>	discuss after the issues?
+17:41:39 <GregNoel>	milestone and priority?
+17:41:41 <Garyo>	roadmap says 2.1 rc sept, 2.1 final oct.
+17:42:04 <sgk>	1745:  2.1 p4 bdbaddog
+17:42:13 <GregNoel>	done
+17:42:18 <jason_at_intel>	ahh the option is /INCREMENTAL
+17:42:51 <sgk>	why'd they pick an obscure option like that to control incremental linking?  :-)
+17:42:16 <GregNoel>	2355
+17:43:12 <Garyo>	2355 clearly needs research.
+17:43:34 <jason_at_intel>	I agree
+17:44:49 <jason_at_intel>	worse case the builder can add a cd <dir> && before the command is the subprocess thing does not work
+17:44:03 <Garyo>	Greg, would you like to look into the subprocess thing?
+17:45:00 <GregNoel>	Er, no.  I already know chdir= doesn't affect the main process on a Real Operating System; the question is about lesser operating systems.
+17:45:24 <bdbaddog>	You mean like MacOS right...;)
+17:45:57 <jason_at_intel>	should be simple to test
+17:46:24 <Garyo>	Simple to test, a bit scary to implement I think
+17:46:27 <sgk>	heh
+17:45:21 <Garyo>	In any case it doesn't seem practical to get into 2.1.  How about aiming for 2.2?
+17:46:58 <GregNoel>	Well, we've always had converting to subprocess() as a goal, but not in 2.1 I don't believe.
+17:47:32 <bdbaddog>	GN: I agree.. 2.2
+17:47:33 <Garyo>	So maybe this will just fall out of that conversion?
+17:47:38 <Garyo>	That'd be great.
+17:47:40 <jason_at_intel>	it seem doing subprocess in SCons first then chdir seem to be the best order
+17:47:50 <Garyo>	Agreed.
+17:47:51 <bdbaddog>	JAI: +1
+17:48:19 <sgk>	GregNoel:  looks like it's ok on windows, the cwd= argument is passed to CreateProcess()
+17:48:49 <sgk>	yeah, subprocess first
+17:48:55 <bdbaddog>	+1
+17:48:59 <bdbaddog>	should we file a bug for that?
+17:49:11 <sgk>	if there isn't one already open, yes
+17:50:09 <bdbaddog>	1955 might be part of that..
+17:50:24 <Garyo>	was just looking at that one
+17:50:53 <GregNoel>	What to do with this issue?  We're running short on time.
+17:51:10 <bdbaddog>	2.2
+17:51:14 <Garyo>	2.2 (but after subprocess), p2, whoever does subprocess.
+17:51:14 <sgk>	2.2 sounds right
+17:51:19 <jason_at_intel>	Say it depend on SCons Subprocess work
+17:51:43 <sgk>	1955 is dup with others that deal with long lines
+17:51:53 <sgk>	so I'll open an issue for the subprocess work
+17:52:04 <sgk>	and then we make 2355 depends on that one
+17:52:14 <Garyo>	sgk: +1
+17:52:35 <GregNoel>	sgk, yes, but what for this issue? 2.2 p2?  Who owns it?
+17:52:01 <jason_at_intel>	I might be able to help with that as well
+17:52:09 <jason_at_intel>	as Parts does this in SCons...
+17:52:26 <sgk>	jason_at_intel:  cool, thanks
+17:52:35 <jason_at_intel>	not sure what is scons defines the default "SPAWN" function however.. so i have not made a patch to SCons
+17:53:05 <Garyo>	Greg: I recommend assigning to sgk for now, he can reassign later if desired.
+17:53:11 <bdbaddog>	+1
+17:53:12 <bdbaddog>	:)
+17:53:13 <sgk>	sounds good
+17:53:18 <jason_at_intel>	+1
+17:53:16 <GregNoel>	done
+17:53:18 <GregNoel>	That covers the issues@scons issues; on to the new issues.
+17:53:18 <GregNoel>	2649 I'll go with research sk; what priority?
+17:53:40 <Garyo>	p3
+17:54:06 <GregNoel>	sgk?  What say you?
+17:54:33 <sgk>	yes
+17:54:38 <GregNoel>	done
+17:54:41 <GregNoel>	2650 consensus review next time
+17:54:41 <GregNoel>	2657
+17:55:14 <Garyo>	2.1 p2 sk
+17:55:19 <jason_at_intel>	Glad i have not seen this on our 64-bit boxes yet
+17:55:26 <sgk>	consensus 2.1 p2 sk done
+17:55:29 <GregNoel>	done
+17:55:31 <GregNoel>	2660 consensus research sk; what priority?
+17:55:40 <sgk>	p3
+17:56:08 <GregNoel>	done
+17:56:14 <GregNoel>	2661 consensus 2.1 p2 Bill
+17:56:14 <GregNoel>	2662 OK, I'll take it as 2.2 p4
+17:56:14 <GregNoel>	2663 consensus 2.1 p3 Bill
+17:56:14 <GregNoel>	That appears to be it for the day...  Anything else?
+17:56:28 <Garyo>	nice work all, just under an hour
+17:56:32 <sgk>	oh, heh:  my comment about 2661 was "try to keep SCons reasonably current with VC tools"
+17:56:34 <bdbaddog>	1.3.1.. push out from last checkpoint?
+17:57:04 <sgk>	yes
+17:56:56 <Garyo>	bdbaddog: absolutely.  No complaints whatsoever that I've heard.
+17:57:49 <bdbaddog>	what about last 2.0.1 checkpoint? release as 2.0.1? rebranch to remove extra changes? other?
+17:58:49 <Garyo>	I think we should try not to be pedantic -- push out as 2.0.1 as is, let's get going on 2.1 work.
+17:59:15 <Garyo>	(?)
+17:59:21 <bdbaddog>	+1 from me.
+18:00:06 <sgk>	+1
+18:00:31 <jason_at_intel>	+1 for me... I think the patches added here make the first drop we can use at work without breaking anything
+18:01:49 <jason_at_intel>	( since 1.2)
+18:01:36 <bdbaddog>	K. then I'll try and roll out 1.3.1 and 2.0.1 this weekend.
+18:01:46 <Garyo>	yay bdbaddog!
+18:01:29 <sgk>	so 2.1 release candidate in september--shall we pick a week to target?
+18:01:56 <bdbaddog>	I'm on vaca the whole first week thereof.
+18:02:09 <bdbaddog>	so later in ssept would be better.
+18:02:42 <sgk>	hmm, looking at the roadmap, i realize my real question is, when do we want to start releasing pre-2.1 checkpoints?
+18:03:00 <sgk>	the roadmap suggests one in july and one in august
+18:03:14 <sgk>	i'm trying to give myself a tangible near-term deadline to get going on some of these things
+18:03:51 <Garyo>	Don't think we have enough in yet for one now.  Maybe end of July?
+18:03:17 <bdbaddog>	has trunk diverged from 2.0.1 much?
+18:03:57 <sgk>	not much yet, but I'm about to start making some big doc changes
+18:04:01 <Garyo>	I'll try to get a few more things done soon.
+18:04:12 <Garyo>	This weekend e.g.
+18:04:26 <sgk>	okay, ditto
+18:04:52 <bdbaddog>	so checkpoint 7/31?
+18:05:01 <Garyo>	Let's aim for that.
+18:05:05 <sgk>	sounds like a good stake in the ground
+18:05:07 <bdbaddog>	k.
+18:05:30 <sgk>	any other issues to cover?
+18:06:09 <sgk>	going once...
+18:06:10 <jason_at_intel>	not from me... I will send some questions tomorrow to get tempfile working
+18:06:11 <Garyo>	none here
+18:06:11 <bdbaddog>	nope.
+18:06:13 <sgk>	going twice...
+18:06:18 <sgk>	okay, sold
+18:06:24 <sgk>	thanks for the good work, everyone
+18:06:39 <GregNoel>	G'night all...
+18:06:40 <Garyo>	bye 4 now
+18:06:43 <bdbaddog>	gnight
+18:06:44 <sgk>	bye
+18:06:46 *	sgk (~sgk@67.218.107.184) has left #SCONS
+18:06:47 <jason_at_intel>	night!
+18:06:58 *	You have been marked as being away
+18:07:22 *	jason_at_intel has quit (Quit: ChatZilla 0.9.86 [Firefox 3.6.6/20100625231939])
+21:23:49 *	Garyo has quit (Quit: ChatZilla 0.9.86 [Firefox 3.6.7/20100713130626])
+23:42:18 *	bdbaddog has quit (Quit: Leaving.)

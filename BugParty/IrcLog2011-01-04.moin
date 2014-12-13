@@ -1,0 +1,208 @@
+{{{
+(07:54:04 PM) #scons: The topic for #scons is: SCons | building software, better | http://www.scons.org | next bug triage party is Tue 2 Mar 2010 17h00 US/Pacific
+(07:54:10 PM) GregNoel [~greg@ip68-7-76-17.sd.sd.cox.net] entered the room.
+(07:56:07 PM) Jason_at_Intel: hello
+(07:56:23 PM) Jason_at_Intel: hope everyone had a good break
+(07:57:51 PM) bdbaddog: NY Blizzard aside.. it was pretty darned good.
+(07:58:13 PM) Jason_at_Intel: ya ... That looked bad
+(07:58:24 PM) garyo: hi folks; I had fun here in Boston.
+(07:59:19 PM) GregNoel: garyo, it may be fun, but that white stuff is snow joke...
+(07:59:52 PM) Jason_at_Intel: I like the snow... way better than an ice storm
+(08:00:19 PM) garyo: Skiing's pretty good here now, or at least it was for a while.
+(08:01:01 PM) Jason_at_Intel: we had all this snow here.. then in the last week it warned up to 60 degrees for to days.. melted and drop back to the 20's
+(08:01:48 PM) kesselhaus left the room (quit: Ping timeout: 240 seconds).
+(08:01:57 PM) Jason_at_Intel: Greg.. I had a message on the dev group.... do you have anything thoughts on it
+(08:02:05 PM) sgk [~sgk@nat/google/x-nmclqbzkuhxtmwnh] entered the room.
+(08:02:43 PM) Jason_at_Intel: hello Steve
+(08:02:54 PM) GregNoel: haven't read mail in over a week
+(08:02:55 PM) sgk: hi Jason
+(08:03:10 PM) kesselhaus [~kesselhau@tmo-105-117.customers.d1-online.com] entered the room.
+(08:03:20 PM) GregNoel: Looks like a quorum...  Who all's here?
+(08:03:23 PM) garyo: Hi Steven!
+(08:03:32 PM) sgk: hi gary
+(08:03:40 PM) bdbaddog: Hi everybody!
+(08:03:47 PM) garyo: Hi Bill!
+(08:04:07 PM) Jason_at_Intel: hope we can fix up the speed issue in SCons steve.. I am seeing good results with my .10 beta of Parts.. hope we can back up the taskmaster/node fixes to get the rest
+(08:04:11 PM) sgk: in case it hasn't already gotten widely publicized, my new favorite web site:  http://www.ismycomputeron.com/
+(08:04:31 PM) garyo: ha ha
+(08:04:42 PM) Jason_at_Intel: lol
+(08:04:46 PM) sgk: Jason_at_Intel:  agreed
+(08:05:31 PM) garyo: so do you all want to go in spreadsheet order, or tigris list order?
+(08:05:56 PM) Jason_at_Intel: spreadsheet order +1
+(08:06:05 PM) garyo: fine w/ me
+(08:06:15 PM) GregNoel: good for me
+(08:06:26 PM) GregNoel: 2703?
+(08:06:40 PM) ***sgk searches for the right window...
+(08:07:17 PM) garyo: looks like 2.2 p3; Jason has some ideas on what to do...
+(08:07:34 PM) Jason_at_Intel: it is documented :-)
+(08:07:50 PM) Jason_at_Intel: and i have been adding new packaging code for our installer in Parts
+(08:08:09 PM) garyo: Can you attach that info to the bug itself?
+(08:08:23 PM) Jason_at_Intel: ya... I will add it now
+(08:08:24 PM) sgk: what version of python do we need to use to get that bdist_wininst option?
+(08:08:59 PM) bdbaddog: also packaging is broken python >= 2.6
+(08:09:02 PM) Jason_at_Intel: I think it is 2.6.. I need to double check however
+(08:09:06 PM) bdbaddog: via bootstrap.py
+(08:09:43 PM) sgk: bdbaddog:  what's the symptom?
+(08:10:47 PM) bdbaddog: hmm.. it's been reported in the mailing list for a while as well. it fails building the win installer from linux.
+(08:10:54 PM) garyo: could make a ticket for that issue and link them perhaps?
+(08:10:58 PM) bdbaddog: I've been using python 2.5.*  explicitly for a while.
+(08:12:36 PM) sgk: a ticket sounds like the right thing
+(08:12:39 PM) sgk: anyway
+(08:12:41 PM) garyo: It must be fixable -- I could try on a python 2.6 machine.  I just don't have one with all the doc tools etc. but could make one
+(08:13:02 PM) sgk: what about 2703?  jason or me or...?
+(08:13:09 PM) Jason_at_Intel: Ya i think you need 2.6
+(08:13:19 PM) Jason_at_Intel: you
+(08:13:21 PM) Jason_at_Intel: :-)
+(08:13:39 PM) sgk: works for me
+(08:13:41 PM) sgk: 2.2 p3 sk ?
+(08:13:44 PM) GregNoel: done
+(08:13:46 PM) Jason_at_Intel: I am not making the official packages.. so it hard for me to fix
+(08:14:00 PM) garyo: 2708 is mine, consensus
+(08:14:01 PM) GregNoel: 2708?
+(08:14:08 PM) GregNoel: done
+(08:14:16 PM) GregNoel: 2709?
+(08:14:17 PM) bdbaddog: @jason - fix it to work on 2.6 and push me the patch and I'll verify.
+(08:14:46 PM) garyo: 2709 3.x p3 +toolchain works for me
+(08:15:04 PM) GregNoel: consensus, done
+(08:15:09 PM) GregNoel: 2700?
+(08:15:30 PM) Jason_at_Intel: is there a master script to build all the packages?
+(08:15:31 PM) garyo: Q: what is .#cache.log?  A SCons thing, or his file?
+(08:15:37 PM) GregNoel: Need priority and owner
+(08:15:44 PM) Jason_at_Intel: or do i just call the setup.py at the root level
+(08:15:56 PM) bdbaddog: @jason - send me an email offline 
+(08:15:57 PM) sgk: Jason_at_Intel:  yeah, but it's a really gnarly SConstruct file that dates to the earliest days of SCons
+(08:16:56 PM) garyo: 2700: research sgk?  Or I could look at it.
+(08:17:06 PM) sgk: research sgk is fine with me
+(08:17:15 PM) garyo: thanks
+(08:17:19 PM) GregNoel: done
+(08:17:29 PM) GregNoel: priority?
+(08:18:33 PM) sgk: i think .#cache.log is the file he's specified with --cache-debug=
+(08:18:39 PM) sgk: p2
+(08:18:49 PM) GregNoel: done
+(08:18:50 PM) garyo: sgk: makes sense.
+(08:19:00 PM) garyo: So probably pretty easy to close when done.
+(08:19:13 PM) GregNoel: 2701?
+(08:19:19 PM) garyo: 2701 seems weird to me.  Invalid?
+(08:19:44 PM) Jason_at_Intel: I did not get...
+(08:19:59 PM) garyo: He changes the source outside SCons during the build, I think.
+(08:20:11 PM) bdbaddog: ewww
+(08:20:11 PM) sgk: yeah, if it's what i think it is, i don't know if we have a solution
+(08:20:18 PM) Jason_at_Intel: that would mess up the sig system
+(08:20:28 PM) garyo: solution = "stop doing that." :-)
+(08:20:40 PM) GregNoel: I don't know of any build system that handles that gracefully, so invalid works for me.
+(08:20:42 PM) sgk: you could argue that we can (or should?) rechecksum the contents after the action is finished
+(08:20:49 PM) sgk: but that would just change where the race is
+(08:21:01 PM) garyo: eww.  slow it down even more, without *really* solving it...
+(08:21:06 PM) sgk: right
+(08:21:30 PM) garyo: nah, just explain it can't work the way he wants it to.  Sorry.
+(08:21:44 PM) sgk: k, INVALID
+(08:21:46 PM) GregNoel: invalid?
+(08:22:01 PM) sgk: who wants to write it?
+(08:22:15 PM) GregNoel: The issue?
+(08:22:22 PM) sgk: the response in the issue
+(08:22:32 PM) GregNoel: I usually do
+(08:22:48 PM) sgk: if you can, that'd be great
+(08:22:52 PM) GregNoel: done
+(08:23:06 PM) garyo: 2702: 2.x p3 bill consensus, thanks!
+(08:23:07 PM) GregNoel: 2702?
+(08:23:12 PM) GregNoel: done
+(08:23:40 PM) GregNoel: 2704?
+(08:23:45 PM) garyo: 2704: I just pinged him again.  He gets one more chance to reply, then we close.
+(08:24:00 PM) GregNoel: ok, defer
+(08:24:16 PM) GregNoel: 2705?
+(08:24:21 PM) garyo: I'll do this one.
+(08:24:27 PM) garyo: At least the UG fix.
+(08:24:39 PM) GregNoel: 2.x p3?
+(08:24:41 PM) Jason_at_Intel: with 2705
+(08:24:45 PM) garyo: for 2.1, why not.
+(08:24:51 PM) Jason_at_Intel: do we test with python 64-bit on windows?
+(08:25:23 PM) GregNoel: 2.1 p3, then?
+(08:25:45 PM) garyo: Jason: I've just started using 64-bit python on Linux, actually.  SCons seems to run there. (2.6 on RedHat 4/64, believe it or not)
+(08:25:50 PM) garyo: Greg: yes
+(08:25:57 PM) GregNoel: done
+(08:26:03 PM) GregNoel: 2706?
+(08:26:26 PM) garyo: 2.x p3 bill, looks like
+(08:26:28 PM) bdbaddog: I got it. I already have another swig bug, so I can hit them all at once.
+(08:26:38 PM) GregNoel: done
+(08:26:43 PM) GregNoel: 2707?
+(08:26:44 PM) garyo: same w/ 2707
+(08:26:51 PM) bdbaddog: yup.
+(08:26:51 PM) GregNoel: ditto?
+(08:26:55 PM) GregNoel: done
+(08:27:03 PM) GregNoel: 2710?
+(08:27:09 PM) Jason_at_Intel: I ask as i think we need to test on windows... I am seeing something odd.. need to verify
+(08:27:14 PM) sgk: 2710:  me
+(08:27:29 PM) garyo: ok, you got it
+(08:27:34 PM) GregNoel: milestone and priority?
+(08:27:42 PM) sgk: 2.1 p2
+(08:27:48 PM) GregNoel: done
+(08:27:59 PM) GregNoel: 2711?
+(08:28:13 PM) sgk: research p2 sk
+(08:28:18 PM) GregNoel: done
+(08:28:31 PM) sgk: 2712:  INVALID
+(08:28:45 PM) GregNoel: worksforme
+(08:29:06 PM) garyo: ok
+(08:29:13 PM) GregNoel: 2713?
+(08:29:45 PM) sgk: any objection to dirk having commit rights for this sort of thing?
+(08:29:46 PM) bdbaddog: I've gotta punch out to head to a class. Catch u all later.
+(08:29:56 PM) garyo: bye Bill.
+(08:30:03 PM) garyo: Dirk committer: +1
+(08:30:03 PM) sgk: bye
+(08:30:05 PM) Jason_at_Intel: later !
+(08:30:22 PM) GregNoel: concur, Dirk as a committer
+(08:30:47 PM) GregNoel: milestone and priority?
+(08:30:53 PM) sgk: 2.1 p3 ?
+(08:30:55 PM) garyo: 2.1 p3 dirk?
+(08:31:04 PM) GregNoel: done
+(08:31:11 PM) garyo: (q: what about arg2nodes?)
+(08:31:30 PM) garyo: It's pretty useful...
+(08:32:23 PM) sgk: Add an issue to make it part of the documented / supported API ?
+(08:32:28 PM) sgk: probably under a different name
+(08:32:44 PM) sgk: while preserving arg2nodes() for backwards compatiibility, of course
+(08:32:46 PM) garyo: ok, a nicely named wrapper makes sense.
+(08:32:57 PM) GregNoel: sgk, concur
+(08:33:06 PM) Jason_at_Intel: I think we might want to think about refactor work for nodes first?
+(08:33:12 PM) garyo: Steven, can you add that ticket?
+(08:33:55 PM) garyo: Jason: I think they're orthogonal
+(08:34:01 PM) garyo: (either one can be done first)
+(08:34:05 PM) sgk: garyo:  yes
+(08:34:13 PM) garyo: thx
+(08:34:15 PM) Jason_at_Intel: ok
+(08:34:18 PM) GregNoel: 2698?
+(08:35:08 PM) garyo: 2.1 p3, me or anyone (the simple way, just add them to the parseflags code)
+(08:35:18 PM) garyo: Generalizing that logic takes more work.
+(08:35:28 PM) GregNoel: I'd break out the list of options that are passed to both the compiler and the linker into a separate list, but otherwise this is pretty trivial.
+(08:35:35 PM) GregNoel: Anybody can do it.
+(08:35:51 PM) garyo: I'll take it, why not.
+(08:36:05 PM) sgk: thx
+(08:36:09 PM) GregNoel: milestone and priority?
+(08:36:15 PM) garyo: 2.1 p3
+(08:36:22 PM) GregNoel: done, thanks
+(08:36:44 PM) sgk: no real activity on the research issues
+(08:36:50 PM) GregNoel: Do any of the rest have a quorum of comments?
+(08:37:30 PM) Jason_at_Intel: If Steve can give me some time and can get the 1708 issue patched
+(08:37:33 PM) GregNoel: 2416, garyo, how old is that comment?
+(08:38:04 PM) sgk: jason:  I think so
+(08:38:05 PM) garyo: 2416 is already done.
+(08:38:05 PM) Jason_at_Intel: If Steve can give me some time I can get the 1708 issue patched
+(08:38:34 PM) Jason_at_Intel: cool... hope you can :-) google really eats you up.. or hides you well :-)
+(08:38:52 PM) GregNoel: garyo, good, then in can be removed.
+(08:39:02 PM) garyo: Greg: yes
+(08:39:06 PM) sgk: partly google, partly real life
+(08:39:35 PM) GregNoel: I have guests arriving in a few minutes; if that's all for now, I should go.
+(08:39:46 PM) Jason_at_Intel: is 800 a dup?
+(08:39:46 PM) garyo: I think we did well tonight -- thanks all
+(08:40:06 PM) sgk: jason:  probably, i think we have multiple issues re: line length
+(08:40:18 PM) Jason_at_Intel: I thought so
+(08:40:20 PM) GregNoel: OK, thanks; I'll leave the session running in case anything else is decided.
+(08:40:26 PM) GregNoel: cu later
+(08:40:31 PM) garyo: bye 4 now all
+(08:40:33 PM) Jason_at_Intel: Gary .. let me know if you can try Parts again 
+(08:40:42 PM) garyo: It's on my list for this week.  Will do.
+(08:40:48 PM) Jason_at_Intel: so i can fix compatiblity issues :-)
+(08:40:51 PM) garyo: I know you made some updates.
+(08:40:52 PM) Jason_at_Intel: Thanks!
+(08:41:03 PM) Jason_at_Intel: Have more coming
+(08:41:13 PM) garyo: all good.
+(08:41:22 PM) Jason_at_Intel: steve you have any time?
+}}}

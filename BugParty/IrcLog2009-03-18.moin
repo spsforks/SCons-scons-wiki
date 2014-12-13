@@ -1,0 +1,301 @@
+#format irc
+17:13:48 *	Jason_at_intel (n=chatzill@bementil-116.illinois.prairieinet.net) has joined #scons
+17:24:55 *	GregNoel is no longer marked as being away
+17:31:47 *	garyo-home (n=chatzill@209-6-158-38.c3-0.smr-ubr1.sbo-smr.ma.cable.rcn.com) has joined #scons
+17:32:00 <GregNoel>	Hi, Gary; Steven's not here yet
+17:32:06 <garyo-home>	Hi, Greg.
+17:32:16 <garyo-home>	I'm still finishing up the spreadsheet.
+17:32:31 <GregNoel>	Yes, I see; I've been following it.
+17:32:25 <Jason_at_intel>	Hi
+17:32:31 <garyo-home>	Hi, Jason.
+17:39:07 <Jason_at_intel>	2373 look interesting
+17:39:09 <garyo-home>	ok, I'm done with the spreadsheet & ready to go.
+17:39:36 <garyo-home>	Jason: yes, of course it would be more interesting with better tool logic!
+17:39:58 <Jason_at_intel>	yep
+17:40:07 <garyo-home>	In fact I think it's not worth it UNTIL the toolchain stuff is in.  But that's a perfect time to add it.
+17:40:08 <Jason_at_intel>	I am about done with my prototype
+17:40:21 <garyo-home>	I'll be interested to see it.
+17:40:33 <Jason_at_intel>	I be interested to finish it :-)
+17:40:36 <garyo-home>	:-)
+17:40:44 <garyo-home>	So the consensus ones are:
+17:41:40 <garyo-home>	1123, 1449, 1450, 1908, 1914, 2018, 2303.
+17:41:55 <garyo-home>	Non-consensus:
+17:42:54 <garyo-home>	1632, 2288, 2306, 2357, 2358, 2363, 2364, 2366, 2367, 2370, 2371, 2373.
+17:43:09 <GregNoel>	1908 isn't consensus; no priority
+17:43:42 <garyo-home>	1908: you're right, the consensus is priority=?? which is not sufficient.
+17:44:37 <GregNoel>	(I'm always right, remember?)
+17:43:16 <Jason_at_intel>	do you are Greg have an idea of what to call stuff like win32-x86 ( I was going with system_config, and have value such as HOST_SYSTEM and TARGET_SYSTEM)
+17:44:18 <GregNoel>	Whatever GNU configure calls it; more traction on that consensus.
+17:45:00 <garyo-home>	Right, even if we don't use their triples, we should call it something familiar (unless it's terrible :-))
+17:45:22 <Jason_at_intel>	so what does GNU call it?
+17:45:37 <garyo-home>	a Configuration Name.  hmm.
+17:46:02 <garyo-home>	Not sure I like that, actually.  But config_name isn't so terrible.
+17:46:08 <GregNoel>	get config_guess and run it; it will tell you
+17:46:12 <Jason_at_intel>	ya.. that is bad... configuration is overloaded as is
+17:46:43 <garyo-home>	system_config_name?
+17:47:03 <Jason_at_intel>	I already call is system_config
+17:47:12 <garyo-home>	Jason: is this more for the doc or actually in the sw?
+17:47:18 <GregNoel>	GNU uses platform architecture and OS in some order
+17:47:39 <garyo-home>	Greg: Jason's asking what to call one of those objects (whatever it contains)
+17:47:49 <garyo-home>	http://www.airs.com/ian/configure/configure_4.html#SEC25
+17:48:06 <Jason_at_intel>	yep, the set data is not as important as what to call the object
+17:48:36 <garyo-home>	platform_config is another option
+17:48:56 <GregNoel>	What object?  I'm behind here
+17:49:15 <garyo-home>	an object (string) representing one of those GNU configure name triplets
+17:49:29 <GregNoel>	"triplet"
+17:49:52 <Jason_at_intel>	I am good with that. The issue i have with configuration, is that we have configure, and i already have configuration ( as in how the rest of the world see them stuff like release debug.. ie a set of setting with a given name)
+17:50:17 <garyo-home>	That's why system_config or platform_config is better.
+17:50:56 <Jason_at_intel>	So i have been trying to communicate on line in the dev group with Parts work i am doing to make an improved tool chain idea based on my experence and guidance on teh wiki from you and gary
+17:50:56 <garyo-home>	Jason, would users see this mostly in the doc, or in error messages, or ... ?
+17:51:48 <Jason_at_intel>	it would be an var in the env that could be used to control build.
+17:52:23 <garyo-home>	... but by the time an env is created, it may be too late.  (A topic for another time I realize.)
+17:52:32 <Jason_at_intel>	ideally there is a HOST_SYSTEM and a TARGET_SYSTEM  ( ie --build and --host for Greg.. only GCC uses --target)
+17:52:39 <garyo-home>	Anyway, how about looking at some of these bugs?
+17:52:46 <GregNoel>	yes
+17:52:54 <Jason_at_intel>	sure... is steve online?
+17:53:08 <garyo-home>	no, but it's 8:52 here.
+17:53:05 <Jason_at_intel>	he is looking at the spreadsheet i think
+17:53:22 <garyo-home>	oh yes, I see him on now.
+17:53:47 <GregNoel>	His spreadsheet cursor hasn't moved for at least two hours
+17:53:54 <garyo-home>	:-(
+17:54:28 <GregNoel>	anyway, 1123 is consensus
+17:54:29 <garyo-home>	Greg, what do you think about my comment on #1632, that it's not really a subst issue?
+17:54:45 <GregNoel>	Let's wait until we get there.
+17:54:51 <garyo-home>	ok, fine.
+17:55:05 <garyo-home>	1443's consensus
+17:55:10 <GregNoel>	1449: consensus 2.x p3 +subst
+17:55:10 <GregNoel>	Gary, the prototype code is smarter about curly braces, brackets, and parens.  It increments a counter for a "left" occurrence and decrements it for a "right" occurrence.  It's stone stupid about whether they match, but if they do, it extracts the right piece.
+17:55:47 <garyo-home>	Great -- it's a real brace parser!  (Even if a stupid one, it's better than regex.)
+17:56:19 <GregNoel>	Well, it uses regex to move between and isolate the braces
+17:56:27 <garyo-home>	sure.
+17:56:53 <Jason_at_intel>	that takes skill to write
+17:57:07 <garyo-home>	But in #1632, how would it know to quote the filename that gets %-substituted in?  That's a complex expression.
+17:57:25 <GregNoel>	patience
+17:58:15 <GregNoel>	we agree, consensus?
+17:59:51 <garyo-home>	(sorry, had to step out)
+18:00:16 <GregNoel>	consensus on 1449?
+18:00:36 <garyo-home>	ok
+18:00:42 <GregNoel>	1450: consensus 2.1 p3 DOS person
+18:00:42 <GregNoel>	Brandon's not here, but for the record DOS is a program scheduler masquerading as an operating system; don't confuse it with the real thing.  Even changing its name didn't change that fundamental flaw.
+18:01:11 <Jason_at_intel>	rolling my eyes
+18:01:45 <garyo-home>	fine w/ 1450.
+18:01:52 <GregNoel>	1632: I agree with Steven's point about regression tests, but I'd like to defer this discussion until after we talk about the schedule.
+18:02:24 <garyo-home>	DO you think subst fixes can fix this bug??
+18:02:42 <GregNoel>	yes
+18:03:01 <garyo-home>	Without changing the string in msvc.py?  I'd be amazed.
+18:03:39 <garyo-home>	How would it know the difference between the space in the format string, and the spaces in the filename(s)?
+18:03:37 <GregNoel>	I've got an email about half-completed about quoting; someday I'll finish it and send it.
+18:04:27 <garyo-home>	OK, I'll believe you...
+18:04:32 <GregNoel>	'string' v. ['string w/ spaces']
+18:04:49 <GregNoel>	I think it can be made to work
+18:04:50 <garyo-home>	But isn't this bug about:
+18:05:15 <garyo-home>	subst("/Yu%s /Fp%s" % "filename with spaces")
+18:05:32 <garyo-home>	(sorry, two filenames, each with spaces, as the arg to the format operator)
+18:05:56 <garyo-home>	but maybe you have some magic that can handle it.
+18:06:32 <garyo-home>	If you think so, then I'm OK w/ 2.1 p3 +subst
+18:06:59 <GregNoel>	Hmmm...  You have a point; the expression would be evaluated before the subst...
+18:07:12 <GregNoel>	I'll have to look at it again.
+18:07:17 <garyo-home>	right, that's why the OP says the quotes need to be added right there.
+18:07:52 <GregNoel>	You may be right; I was looking at the braces, not the expression
+18:08:42 <garyo-home>	In that case, the patch should be applied.
+18:09:04 <GregNoel>	Hmmm...  Let's pass this and come back to it if we have time; we're taking too long on it.
+18:09:23 <garyo-home>	ok fine
+18:09:44 <GregNoel>	1908: not consensus, need a priority
+18:09:44 <GregNoel>	I think Benoit uses Linux, at least part of the time, but even if the underlying problem is DOS and not us (or maybe _especially_ if it's not us), as long as it keeps happening, I can see the point of checking for it.
+18:09:44 <GregNoel>	Gary, I'm not sure that it's debug-only, but it's a good point that it ought to have "debug" in it if it is.
+18:09:44 <GregNoel>	I like the idea of separating the options into "common" and "advanced" sets, but then I've proposed that before myself. {;-}
+18:09:44 <GregNoel>	However, at the risk of backward incompatibility, could we consider changing all the --cache-option flags into --cache=option and deprecate the old ones in 2.x?  (Only --cache-debug=file has a parameter, and we might be able to finesse that somehow.)  That would reduce the number of _distinct_ command-line options, at least.
+18:10:32 <Jason_at_intel>	so is this DOS?.. I mean who is using DOS?
+18:10:47 <GregNoel>	you, apparently
+18:10:48 <garyo-home>	1908: I say p4.  cache-verify is only for debugging, I *think* the other one is for fixing corrupt caches.
+18:11:14 <garyo-home>	If you believe the OP, it can occur on any OS due to user error.
+18:11:22 <GregNoel>	yeah, but it's a patch and can corrupt builds
+18:11:22 <Jason_at_intel>	win teh command prompt on windows , while crappy is way better than the old DOS shell
+18:11:53 <Jason_at_intel>	I have not used DOS for years... people seem to confuse DOS with a command prompt
+18:12:02 <garyo-home>	Jason: Greg is using DOS to mean all DOS-derived OSes including Windows.
+18:12:26 <Jason_at_intel>	It is like you saying linux is a BASH, or csh
+18:12:38 <Jason_at_intel>	but that is funny
+18:12:39 <garyo-home>	No, it's like saying linux is Unix.
+18:12:46 <Jason_at_intel>	winnt has not dos roots
+18:12:55 <Jason_at_intel>	it is based on a mainframe
+18:12:56 <garyo-home>	anyway, let's stay on topic.
+18:13:24 <garyo-home>	Can we just say 2.x p4 +easy and note that the option names should have "debug" in them?
+18:13:41 <Jason_at_intel>	sure, the point here is this issue with who we think we can use the command prompt, or a dos prompt?
+18:13:55 <GregNoel>	As I understand cache-verify, it does the build and warns if the content of the cache is different from the built file
+18:13:57 <Jason_at_intel>	cmd.exe which is used today is not command.com
+18:14:19 <GregNoel>	Given that it has a patch, I was thinking p2
+18:14:38 <garyo-home>	split the diff, p3?
+18:14:46 <GregNoel>	Sigh, ok
+18:15:13 <GregNoel>	1914: consensus 2.x p3 +subst.
+18:15:13 <GregNoel>	Gary, it's not string + string, it's $FOO$BAR where FOO and BAR are strings.
+18:16:00 <garyo-home>	ah, got it.
+18:16:30 <garyo-home>	yup, same old subst whitespace stripping issue.
+18:16:24 <GregNoel>	2018: consensus?
+18:16:43 <garyo-home>	2018: agreed.
+18:16:52 <GregNoel>	2288: Research needs a person and I'd much prefer that someone talk with Philipp _before_ we assign it to him.  If we don't assign it to Philipp, we need a milestone and priority for +Easy, probably something in 2.x.
+18:17:36 <garyo-home>	Can you ask him since you already spent some time on the bug?  If not, I'll ask him.
+18:18:02 <GregNoel>	I think you (or Steven) should; I don't know him at all.
+18:18:08 <garyo-home>	Just read your comment ("not me!"), I'll do it.
+18:18:15 <GregNoel>	done
+18:18:46 <GregNoel>	2303: consensus, and as far as Steven got.
+18:18:53 <garyo-home>	2303 consensus 2.x p2 +Easy
+18:19:32 <GregNoel>	2306, I still lean toward option two
+18:20:03 <GregNoel>	It seems to me just as flexible as a .common directory and has some other possibilities.
+18:20:11 <garyo-home>	I'm OK w/ that; #2 lets you remove tests, #3 lets you add common code.
+18:20:42 <GregNoel>	#2 also removes common code
+18:20:33 <garyo-home>	Good point, you can add common code w/ #2 too, just doesn't go in a subdir.
+18:20:46 <garyo-home>	Either's fine w/ me.
+18:21:20 <GregNoel>	Defer, I guess; my leaning is not that strong.  It's my issue so I can wait until next time.
+18:21:27 <garyo-home>	ok, done.
+18:21:43 <garyo-home>	2357, I like your patch Greg.
+18:21:46 <GregNoel>	2357: Gary, 1.3 has a base of Python 1.5.2.  Did you mean 2.1?  I agree with "everybody" but I'm not sure how to mark that...
+18:21:58 <garyo-home>	Sorry, yes 2.1.
+18:22:14 <garyo-home>	Mark it "steven" but then he signs us all up for it.
+18:22:36 <GregNoel>	{;-} that'll work
+18:23:18 <garyo-home>	ok great, 1.3 p2 "steven (aka everyone)"
+18:23:26 <GregNoel>	done
+18:23:36 <GregNoel>	I think we agree on 2358
+18:23:40 <garyo-home>	2358: greg, can you invite Ben?
+18:24:01 <GregNoel>	Sure; I've chatted with him on other topics.
+18:23:53 <garyo-home>	I agree he did a good job there.
+18:24:16 <GregNoel>	A marvelous job, indeed.
+18:24:29 <garyo-home>	Good -- 2.1 p2 benmwebb for that one.
+18:24:37 <garyo-home>	(if he'll take it.)
+18:24:46 <GregNoel>	done
+18:24:48 <GregNoel>	2363: Again, I'd like to defer this discussion until after we talk about the schedule.
+18:25:14 <garyo-home>	ok, probably need to wait for Steven for that discussion.
+18:25:20 <GregNoel>	yes
+18:25:54 <garyo-home>	2364: I'll follow up the bug report and ask the OP for a test case.  Something weird is happening there.
+18:25:54 <GregNoel>	2364: Gary, it probably looks like it's been reinitialized because his Tool hasn't been selected.
+18:26:54 <garyo-home>	I'm not sure... he put in trace code in WhereIs.  I'd like to find out more.
+18:27:00 <GregNoel>	I think Brandon has it right; ask on the user list, and if that turns into a test case, reopen the issue
+18:27:15 <garyo-home>	OK, I'll do that.
+18:27:42 <GregNoel>	Notice the WhereIs() code is hit three times; the last wins, and it's not his.
+18:27:29 <garyo-home>	Close as invalid in the meantime?
+18:28:35 <garyo-home>	I just hate for someone to go away thinking SCons is "perverse" (ok, even if it really is...)
+18:28:40 <GregNoel>	so invalid, move to mailing list?
+18:28:45 <garyo-home>	yes.
+18:28:58 <garyo-home>	I have a note to follow it up.
+18:28:59 <GregNoel>	hopefully toolchain will fix most of that...
+18:29:07 <garyo-home>	Definitely.
+18:29:04 <GregNoel>	done
+18:29:07 <GregNoel>	2366: Yes, it's a doc change, but when?
+18:29:43 <garyo-home>	Whenever SourceCode gets removed, maybe?
+18:29:48 <garyo-home>	(or earlier)
+18:30:18 <garyo-home>	I'm not 100% sure I understood what was going on though, so don't count on my opinion.
+18:32:02 <GregNoel>	What you want to do is make sure you execute the checkout _before_ you try to build using it.  SourceCode() was a hack to get to the right place; we need a better, more flexible, and extensible mechanism.
+18:30:11 <GregNoel>	earlier, so sometime in 2.x.  P2?
+18:30:30 <garyo-home>	Sure, 2.x p2 or 2.x p3.
+18:31:10 <garyo-home>	who?  don't know.
+18:32:17 <GregNoel>	I guess I have to...
+18:32:39 <garyo-home>	thanks!
+18:32:44 <GregNoel>	np
+18:32:59 <GregNoel>	so 2.x p2 me
+18:33:01 <Jason_at_intel>	I have a possible solution in Parts called VCS
+18:33:49 <garyo-home>	How's it work, in a sentence or 2?
+18:34:34 <Jason_at_intel>	It is an object that grabs data from some source, it however is executed at read time, but build
+18:34:39 <Jason_at_intel>	hmm
+18:35:18 <garyo-home>	I always figured checking everything out before building is more stable anyway.
+18:35:21 <GregNoel>	brb, doorbell
+18:35:24 <Jason_at_intel>	it has the fault that it requires everything to be checkout during teh read, unless you skip it
+18:36:11 <Jason_at_intel>	ya.. the only issue i get at work with it is that people don''t want to check everything out if they only need to build a small piece
+18:36:21 <garyo-home>	I've seen various attempts but nothing as good as "os.system('svn co ...')" in the build script. :-)
+18:36:28 <Jason_at_intel>	we have a small work around for this..
+18:36:57 <garyo-home>	use Repository()?
+18:36:58 <Jason_at_intel>	basically that is the end call.. minus we use Subprocess
+18:37:10 <Jason_at_intel>	honestly can't figure out who to use it correctly
+18:37:34 <Jason_at_intel>	it seem to mess up , like build variants when you duplicate files
+18:37:59 <Jason_at_intel>	I figure it is me, or a SCons bug.. not sure which yet
+18:38:22 <Jason_at_intel>	Tried CacheDir.. but network access can kill build times for people
+18:38:35 <Jason_at_intel>	still hope to get that to work some how better
+18:39:44 <Jason_at_intel>	in the end people suffer in large projects to get it all, then we need the caching to take over to not do stuff it know it does not need to do
+18:40:17 <Jason_at_intel>	anyways SourceCode, messes up with varaint directories for me... same with Glob
+18:40:52 <garyo-home>	Glob is supposed to be designed to handle variants.  Submit bug reports if not!
+18:41:27 <Jason_at_intel>	Honestly Dir should be changes to act as a filter i think
+18:41:45 <garyo-home>	?
+18:41:46 <Jason_at_intel>	i would look at my parts samples that use pattern ( my glob replacement)
+18:42:04 <Jason_at_intel>	SCons has File and Dir
+18:42:34 <Jason_at_intel>	have Dir("mydir", filter,recusive)
+18:42:55 <garyo-home>	It would return a list of nodes instead of the Dir node??
+18:42:58 <Jason_at_intel>	GLob flattens, and lose structure
+18:43:17 <garyo-home>	Glob isn't recursive today.
+18:43:28 <Jason_at_intel>	well this was just a thought. but i think have it return one DIR node
+18:43:42 <Jason_at_intel>	might expand to a list of file later
+18:43:55 <garyo-home>	Dir("mydir") returns the Dir node for "mydir".  Seems OK to me.
+18:44:24 <Jason_at_intel>	it is the same as Install() messing up on Dir nodes at times
+18:44:14 <GregNoel>	back, can we proceed?
+18:44:28 <Jason_at_intel>	yes
+18:44:28 <garyo-home>	sure.
+18:44:34 <GregNoel>	so 2.x p2 me
+18:44:43 <garyo-home>	great!
+18:45:00 <GregNoel>	done
+18:45:03 <GregNoel>	2367, I don't believe multiprocess will solve the problem.
+18:45:31 <garyo-home>	I don't understand all the issues, but is he suggesting python builders w/ chdir get run in a forked process?
+18:45:49 <GregNoel>	I believe so.
+18:45:56 <garyo-home>	That would change semantics.
+18:46:07 <GregNoel>	You noticed!
+18:46:23 <garyo-home>	Global data structures like the DAG for instance.
+18:46:45 <GregNoel>	Not to mention local Python subroutines.
+18:46:29 <garyo-home>	I would not go there.
+18:46:48 <GregNoel>	concur
+18:47:31 <garyo-home>	OK, so doing it your way is clever.
+18:48:41 <GregNoel>	Thanks; it's just the weird way my mind works.
+18:48:01 <GregNoel>	Issue 2124 that he refers to is about creating a pool of processes to run tasks, which will duplicate Jobs.py eventually.
+18:48:01 <garyo-home>	I think there are so many 2.x issues I'm loath to make anything more than p3 unless it's important.
+18:48:44 <Jason_at_intel>	these would run the command
+18:48:49 <garyo-home>	That would work if you could transfer the python code and all its dependencies over, which seems unlikely.
+18:48:57 <GregNoel>	agree
+18:48:47 <GregNoel>	I'm inclined to push it after taskmaster-ng
+18:48:58 <garyo-home>	push til later: agreed.
+18:49:41 <Jason_at_intel>	agree
+18:49:28 <GregNoel>	Let's defer it until after we've had the scheduling discussion.
+18:49:41 <garyo-home>	ok, 2370 then
+18:49:59 <GregNoel>	2370: If you want to match dotfiles, use Glob(.pat) + Glob(pat).
+18:50:14 <garyo-home>	Yeah, I thought of that, it's probably acceptable.
+18:50:36 <garyo-home>	Specifically Glob('.??*') + Glob('*") to get everything.
+18:50:49 <GregNoel>	yep
+18:50:26 <GregNoel>	invalid, then?
+18:50:49 <garyo-home>	ok, invalid.
+18:51:11 <GregNoel>	done
+18:51:14 <GregNoel>	2371: Whilst I was exploring this, I discovered that OverrideEnvironment is now derived from Base instead of SubstitutionEnvironment, making it a _very_ expensive object.  This change was made 2005-03-18 06:37:06-0700 (4 years ago) by stevenknight with the comment "Fix a regression in handling overridden construction variables when the substitution is called from an Environment.Base class."
+18:51:14 <GregNoel>	Then in the regression tests, we have this:
+18:51:14 <GregNoel>	    # Test a number of Base methods through an OverrideEnvironment to
+18:51:14 <GregNoel>	    # make sure they handle overridden constructionv variables properly.
+18:51:14 <GregNoel>	    # ...
+18:51:14 <GregNoel>	    # It's unlikely Clone() will ever be called this way, so let the
+18:51:14 <GregNoel>	    # other methods test that handling overridden values works.
+18:51:14 <GregNoel>	    #def test_Clone(self):
+18:51:14 <GregNoel>	If there are no objections, I'd like to see if there isn't another way to solve that problem without making OverrideEnvironment so heavyweight.  I don't think I'll be able to actually fix the issue here (Clone() of an OverrideEnvironment), but we might want to document (somewhere other than the code?) that not only is an Override() of an OverrideEnvironment valid but also it's the approved technique
+18:52:37 <garyo-home>	Yikes, please do try to look into it.
+18:52:39 <Jason_at_intel>	I would agree with the goal
+18:52:45 <garyo-home>	Could be a big memory saver.
+18:53:19 <GregNoel>	Not so much memory (one unused dict), but all that setup time...
+18:53:32 <garyo-home>	For sure.
+18:53:57 <GregNoel>	I see two techniques as possible:
+18:53:57 <GregNoel>	(1) Use an intermediate class containing those functions that use self.subst() and derive both Base and OverrideEnvironment from it.
+18:53:57 <GregNoel>	(2) Use self[key] to access the environment rather than self._dict[key] and invoke the functions with self pointing to the override.  I used this method when I split up ParseConfig(), so I know it works.
+18:53:57 <GregNoel>	Possibly a mixture of both will be needed, but I won't know until I look at it.
+18:54:46 <garyo-home>	Will your newCLVar stuff be related to this a bit?
+18:55:30 <GregNoel>	No, not really.  I can look at some of that at the same time, but this is mostly refactoring.
+18:55:42 <garyo-home>	Anyway, so the bug gets marked invalid and you take this as a side task?
+18:56:01 <GregNoel>	yes, or research or anytime...
+18:56:37 <garyo-home>	research should be for something to be retriaged soon though.  Anytime is OK w me.
+18:56:43 <GregNoel>	done
+18:57:01 <GregNoel>	2373, last one, and I need to go soon.
+18:57:07 <garyo-home>	2373: I was getting off topic, sorry.
+18:57:35 <Jason_at_intel>	that seem to be a big feature
+18:58:03 <GregNoel>	I'm willing to talk to the Debian guy to see what can be done, but I don't think we can do this in isolation.
+18:57:55 <garyo-home>	I like the idea of getting a domain expert involved if possible.  Greg, can you follow up?
+18:58:09 <GregNoel>	yes
+18:58:13 <garyo-home>	perfect.
+18:58:18 <GregNoel>	anytime?
+18:58:23 <garyo-home>	sure.
+18:58:28 <GregNoel>	done
+18:58:35 <garyo-home>	ok, that's a wrap then.
+18:58:47 <garyo-home>	thanks!
+18:58:54 <GregNoel>	Yep, dinner is arriving, so I've got to go
+18:59:01 <GregNoel>	cul
+18:59:02 <Jason_at_intel>	later greg
+18:59:15 *	GregNoel has been marked as being away
+18:59:18 *	garyo-home has quit ("ChatZilla 0.9.84 [Firefox 3.0.7/2009021910]")
+19:12:49 *	Jason_at_intel has quit ("ChatZilla 0.9.84 [Firefox 3.0.7/2009021910]")

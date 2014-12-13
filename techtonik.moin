@@ -1,0 +1,9 @@
+##master-page:HomepageTemplate
+#format wiki
+==== Why tigris.org is bad? ====
+ 1. Anonymous code access in SVN [[http://scons.tigris.org/ds/viewMessage.do?dsForumId=1268&dsMessageId=2445781|requires 'guest' username]]. This confuses users, who usually don't know about 'guest'. For comparison, Google Code offers [[http://code.google.com/p/support/wiki/SubversionFAQ#How_can_I_make_SVN_serve_HTML_and_images_with_the_correct_Conten|SVN as a host for web pages]].
+ 2. [[http://scons.tigris.org/source/browse/scons/|Source code browser]] doesn't show directory history.
+ 3. There is a forum interface to mailing list, but unlike Google Groups you can't monitor individual threads.
+ 4. I can't sign in with my OpenID
+----
+CategoryHomepage

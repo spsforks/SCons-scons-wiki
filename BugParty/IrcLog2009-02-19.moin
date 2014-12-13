@@ -1,0 +1,245 @@
+#format irc
+17:16:22 *	GregNoel is no longer marked as being away
+17:25:49 *	stevenknight (n=stevenkn@67.218.109.115) has joined #scons
+17:26:06 <stevenknight>	hey nait
+17:27:16 <stevenknight>	hey GregNoel
+17:29:29 <nait>	Unfortunately, I needed to get a ride home today, so I'm going to miss the bug party.  I'll try to be around at 8:30 for discussions about fixers and 2.0
+17:30:08 <stevenknight>	okay
+17:30:19 <GregNoel>	I'm here...
+17:30:23 <stevenknight>	i may not be able to connect then
+17:30:31 <stevenknight>	looks like a lot going on this evening...
+17:31:20 <stevenknight>	hi greg
+17:31:24 <GregNoel>	Fair warning: I seem to have caught the bug that the kids have been passing around, so I'm a bit under the weather and liable to be slow tonight.
+17:31:32 <stevenknight>	okay
+17:31:37 <stevenknight>	shall we get started then?
+17:31:41 <GregNoel>	Hi, Steven... and Nate?
+17:31:54 <stevenknight>	nait's here for now but has to leave
+17:32:09 <stevenknight>	no sign of Brandon or Bill
+17:32:13 <stevenknight>	and Gary's still on vacation
+17:32:38 <GregNoel>	So a bit on the thin side.
+17:32:44 <stevenknight>	yeah
+17:32:58 <stevenknight>	but we can still do what we can
+17:33:04 <GregNoel>	yup
+17:33:06 <stevenknight>	and defer as necessary
+17:33:17 <GregNoel>	yup
+17:33:05 <nait>	Yeah, sorry.  I don't have a car today, so I'm at the whim of my co-worker.
+17:33:20 <stevenknight>	nait: understood, been there myself
+17:33:38 <stevenknight>	so where did we leave off?
+17:33:38 <GregNoel>	I think 2288 is next; we hadn't finished with it.
+17:33:49 <stevenknight>	right
+17:34:10 <stevenknight>	oh, I thought we agreed right before the end to defer 2288 to next week
+17:34:12 <stevenknight>	and close 2289
+17:34:35 <GregNoel>	I thought we said "next time" but I'm willing to bypass it.
+17:34:47 <GregNoel>	I'll ask for more info
+17:34:50 <stevenknight>	right, meant "next time"
+17:34:57 <stevenknight>	okay, done
+17:35:22 <stevenknight>	2303:  research, me?
+17:35:24 <GregNoel>	2303, I seem to be collecting the symlink issues
+17:35:39 <GregNoel>	but you're welcome to research it {;-}
+17:35:41 <stevenknight>	er, I meant, research, gregnoel?
+17:35:44 <stevenknight>	:-)
+17:35:57 <stevenknight>	sorry, it's this frog in my throat... :-)
+17:36:11 <GregNoel>	It can't be worse than mine.
+17:36:34 <stevenknight>	if you have other symlink issues then it probably does make more sense with you
+17:36:55 <GregNoel>	This isn't the same as the other issues, which are related to making a symlink a first-class node type
+17:37:15 <stevenknight>	seems like it'd be in the same ballpark, though
+17:37:32 <stevenknight>	if the FS.* hierarchy is going to understand symlinks anyway
+17:37:45 <GregNoel>	OK, I'll research it, but I suspect I'll be tossing it back.
+17:37:45 <stevenknight>	i'm okay with it being your call, though
+17:37:51 <GregNoel>	done
+17:37:52 <stevenknight>	that's fine
+17:37:53 <stevenknight>	done
+17:37:59 <stevenknight>	2304:  research, me?
+17:38:33 <GregNoel>	OK, but you've got to start catching up on those (as do I with mine)
+17:38:43 <stevenknight>	yep, i agree
+17:39:04 <stevenknight>	i'm going to try to make it a priority after landing vs_revamp on the trunk
+17:39:20 <stevenknight>	i have to remember that the idea isn't necessarily to solve them all
+17:39:28 <stevenknight>	but at least characterize them enough to slot them elsewhere...
+17:39:41 <GregNoel>	2306, sigh, I'll come up with a proposal
+17:39:41 <stevenknight>	anyway
+17:39:45 <stevenknight>	2304:  research, sgk
+17:39:46 <stevenknight>	done
+17:39:46 <GregNoel>	yes, exactly
+17:39:51 <stevenknight>	2306:  research, gregnoel
+17:39:58 <stevenknight>	done
+17:39:58 <GregNoel>	done
+17:40:18 <GregNoel>	2309, as you request
+17:40:27 <stevenknight>	2309:  1.3, p2, sk, +vs_revamp
+17:40:28 <stevenknight>	done
+17:40:51 <stevenknight>	2311
+17:41:07 <GregNoel>	the only one with a consensus...
+17:41:12 <stevenknight>	to do this one right has larger implications about making the Builder (or action) configurable
+17:41:47 <stevenknight>	2.x p2 feels right
+17:42:01 <GregNoel>	I'd think it would always be rebuilt if a source changes; when would it not?
+17:42:03 <stevenknight>	are we still okay leaving 2.x issues as TBD / future draft pick?
+17:42:31 <stevenknight>	trivial case:  your target is built by just concatenating the sources
+17:42:33 <GregNoel>	not 2.x p2; too soon in the future
+17:42:40 <stevenknight>	you don't care about the name change then
+17:42:57 <stevenknight>	but you could argue that we should go ahead and rebuild anyway
+17:43:19 <stevenknight>	on the theory that it's generally safer, and we don't need the extra complexity for the corner case
+17:43:07 <GregNoel>	Yes, you do; the source could have different contents; that's the bug here.
+17:43:27 <stevenknight>	no, the source has the same contents
+17:43:37 <stevenknight>	if the contents are different, then the MD5 checksum difference triggers a rebuild
+17:43:42 <GregNoel>	Not what the bug said, as I recall.
+17:44:25 <stevenknight>	checking now;...
+17:44:27 <stevenknight>	but I doubt it
+17:45:19 <stevenknight>	ouch, you're right
+17:45:20 <stevenknight>	as usual
+17:45:26 <GregNoel>	{;-}
+17:45:51 <GregNoel>	The bug is probably that it's checking the _old_ source, rather than the new one.
+17:47:40 <stevenknight>	ah, yes
+17:47:48 <stevenknight>	very likely
+17:47:53 <stevenknight>	okay, give it to me
+17:47:57 <GregNoel>	done
+17:49:01 <stevenknight>	2312:  2.x p3 managan
+17:48:38 <GregNoel>	2312, I agree.
+17:49:02 <stevenknight>	done
+17:49:03 <GregNoel>	2311, I wish I had some of those drugs right now
+17:49:41 <stevenknight>	2313:  defer to next time and hope someone else comes up with a better idea for tackling packaging issues?
+17:50:02 <GregNoel>	2312, I'm inclined to close it as invalid: we only support one package per run right now
+17:50:08 <stevenknight>	ah
+17:50:28 <GregNoel>	or wontfix
+17:50:25 <stevenknight>	how about just turn it into a feature request, then?
+17:50:45 <GregNoel>	feature request, hmmm, yeah, makes sense
+17:50:57 <stevenknight>	a packaging system that can't let you build more than one at a time seems pretty limited
+17:51:22 <stevenknight>	so...  feature request, 3.x p3?
+17:51:38 <GregNoel>	yeah, sounds right.
+17:51:39 <stevenknight>	and an invitation to scratch the itch sooner if he wants to contribute a patch
+17:51:47 <GregNoel>	good point
+17:52:24 <stevenknight>	done
+17:52:35 <GregNoel>	2338, 2.1 p4 is fine
+17:52:45 <stevenknight>	done
+17:52:46 <GregNoel>	2339, ditto
+17:52:50 <stevenknight>	done
+17:52:52 <stevenknight>	gregnoel on both?
+17:53:16 <GregNoel>	Hmmm...
+17:53:24 <GregNoel>	Nate, you still here?
+17:54:07 <GregNoel>	Nate has been working with me on the fixers; this might be in his ballpark
+17:54:13 <stevenknight>	that sounds good
+17:54:51 <GregNoel>	Not to mention I suspect I'll be zoned out when 2.0 is out after supervising all those fixers.
+17:54:25 <stevenknight>	how about putting his name on and you guys can negotiate if that's not okay with him
+17:54:56 <GregNoel>	Yeah, I'll do that.
+17:55:07 <stevenknight>	right re: zoned out
+17:55:34 <stevenknight>	okay, 2338+2339:  2.1 p4 Nate
+17:55:35 <stevenknight>	done
+17:55:41 <stevenknight>	2346:  consensus invalid
+17:55:53 <GregNoel>	2346, done
+17:56:15 <stevenknight>	2347:  ...
+17:56:17 <GregNoel>	2347, sk to follow up?
+17:56:23 <stevenknight>	2.x p3 sk
+17:56:30 <stevenknight>	no
+17:56:31 <GregNoel>	done
+17:56:32 <stevenknight>	research p3 sk
+17:56:37 <stevenknight>	so i'll follow up sooner
+17:56:52 <GregNoel>	better; I agree
+17:56:56 <stevenknight>	done
+17:57:08 <stevenknight>	2349:  anytime p4 gregnoel?
+17:57:16 <GregNoel>	2349, I guess that's what I get...
+17:57:22 <stevenknight>	:-)
+17:57:34 <GregNoel>	OK, but make it p2
+17:57:42 <stevenknight>	okay
+17:57:48 <GregNoel>	get it out of the way
+17:57:52 <stevenknight>	good point
+17:57:53 <stevenknight>	done
+17:57:57 <stevenknight>	on to 2004h2?
+17:58:22 <GregNoel>	Wow, you updated the spreadsheet that quickly; I can't even navigate today...
+17:58:54 <stevenknight>	small advantage of the laptop, the touchpad keeps the fingers closer to home row...
+17:59:12 <GregNoel>	No quorum for schedule items, so yeah, let's look at a few from 2004
+17:59:37 <stevenknight>	851:  too old to mess with, invalid (or worksforme)
+18:00:03 <GregNoel>	worksforme worksforme
+18:00:07 <stevenknight>	:-)
+18:00:11 <stevenknight>	done
+18:00:14 <stevenknight>	860:  already closed
+18:00:16 <stevenknight>	863:
+18:00:34 <stevenknight>	agree w/your suggestion of dup'ing these
+18:00:45 <GregNoel>	OK, I'll do it
+18:00:52 <GregNoel>	not tonight, though..
+18:01:01 <stevenknight>	the survivor should be p2 so it stays near top of list, i think
+18:01:05 <stevenknight>	agreed re: not tonight
+18:01:24 <stevenknight>	914:  research
+18:01:27 <stevenknight>	maybe me
+18:01:37 <stevenknight>	fresh eyes would help
+18:01:49 <stevenknight>	but I don't know if anyone else has an itch to scratch re: collecting test results
+18:02:00 <stevenknight>	it's been somewhat superceded by going with Buildbot
+18:02:14 <GregNoel>	somewhat
+18:03:04 <GregNoel>	Buildbot is nice, but I find it limiting; I've wanted to fiddle with it, but I don't have the most-recent stuff
+18:02:39 <stevenknight>	yeah, research sk is the right call here
+18:03:29 <GregNoel>	914, research is good; close it if it's no help any more
+18:03:32 <stevenknight>	we should chat about Buildbot plans some other time (when you're more up to it)
+18:03:39 <GregNoel>	concur
+18:03:42 <stevenknight>	we're probably going to be doing some buildbot work for the day job
+18:03:59 <stevenknight>	would be nice to do things that benefit us too
+18:04:11 <GregNoel>	true
+18:04:01 <stevenknight>	anyway
+18:04:13 <stevenknight>	923:  1.3 p3 sk +vs_revamp
+18:04:52 <GregNoel>	923, done
+18:04:37 <GregNoel>	and don't forget the new Python support systems; they could run buildbots
+18:04:59 <stevenknight>	snakebite or whatever it's called?
+18:05:08 <GregNoel>	yeah, that's it.
+18:05:24 <stevenknight>	yeah, definitely worth keeping in mind
+18:05:38 <stevenknight>	especially if it helps with Windows and non-POSIXy platforms
+18:05:44 <stevenknight>	924:  already closed
+18:05:57 <stevenknight>	939:  already closed
+18:06:06 <GregNoel>	947, needs to be someone with a DOS box
+18:06:12 <GregNoel>	Maybe Gary?
+18:06:34 <stevenknight>	is it high enough priority?
+18:06:40 <stevenknight>	since his time is limited..
+18:06:54 <stevenknight>	sure
+18:06:58 <stevenknight>	let's assign to gary
+18:07:12 <stevenknight>	and invite negotiation if he wants to throw it back
+18:07:24 <GregNoel>	good; milestone and priority?
+18:07:31 <stevenknight>	anytime, p2?
+18:07:35 <stevenknight>	p2 to get it out of the way
+18:07:44 <GregNoel>	done {;-}
+18:08:01 <stevenknight>	done
+18:08:13 <stevenknight>	960:  3.x p[34]?
+18:08:19 <stevenknight>	do we want a separate doc issue, too?
+18:08:30 <GregNoel>	I like your comment; p4 it is.
+18:08:39 <stevenknight>	okay
+18:09:01 <stevenknight>	done
+18:09:15 <stevenknight>	961:  okay with 2.x p3?
+18:09:25 <stevenknight>	3.x feels too far out for some useful functionality
+18:09:51 <GregNoel>	Yeah, you make a good point in your comment.  How about 2.x p4?
+18:09:58 <stevenknight>	done
+18:10:24 <stevenknight>	977:  research?  who?
+18:10:40 <GregNoel>	977, the wiki page is out, but few review comments...  (hint, hint)
+18:11:04 <stevenknight>	fair point
+18:11:14 <stevenknight>	give 977 to me, then
+18:11:32 <stevenknight>	so i'll have a reminder to comment if i haven't done so by the time I try to clear my research pile
+18:11:47 <stevenknight>	977:  research, sk
+18:11:48 <GregNoel>	OK; this one is an old issue, mind, so it may be moot by now
+18:11:53 <GregNoel>	done
+18:11:55 <stevenknight>	right
+18:11:59 <stevenknight>	982:  already closed
+18:12:24 <stevenknight>	988:  consensus invalid
+18:12:31 <GregNoel>	done
+18:12:46 <stevenknight>	993:  1.3 p2 sk, +vs_revamp
+18:12:56 <GregNoel>	done
+18:13:13 <stevenknight>	1003:  consensus invalid
+18:13:13 <GregNoel>	1003, invalid
+18:13:18 <GregNoel>	done
+18:13:33 <stevenknight>	1012:  consensus 3.x p3
+18:14:02 <GregNoel>	1012, yes, with your ammendment
+18:14:21 <stevenknight>	1017:  consensus invalid
+18:14:22 <GregNoel>	1017, invalid
+18:14:42 <GregNoel>	done
+18:14:46 <stevenknight>	1019:  2.x p3 sk?
+18:15:07 *	GregNoel is still reading the comment
+18:15:45 <stevenknight>	np
+18:16:02 <GregNoel>	OK, your funeral; done
+18:16:16 <stevenknight>	:-)
+18:16:43 <stevenknight>	1033:  3.x, p[your call], +TaskmasterNG
+18:16:53 <GregNoel>	done
+18:17:26 <GregNoel>	(I think I'll make it p2 to keep it above the herd)
+18:17:41 <stevenknight>	sounds good
+18:17:48 <stevenknight>	and we're just coming to the exit for my stop
+18:17:53 <stevenknight>	excellent work tonight
+18:18:03 <stevenknight>	many thanks, especially given how you're feeling
+18:18:20 <GregNoel>	good timing; and I'm starting to sweat, so maybe the fever is breaking.
+18:18:28 <GregNoel>	Good time to quit
+18:18:31 <stevenknight>	yep
+18:18:39 <GregNoel>	OK, cul, and thanks.
+18:18:45 <stevenknight>	and you
+18:18:46 <stevenknight>	later
+18:18:50 *	stevenknight has quit ("Leaving")
+21:12:03 *	GregNoel has been marked as being away

@@ -1,0 +1,28 @@
+= Internationalization of SCons =
+== What are internationalization and localization? ==
+In computing, internationalization and localization (also spelled internationalisation and localisation, see spelling differences) are means of adapting computer software to different languages and regional differences. Internationalization is the process of designing a software application so that it can be adapted to various languages and regions without engineering changes. Localization is the process of adapting internationalized software for a specific region or language by adding locale-specific components and translating text.
+
+Due to their length, the terms are frequently abbreviated to the numeronyms i18n (where 18 stands for the number of letters between the i and the n in internationalization, a usage coined at DEC in the 1970s or 80s) and L10n respectively. The capital L in L10n helps to distinguish it from the lowercase i in i18n.
+
+Some companies, like Microsoft, IBM and Sun Microsystems, use the term globalization for the combination of internationalization and localization. Globalization can also be abbreviated to g11n.
+
+This term is also known as Native Language Support or NLS.
+
+== What is pot files? ==
+Pot file is a template, which contains a list of all the translatable strings extracted from the sources. An entry in the .pot file would look like:
+
+{{{
+#: SConf.py:112
+msgid "scons: Configure: creating %s"
+msgstr ""
+}}}
+== Guides ==
+ * [[i18n/DeveloperGuide|How to make codes translatable? (Developer Guide)]]
+
+ * [[i18n/TranslatorGuide|How to translate SCons into your language? (Translator Guide)]]
+
+== References ==
+
+http://en.wikipedia.org/wiki/Internationalization_and_localization
+
+http://en.wikipedia.org/wiki/GNU_gettext

@@ -1,0 +1,60 @@
+## page was copied from Containers
+#pragma supplementation-page on
+||SEP ||0002 ||
+||Title ||Add More site_scons dirs ||
+||Author ||Gary Oberbrunner ||
+||Status ||Accepted, implemented for SCons 2.1 ||
+||<style="text-align: center;" |2>Post History ||--- ||
+|| || ||
+||References ||Similar PEP: http://ftp.python.org/dev/peps/pep-0370/ ||
+
+
+Please use the "Discussion" link above for discussions about how this SEP should evolve.
+
+There's been some mailing list discussion about adding more site_scons dirs.  Currently in 1.2, only $TOP/site_scons is searched for site_init.py, site_tools, and misc python modules.  It makes sense to search a whole path of these.  This SEP is about where they should be on different OSes.
+
+<<Anchor(TOC)>> <<TableOfContents(3)>>
+
+<<Anchor(Search behavior)>>
+
+== Search behavior ==
+All of these dirs are searched, in the order given.  Any site_init.py files found are run when found. They are added to python's sys.path in the reverse order, so the user's dir is first and the system dirs are last.
+
+<<Anchor(Site_scons locations)>>
+
+== Site_scons locations ==
+=== Windows XP ===
+ * ??? (writable system location: should NOT be %SYSTEM% or %SYSTEM32%; could be %COMMONPROGRAMFILES%)
+ * CSIDL_APPDATA (shell.SHGetFolderPath(0, shellcon.CSIDL_APPDATA, 0, 0)), aka os.environ['APPDATA']
+ * ./site_scons
+
+=== Windows Vista and 7 ===
+ * C:\ProgramData\SCons\site_scons
+ * C:\Users\<username>\Appdata\Local\SCons\site_scons
+ * ./site_scons
+
+Q: how to find these correctly using Windows API or env vars?  Some people won't be on C:, localized dir names will differ, etc.
+
+=== Linux (e.g. Ubuntu, RedHat) ===
+ * /usr/share/scons/site_scons
+ * ~/.scons/site_scons
+ * ./site_scons
+
+=== Solaris ===
+ * /opt/sfw/scons/site_scons (?)
+ * /usr/share/scons/site_scons
+ * ~/.scons/site_scons
+ * ./site_scons
+
+=== Mac OS X ===
+ * /Library/Application Support/SCons/site_scons
+ * ~/Library/Application Support/SCons/site_scons
+ * ~/.scons/site_scons
+ * ./site_scons
+
+These next two options might or might not be useful if Application Support is chosen (which would sidestep any "my package management tool is better than yours" arguments)
+
+ * /opt/local/share/scons/site_scons (for MacPorts)
+ * /sw/share/scons/site_scons (for Fink, if Fink is still in common use)
+
+=== Other ===

@@ -1,0 +1,15 @@
+#acl GregNoel:read,write,revert,delete All:read
+== J. Gregory Noel, UNIX Guru ==
+Email: Tigris.org as "GregNoel"; mention 'SCons' somewhere in the subject
+
+During his professional career, Greg was one of the world's leading experts on the UNIX™ Operating System.  While working, he made numerous contributions to the state of the art in the areas of networking and programming languages.  Since his retirement, he dabbles in whatever projects catch his fancy.
+
+=== My Pages ===
+ * [[GregNoel/RunDAG1|An analysis of the algorithm used by the Taskmaster to run the DAG]]
+ * [[/TaskmasterNG|Documentation for the new Taskmaster I'm writing]]
+
+ * [[GregNoel/AutotoolSteps|An analysis of the steps in the Autotools toolchain]]
+ * [[SummerOfCodeIdeas/AutotoolSCons|A model for the implementation of Autotools in SCons]]
+ * [[GregNoel/StandardMacros|Triage and prioritize the Autotools standard macros]]
+ * [[GregNoel/AutomakeSyntax|An analysis of the syntax of Automake input files]]
+ * [[GregNoel/AutomakeAPI|A possible API for an Automake-like implementation]]

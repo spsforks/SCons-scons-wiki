@@ -1,0 +1,51 @@
+Index: src/engine/SCons/Executor.py
+===================================================================
+--- src/engine/SCons/Executor.py	(revision 3233)
++++ src/engine/SCons/Executor.py	(working copy)
+@@ -37,7 +37,7 @@
+ import SCons.Memoize
+ 
+ 
+-class Executor:
++class Executor(object):
+     """A class for controlling instances of executing an action.
+ 
+     This largely exists to hold a single association of an action,
+@@ -45,6 +45,10 @@
+     and sources for later processing as needed.
+     """
+ 
++    __slots__ = ("pre_actions", "post_actions", "env", "overridelist", \
++        "targets", "sources", "sources_need_sorting", "builder_kw", "_memo", \
++        "action_list", "do_execute", "my_str", "__weakref__")
++
+     if SCons.Memoize.use_memoizer:
+         __metaclass__ = SCons.Memoize.Memoized_Metaclass
+ 
+@@ -63,6 +67,8 @@
+         self.sources_need_sorting = False
+         self.builder_kw = builder_kw
+         self._memo = {}
++        self.do_execute = self._do_execute # XXX
++        self.my_str = self._my_str # XXX
+ 
+     def set_action_list(self, action):
+         import SCons.Util
+@@ -122,7 +128,7 @@
+     def do_nothing(self, target, kw):
+         return 0
+ 
+-    def do_execute(self, target, kw):
++    def _do_execute(self, target, kw):
+         """Actually execute the action list."""
+         env = self.get_build_env()
+         kw = self.get_kw(kw)
+@@ -178,7 +184,7 @@
+ 
+     # another extra indirection for new-style objects and nullify...
+ 
+-    def my_str(self):
++    def _my_str(self):
+         env = self.get_build_env()
+         get = lambda action, t=self.targets, s=self.get_sources(), e=env: \
+                      action.genstring(t, s, e)

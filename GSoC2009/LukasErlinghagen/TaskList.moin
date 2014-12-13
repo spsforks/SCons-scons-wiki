@@ -1,0 +1,141 @@
+= GSoC 2009: SCons on Windows - Task List =
+
+== Test systems ==
+
+ * Set up virtual machines to run tests on
+   * --(Windows XP, Python 1.5.2 (oldest supported version))-- 
+   * --(Windows XP, Python 2.1 (oldest supported version for python2-scons, according to setup.py))--
+   * --(Windows XP, Python 2.6.2 (current release of Python 2))--
+   * --(Windows XP, Python 3.0.1 (current release of Python 3))--
+   * --(Windows XP, !ActiveState !ActivePython 2.6.2 (current release of !ActivePython 2, to see if there are any differences between this version and python.org's Python))--
+   * --(Windows Vista, restricted user (to test local installations))--
+   * --(Windows Vista, admin (to test global installations))--
+   * --(Windows XP, admin (to test global installations on a system without UAC))--
+
+== Stand-alone executable ==
+
+ * --(Research available tools to convert python programs to stand-alone entities)--
+   * --([[http://www.py2exe.org/|py2exe]])--
+   * --([[http://www.pyinstaller.org/|pyinstaller]])--
+   * --([[http://svn.python.org/view/python/trunk/Tools/freeze/|Python's freeze]])--
+   * --([[http://cx-freeze.sourceforge.net/index.html|cx_freeze]])--
+   * --([[http://www.effbot.org/zone/squeeze.htm|Squeeze]])--
+
+ * --(Select one of these tools)--
+   * --(Is cross-building (build Windows .exe on Linux) available?)--
+   * --(Is it wine-compatible?)--
+   * --(How does it deal with Tcl/Tk/TkInter?)--
+   * cx_Freeze was chosen
+
+ * --(Document the alternatives, the choice, and why it was made)--
+   * [[http://scons.org/wiki/SConsInstaller]]
+
+ * --(Manually create a stand-alone SCons)--
+   * --(Generate input files for the converter)--
+
+ * --(Document the method to produce the input file(s))--
+   * No real input file, just a stripped-down setup.py
+
+ * --(Run the end-to-end tests using that manually created SCons)--
+
+ * --(Integrate the stand-alone exe creation into the build script)--
+   * --(Converter input files)--
+   * --(Actually building the exe)--
+   * --(Write a Builder?)--
+   * Building the executables is a simple distutils command
+
+ * --(Document necessary changes/additions)--
+   * The relevant code in the SConstruct file starts around line 1200
+
+ * --(Research building on Linux)--
+   * --(Cross-building via one of the tools mentioned above?)--
+   * --(Use Wine?)--
+   * cx_Freeze via Wine
+
+ * Document the requirements for building on Linux
+   * [[http://scons.org/wiki/SConsInstaller]]
+ 
+== Better installer ==
+
+ * Features:
+   1. Select features to install
+     1. --(SCons stand-alone)--
+     1. --(SCons engine (into Python's site-packages))-- Uses the standard Python installer
+     1. --(Documentation)--
+     1. --(Frontend)--
+     1. --(Add SCons to the path)--
+     1. --(Set the $SCONS environment variable)--
+     1. --(Integrate the frontend into Explorer's context menus)--
+   1. --(Works correctly with [[http://msdn.microsoft.com/en-us/library/bb756973.aspx|UAC]])--
+   1. --(Detects insufficient write privileges)--
+   1. --(Uninstaller)--
+   1. --(Localized user interface)--
+
+ * --(Research installer creation tools)--
+   * --([[http://nsis.sourceforge.net/Main_Page|NSIS]])--
+   * --([[http://www.jrsoftware.org/isinfo.php|InnoSetup]])--
+   * --([[http://wix.sourceforge.net/|WiX]])--
+
+ * --(Select one of those tools)--
+   * --(Cross-build capability?)--
+   * --(Support for extensions/scripts?)--
+   * NSIS was chosen since it is the only option available on Linux
+
+ * --(Document the alternatives, the choice, and why it was made)--
+
+ * --(Manually build an installer, containing features 1.1, 1.5, 1.6, 2, 3, 4)--
+
+ * --(Document the method)--
+
+ * --(Create/update a Builder for the selected installer tool)--
+   * Updated NSIS builder from the wiki
+
+ * --(Integrate installer creation into the build script)--
+
+ * Document necessary changes/additions
+
+ * --(Convert the manual to .chm)-- This feature has been dropped
+
+ * --(Create/update a .chm Builder)-- This feature has been dropped
+
+  * --(Document necessary changes/additions)--
+
+ * --(Integrate the manual into the installer)--
+
+ * --(Perform test installs (Tools: [[http://technet.microsoft.com/de-de/sysinternals/bb896642.aspx|FileMon]], [[http://technet.microsoft.com/de-de/sysinternals/bb896652.aspx|RegMon]], [[http://technet.microsoft.com/de-de/sysinternals/bb896645.aspx|Process Monitor]]))--
+
+ * Document the expected actions of the installer
+
+== GUI Front-end ==
+
+ * Research different ways to test TkInter programs when no display is available
+   * xvfb?
+   * Mock version of TkInter?
+   * Test cases that have to be executed by human testers?
+
+ * Create a test application that changes a text label when a button is clicked
+
+ * Set up the testing infrastructure for that application
+
+ * Document the testing methods
+
+ * --(Create the first version of the front-end)--
+   * --(Text box to specify a working directory for SCons)--
+   * --(Text box to specify command line arguments for SCons)--
+   * --(An output window that captures all output by SCons)--
+
+ * Create tests for this version
+   * Window creation testing is in place, headless testing is still missing
+
+ * --(Build a stand-alone application)--
+
+ * --(Integrate the front-end into the Windows Explorer as a context menu entry for directories)--
+
+ * --(Add the basic front-end to the installer)--
+
+ * Extend the front-end
+   * --(Add a way to specify name-value pairs on the command line)--
+   * --(Bi-directional transfer between the command line string and user interface elements)-- Has been changed to "option selection -> command line string"
+   * --(Add a way to access SCons command line options)--
+   * If possible, integrate the user manual to provide context help
+   * If time permits, add a module that parses SConstruct files and lets the user select targets to be built

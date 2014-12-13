@@ -1,0 +1,32 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>SCons tool &#8220;cpython&#8221; - Reference</title><link rel="stylesheet" href="scons.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.71.1"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="article" lang="en"><div class="titlepage"><div><div><h1 class="title"><a name="id2424771"></a>SCons tool &#8220;<span class="quote">cpython</span>&#8221; - Reference</h1></div><div><div class="author"><h3 class="author"><span class="firstname">Dirk</span> <span class="surname">Baechle</span></h3></div></div><div><p class="pubdate">2010-07-28</p></div></div><hr></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#interna">1. Interna</a></span></dt><dt><span class="section"><a href="#id2504807">2. Builders</a></span></dt><dd><dl><dt><span class="section"><a href="#id2504813">2.1. InstallPython</a></span></dt></dl></dd><dt><span class="section"><a href="#id2504864">3. Variables</a></span></dt></dl></div><div class="abstract"><p class="title"><b>Abstract</b></p><p>This reference lists all the variables that are used within the
+    &#8220;<span class="quote">cpython</span>&#8221; tool, and the available builders. It is intended
+    for SCons tool developers and core programmers, as a normal user you
+    should read the manual instead.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="interna"></a>1. Interna</h2></div></div></div><p>Internally, the builder is based on the
+    <code class="literal">Install</code>/<code class="literal">InstallAs</code> methods from
+    <code class="literal">SCons.Tool.install</code>. It makes use of the basic builder's
+    functions: <code class="literal">installFunc()</code>, and
+    <code class="literal">add_targets_to_INSTALLED_FILES()</code>.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id2504807"></a>2. Builders</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id2504813"></a>2.1. InstallPython</h3></div></div></div><p>The &#8220;<span class="quote"><code class="literal">InstallPython</code></span>&#8221; method creates
+      <code class="literal">.pyc</code> or <code class="literal">.pyo</code> files for
+      <code class="literal">.py</code> source files and adds them to the list of targets
+      along with the source files. They are later copied to the destination
+      (target) directory.</p><p>Example:</p><pre class="screen">env = Environment()
+hello = File('hello.py')
+env.InstallPython('/usr/local/bin/', hello)
+env.Alias('install', '/usr/local/bin/')
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id2504864"></a>3. Variables</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">CPYTHON_PYC</span></dt><dd><p>Default value is <code class="literal">1</code>, which means that the
+            Python source files get compiled to <code class="literal">.pyc</code> files.
+            Set this variable to <code class="literal">0</code> in order to get
+            optimized <code class="literal">.pyo</code> files, parallel to your
+            installed sources.</p></dd><dt><span class="term">CPYTHON_EXE</span></dt><dd><p>The path to the external Python executable, used for
+            creating optimized <code class="literal">.pyo</code> files. Default value is
+            '<code class="literal">python</code>'.</p></dd><dt><span class="term">CPYTHON_PYO_FLAGS</span></dt><dd><p>Additional flags for compiling optimized Python files
+            (<code class="literal">.pyo</code>). The default is
+            '<code class="literal">-O</code>'.</p></dd><dt><span class="term">CPYTHON_PYO_CMD</span></dt><dd><p>The command arguments for compiling optimized Python files
+            (<code class="literal">.pyo</code>). The default value is '<code class="literal">-c
+            'import sys,py_compile; [py_compile.compile(i) for i in
+            sys.argv[1:]]'</code>'.</p></dd><dt><span class="term">CPYTHON_PYCOM</span></dt><dd><p>The command line for compiling optimized Python files
+            (<code class="literal">.pyo</code>). Default is '<code class="literal">$CPYTHON_EXE
+            $CPYTHON_PYO_FLAGS $CPYTHON_PYO_CMD</code>'.</p></dd><dt><span class="term">CPYTHON_PYCOMSTR</span></dt><dd><p>The message string for the
+            '<code class="literal">CPYTHON_PYCOM</code>' command. Default is
+            '<code class="literal">Install file: "$SOURCE" as "$TARGET"</code>'.</p></dd><dt><span class="term">CPYTHON_SUFFIX</span></dt><dd><p>Default value is '.py'. The suffix for Python source
+            files.</p></dd></dl></div></div></div></body></html>

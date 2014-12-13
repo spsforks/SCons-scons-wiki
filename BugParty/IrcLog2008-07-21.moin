@@ -1,0 +1,260 @@
+#format irc
+17:18:02 *	bdbaddog (n=bdeegan@adsl-71-131-30-2.dsl.sntc01.pacbell.net) has joined #scons
+18:51:06 *	stevenknight (n=stevenkn@69.36.227.131) has joined #scons
+18:51:35 *	GregoryNoel is no longer marked as being away
+18:51:48 <GregoryNoel>	Hey, Steven...
+18:53:59 <stevenknight>	hi greg
+18:54:26 <GregoryNoel>	I hope Gary can make it; he sounded dragged out in his note.
+18:54:30 <stevenknight>	on the late shuttle tonight, so i turn into a pumpkin early  :-(
+18:54:36 <stevenknight>	agreed re: Gary
+18:55:22 <stevenknight>	he said he'd updated the spreadsheet, but i only see his comments on early issues
+18:56:05 *	GregoryNoel is still pulling up the spreadsheet
+18:59:22 <GregoryNoel>	Ah, Brandon is adding comments.  But you're right; I don't see Gary's comments past the initial few.
+19:00:34 <GregoryNoel>	Brandon, are you here for the bug meeting?
+19:00:46 <GregoryNoel>	Or anyone else?
+19:02:48 <Azverkan>	I'm here
+19:02:52 <Azverkan>	was still typing
+19:03:00 <GregoryNoel>	Hey, Brandon...
+19:03:10 <stevenknight>	hi brandon
+19:03:43 <Azverkan>	hey
+19:04:04 <GregoryNoel>	Can you keep going, but split your attention here?
+19:04:09 <Azverkan>	yep
+19:04:19 <GregoryNoel>	OK, shall we proceed?
+19:04:23 <stevenknight>	since we have three + gary's comments, and the clock's ticking, shall we get started then?
+19:04:26 <stevenknight>	yes
+19:04:35 <stevenknight>	2133:
+19:05:01 <stevenknight>	the more that i think about it, i'm on the fence like gary
+19:05:44 <GregoryNoel>	I think I'd move from INVALID to WONTFIX, but I still think it's not a bug
+19:05:44 <stevenknight>	but it's still pretty common and not unreasonable usage
+19:06:00 <GregoryNoel>	Really?  What's the use case?
+19:06:16 <stevenknight>	hmm, well maybe not *common* per se
+19:06:21 <stevenknight>	just surprising
+19:06:38 <stevenknight>	you want to run a post-processing script after building the target
+19:06:48 <stevenknight>	the post-processing script is built locally in your tree
+19:07:09 <stevenknight>	you AddPostAction() the script and expect that SCons will make sure it's built before it tries to execute it
+19:07:16 <stevenknight>	like it does with the regular Actions
+19:07:39 <GregoryNoel>	Yeah, but the next run, the post-processing doesn't get done since the command is already built.
+19:07:36 <stevenknight>	i guess it comes down to whether or not people should think an Action is an Action is an Action
+19:07:54 <stevenknight>	regardless of whether a Builder or AddPostAction associates it with the target
+19:08:21 <GregoryNoel>	I think it's bad design, for sure
+19:08:32 <stevenknight>	AddPostAction() in general?  I agree
+19:08:44 <GregoryNoel>	No, this use case, running a command as part of its own build.
+19:08:50 <stevenknight>	ah
+19:09:04 <GregoryNoel>	I just don't see any real reason to run the command just after building it and no other time.
+19:09:05 <Azverkan>	Feels more like a side effect of how builders are implemented that being a required feature to me
+19:09:47 <stevenknight>	I don't know, i do see people using it for things like unit test executables
+19:10:03 <Azverkan>	You have two types of these post actions, some that you want to always run and some that you only want to run after the executable changes
+19:10:09 <GregoryNoel>	For unit tests, you can use a synthetic target
+19:10:12 <stevenknight>	but you can argue that's just because we do a lousy job with tests right now
+19:10:27 <Azverkan>	and in both cases they may or may not have real targets, but fake targets like the windows registry getting updated etc...
+19:10:37 *	stevenknight agrees with Azverkan
+19:10:47 <Azverkan>	I think the real fix is to make Alias() more interchangeable with File()
+19:11:03 <GregoryNoel>	yes
+19:11:05 <stevenknight>	yes yes yes
+19:11:07 <Azverkan>	there are some cases where you have to make a File() that does not exist to work around limitations in Alias()
+19:11:21 <GregoryNoel>	yes
+19:11:41 <stevenknight>	okay, i can see WONTFIXing this in favor of a more comprehensive solution involving being able to use Alias
+19:11:48 <stevenknight>	as both a source and a real Dependency
+19:11:53 <GregoryNoel>	I'll go for that.
+19:12:04 <stevenknight>	like Brandon said
+19:12:16 <stevenknight>	okay, done
+19:13:00 <stevenknight>	I'll open a new one to track the Alias-wherever-you-can-use-File enhancement
+19:12:51 <GregoryNoel>	2134
+19:13:03 <stevenknight>	2134:
+19:13:45 <stevenknight>	Greg, did you have a particular 2.x feature in mind to make this easier?
+19:13:46 <GregoryNoel>	2133 spinoff: "Synthetic Targets"
+19:13:55 <stevenknight>	oh, wait, just saw it in your comment
+19:13:57 <GregoryNoel>	'attribute'
+19:14:30 <stevenknight>	gotta transfer buses, expect short disconnect
+19:14:40 *	stevenknight has quit ("Leaving")
+19:16:35 *	stevenknight (n=stevenkn@69.36.227.135) has joined #scons
+19:16:41 <GregoryNoel>	I just don't know if it's worth trying to implement in the 1.x timeframe if we're just going to reengineer it in 2.x, especially since 1.x is already getting so full.
+19:16:47 <stevenknight>	and we're back...
+19:17:11 <stevenknight>	yeah, 1.x is definitely full
+19:17:19 <stevenknight>	no one's beating down the doors for this
+19:17:25 <stevenknight>	let's go ahead and push it out to 2.x
+19:17:30 <stevenknight>	(assume we're still on 2134)
+19:17:37 <GregoryNoel>	works for me (yes)
+19:17:57 <stevenknight>	okay, 2134, 2.x, p3 (?)
+19:18:10 <GregoryNoel>	yes, issues@scons
+19:18:25 <stevenknight>	2135:  consensus 1.0.x p2
+19:18:34 <GregoryNoel>	done
+19:18:41 <stevenknight>	2136:  consensus 1.x p2
+19:18:46 <GregoryNoel>	done
+19:19:00 <stevenknight>	2137:  consensus 1.0 p3
+19:19:08 <GregoryNoel>	yes, but who?
+19:19:49 <stevenknight>	guess it partly depends on how soon we push out 1.0
+19:20:12 <GregoryNoel>	I think it should be within a week; it's aged enough.
+19:20:12 <stevenknight>	i'll take it, unless you have any text you've already started
+19:20:22 <stevenknight>	agree re: aged enough
+19:20:31 <GregoryNoel>	no, in fact, I think I'm too close to it
+19:20:27 <stevenknight>	2137:  1.0 p3 stevenknight
+19:20:38 <GregoryNoel>	done
+19:21:01 <GregoryNoel>	2138
+19:21:12 <stevenknight>	2138:  consensus 1.0.x p2
+19:21:13 <stevenknight>	me
+19:21:22 <GregoryNoel>	ok, works
+19:21:39 <stevenknight>	2140:  changed my mind, 2.x p4
+19:21:50 <stevenknight>	move it up if someone actually comes up with a good interface for it
+19:21:58 <stevenknight>	(the underlying hook, i mean)
+19:22:10 <GregoryNoel>	okay
+19:22:37 <stevenknight>	2141:  1.0.x p2, me
+19:22:40 <GregoryNoel>	2141, consensus
+19:22:47 <Azverkan>	2140: I'd think that the hook would probably be driven more by distributed build requirements like IncrediBuild than the actual submitted bug
+19:23:18 <stevenknight>	2140:  agree that that's a more compelling reason than this particular use case
+19:23:37 <stevenknight>	but someone still has to care enough to pony up the code
+19:24:05 *	Azverkan is at the moment I'm worried about the GIL not getting fixed in Py3k
+19:24:10 <stevenknight>	2142:  consensus dup
+19:24:35 <GregoryNoel>	2142, I added a comment to 2132 asking that he takes makes sure it uses env[ENV]
+19:24:29 <stevenknight>	2143:  consensus 1.x p2 david
+19:24:46 <GregoryNoel>	2143, done
+19:24:47 <stevenknight>	cool, thanks
+19:24:52 <stevenknight>	(re: 2142)
+19:25:36 <stevenknight>	2144:  Brandon, can you say more about the Windows API issue at work here
+19:26:01 <Azverkan>	It's probably more complicated than we want to spend on it
+19:26:01 <GregoryNoel>	2144, I agree with Steven's comment, but we should ask Benoit about it.
+19:26:16 <Azverkan>	But basically Ctrl-C event and job trees is the root of the issue
+19:26:31 <stevenknight>	on the discussion or on actually fixing it (or working around it) in SCons?
+19:26:32 <Azverkan>	Unix sends signals to subprocesses differently than windows does
+19:26:39 <GregoryNoel>	Is the original issue from Windoze?
+19:26:46 <stevenknight>	yes, IIRC
+19:26:58 <Azverkan>	yeah
+19:27:16 <Azverkan>	it gets even nastier if you have a scons running inside a scons running inside a scons or something like that
+19:27:16 <GregoryNoel>	Then it looks like Brandon is volunteering.... {;-}
+19:27:33 <Azverkan>	I dont think it's something we can ever fix on the command line without an IPC layer
+19:28:11 <Azverkan>	but the named event hack I did in the past worked well enough that I could submit a patch
+19:28:05 <stevenknight>	basically something else wraps and just handles the interrupt
+19:28:16 <stevenknight>	and passes word in a controlled way to the back-end SCons process?
+19:28:50 <Azverkan>	in my case we just modified the gui to send the named event instead of the Ctrl-C or the Ctrl-Break which both have bugs (and different kinds)
+19:29:04 <Azverkan>	Ctrl-C corrupts scons and Ctrl-Break corrupts subtools
+19:29:16 <GregoryNoel>	Ah, Windo$e...
+19:29:39 <stevenknight>	and i assume the wrapper that handles the Ctrl-{C,Break} needs to be a separate task, not just a thread?
+19:29:50 <Azverkan>	yes and scons cannot be a child of that task
+19:30:00 <Azverkan>	so you have to spawn a task parented by the parent of scons
+19:30:12 <stevenknight>	what fun!
+19:30:19 <Azverkan>	detach the console from scons and reattach the console to that
+19:30:27 <Azverkan>	its probably not really worth the effort
+19:30:32 *	GregoryNoel wonders about Steven's idea of fun
+19:30:48 <Azverkan>	I'd put it off until we think about releasing 2.x
+19:31:02 <GregoryNoel>	Future?  Or wontfix?
+19:31:11 <stevenknight>	future
+19:31:17 <Azverkan>	future because you will get new bugs otherwise
+19:31:21 <Azverkan>	over and over
+19:31:31 <stevenknight>	Brandon, could you add a write up describing the above so it gets captured?
+19:31:32 <GregoryNoel>	ok, what priority then?
+19:31:39 <Azverkan>	yeah
+19:31:44 <stevenknight>	thanks
+19:31:46 <stevenknight>	i'd say p2
+19:31:56 <stevenknight>	agree it sounds like a lot of effort
+19:32:06 <stevenknight>	but it goes to the heart of the "correct build" priority
+19:32:07 <GregoryNoel>	... I was thinking p3 but I'll go with p2
+19:32:17 <GregoryNoel>	ah, good point
+19:32:25 <stevenknight>	okay, 2144, future, p2
+19:32:29 <GregoryNoel>	done
+19:32:48 <stevenknight>	2145:  research, me
+19:33:13 <GregoryNoel>	ok, done
+19:33:29 <stevenknight>	2146:  anytime
+19:33:36 <stevenknight>	me if no one else volunteers
+19:33:44 <GregoryNoel>	done
+19:33:59 <GregoryNoel>	I think you're the only one who understands it
+19:33:52 <stevenknight>	re: 2146
+19:34:45 <stevenknight>	if we scrap the surrogate stuff, what about generatiing the output with scripts modeled after the test/*.py infrastructure?
+19:35:12 <GregoryNoel>	say more?
+19:35:52 <stevenknight>	all of the in-line <scons_example> things
+19:36:18 <stevenknight>	get turned into a separate self-contained script based on the same API that the test/*.py tests use
+19:36:41 <stevenknight>	generating the example output becomes a matter of running some script like runtest.py
+19:36:51 <stevenknight>	that captures the output at the right step
+19:37:32 <GregoryNoel>	I'm not sure...  It still seems awkward.  Maybe you should start a thread on the dev list.
+19:37:43 <stevenknight>	your ideas about making it a more integrated part of the packaging build are on target regardless of this internal implementation detail
+19:37:56 <stevenknight>	okay, i can do that
+19:38:10 <GregoryNoel>	ok, I'll look for your message
+19:38:22 <stevenknight>	shall we try to make some progress on 2006H2?
+19:38:29 <GregoryNoel>	How about that?  We finished the current issues!
+19:38:39 *	stevenknight rejoices
+19:38:36 <GregoryNoel>	Yes, onward
+19:38:46 <GregoryNoel>	only a few of those left now...
+19:39:13 <stevenknight>	cool
+19:39:23 <stevenknight>	net lag pulling up the spreadsheet...
+19:39:25 <stevenknight>	there we go
+19:39:35 <bdbaddog>	:)
+19:39:36 <stevenknight>	where did we leave off?
+19:39:42 <GregoryNoel>	1437 is first
+19:39:55 <stevenknight>	1437:  consensus dup
+19:39:57 <stevenknight>	hey bill
+19:40:23 <bdbaddog>	Good evening.  Gotta run in a few,but here for a few.
+19:40:36 <stevenknight>	cool, thanks
+19:40:39 <GregoryNoel>	Hey, Bill
+19:40:42 <bdbaddog>	timely 1437 is related to email thread Greg and I have been sharing.
+19:40:49 <stevenknight>	on 2006H2
+19:40:49 <stevenknight>	1438:  i
+19:40:50 <GregoryNoel>	yep
+19:40:55 <stevenknight>	try again
+19:41:10 <stevenknight>	1438:  I'm coming around to Bill's suggestion of 2.x and redoing this
+19:42:09 <stevenknight>	I'm starting to think I can kill off VariantDir by making the repository support more flexible
+19:42:20 <stevenknight>	let you really stack directories arbitrarily
+19:42:33 <GregoryNoel>	I tried to go there once; you shot me down.
+19:42:45 <stevenknight>	yep, i was wrong
+19:42:51 <bdbaddog>	sounds like it would support very complicated schemes, but would it be easy to to the simple case?
+19:43:33 <stevenknight>	i think so
+19:43:49 <bdbaddog>	worth a wiki page to discuss ?
+19:43:54 <bdbaddog>	and/or email thread.
+19:43:57 <GregoryNoel>	I'd certainly like to see a proposal
+19:44:00 <stevenknight>	sounds like it
+19:44:16 <Azverkan>	I'm also of the opinion that the current approach needs to replaced and since that would potentially require scripts to be updated it would have to be a 2.x feature
+19:44:17 <stevenknight>	probably research, p3, me then
+19:44:30 <bdbaddog>	ok guys. gotta run. sorry to be a short timer tonight.
+19:44:37 <GregoryNoel>	your research?  That's 'anytime'
+19:44:48 <stevenknight>	:-)
+19:45:21 <GregoryNoel>	I'm not kidding; I plan to manipulate the ordering so 'anytime' always sorts just after the current release.
+19:45:35 <GregoryNoel>	Er, the next immediate release.
+19:45:47 <stevenknight>	right, but i'm actually somewhat serious too
+19:46:02 <stevenknight>	i've adopted your terminology and agree that "research" should be higher priority
+19:46:10 <stevenknight>	for reclassification
+19:46:18 <stevenknight>	even if i'm not consistent about doing that
+19:46:37 <GregoryNoel>	Hmmm, ok, then which do you mean?
+19:46:41 <stevenknight>	so i'd rather see this as "research" so the proposal has at least a shot at getting written up sooner rather than later
+19:46:53 <GregoryNoel>	I'll go for that
+19:46:56 <stevenknight>	if only because I have it staring at me reminding me i haven't done it yet...
+19:47:08 <GregoryNoel>	{;-}
+19:47:18 <stevenknight>	okay, 1438:  research, sk
+19:47:22 <GregoryNoel>	done
+19:47:42 <GregoryNoel>	1439, toolchain
+19:47:49 <stevenknight>	done
+19:47:55 <stevenknight>	(I could go with you on invalid, too)
+19:48:19 <stevenknight>	1442:  toolchain / dup 1437
+19:48:23 <stevenknight>	?
+19:48:36 <GregoryNoel>	yes, invalid, I was thinking of another issue
+19:49:19 <stevenknight>	okay, just to be clear:  1439:  invalid ?
+19:49:23 <Azverkan>	not convinced that 1439 is invalid
+19:49:32 <GregoryNoel>	1439, yes
+19:49:38 <Azverkan>	but a decision that the project sure either make for or against
+19:50:00 <Azverkan>	seems like the current approach is that it is not supported
+19:50:52 <GregoryNoel>	uh, wait, 1439 has been already taken care of
+19:51:11 <Azverkan>	yeah there is like 10 in a row I think
+19:51:14 <stevenknight>	whoa, hang on, i already have a comment on here from July 1 saying this was getting closed
+19:51:46 <stevenknight>	but it looks like I didn't change the status
+19:52:06 <GregoryNoel>	Yes, it's marked invalid; it's still just in the spreadsheet.
+19:52:06 <stevenknight>	yeah, we've been through a bunch of these already
+19:52:23 <stevenknight>	ah, we only have 7 left from 2006H2
+19:52:25 <GregoryNoel>	next is 1490
+19:52:48 <stevenknight>	damn, i'm down to the last minute
+19:52:55 <stevenknight>	same time next week?
+19:53:00 <stevenknight>	we obviously won't have gary
+19:53:15 <stevenknight>	brandon, is this time good for you -- it's really helpful to have you here
+19:53:48 <Azverkan>	the earliest I get home by is 7:00PM west coast
+19:54:24 <Azverkan>	the time we have now is best for me so far
+19:54:34 <stevenknight>	okay, sounds good
+19:54:35 <GregoryNoel>	You can certainly join a little late, but would some other time be better?
+19:55:02 <Azverkan>	my work hours are more or less demand driven
+19:55:07 <stevenknight>	if so, say the word
+19:55:13 <Azverkan>	not really
+19:55:20 <stevenknight>	i'll assume same time (19h00 PDT) next week unless i hear otherwise
+19:55:27 <Azverkan>	I'm other completely busy or free by 1900
+19:55:35 <GregoryNoel>	OK, then we demand that you're here next time {;-}
+19:55:30 <stevenknight>	....and i'm at my stop
+19:55:32 <stevenknight>	later...
+19:55:35 *	stevenknight has quit ("Leaving")
+19:56:19 <GregoryNoel>	I've got to go, too; le Tour de France calls...
+19:56:25 <GregoryNoel>	cul
+19:56:34 *	GregoryNoel has been marked as being away
+21:55:33 *	bdbaddog (n=bdeegan@adsl-71-131-30-2.dsl.sntc01.pacbell.net) has left #scons
