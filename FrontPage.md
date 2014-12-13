@@ -1,12 +1,9 @@
 
+# The SCons Wiki - TEST VERSION
 
-# The SCons Wiki
+** THIS IS JUST A TEST VERSION OF THE SCONS WIKI - DO NOT RELY ON IT**
 
-Welcome to the home of the [SCons](http://www.scons.org) wiki (hosted by [Pair Networks](http://www.pair.com))! This wiki is an open forum for development and use of [SCons](http://www.scons.org/). Please, do feel free to contribute. New wiki users can practice in the [WikiSandBox](WikiSandBox). 
-
-_Note: Due to wiki spamming, you must have an account to edit pages and be a member of [WikiEditorsGroup](WikiEditorsGroup) to edit this page.  Also due to spam, wiki changes are queued up and approved by moderators.  See [http://www.scons.org/wiki/HelpOnApproveChanges](http://www.scons.org/wiki/HelpOnApproveChanges) for info._ 
-
-
+Welcome to the home of the [SCons](http://www.scons.org) wiki! This wiki is an open forum for development and use of [SCons](http://www.scons.org/). Please, do feel free to contribute.
 
 ![](http://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Im-jabber.svg/48px-Im-jabber.svg.png)
 
