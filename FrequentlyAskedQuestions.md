@@ -1,5 +1,4 @@
 
-
 # Frequently Asked Questions
 
 This FAQ contains information about the SCons software construction tool. 
@@ -99,7 +98,7 @@ If you have time and/or resources to contribute, contact scons-dev AT scons DOT 
 
 A common problem for new users is that SCons can't seem to find a compiler, linker, or other utility that they can run just fine from the command line. This is almost always because, by default, SCons does not use the same PATH environment variable that you use from the command line, so it can't find a program that has been installed in a "non-standard" location unless you tell it how. Here is the explanation from the SCons man page: 
 
-         * SCons does not automatically propagate the external environment used to execute '`scons`' to the commands used to build target files. This is so that builds will be guaranteed repeatable regardless of the environment variables set at the time scons is invoked. This also means that if the compiler or other commands that you want to use to build your target files are not in standard system locations, SCons will not find them unless you explicitly set the PATH to include those locations. 
+> SCons does not automatically propagate the external environment used to execute '`scons`' to the commands used to build target files. This is so that builds will be guaranteed repeatable regardless of the environment variables set at the time scons is invoked. This also means that if the compiler or other commands that you want to use to build your target files are not in standard system locations, SCons will not find them unless you explicitly set the PATH to include those locations. 
 Fortunately, it's easy to propagate the PATH value from your external environment by initializing the ENV construction variable as follows: 
 
                      * `import os`  
