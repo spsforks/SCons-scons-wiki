@@ -1,13 +1,12 @@
-
 Here is a Builder that runs `make`.  It's intended to be used along with [UnTarBuilder](UnTarBuilder) and [AutoConfigBuilder](AutoConfigBuilder) to extract some source code, configure it, and build it. 
 
 The Builder accepts several options to control build targets, execution environment, and make command-line options.  It will also pass the SCons `-j` parameter to the make command (but there's an option to prevent that). 
 
-[[!toc 1]] 
+**Table of Contents**
 
+[TOC] 
 
 # Definition
-
 
 ```python
 #!python 
