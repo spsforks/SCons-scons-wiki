@@ -1,6 +1,8 @@
-<<toc>>
+Here is a simple Builder that runs a `configure` script inside a directory.  It's intended to be used along with [UnTarBuilder](UnTarBuilder) and [MakeBuilder](MakeBuilder) to extract some source code, configure it, and build it.
 
-Here is a simple Builder that runs a `configure` script inside a directory.  It's intended to be used along with [UnTarBuilder](UnTarBuilder) and [MakeBuilder](MakeBuilder) to extract some source code, configure it, and build it. 
+**Table of Contents**
+
+[TOC]
 
 # Definition
 
