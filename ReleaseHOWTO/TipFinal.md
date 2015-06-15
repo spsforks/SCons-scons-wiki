@@ -160,10 +160,12 @@ If any of the tests fail, fix the problem in `trunk` following your usual develo
 
 ### Tag the Release
 
-Verify that you have SVN and VERSION in your shell environment as described in the setup section above, then run this command: 
+Verify that you have VERSION in your shell environment as described in the setup section above, then run this command: 
 
 
-  $ svn cp . $SVN/tags/$VERSION -m"Tagging $VERSION"
+```txt
+  $ hg tag -m "Tagging $VERSION" $VERSION
+```
 
 ### Archive Candidate Packages
 
