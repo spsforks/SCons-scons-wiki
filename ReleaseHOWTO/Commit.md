@@ -1,10 +1,5 @@
 
 ```txt
-  $ svn commit -F log.file
-  Sending        some/file
-  Sending        some/other/file
-  Transmitting file data ..
-  Committed revision 54321.
-  $
+  $ hg ci -m "Updating files for 2.3.5.final.0 release"
 ```
 

@@ -64,12 +64,7 @@ Commit the changes using the log message:
 
 
 ```txt
-  $ svn commit -F log.file
-  Sending        some/file
-  Sending        some/other/file
-  Transmitting file data ..
-  Committed revision 54321.
-  $
+  $ hg ci -m "Updating files for 2.3.5.final.0 release"
 ```
 
 
@@ -315,12 +310,7 @@ A release level of `'post'` causes `update-release-info.py` to update `ReleaseCo
 
 
 ```txt
-  $ svn commit -F log.file
-  Sending        some/file
-  Sending        some/other/file
-  Transmitting file data ..
-  Committed revision 54321.
-  $
+  $ hg ci -m "Updating files for 2.3.5.final.0 release"
 ```
 
 
