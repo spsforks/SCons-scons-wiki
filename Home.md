@@ -49,7 +49,7 @@ Welcome to the home of the [SCons](http://www.scons.org) wiki! This wiki is an o
  * Also see [CustomBuilders](CustomBuilders), an automatically generated page - contains all pages with Builder in their names 
  * [ToolsForFools](ToolsForFools) - Guide for writing new Builders/Tools 
  * [SconsToolbox](SconsToolbox) for contributed modules/extensions/scripts 
- * [ToolsIndex](ToolsIndex) for Tool modules that are developed separately from SCons </div>
+ * [ToolsIndex](ToolsIndex) for Tool modules that are developed separately from SCons
 
 ![](http://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Gnome-preferences-system.svg/48px-Gnome-preferences-system.svg.png)
 
@@ -61,7 +61,7 @@ Welcome to the home of the [SCons](http://www.scons.org) wiki! This wiki is an o
  * [BugParty](BugParty), our weekly IRC sessions to triage and prioritize newly submitted (and backlogged) bugs and issues 
  * [Buildbot](http://buildbot.scons.org/), our automatically running [build](http://buildbot.scons.org/console) and [performance](http://buildbot.scons.org/timings/) reports 
  * [InstallingBuildbotSlaves](InstallingBuildbotSlaves), examples and commands for setting up a [Buildbot](http://buildbot.scons.org/) slave (volunteer now!) 
- * [Google Summer of Code Pages](GSoC) </div>
+ * [Google Summer of Code Pages](GSoC)
 
 ## Other Wiki Notes
 
