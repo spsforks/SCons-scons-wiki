@@ -4,7 +4,7 @@
 
 These initializations are the conventions that will be used in the rest of this flow. 
 
-The location of the SCons SVN archive: 
+The location of the SCons Mercurial archive: 
 ```txt
   $ export HG=https://bitbucket.org/scons/scons
 ```
