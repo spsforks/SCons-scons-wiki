@@ -1,24 +1,20 @@
+# The SCons Wiki - Migration in progress.
 
-# The SCons Wiki - TEST VERSION
-
-** THIS IS JUST A TEST VERSION OF THE SCONS WIKI - DO NOT RELY ON IT**
+** The content is taken from a snapshot of the SCons wiki.  If you notice missing content please send email to the users mailing list**
 
 Welcome to the home of the [SCons](http://www.scons.org) wiki! This wiki is an open forum for development and use of [SCons](http://www.scons.org/). Please, do feel free to contribute.
 
-![](http://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Im-jabber.svg/48px-Im-jabber.svg.png)
-
-******About SCons****** 
+# About SCons #
 
  * [AboutSCons](AboutSCons) - background information about scons 
  * [FromMakeToScons](FromMakeToScons) - why scons? a critique to Make, and a history of build systems 
  * [SconsVsOtherBuildTools](SconsVsOtherBuildTools) - for those who want to compare SCons to other build tools. 
  * [SconsProjects](SconsProjects), open source projects which use SCons (add yours there). Can be a useful resource to learn new SCons tricks or just see it in action 
- * #scons IRC channel on Freenode [irc://irc.freenode.net/scons](irc://irc.freenode.net/scons) 
+ * IRC channel (#scons) on Freenode [irc://irc.freenode.net/scons](irc://irc.freenode.net/scons) 
  * [TalksAndSlides](TalksAndSlides) - videos and presentation slides of SCons talks
 
-![](http://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Emblem-question.svg/48px-Emblem-question.svg.png)
 
-******Getting Started****** 
+# Getting Started #
 
  * [BasicConcepts](BasicConcepts) - SCons building blocks 
  * [SConsCrashCourse](SConsCrashCourse) - write your first simple scripts in 5 minutes 
@@ -28,9 +24,7 @@ Welcome to the home of the [SCons](http://www.scons.org) wiki! This wiki is an o
  * [IDEIntegration](IDEIntegration) to use SCons from your favourite IDE 
  * [FromQmakeToScons](FromQmakeToScons) - how to make the switch
 
-![](img http://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Gnome-system-help.svg/48px-Gnome-system-help.svg.png)
-
-******Further documentation****** 
+# Further documentation  
 
  * [FrequentlyAskedQuestions](FrequentlyAskedQuestions) 
  * [PlatformSpecificNotes](PlatformSpecificNotes) 
@@ -40,9 +34,7 @@ Welcome to the home of the [SCons](http://www.scons.org) wiki! This wiki is an o
  * [AdministratorGuide](AdministratorGuide) for toolsmiths who install and maintain SCons and more complex build rules
 
 
-![](http://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Gnome-preferences-other.svg/48px-Gnome-preferences-other.svg.png)
-
-******SCons extensions/contributions****** 
+# SCons extensions/contributions
 
  * [HowToContribute](HowToContribute) - ideas for helping out the project in general (no hacking skills required!) 
  * [ContributedBuilders](ContributedBuilders) - contributed builders (and other misc tools) to provide support for more languages/librairies 
@@ -51,9 +43,7 @@ Welcome to the home of the [SCons](http://www.scons.org) wiki! This wiki is an o
  * [SconsToolbox](SconsToolbox) for contributed modules/extensions/scripts 
  * [ToolsIndex](ToolsIndex) for Tool modules that are developed separately from SCons </div>
 
-![](http://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Gnome-preferences-system.svg/48px-Gnome-preferences-system.svg.png)
-
-******SCons Development****** 
+# SCons Development  
 
  * [Roadmap](Roadmap) 
  * [DeveloperGuide](DeveloperGuide) for those who wish to hack on the core code 
@@ -63,9 +53,3 @@ Welcome to the home of the [SCons](http://www.scons.org) wiki! This wiki is an o
  * [InstallingBuildbotSlaves](InstallingBuildbotSlaves), examples and commands for setting up a [Buildbot](http://buildbot.scons.org/) slave (volunteer now!) 
  * [Google Summer of Code Pages](GSoC) </div>
 
-## Other Wiki Notes
-
-Use bug macro by [GregNoel](GregNoel) to link to SCons bugs at scons.tigris.org directly from wiki pages. [[!bug 1650]] ends up looking like [[!bug 1650]], lowercase works too: [[!bug 1650]] produces [[!bug 1650]]. 
-
-* [WikiUpgrade](WikiUpgrade), lists bugs and feature requests for this wiki 
-* [WikiUserPages](WikiUserPages), a page to find out about the people who edit this wiki (add yourself there!) 
