@@ -15,16 +15,6 @@ $ VERSION=3.2.0.final.0
 
 !INCLUDE "CheckOutRelease.md" 
 
-### Merge Checkpoint into Release
-
-```
-$ cd release
-$ svnmerge merge -b -S $SVN/checkpoint -f commit.txt
-```
-
-### Resolve Conflicts
-
-!INCLUDE "Resolved.md"
 
 ### Update Release Values
 
