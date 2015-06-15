@@ -31,9 +31,11 @@ $ VERSION=3.2.0.final.0
 
 From within your base directory, execute this command: 
 
+```txt
   $ hg clone $HG
   $ hg checkout tip
   $ hg purge
+```
 
 
 <a name="MergeAgain"></a> ### Merge Checkpoint into Release
