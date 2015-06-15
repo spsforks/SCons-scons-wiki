@@ -1,19 +1,19 @@
-
-
-<div>
 These instructions use outdated workflow based on svnmerge tool. 
-</div>
+
 Cherry-picking is the act of applying only selected changesets to a current branch, rather than taking all possible changesets to bring the branch up-to-date. 
 
 In our case, `trunk` is the authoritative source for everything that goes in a release; only under exceptional circumstances are changes made to `checkpoint` or `trunk`.  The general rule is that a change is made to `trunk` and brought over to `checkpoint`. 
 
 This flow assumes that the needed changesets are already in `trunk`; if not, you will need to commit a suitable changeset to `trunk` following your usual development practices prior to using this flow. 
 
-[[!toc 3]] 
+**Table of Contents**
 
-[[!inline pages="../InitSVN" quick="yes" raw="yes"]] 
-```txt
-  $ VERSION=3.2.0.beta.yyyymmdd
+[TOC]
+
+[[!inline pages="../InitSVN" quick="yes" raw="yes"]]
+
+```
+$ VERSION=3.2.0.beta.yyyymmdd
 ```
 
 ### Check Out Checkpoint
@@ -26,14 +26,14 @@ This flow assumes that the needed changesets are already in `trunk`; if not, you
 You can review the changes available on `trunk` to be integrated into `checkpoint`: 
 
 
-```txt
-  $ svnmerge.py avail --log -S $SVN/trunk
+```
+$ svnmerge.py avail --log -S $SVN/trunk
 ```
 You can look at the diff that was applied by this revision: 
 
 
-```txt
-  $ svnmerge.py avail --diff -S $SVN/trunk -r54321
+```
+$ svnmerge.py avail --diff -S $SVN/trunk -r54321
 ```
 Use this information to determine the revision(s) to be applied. 
 
@@ -45,8 +45,8 @@ After selecting the revision(s), merge them into the `checkpoint` branch.
 From within the `checkpoint` directory: 
 
 
-```txt
-  $ svnmerge.py merge -r54321,54123,53412 -b -S $SVN/trunk -f commit.txt
+```
+$ svnmerge.py merge -r54321,54123,53412 -b -S $SVN/trunk -f commit.txt
 ```
 
 ### Resolve Conflicts
@@ -66,7 +66,8 @@ Verify that `release_tuple` in `ReleaseConfig` has the correct release and says 
 Prepare a `log.file` that describes the revisions you pulled over.  You can use the `commit.txt` returned by the merge step to help prepare the log file.  Don't just reuse `commit.txt` as it tends to be very verbose and hard to read. 
 
 Here's an example of a reasonable `log.file`: 
-```txt
+
+```
 Cherry-picked revisions from trunk because blah blah blah.
 
 From John Doe:
@@ -79,7 +80,7 @@ From Jim Smith:
 Use your judgment.  If all the revision(s) from John Doe were documentation, and Jim Smith fixed an important bug (and was the actual reason for the cherry-picking), the log message might be like this: 
 
 
-```txt
+```
 Jim Smith fixed the yadda yadda by blah blah, and the issue was
 deemed important enough to be brought over into the checkpoint
 branch on a expedited schedule toward a micro release.
@@ -87,6 +88,7 @@ branch on a expedited schedule toward a micro release.
 Also picked up documentation updates from John Doe as they have
 no possibility of destabilizing the release.
 ```
+
 Then commit the result to SVN: 
 
 [[!inline pages="../Commit" quick="yes" raw="yes"]] 
