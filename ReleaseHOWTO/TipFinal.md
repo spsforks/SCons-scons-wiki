@@ -38,7 +38,8 @@ From within your base directory, execute this command:
 ```
 
 
-<a name="MergeAgain"></a> ### Merge Checkpoint into Release
+<a name="MergeAgain"></a> 
+### Merge Checkpoint into Release
 
 ```
 $ cd release
