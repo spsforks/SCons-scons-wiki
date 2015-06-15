@@ -1,13 +1,15 @@
-
 A beta release is prepared and published when the branch has stabilized enough that it's worth exposing to a wider audience. 
 
 If you want a checklist you can mark off as you go, cut-n-paste these contents. 
 
-[[!toc ]] 
+**Table of Contents**
 
-[[!inline pages="../InitSVN" quick="yes" raw="yes"]] 
-```txt
-  $ VERSION=3.2.1.beta.yyyymmdd
+[TOC]
+
+[[!inline pages="../InitSVN" quick="yes" raw="yes"]]
+
+```
+$ VERSION=3.2.1.beta.yyyymmdd
 ```
 
 ### Check Out Branch
