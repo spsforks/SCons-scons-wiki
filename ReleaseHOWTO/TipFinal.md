@@ -3,10 +3,6 @@
 
 # Final Release
 
-These instructions use outdated workflow based on svnmerge tool.
-
-This flow takes the available changesets in `checkpoint` and brings `release` up to date.  It assumes that `checkpoint` and `release` already exist and have been set up correctly. The `trunk` is the authoritative source for everything that goes in a release; only under exceptional circumstances are changes made to other branches.  The general rule is that a change is made to `trunk`, brought over to `checkpoint` and then merged into `release`. This flow assumes that any needed changesets are already in `checkpoint`; if not, you will need to commit a suitable changeset to `trunk` following your usual development practices, then [cherry-pick the changes](ReleaseHOWTO/TipCherryPick) into `checkpoint` before starting this flow. If you want a checklist you can mark off as you go, cut-n-paste these contents.
-
 **Table of Contents**
 
 [TOC]
