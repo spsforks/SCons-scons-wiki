@@ -11,9 +11,15 @@ The following table describes the different roles a contributor the SCons projec
 
 Role  | Description  | Responsibilities 
 :-----|-------------:|:----------------
-Developer | Writes code under his/her control | Checking scons-dev mailing list, Writing code, Submitting to his/her QA contact for testing
-QA | Tests code under his/her control | Checking scons-user mailing list to understand user problems  , Testing code under his/her control through pre-defined tests and real-world projects using SCons, Submitting patches back to the Developer (optional)
-[Release_Team](Release_Team) | Release policy and activities | Participate in setting release schedule  , Participate in setting release goals, Rotate actual release duties
+Developer | Writes code under his/her control | Checking scons-dev mailing list
+ | | Writing code
+ | | Submitting to his/her QA contact for testing
+QA | Tests code under his/her control | Checking scons-user mailing list to understand user problems
+ | | Testing code under his/her control through pre-defined tests and real-world projects using SCons
+ | | Submitting patches back to the Developer (optional)
+[Release_Team](Release_Team) | Release policy and activities | Participate in setting release schedule
+ | | Participate in setting release goals
+ | | Rotate actual release duties
 
 
 ## Duties
