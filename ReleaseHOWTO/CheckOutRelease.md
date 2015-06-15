@@ -1,5 +1,8 @@
 
 From within your base directory, execute this command: 
 
-  $ svn co $SVN/release
+  $ hg clone $HG
+  $ hg checkout tip
+  $ hg purge
+
 
