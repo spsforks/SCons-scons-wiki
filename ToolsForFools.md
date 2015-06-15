@@ -1,5 +1,6 @@
+**Table of Contents**
 
-[[!toc 2]] 
+[TOC]
 
 
 # A simple Builder, and its evolution to a Tool
