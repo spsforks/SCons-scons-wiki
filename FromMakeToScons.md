@@ -1,5 +1,6 @@
+**Table of Contents**
 
-<a name="toc_anchor"></a> [[!toc 3]] 
+[TOC]
 
 Evolution is a slow process. Getting rid of old bad habits is never easy.  This article is a critique of the Make build tool.  We list its shortcomings and we suggest a few more modern alternatives. 
 
