@@ -6,9 +6,7 @@
 
 Welcome to the home of the [SCons](http://www.scons.org) wiki! This wiki is an open forum for development and use of [SCons](http://www.scons.org/). Please, do feel free to contribute.
 
-![](http://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Im-jabber.svg/48px-Im-jabber.svg.png)
-
-# About SCons
+# About SCons ![](http://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Im-jabber.svg/48px-Im-jabber.svg.png)
 
  * [AboutSCons](AboutSCons) - background information about scons 
  * [FromMakeToScons](FromMakeToScons) - why scons? a critique to Make, and a history of build systems 
@@ -17,9 +15,7 @@ Welcome to the home of the [SCons](http://www.scons.org) wiki! This wiki is an o
  * \#scons IRC channel on Freenode [irc://irc.freenode.net/scons](irc://irc.freenode.net/scons) 
  * [TalksAndSlides](TalksAndSlides) - videos and presentation slides of SCons talks
 
-![](http://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Emblem-question.svg/48px-Emblem-question.svg.png)
-
-# Getting Started
+# Getting Started ![](http://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Emblem-question.svg/48px-Emblem-question.svg.png)
 
  * [BasicConcepts](BasicConcepts) - SCons building blocks 
  * [SConsCrashCourse](SConsCrashCourse) - write your first simple scripts in 5 minutes 
@@ -29,9 +25,7 @@ Welcome to the home of the [SCons](http://www.scons.org) wiki! This wiki is an o
  * [IDEIntegration](IDEIntegration) to use SCons from your favourite IDE 
  * [FromQmakeToScons](FromQmakeToScons) - how to make the switch
 
-![](http://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Gnome-system-help.svg/48px-Gnome-system-help.svg.png)
-
-# Further documentation
+# Further documentation ![](http://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Gnome-system-help.svg/48px-Gnome-system-help.svg.png)
 
  * [FrequentlyAskedQuestions](FrequentlyAskedQuestions) 
  * [PlatformSpecificNotes](PlatformSpecificNotes) 
@@ -40,9 +34,7 @@ Welcome to the home of the [SCons](http://www.scons.org) wiki! This wiki is an o
  * Man page as [HTML](http://www.scons.org/doc/HTML/scons-man.html) and [PDF](http://media4.filewind.com/g.php?filepath=1633) - very detailed information about SCons features (hint: there's an index at the bottom) 
  * [AdministratorGuide](AdministratorGuide) for toolsmiths who install and maintain SCons and more complex build rules
 
-![](http://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Gnome-preferences-other.svg/48px-Gnome-preferences-other.svg.png)
-
-# SCons extensions/contributions
+# SCons extensions/contributions ![](http://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Gnome-preferences-other.svg/48px-Gnome-preferences-other.svg.png)
 
  * [HowToContribute](HowToContribute) - ideas for helping out the project in general (no hacking skills required!) 
  * [ContributedBuilders](ContributedBuilders) - contributed builders (and other misc tools) to provide support for more languages/librairies 
@@ -51,9 +43,7 @@ Welcome to the home of the [SCons](http://www.scons.org) wiki! This wiki is an o
  * [SconsToolbox](SconsToolbox) for contributed modules/extensions/scripts 
  * [ToolsIndex](ToolsIndex) for Tool modules that are developed separately from SCons
 
-![](http://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Gnome-preferences-system.svg/48px-Gnome-preferences-system.svg.png)
-
-# SCons Development
+# SCons Development ![](http://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Gnome-preferences-system.svg/48px-Gnome-preferences-system.svg.png)
 
  * [Roadmap](Roadmap) 
  * [DeveloperGuide](DeveloperGuide) for those who wish to hack on the core code 
