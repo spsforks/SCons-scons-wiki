@@ -1,12 +1,13 @@
+**Table of Contents**
 
-[[!toc 1]] 
+[TOC]
 
 
 # Introduction
 
-SCons core provides tools implemented as Python modules.  This is fine for tools that are part of the SCons distribution, but for contributed tools supported separately from the SCons code repository, using modules is not the best architecture.  Fortunately, SCons allows for tools to be implemented as Python packages (i.e. directories with a file _**`__init__.py`**_).  This allows for tools to be managed as packages in distributed version control system (DVCS) branches and repositories -- a Python package is a directory and directories not files are the top-level thing managed by a DVCS (which is why it is easier to deal with packages rather than modules using a DVCS). 
+SCons core provides tools implemented as Python modules.  This is fine for tools that are part of the SCons distribution, but for contributed tools supported separately from the SCons code repository, using modules is not the best architecture.  Fortunately, SCons allows for tools to be implemented as Python packages (i.e. directories with a file `__init__.py`).  This allows for tools to be managed as packages in distributed version control system (DVCS) branches and repositories -- a Python package is a directory and directories not files are the top-level thing managed by a DVCS (which is why it is easier to deal with packages rather than modules using a DVCS). 
 
-To manage tools that are not part of SCons core, or provide enhancements for core tools independently, a DVCS (e.g. Mercurial, Git, Bazaar) repository (branch in Bazaar) should be created and the directory should contain a file _**`__init__.py`_** so that it is a package in the Python sense. The tool can then be installed by cloning (branching in Bazaar) the repository into the _**site_scons/site_tools**_ directory. 
+To manage tools that are not part of SCons core, or provide enhancements for core tools independently, a DVCS (e.g. Mercurial, Git, Bazaar) repository (branch in Bazaar) should be created and the directory should contain a file `__init__.py` so that it is a package in the Python sense. The tool can then be installed by cloning (branching in Bazaar) the repository into the `site_scons/site_tools` directory. 
 
 No matter which DVCS and hosting site is used for a given tool, it should be indexed on this page:  this page is the central index of all contributed tools.  The index works best where there is a wiki page explaining the tool linked to by the entry in the first column of the tool list. 
 
@@ -15,47 +16,49 @@ No matter which DVCS and hosting site is used for a given tool, it should be ind
 
 Installing an external Tool requires you to clone (branch in Bazaar) the contents of the package's folder to 
 
-1. _**/path_to_your_project/site_scons/site_tools/foo_**, if you need the _**foo**_ Tool in one project only, or 
+1. `/path_to_your_project/site_scons/site_tools/foo`, if you need the `foo` Tool in one project only, or 
 
-2. _**~/.scons/site_scons/site_tools/foo_**, for a personal installation of _**foo**_ that can be used by you for all your projects (SCons 2.1 and later). 
+2. `~/.scons/site_scons/site_tools/foo`, for a personal installation of `foo` that can be used by you for all your projects (SCons 2.1 and later). 
 
-In SCons 2.1 and later, the following paths are tried in order to detect SCons specific settings, like the _**site_scons/site_tools**_ folder: 
-[[!table header="no" class="mointable" data="""
-**OS (Platform)**  | **Path** 
-Windows (win32/cygwin)  | _**$ALLUSERSPROFILE\Application Data\scons**_ 
-  | _**$USERPROFILE\Local Settings\Application Data\scons**_ 
-  | _**$APPDATA\scons**_ 
-  | _**~\.scons**_ 
-MacOS X (darwin)  | _**/Library/Application Support/SCons**_ 
-  | _**/opt/local/share/scons**_ 
-  | _**/sw/share/scons**_ 
-  | _**~/Library/Application Support/SCons**_ 
-  | _**~/.scons**_ 
-Solaris (sunos)  | _**/opt/sfw/scons**_ 
-  | _**/usr/share/scons**_ 
-  | _**~/.scons**_ 
-Linux/HPUX/... (other)  | _**/usr/share/scons**_ 
-  | _**~/.scons**_ 
-"""]]
+In SCons 2.1 and later, the following paths are tried in order to detect SCons specific settings, like the `site_scons/site_tools` folder:
+
+OS (Platform)  | Path
+--------------:|:----
+Windows (win32/cygwin) | `$ALLUSERSPROFILE\Application Data\scons` 
+Windows (win32/cygwin) | `$USERPROFILE\Local Settings\Application Data\scons` 
+Windows (win32/cygwin) | `$APPDATA\scons` 
+Windows (win32/cygwin) | `~\.scons` 
+MacOS X (darwin)  | `/Library/Application Support/SCons` 
+MacOS X (darwin) | `/opt/local/share/scons` 
+MacOS X (darwin) | `/sw/share/scons` 
+MacOS X (darwin) | `~/Library/Application Support/SCons` 
+MacOS X (darwin) | `~/.scons` 
+Solaris (sunos)  | `/opt/sfw/scons` 
+Solaris (sunos) | `/usr/share/scons` 
+Solaris (sunos) | `~/.scons` 
+Linux/HPUX/... (other) | `/usr/share/scons` 
+Linux/HPUX/... (other) | `~/.scons`
 
 (see also sect. 19.7 [http://scons.org/doc/production/HTML/scons-user/x3697.html](http://scons.org/doc/production/HTML/scons-user/x3697.html) in the User's Guide). 
 
-This makes the tool available but it must be included explicitly in a SCons build by creating an Environment with a _**tools**_ entry since only named tools from the SCons core are initialized automatically when SCons runs. Example: 
+This makes the tool available but it must be included explicitly in a SCons build by creating an Environment with a `tools` entry since only named tools from the SCons core are initialized automatically when SCons runs. Example: 
 
 
-```txt
-  # Create environment and init Tool foo
-  env = Environment(tools=['foo'])
+```
+#!python
+# Create environment and init Tool foo
+env = Environment(tools=['foo'])
 
-  # Use the builder, provided by the Tool foo
-  env.Foo(Glob('*.foo'))
+# Use the builder, provided by the Tool foo
+env.Foo(Glob('*.foo'))
 ```
 
 # Have a pick (the actual index)
 
 The index of Tools maintained outside of SCons repository: 
-[[!table header="no" class="mointable" data="""
+
 **Name**  | **DVCS**  | **Location**  | **Branch/Clone command** 
+---------:|:----------|--------------:|:------------------------
 Chapel  | Mercurial  | [https://bitbucket.org/russel/scons_chapel](https://bitbucket.org/russel/scons_chapel)  | hg clone [https://bitbucket.org/russel/scons_chapel](https://bitbucket.org/russel/scons_chapel) chapel 
 [C#](CsharpBuilder)  | Mercurial  | [https://bitbucket.org/russel/scons_csharp](https://bitbucket.org/russel/scons_csharp)  | hg clone [https://bitbucket.org/russel/scons_csharp](https://bitbucket.org/russel/scons_csharp) csharp 
 [CPython](CPythonTool)  | Mercurial  | [https://bitbucket.org/dirkbaechle/scons_cpython](https://bitbucket.org/dirkbaechle/scons_cpython)  | hg clone [https://bitbucket.org/dirkbaechle/scons_cpython](https://bitbucket.org/dirkbaechle/scons_cpython) cpython 
@@ -87,7 +90,6 @@ Sphinx  | Mercurial  | [http://bitbucket.org/zondo/sphinx-scons/overview](http:/
 [Vala](ValaBuilder)  | Mercurial  | [https://bitbucket.org/russel/scons_vala](https://bitbucket.org/russel/scons_vala)  | hg clone [https://bitbucket.org/russel/scons_vala](https://bitbucket.org/russel/scons_vala) vala 
 [Watcom](Watcom)  | Git  | [http://code.google.com/p/scons-wat/](http://code.google.com/p/scons-wat/)  | git clone [http://code.google.com/p/scons-wat/](http://code.google.com/p/scons-wat/) watcom 
 X10  | Mercurial  | [https://bitbucket.org/russel/scons_x10](https://bitbucket.org/russel/scons_x10)  | hg clone [https://bitbucket.org/russel/scons_x10](https://bitbucket.org/russel/scons_x10) x10 
-"""]]
 
 (*) The D tool is no longer developed outside of the SCons source tree (as it once was) to enable correct integration between D, C++ and C in multi-language systems.  D tool development now happens in [a clone of the SCons repository specifically for developing the D tool](https://bitbucket.org/russel/scons_d_tooling). 
 
@@ -121,7 +123,7 @@ We assume that you have initially branched an existing tool, modified it and wan
 * You should also check your local name (the one that is displayed for commits) with `bzr whoami` and change it by `bzr whoami "John Doe <jdoe@lostmymind.com>"`, respectively. 
 * Commit your local changes with `bzr commit`. 
 * Then, push your local branch up to Launchpad with `bzr push lp:~yournick/toolname/branchname`. Correctly replacing `yournick` (your _Launchpad-login_), `toolname` (name of the tool) and `branchname` (name of your branch), this creates a new branch under your account associated with the tool project. Since Launchpad stores all the different branches in a sort of "matrix", your contribution should show up on your page and on the tool project page along with the original branch. 
-* As described on the [Code/Uploading a Branch](https://help.launchpad.net/Code/UploadingABranch) page, you can continue to commit your subsequent changes locally (`bzr commit`) or publish them again by a push (`bzr push lp:~yournick/toolname/branchname`). 
+* As described on the [Code/Uploading a Branch](https://help.launchpad.net/Code/UploadingABranch) page, you can continue to commit your subsequent changes locally `bzr commit` or publish them again by a push `bzr push lp:~yournick/toolname/branchname`. 
 * Eventually, use the "Propose for merging" link (on the Launchpad page of your branch) to get your changes into the _mainline_ (also known as _trunk_). 
 Please also regard the special page [ToolsBazaarWorkflows](ToolsBazaarWorkflows), it contains more info about 
 
@@ -131,3 +133,4 @@ Please also regard the special page [ToolsBazaarWorkflows](ToolsBazaarWorkflows)
 In many ways all branches for a given tool are equal; all branches are effectively forks of the tool.  The mainline is the one agreed to be the mainline and is the one to be indexed above. 
 
 For more detailed infos about Bazaar and DVCS in general, you should also visit the [UsingBzr](http://scons.org/wiki/UsingBzr) page. 
+
