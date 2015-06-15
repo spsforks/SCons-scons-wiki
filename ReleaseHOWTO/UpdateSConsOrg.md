@@ -6,11 +6,13 @@
 
 Commit the changes you prepared above: 
 
+```txt
   $ svn commit -m"Changes to publish the SCons $VERSION release"
+```
 
 Now you have to go update the site: 
 
-
+```txt
   $ ssh -l scons manam.pair.com
   $ cd public_html
   $ cp -al production new  # hard-link the whole tree; fast.
@@ -18,6 +20,7 @@ Now you have to go update the site:
   $ rm -rf previous
   $ mv production previous && mv new production
   $ exit
+```
 
 Now point your browser to the [SCons home page](http://scons.org/). If anything is amiss, fix it, commit the necessary changes, and update the site. 
 
