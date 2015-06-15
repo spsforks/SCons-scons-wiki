@@ -165,6 +165,7 @@ Verify that you have VERSION in your shell environment as described in the setup
 
 ```txt
   $ hg tag -m "Tagging $VERSION" $VERSION
+  $ hg push
 ```
 
 ### Archive Candidate Packages
