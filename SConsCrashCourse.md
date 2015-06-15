@@ -1,3 +1,6 @@
+**Table of Contents**
+
+[TOC]
 
 If you're familiar with `make` utility, **SCons** is a replacement for it. As the `make` utility looks for a **Makefile**, SCons looks for a **SConstruct** file by default. SConstruct file is a Python script. _Note that you do not have to know Python or `make` for basic operation with this build tool._ 
 
