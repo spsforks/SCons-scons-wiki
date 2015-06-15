@@ -1,8 +1,6 @@
-
-
-<div>
 Don't put Builders and Tools here. Put them in [ContributedBuilders](ContributedBuilders). This is for things that integrate scons into other systems or tools to help use scons. True, some of the things below should already be in the recipes/builder pages. 
-</div>
+
+
 * [NsisSconsTool](NsisSconsTool) A Tool to deal with Nullsoft Scriptable Installation System scripts, and the creation of windows installers with this free tool. 
 * [Win32Executable](Win32Executable) A win32 executable of SCons. You don't need to install Python to run SCons. 
 * [MicrosoftPlatformTool](MicrosoftPlatformTool) Using the free as in beer Microsoft command line C++ compiler with SCons. (Plus Platform SDK and Direct X SDK) 
