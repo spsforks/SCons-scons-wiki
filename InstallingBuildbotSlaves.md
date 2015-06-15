@@ -1,10 +1,11 @@
+**Table of Contents**
 
-[[!toc 2]] 
+[TOC]
 
 
 # Installing a Buildbot slave
 
-By setting up a Buildbot slave and registering it with our master process at `buildbot.scons.org` ([link](http://buildbot.scons.org)) you can contribute to the SCons project a lot. We are always looking for volunteers to help us cover additional platforms or build options in [BuildBot](BuildBot). Having a good amount of diversity among the provided slave setups helps us to keep SCons cross-platform and functioning in general. 
+By setting up a Buildbot slave and registering it with our master process at [buildbot.scons.org](http://buildbot.scons.org) you can contribute to the SCons project a lot. We are always looking for volunteers to help us cover additional platforms or build options in [BuildBot](BuildBot). Having a good amount of diversity among the provided slave setups helps us to keep SCons cross-platform and functioning in general. 
 
 It's not that complicated to get a Buildbot slave running and is a good way to get involved without having to spend a lot of time on it.  If you are able to provide a spare machine for this purpose, your help is greatly appreciated! 
 
