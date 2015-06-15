@@ -97,8 +97,9 @@ Repeat this section for each conflicted file.
 Verify that `release_level` in [ReleaseConfig](ReleaseConfig) is being set to `final`.
 
 
-
-$ python bin/update-release-info.py release
+```txt
+	$ python bin/update-release-info.py release
+```
 
 
 The `ReleaseConfig` file is where the "official" version number ($VERSION), the Python version floors, and other information about the release is recorded.  This command takes the information in `ReleaseConfig` and inserts it in the necessary files. 
@@ -352,8 +353,9 @@ From within your base directory, execute this command:
 From within the `trunk` directory, edit `ReleaseConfig` and change the assignment of `release_level` to `'post'`. 
 
 
-
-$ python bin/update-release-info.py release
+```txt
+	$ python bin/update-release-info.py release
+```
 
 
 The `ReleaseConfig` file is where the "official" version number ($VERSION), the Python version floors, and other information about the release is recorded.  This command takes the information in `ReleaseConfig` and inserts it in the necessary files. 
