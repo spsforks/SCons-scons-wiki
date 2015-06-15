@@ -63,13 +63,15 @@ Rebased the release branch to r54321 of the checkpoint branch.
 Commit the changes using the log message: 
 
 
-
+```txt
   $ svn commit -F log.file
   Sending        some/file
   Sending        some/other/file
   Transmitting file data ..
   Committed revision 54321.
   $
+```
+
 
 ### Build Candidate Packages
 Provided you have all of the necessary utilities installed, this should be a simple matter of: 
@@ -312,12 +314,14 @@ A release level of `'post'` causes `update-release-info.py` to update `ReleaseCo
 **Commit changes for next version** Create `log.file` ... [FIXME](ReleaseHOWTO/TipFinalBody) 
 
 
-
+```txt
   $ svn commit -F log.file
   Sending        some/file
   Sending        some/other/file
   Transmitting file data ..
   Committed revision 54321.
   $
+```
+
 
 **Finalize** Go celebrate; you're all done. 
