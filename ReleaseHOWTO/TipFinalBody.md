@@ -14,7 +14,7 @@ $ VERSION=3.2.0.final.0
 ### Check Out Release
 
 !INCLUDE "CheckOutRelease.md" 
-<a name="MergeAgain"></a> 
+
 ### Merge Checkpoint into Release
 
 ```
