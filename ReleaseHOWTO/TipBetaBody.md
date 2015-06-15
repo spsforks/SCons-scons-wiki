@@ -13,7 +13,7 @@ If you want a checklist you can mark off as you go, cut-n-paste these contents.
 
 [[!toc 3]] 
 
-[[!inline pages="../InitSVN" quick="yes" raw="yes"]] 
+[[!inline pages="../InitHG" quick="yes" raw="yes"]] 
 ```txt
   $ export RELEASE=3.2.0.beta.yyyymmdd
 ```

@@ -9,7 +9,7 @@ Another example might be automatically publishing the packages every day; to kee
 
 [[!toc ]] 
 
-BLAH BLAH BLAH [[!inline pages="../InitSVN" quick="yes" raw="yes"]] 
+BLAH BLAH BLAH [[!inline pages="../InitHG" quick="yes" raw="yes"]] 
 
 BLAH BLAH BLAH 
 ```txt

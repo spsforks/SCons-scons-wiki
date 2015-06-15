@@ -10,7 +10,7 @@ This flow assumes that the needed changesets are already in `trunk`; if not, you
 
 [TOC]
 
-[[!inline pages="../InitSVN" quick="yes" raw="yes"]]
+[[!inline pages="../InitHG" quick="yes" raw="yes"]]
 
 ```
 $ VERSION=3.2.0.beta.yyyymmdd

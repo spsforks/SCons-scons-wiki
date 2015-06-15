@@ -6,7 +6,7 @@ This flow takes the available changesets in `checkpoint` and brings `release` up
 
 [TOC]
 
-!INCLUDE "InitSVN.md"
+!INCLUDE "InitHG.md"
 
 ```
 $ VERSION=3.2.0.final.0

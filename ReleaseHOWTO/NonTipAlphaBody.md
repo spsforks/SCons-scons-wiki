@@ -6,7 +6,7 @@ If you want a checklist you can mark off as you go, cut-n-paste these contents.
 
 [TOC]
 
-[[!inline pages="../InitSVN" quick="yes" raw="yes"]] 
+[[!inline pages="../InitHG" quick="yes" raw="yes"]] 
 ```
 $ VERSION=3.2.1.alpha.yyyymmdd
 ```
