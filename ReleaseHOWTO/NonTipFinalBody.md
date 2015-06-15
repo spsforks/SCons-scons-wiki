@@ -1,13 +1,14 @@
-
 A final release is prepared and published when FIXME 
 
 If you want a checklist you can mark off as you go, cut-n-paste these contents. 
 
-[[!toc ]] 
+**Table of Contents**
+
+[TOC]
 
 [[!inline pages="../InitSVN" quick="yes" raw="yes"]] 
-```txt
-  $ VERSION=3.2.1.final.0
+```
+$ VERSION=3.2.1.final.0
 ```
 
 ### Check Out Branch
