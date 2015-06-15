@@ -7,9 +7,9 @@ Send the changes you prepared above to Tigris:
 From within the `www` subdirectory of your `trunk` directory: 
 
 
-```txt
   $ svn commit -m"Update project web pages for $VERSION"
-```
+
+
 Point your browser at [the roadmap page](http://scons.tigris.org/roadmap.html); if anything's amiss, fix it and commit again. 
 
 **Add news item** 

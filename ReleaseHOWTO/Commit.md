@@ -1,10 +1,8 @@
 
 
-```txt
   $ svn commit -F log.file
   Sending        some/file
   Sending        some/other/file
   Transmitting file data ..
   Committed revision 54321.
   $
-```

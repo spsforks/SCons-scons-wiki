@@ -6,14 +6,15 @@ This flow takes the available changesets in `checkpoint` and brings `release` up
 
 [TOC]
 
-[[!inline pages="../InitSVN" quick="yes" raw="yes"]]
+!INCLUDE "InitSVN.md"
 
 ```
 $ VERSION=3.2.0.final.0
 ```
 ### Check Out Release
 
-[[!inline pages="../CheckOutRelease" quick="yes" raw="yes"]] <a name="MergeAgain"></a> ### Merge Checkpoint into Release
+!INCLUDE "CheckOutRelease.md" 
+<a name="MergeAgain"></a> ### Merge Checkpoint into Release
 
 ```
 $ cd release
@@ -22,13 +23,13 @@ $ svnmerge merge -b -S $SVN/checkpoint -f commit.txt
 
 ### Resolve Conflicts
 
-[[!inline pages="../Resolved" quick="yes" raw="yes"]]
+!INCLUDE "Resolved.md"
 
 ### Update Release Values
 
 Verify that `release_level` in [ReleaseConfig](ReleaseConfig) is being set to `final`.
 
-[[!inline pages="../UpdateFiles" quick="yes" raw="yes"]]
+!INCLUDE "UpdateFiles.md"
 
 ### Commit Release
 
@@ -41,10 +42,12 @@ Rebased the release branch to r54321 of the checkpoint branch.
   -- Various typos
 ```
 
-Commit the changes using the log message: [[!inline pages="../Commit" quick="yes" raw="yes"]]
+Commit the changes using the log message: 
+
+!INCLUDE "Commit.md"
 
 ### Build Candidate Packages
-[[!inline pages="../Bootstrap" quick="yes" raw="yes"]]
+!INCLUDE "Bootstrap.md"
 
 ### Test the Candidate Packages
 This script is kept in the distribution as bin/xxxxxxxxx:
@@ -60,34 +63,44 @@ The first line of the script runs the regression test.  The SCons BuildBot monit
 
 ### Package Tests
 
-[[!inline pages="../TestCandidates" quick="yes" raw="yes"]]
+!INCLUDE "TestCandidates.md"
 
 If any of the tests fail, fix the problem in `trunk` following your usual development practices, [cherry-pick the changes](ReleaseHOWTO/TipCherryPick) into the `checkpoint` branch, and go back to [merge the changeset(s)](ReleaseHOWTO/TipFinalBody) into the `release` branch.
 
 ### Tag the Release
-[[!inline pages="../TagRelease" quick="yes" raw="yes"]]
+!INCLUDE "TagRelease.md"
 
 ### Archive Candidate Packages
-[[!inline pages="../ArchivePackages" quick="yes" raw="yes"]]
+!INCLUDE "ArchivePackages.md"
 
  ### Update SourceForge
-[[!inline pages="../UpdateSourceForge" quick="yes" raw="yes"]] 
+!INCLUDE "UpdateSourceForge.md" 
 
 ### Update scons.org
-[[!inline pages="../UpdateSConsOrg" quick="yes" raw="yes"]] 
+!INCLUDE "UpdateSConsOrg.md" 
 
 ### Update Tigris.org
-[[!inline pages="../UpdateTigris" quick="yes" raw="yes"]] 
+!INCLUDE "UpdateTigris.md" 
 
 ### Announce
-[[!inline pages="../AnnounceAll" quick="yes" raw="yes"]] 
+!INCLUDE "AnnounceAll.md" 
 
 ### Update Trunk to Next Version
 
-**Initialize files for next version** [[!inline pages="../CheckOutTrunk" quick="yes" raw="yes"]] From within the `trunk` directory, edit `ReleaseConfig` and change the assignment of `release_level` to `'post'`. [[!inline pages="../UpdateFiles" quick="yes" raw="yes"]] A release level of `'post'` causes `update-release-info.py` to update `ReleaseConfig` itself to the next minor version and then tweak some other files to set them up for the the beginning of a new version.
+**Initialize files for next version** 
+
+!INCLUDE "CheckOutTrunk.md" 
+
+From within the `trunk` directory, edit `ReleaseConfig` and change the assignment of `release_level` to `'post'`. 
+
+!INCLUDE "UpdateFiles.md" 
+
+A release level of `'post'` causes `update-release-info.py` to update `ReleaseConfig` itself to the next minor version and then tweak some other files to set them up for the the beginning of a new version.
 
 **Verify files are correct** Edit files ... [FIXME](ReleaseHOWTO/TipFinalBody)
 
-**Commit changes for next version** Create `log.file` ... [FIXME](ReleaseHOWTO/TipFinalBody) [[!inline pages="../Commit" quick="yes" raw="yes"]]
+**Commit changes for next version** Create `log.file` ... [FIXME](ReleaseHOWTO/TipFinalBody) 
+
+!INCLUDE "Commit.md"
 
 **Finalize** Go celebrate; you're all done. 

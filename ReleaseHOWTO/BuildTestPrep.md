@@ -9,10 +9,9 @@ The tests can run a very long time.  While you're waiting, go back to your other
 From within your base directory, run these commands: 
 
 
-```txt
   $ svn co $SVN/scons.org
   $ cd scons.org
-```
+
 The `scons.org` checkout is pretty large.  If you don't want to wait, open another shell window and proceed.  Make sure the new shell is set up with the SVN and VERSION shell variables as described above. 
 ### Prepare Blurb
 
@@ -61,7 +60,6 @@ To unpack the release documentation into where it can be used by the web pages, 
  or something similar.  In the meantime, copy the script and run it. 
 
 
-```txt
   mkdir doc/$VERSION
   (cd doc/$VERSION && tar zxf build/dist/scons-doc-$RELEASE.tar.gz)
   svn add doc/$VERSION
@@ -70,5 +68,5 @@ To unpack the release documentation into where it can be used by the web pages, 
       # This is a 'final' release on the main branch
       (cd doc && rm -f production && ln -s $VERSION production)
   esac
-```
+
 [FIXME](ReleaseHOWTO/BuildTestPrep) If any of the candidate packages fail, fix the problem in `trunk` following your usual development practices and [go and do another dry run](ReleaseHOWTO/BuildTestPrep). 

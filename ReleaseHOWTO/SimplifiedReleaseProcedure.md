@@ -7,11 +7,14 @@ The procedure has been used for all releases since 2.2.0.
 
 ## Prepare Binaries and Doc
 
-* validate and update all documentation files by calling: ```txt
-python bin/docs-update-generated.py
-python bin/docs-validate.py
-python bin/docs-create-example-outputs.py
-```, then check all diffs for the files in `docs/generated/*`. 
+* validate and update all documentation files by calling: 
+
+   python bin/docs-update-generated.py
+   python bin/docs-validate.py
+   python bin/docs-create-example-outputs.py
+
+
+, then check all diffs for the files in `docs/generated/*`. 
 * Commit the auto-generated doc changes to current branch ("Regenerated docs for X.Y.Z release.") 
 * update CHANGES.txt (should already be up to date) 
 * update Announce.txt (not for checkpoints): add section for this release, important user-visible changes only.  This is really long since it also has old releases.  Is it useful? 
@@ -24,8 +27,6 @@ python bin/docs-create-example-outputs.py
 * test them: `python runtest.py -a` (Q: aren't there special tests to test the unpacked installers?) 
 You should now have the following in build/dist: 
 
-
-```txt
   scons-$VERSION-1.noarch.rpm
   scons-$VERSION-1.src.rpm
   scons-$VERSION.linux-x86_64.tar.gz
@@ -38,7 +39,7 @@ You should now have the following in build/dist:
   scons-local-$VERSION.zip
   scons-src-$VERSION.tar.gz
   scons-src-$VERSION.zip
-```
+
 The .linux-x86_64 ones are not needed and may be deleted; the others all get uploaded to SF. 
 
 * You have to rename the scons-$VERSION.win32.exe to scons-$VERSION-setup.exe; the build SConstruct should be fixed to do this.  (Note that the upload script requires this.) 
@@ -47,11 +48,9 @@ The .linux-x86_64 ones are not needed and may be deleted; the others all get upl
 
 * commit the changes made by update-release-info.py onto a release branch: 
 
-```txt
    hg branch rel_<NAME>
    hg commit (message: final auto updates for x.y.z release)
    hg tag <NAME> (e.g. 2.2.0)
-```
 
 ## Upload Software and Doc
 

@@ -1,2 +1,3 @@
+!INCLUDE "AnnounceCommon.md"
 
-[[!inline pages="../AnnounceCommon" quick="yes" raw="yes"]] 
+

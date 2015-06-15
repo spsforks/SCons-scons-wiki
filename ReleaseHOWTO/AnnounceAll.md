@@ -21,4 +21,4 @@ OTHERS?  Are there other individuals we should notify?  Or other mailing lists? 
 
 See [http://en.wikipedia.org/wiki/Linux_distributions](http://en.wikipedia.org/wiki/Linux_distributions) and [http://en.wikipedia.org/wiki/DistroWatch](http://en.wikipedia.org/wiki/DistroWatch) for candidates to be contacted. 
 
-[[!inline pages="../AnnounceCommon" quick="yes" raw="yes"]] 
+!INCLUDE "AnnounceCommon.md"
