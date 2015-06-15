@@ -1,13 +1,14 @@
-
 An alpha release is a quick-n-dirty way of getting out initial releases for testing.  It can be done at any point, even from a read-only tree, as there's no requirement for committing the branch when the process is completed. 
 
 If you want a checklist you can mark off as you go, cut-n-paste these contents. 
 
-[[!toc ]] 
+**Table of Contents**
+
+[TOC]
 
 [[!inline pages="../InitSVN" quick="yes" raw="yes"]] 
-```txt
-  $ VERSION=3.2.1.alpha.yyyymmdd
+```
+$ VERSION=3.2.1.alpha.yyyymmdd
 ```
 
 ### Check Out Branch
