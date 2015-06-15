@@ -148,7 +148,8 @@ By default, SCons only builds what you tell it to, and anything that these files
 1. Specify the full path name of the external target(s) on the command line.  This will build the the target(s) and anything they need. `% scons /full/path/to/target`
 1. Specify a directory on the command line that is above the target(s) to be built.  One example of this is to specify the root directory, which tells SCons to build everything it knows about. `% scons /` 
 1. Use [Default()](SConsMethods/Default). Any argument you pass to Default() will be built when the user just runs "scons" without explicitly specifying any targets to build. So, you'd say something like: `Default(env.Install(directory='my_install_dir', source='foo'))` 
-1. Use [Alias()](SConsMethods/Alias). Alias allows you to attach a "pseudo target" to one or more files. Say you want a user to type "scons install" in order to install all your targets, just like a user might type `make install` for traditional make. Here is how you do that: `Alias("install", env.Install(dir="install_dir", source="foo"))` Note that you can call Alias() with a target of "install" as many times as you want with different source files, and SCons will build all of them when the user types `scons install`. 
+1. Use [Alias()](SConsMethods/Alias). Alias allows you to attach a "pseudo target" to one or more files. Say you want a user to type "scons install" in order to install all your targets, just like a user might type `make install` for traditional make. Here is how you do that: `Alias("install", env.Install(dir="install_dir", source="foo"))`
+    1. Note that you can call Alias() with a target of "install" as many times as you want with different source files, and SCons will build all of them when the user types `scons install`. 
 
 [Charles Crain, 14 August 2003, updated by Greg Noel, 1 December 2008] 
 
