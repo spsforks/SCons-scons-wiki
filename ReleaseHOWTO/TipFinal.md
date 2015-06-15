@@ -64,7 +64,7 @@ Commit the changes using the log message:
 
 
 ```txt
-  $ hg ci -m "Updating files for $VERSION release"
+  $ hg ci -l log.file
 ```
 
 
@@ -310,7 +310,7 @@ A release level of `'post'` causes `update-release-info.py` to update `ReleaseCo
 
 
 ```txt
-  $ hg ci -m "Updating files for $VERSION release"
+  $ hg ci -l log.file
 ```
 
 
