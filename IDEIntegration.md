@@ -1,6 +1,6 @@
+**Table of Contents**
 
-[[!toc ]] 
-
+[TOC]
 
 # Integrating scons into IDEs
 
