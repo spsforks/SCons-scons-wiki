@@ -86,12 +86,10 @@ Definitely. We're looking for any help possible:
 * documentation writers 
 * web designers and/or administrators 
 * testers (especially if you use a non-usual operating system or tool chain) 
-If you have time and/or resources to contribute, contact scons-dev AT scons DOT org, the SCons developers and tell us what you're interested in doing. You may also want to check out [http://scons.org/wiki/HowToContribute](http://scons.org/wiki/HowToContribute) , for some ideas about how you can help us. 
-
+If you have time and/or resources to contribute, contact scons-dev AT scons DOT org, the SCons developers and tell us what you're interested in doing. You may also want to check out [HowToContribute](HowToContribute), for some ideas about how you can help us. 
 
 # SCons Questions
 
-<a name="shell_env"></a> 
 [1]:
 ## Why doesn't SCons find my compiler/linker/etc.? I can execute it just fine from the command line.
 
@@ -100,47 +98,57 @@ A common problem for new users is that SCons can't seem to find a compiler, link
 > SCons does not automatically propagate the external environment used to execute '`scons`' to the commands used to build target files. This is so that builds will be guaranteed repeatable regardless of the environment variables set at the time scons is invoked. This also means that if the compiler or other commands that you want to use to build your target files are not in standard system locations, SCons will not find them unless you explicitly set the PATH to include those locations. 
 Fortunately, it's easy to propagate the PATH value from your external environment by initializing the ENV construction variable as follows: 
 
-                     * `import os`  
- `env = Environment(ENV = {'PATH' : os.environ['PATH']})` 
+```
+#!python
+import os
+env = Environment(ENV = {'PATH' : os.environ['PATH']})
+```
+
 Alternatively, you might want to propagate your entire external environment to the build commands as follows: 
 
-                     * `import os`  
- `env = Environment(ENV = os.environ)` 
+```
+#!python
+import os
+env = Environment(ENV = os.environ)
+```
 Of course, by propagating external environment variables into your build, you're running the risk that a change in the external environment will affect the build, possibly in unintended ways. The way to guarantee that the build is repeatable is to explicitly initialize the PATH 
 
-                     * `path = ['/bin', '/usr/bin', '/path/to/other/compiler/bin']`  
- `env = Environment(ENV = {'PATH' : path})` 
-
+```
+#!python
+path = ['/bin', '/usr/bin', '/path/to/other/compiler/bin']
+env = Environment(ENV = {'PATH' : path})
+```
 ### How do I get SCons to find my #include files?
 
 If your program has #include files in various directories, SCons must somehow be told in which directories it should look for the #include files. You do this by setting the CPPPATH variable to the list of directories that contain .h files that you want to search for: 
 
-                           * `env = Environment(CPPPATH='inc')`  
- `env.Program('foo', 'foo.c')` 
+```
+#!python
+env = Environment(CPPPATH='inc')
+env.Program('foo', 'foo.c')
+```
+
 SCons will add to the compilation command line(s) the right -I options, or whatever similar options are appropriate for the C or C++ compiler you're using. This makes your SCons-based build configuration portable. 
 
 Note specifically that you should not set the include directories directly in the CCFLAGS variable, as you might initially expect: 
 
-                           * `env = Environment(CCFLAGS='-Iinc')    # THIS IS INCORRECT!`  
- `env.Program('foo', 'foo.c')` 
-This will make the program compile correctly, but SCons will not find the dependencies in the "inc" subdirectory and the program will not be rebuilt if any of those #include files change. 
+```
+#!python
+env = Environment(CCFLAGS='-Iinc') # THIS IS INCORRECT!
+env.Program('foo', 'foo.c')
+```
 
-<a name="build_outside"></a>
+This will make the program compile correctly, but SCons will not find the dependencies in the "inc" subdirectory and the program will not be rebuilt if any of those #include files change.
 
 [2]:
 ## How do I install files? The Install() method doesn't do anything. In general, how do I build anything outside my current directory?
 
 By default, SCons only builds what you tell it to, and anything that these files depend on (no matter where they live). If you don't specify differently, SCons builds "." (_i.e._, all the targets in and under the current directory). If you want SCons to build/install targets outside the current directory, you have to tell it to do so somehow. There are four ways you might do this: 
 
-1. Specify the full path name of the external target(s) on the command line.  This will build the the target(s) and anything they need. 
-                     * `% scons /full/path/to/target` 
-1. Specify a directory on the command line that is above the target(s) to be built.  One example of this is to specify the root directory, which tells SCons to build everything it knows about. 
-                     * `% scons /` 
-1. Use [Default()](SConsMethods/Default). Any argument you pass to Default() will be built when the user just runs "scons" without explicitly specifying any targets to build. So, you'd say something like: 
-                     * `Default(env.Install(directory='my_install_dir', source='foo'))` 
-1. Use [Alias()](SConsMethods/Alias). Alias allows you to attach a "pseudo target" to one or more files. Say you want a user to type "scons install" in order to install all your targets, just like a user might type "`make install`" for traditional make. Here is how you do that: 
-                     * `Alias("install", env.Install(dir="install_dir", source="foo"))` 
-Note that you can call Alias() with a target of "install" as many times as you want with different source files, and SCons will build all of them when the user types "`scons install`". 
+1. Specify the full path name of the external target(s) on the command line.  This will build the the target(s) and anything they need. `% scons /full/path/to/target`
+1. Specify a directory on the command line that is above the target(s) to be built.  One example of this is to specify the root directory, which tells SCons to build everything it knows about. `% scons /` 
+1. Use [Default()](SConsMethods/Default). Any argument you pass to Default() will be built when the user just runs "scons" without explicitly specifying any targets to build. So, you'd say something like: `Default(env.Install(directory='my_install_dir', source='foo'))` 
+1. Use [Alias()](SConsMethods/Alias). Alias allows you to attach a "pseudo target" to one or more files. Say you want a user to type "scons install" in order to install all your targets, just like a user might type `make install` for traditional make. Here is how you do that: `Alias("install", env.Install(dir="install_dir", source="foo"))` Note that you can call Alias() with a target of "install" as many times as you want with different source files, and SCons will build all of them when the user types `scons install`. 
 
 [Charles Crain, 14 August 2003, updated by Greg Noel, 1 December 2008] 
 
@@ -151,20 +159,27 @@ Like every other build system, SCons considers a directory used as a target as u
 
 As a workaround, make the dependency on some file within the directory that's always updated: 
 
-                     * `env.Command('html_dir/index.html', Glob('rst/*.rst'),`  
- `            'rst2html -o $TARGET.dir $SOURCES')` 
+```
+#!python
+env.Command('html_dir/index.html', Glob('rst/*.rst'), 'rst2html -o $TARGET.dir $SOURCES')
+```
+
 If there isn't such a file, create one and put something in it that changes every time you build (such as the date): 
 
-                     * `env.Command('html_dir/last_updated', Glob('rst/*.rst'),`  
- `            ['rst2html -o $TARGET.dir $SOURCES',`  
- `             'date >$TARGET'])`  
- 
+```
+#!python
+env.Command('html_dir/last_updated', Glob('rst/*.rst'), ['rst2html -o $TARGET.dir $SOURCES','date >$TARGET'])  
+```
 
 ## I'm already using ldconfig, pkg-config, gtk-config, etc. Do I have to rewrite their logic to use SCons?
 
 SCons provides explicit support for getting information from programs like ldconfig and pkg-config. The relevant method is `ParseConfig()`, which executes a `*-config` command, parses the returned flags, and puts them in the environment through which the [ParseConfig](ParseConfig)() method is called: 
 
-                     * `env.ParseConfig('pkg-config --cflags --libs libxml')` 
+```
+#!python
+env.ParseConfig('pkg-config --cflags --libs libxml')
+```
+
 If you need to provide some special-purpose processing, you can supply a function to process the flags and apply them to the environment in any way you want. 
 
 
@@ -172,7 +187,11 @@ If you need to provide some special-purpose processing, you can supply a functio
 
 The Microsoft linker requires that the environment variable TMP is set. I do the following in my SConstruct file. 
 
-                     * `env['ENV']['TMP'] = os.environ['TMP']` 
+```
+#!python
+env['ENV']['TMP'] = os.environ['TMP']
+```
+
 There are potential pitfalls for copying user environment variables into the build environment, but that is well documented. If you don't want to import from your external environment, set it to some directory explicitly. 
 
 [Rich Hoesly, 18 November 2003] 
@@ -268,8 +287,6 @@ Although the information about the original Software Carpentry competition doesn
 
 
 ## Current Version of This FAQ
-
-The most recent and up-to-date version of this FAQ may always be found at [http://scons.org/wiki/FrequentlyAskedQuestions](http://scons.org/wiki/FrequentlyAskedQuestions) 
 
 Please check to make sure your question hasn't already been answered in the latest version before submitting a new question (or an addition or correction to this FAQ). 
 
