@@ -1,15 +1,14 @@
+**This is the place to share tips, examples, and short scripts.**
 
-This is the place to share tips, examples, and short scripts. 
+The SCons [ManPage](http://www.scons.org/doc/HTML/scons-man.html) also contains a number of quick examples. 
 
-* The SCons [ManPage](http://www.scons.org/doc/HTML/scons-man.html) also contains a number of quick examples. See the [Examples](http://www.scons.org/doc/HTML/scons-man.html#lbBB) section towards the bottom of the page. 
-[[!toc ]] 
+See the [Examples](http://www.scons.org/doc/HTML/scons-man.html#lbBB) section towards the bottom of the page. 
 
+**Table of Contents**
 
+[TOC]
 
 ---
-
- 
-
 
 ## Scons : Extending and getting info
 
