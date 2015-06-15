@@ -25,19 +25,19 @@ In SCons 2.1 and later, the following paths are tried in order to detect SCons s
 OS (Platform)  | Path
 --------------:|:----
 Windows (win32/cygwin) | `$ALLUSERSPROFILE\Application Data\scons` 
-Windows (win32/cygwin) | `$USERPROFILE\Local Settings\Application Data\scons` 
-Windows (win32/cygwin) | `$APPDATA\scons` 
-Windows (win32/cygwin) | `~\.scons` 
+ | `$USERPROFILE\Local Settings\Application Data\scons` 
+ | `$APPDATA\scons` 
+ | `~\.scons` 
 MacOS X (darwin)  | `/Library/Application Support/SCons` 
-MacOS X (darwin) | `/opt/local/share/scons` 
-MacOS X (darwin) | `/sw/share/scons` 
-MacOS X (darwin) | `~/Library/Application Support/SCons` 
-MacOS X (darwin) | `~/.scons` 
+ | `/opt/local/share/scons` 
+ | `/sw/share/scons` 
+ | `~/Library/Application Support/SCons` 
+ | `~/.scons` 
 Solaris (sunos)  | `/opt/sfw/scons` 
-Solaris (sunos) | `/usr/share/scons` 
-Solaris (sunos) | `~/.scons` 
+ | `/usr/share/scons` 
+ | `~/.scons` 
 Linux/HPUX/... (other) | `/usr/share/scons` 
-Linux/HPUX/... (other) | `~/.scons`
+ | `~/.scons`
 
 (see also sect. 19.7 [http://scons.org/doc/production/HTML/scons-user/x3697.html](http://scons.org/doc/production/HTML/scons-user/x3697.html) in the User's Guide). 
 
