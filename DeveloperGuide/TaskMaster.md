@@ -1,5 +1,4 @@
 
-
 # SCons Taskmaster
 
 The Taskmaster is responsible for taking the directed acyclic graph (DAG) created during the parse phase, evaluating it, and arranging for the execution of any commands needed to bring the project up to date.  As part of its processing, it scans source files for implicit dependencies and adds them to the DAG.  To determine if something needs to be built or rebuilt, it compares the signatures of the antecedents; if they have changed from the last run, the Taskmaster runs a command and then generates new signatures. 
@@ -9,7 +8,7 @@ The Taskmaster is responsible for taking the directed acyclic graph (DAG) create
 
 The Taskmaster is called from the Jobs module.  The Jobs module pulls a batch of tasks (a subclass of Task wraps a runnable Node) and runs the batch to completion.  The Jobs module repeats this process until the Taskmaster tells it that there are no more runnable tasks.  If the Jobs module is in _parallel_ mode, the batch size is set by the **-j** parameter on the command line.  If the number of jobs is one (the default) or if the Python implementation does not support parallel execution, the Jobs module operates in _serial_ mode and the batch size is one. 
 
-When the Taskmaster is instantiated, it is given the specific class to use to wrap the runnable nodes.  This class is normally a subclass of the Task class (also defined in the Taskmaster module) and contains the logic to process a node.  Subclasses are used to cause the Taskmaster to operate in different modes; the subclass provides the behavior that is specific to the mode.  Different subclasses are used for a standard build (Build****Task), for cleaning targets (Clean****Task), for determining if a build is up-to-date (Question****Task), and for configuring (SConf****Build****Task). 
+When the Taskmaster is instantiated, it is given the specific class to use to wrap the runnable nodes.  This class is normally a subclass of the Task class (also defined in the Taskmaster module) and contains the logic to process a node.  Subclasses are used to cause the Taskmaster to operate in different modes; the subclass provides the behavior that is specific to the mode.  Different subclasses are used for a standard build (BuildTask), for cleaning targets (CleanTask), for determining if a build is up-to-date (QuestionTask), and for configuring (SConfBuildTask). 
 
 
 ## Running the DAG
