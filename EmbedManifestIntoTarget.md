@@ -1,12 +1,12 @@
 
-
 # How To Embed Manifest Into Target
 
 Here I do a fast explanation how to embed your manifest file into your target using the Microsoft Manifest Tool. 
 
 To use this tip, you must to create your environment as usual, but at the final, you must to add a line. 
 
-* ```txt
+```
+#!python
         # Create your environment as usual.
         env = Environment()
 
@@ -20,13 +20,15 @@ To use this tip, you must to create your environment as usual, but at the final,
                 LINKCOM  = [env['LINKCOM'], 'mt.exe -nologo -manifest ${TARGET}.manifest -outputresource:$TARGET;2']
                 )
 ```
+
 That's it. Enjoy! 
 
 
 # Another Way to Embed a Manifest File
 
-You can also run the Microsoft Manifest Tool (mt.exe) as a post-build step. I have found this to be more reliable than adjusting LINKCOM as the method above does. 
-```txt
+You can also run the Microsoft Manifest Tool (mt.exe) as a post-build step. I have found this to be more reliable than adjusting LINKCOM as the method above does.
+
+```
         # Create your environment as usual.
         env = Environment()
 
@@ -44,7 +46,7 @@ You can also run the Microsoft Manifest Tool (mt.exe) as a post-build step. I ha
 
 Here's a two-liner that sets up the correct link environment to automatically embed manifest files, for both executables and shared libraries: 
 
-* ```txt
+```
         # Create your environment as usual.
         env = Environment()
 
@@ -65,7 +67,7 @@ If you don't want to use the Microsoft compiler and tools, using MinGW one needs
 
 In this example, I will embed a manifest file for linking against the Microsoft VC Runtime library.  Python 2.6 installs one for us on the system and includes a package called **msvcrt**.  Below, ask Python for the specific name, version, and key.  Then write it out to a file: 
 
-* ```txt
+```
 import sys
 
 # Defaults
@@ -109,7 +111,7 @@ fout.close()
 
 Create an .rc file with the following text for embedding into an executable: 
 
-* ```txt
+```
 fout = open("msvcr.rc", "w")
 fout.write("""
 #include "winuser.h"
@@ -124,12 +126,12 @@ The "**1**" above indicates this manifest to be embedded into an executable, cha
 
 On the command line one would do: 
 
-* ```txt
+```
 $ windres --input msvcr.rc --output msvcrc.o
 ```
 From Python, open a subprocess: 
 
-* ```txt
+```
 try:
     out = subprocess.Popen(["windres", "--input", "msvcr.rc", "--output", "msvcr.o"],
         stdout = subprocess.PIPE).communicate()
@@ -141,7 +143,7 @@ except:
 
 Having separate environments for compiling executables and libraries makes it easy to embed different manifest objects: 
 
-* ```txt
+```
     exe_env.Append(LINKFLAGS = " %s " % exe_manifest_obj_filename)
     lib_env.Append(LINKFLAGS = " %s " % lib_manifest_obj_filename)
 ```
