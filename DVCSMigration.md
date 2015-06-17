@@ -1,10 +1,6 @@
-
-
-<div>
 On November 21th, 2011 SCons codebase officially migrated from SVN to Mercurial. 
 
 [https://bitbucket.org/scons](https://bitbucket.org/scons) 
-</div>
 
 # SCons DVCS Migration
 
