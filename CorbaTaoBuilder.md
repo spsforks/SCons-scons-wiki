@@ -1,4 +1,6 @@
-This is rough builder for Corba-using applications using Tao. It is based on the other builder [CorbaBuilder](CorbaBuilder), but this one works without any modifications and allows you to build client and server applications separately. With minor modifications, this also works for Orbacus from IONA. ```python
+This is rough builder for Corba-using applications using Tao. It is based on the other builder [CorbaBuilder](CorbaBuilder), but this one works without any modifications and allows you to build client and server applications separately. With minor modifications, this also works for Orbacus from IONA.
+
+```
 #!python
 import SCons.Scanner.IDL
 
@@ -76,4 +78,5 @@ env.Program(
   ],
 )
 
-```-- Teftin, --platon42 
+```
+-- Teftin, --platon42 
