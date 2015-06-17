@@ -29,17 +29,9 @@ In this first part of my investigations, I concentrated on busting the myth that
 
 ## Repositories
 
-All the results of the following discussion can be downloaded as `hg` (Mercurial) repo from 
+All the results of the following discussion can be downloaded as `hg` (Mercurial) repo from [http://www.bitbucket.org/dirkbaechle/scons_testresults](http://www.bitbucket.org/dirkbaechle/scons_testresults). In separate folders you can find the raw result data and the scripts that were used to run the examples. Look out for `README.rst` or `overview.rst` files, they contain some additional info about how things work and what the single subdirectories contain. 
 
-[http://www.bitbucket.org/dirkbaechle/scons_testresults](http://www.bitbucket.org/dirkbaechle/scons_testresults) 
-
-. In separate folders you can find the raw result data and the scripts that were used to run the examples. Look out for `README.rst` or `overview.rst` files, they contain some additional info about how things work and what the single subdirectories contain. 
-
-Additionally, I created a separate SCons testsuite which is available at 
-
-[http://www.bitbucket.org/dirkbaechle/scons_testsuite](http://www.bitbucket.org/dirkbaechle/scons_testsuite) 
-
-. It comprises several real-life projects, control scripts, and the supporting "`sconstest`" package for running all the timings and profilings. 
+Additionally, I created a separate SCons testsuite which is available at [http://www.bitbucket.org/dirkbaechle/scons_testsuite](http://www.bitbucket.org/dirkbaechle/scons_testsuite). It comprises several real-life projects, control scripts, and the supporting `sconstest` package for running all the timings and profilings. 
 
 A warning: Both repos are rather large, so be prepared for some download time! 
 
@@ -64,21 +56,21 @@ For all the tests and speedup comparisons in this section, I used the following 
 
 This is the original script as used by Eric Melski in his comparison of SCons and make. I additionally downloaded the stable release of SCons v1.2.0 and installed it, just to be sure that I get as close to his setup as possible. 
 
-The full set of results can be found in the "`scons120_vs_make`" folder of the "`scons_testresults`" repo. 
+The full set of results can be found in the `scons120_vs_make` folder of the `scons_testresults` repo. 
 
 For a better comparison, here is the original result data by Eric Melski first (as published via `pastebin`). 
 
-[[!img melski.png] 
+![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/melski.png) 
 
 I ran my own series of builds as "clean build" (from scratch), "update" and as "implicit-deps-unchanged update" (for SCons only, with the command-line options `--max-drift=1 --implicit-deps-unchanged`). While doing so, the project sizes ranged from 2500 up to 16500 C files. 
 
-[[!img scons120.png] 
+![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/scons120.png) 
 
 The measured times don't show a dramatic quadratic increase as claimed. You'll certainly notice that the X axis is scaled differently. That's because I couldn't reach any higher number of C files without my machine starting to swap memory. At the maximum of 16500 C files, SCons required about 1GB of RAM for a clean build, and the update runs as well. The rest of my total 2GB was taken by the OS, which makes me wonder how Eric Melski was able to reach those high numbers of files. By letting the machine swap freely? This would explain the increase of build times, starting at about 20000 C files in his data. 
 
 Another thing is, that if a quadratic behaviour for the whole process can be seen, I'd expect at least one module or function to show `O(n**2)` behaviour or worse. I mean, if there were a design flaw to be found, it shouldn't affect the whole program/framework but only a part of it, like a module or a single function. This bug would then grow exponentially over the number of files, and drag the overall performance of SCons down. 
 
-So I did a full profiling run with `cProfile.py` for the two project sizes "`d`" (8500 files) and "`e`" (16500 files). You'll find the complete results in the repo, with all the timings, memory consumption and `pstats` files. Here are the profiling results for an update run: 
+So I did a full profiling run with `cProfile.py` for the two project sizes `d` (8500 files) and `e` (16500 files). You'll find the complete results in the repo, with all the timings, memory consumption and `pstats` files. Here are the profiling results for an update run: 
 
 [melski_update_d.svg](melski_update_d.svg) 
 
@@ -91,16 +83,16 @@ As my later experiments showed (see the section "Continued analysis" below), the
 
 ### Switching to a more recent SCons version
 
-A comparison of the ancient v1.2.0 with the recent v2.3.0 release (see the folder "`scons230_vs_make/genscons`" in the `scons_testresults` repo) didn't show any large differences in runtime behaviour. So for the remaining tests, I decided to switch to a current revision from latest development. 
+A comparison of the ancient v1.2.0 with the recent v2.3.0 release (see the folder `scons230_vs_make/genscons` in the `scons_testresults` repo) didn't show any large differences in runtime behaviour. So for the remaining tests, I decided to switch to a current revision from latest development. 
 
-I picked revision "`#0c9c8aff8f46`" of the SCons trunk. This means we talk about the stable 2.3.0 release, plus some additional patches towards 2.3.1 (right after replacing the documentation toolchain). 
+I picked revision `#0c9c8aff8f46` of the SCons trunk. This means we talk about the stable 2.3.0 release, plus some additional patches towards 2.3.1 (right after replacing the documentation toolchain). 
 
 
 ### The generate_libs.py script
 
 This is the script that was used by Noel Llopis in his "Quest for Performance" series. I downloaded it from the website, and disabled all other competitors except SCons and make. 
 
-[[!img scons230_qperf.png] 
+![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/scons230_qperf.png) 
 
 The project sizes were 5000, 10000, 12500 and 15000 CPP files. All the results can be found in the `scons230_vs_make/questfperf/run_original` folder. 
 
@@ -109,7 +101,7 @@ The project sizes were 5000, 10000, 12500 and 15000 CPP files. All the results c
 
 Then I ran the example script from the wonderbuild benchmark with the same numbers of source files. 
 
-[[!img scons230_wbuild.png] 
+![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/scons230_wbuild.png) 
 
 Find the full set of results in the `scons230_vs_make/wonderbuild/run_original` folder. 
 
@@ -223,11 +215,11 @@ With these patched classes I ran another series for the "Quest for performance" 
 
 Here are the results of the "Quest for performance" script:   
 
-[[!img scons230_qperfp.png] 
+![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/scons230_qperfp.png) 
 
 and the "wonderbuild" setup: 
 
-[[!img scons230_wbuildp.png] 
+![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/scons230_wbuildp.png) 
 
 . The full set of results can be found in the `run_patched` folder of `scons230_vs_make/questfperf` and `scons230_vs_make/wonderbuild`, respectively. 
 
@@ -260,18 +252,18 @@ You can find all results and speedup graphs in the `scons230_vs_make/parallel` f
 
 In general the results show that the parallel speedups for SCons and make are on par, following are two example graphs. The first was run on the quad core machine and shows the "Quest for performance" results to the left, and the "wonderbuild" speedup to the right: 
 
-[[!img speedup_quad.png] 
+![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/speedup_quad.png) 
 
 I repeated the same experiment on the octa core machine, but let the number of threads range between 1 and 12 (again the "wonderbuild" graph is to the right): 
 
-[[!img speedup_octa.png] 
+![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/speedup_octa.png) 
 
 As an example of what's actually behind these graphs, here's the full array of single runs from `-j1` to `-j12` for the wonderbuild benchmark on the octa core system: 
 
-[[!img parallel_wbuild_1_12.png] 
+![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/parallel_wbuild_1_12.png) 
 
 
-# Testsuite and "`fastcpp`" Tool
+# Testsuite and `fastcpp` Tool
 
 So far, we've seen that SCons doesn't perform that bad and with that I mean "It seems to scale pretty well.". To me this indicates that our Taskmaster is doing a good job (despite common belief) and we don't have a more general problem in our source code where quadratic, or higher, complexity goes havoc. Still the update times could probably be a little smaller, which raises the questions 
 
@@ -289,24 +281,31 @@ Disclaimer: It's currently not in a state of "running everywhere", but especiall
 
 ## Results
 
-With this testsuite I profiled the "`#0c9c8aff8f46`" revision of SCons v2.3.0 mentioned above, in order to have some figures for reference. I won't go into full detail about all the different profiling and results graphs, just check the `testresults/default` folder for yourself. 
+With this testsuite I profiled the `#0c9c8aff8f46` revision of SCons v2.3.0 mentioned above, in order to have some figures for reference. I won't go into full detail about all the different profiling and results graphs, just check the `testresults/default` folder for yourself. 
 
 In general, the running time of SCons is distributed over a lot of different modules and functions, making it difficult to identify a single place that is suited for optimization. However, by cycling through patching the source code and rerunning the tests I found two places where a lot of time gets spent on the wrong things in my opinion. At least this is where we could spare a few cycles, especially for large projects with a lot of C/CPP files: 
 
-1. The prefixes and suffixes for programs, objects and libraries in the default C/CPP builders are set as variables. For example the `Program` Builder in `src/engine/SCons/Tool/__init__.py`, ll. 196, uses: ```txt
- prefix = '$PROGPREFIX',
- suffix = '$PROGSUFFIX',
- src_suffix = '$OBJSUFFIX',
+1. The prefixes and suffixes for programs, objects and libraries in the default C/CPP builders are set as variables. For example the `Program` Builder in `src/engine/SCons/Tool/__init__.py`, ll. 196, uses:
+
+```
+#!python
+prefix = '$PROGPREFIX',
+suffix = '$PROGSUFFIX',
+src_suffix = '$OBJSUFFIX',
+```
+
+This means that they have to get substituted every time a corresponding target gets built. 
+1. Somewhat related to this is the flexibility that we offer when specifiying C/CPP source files. By adding a large list of different scanners for file suffixes,
+```
+#!python
+CSuffixes = [".c", ".C", ".cxx", ".cpp", ".c++", ".cc",
+             ".h", ".H", ".hxx", ".hpp", ".hh",
+             ".F", ".fpp", ".FPP",
+             ".m", ".mm",
+             ".S", ".spp", ".SPP", ".sx"]
  
-```This means that they have to get substituted every time a corresponding target gets built. 
-1. Somewhat related to this is the flexibility that we offer when specifiying C/CPP source files. By adding a large list of different scanners for file suffixes,  ```txt
- CSuffixes = [".c", ".C", ".cxx", ".cpp", ".c++", ".cc",
-              ".h", ".H", ".hxx", ".hpp", ".hh",
-              ".F", ".fpp", ".FPP",
-              ".m", ".mm",
-              ".S", ".spp", ".SPP", ".sx"]
- 
-```, `src/engine/SCons/Tool/__init__.py`, ll. 64, we have to check against them for each source file we encounter. When a user knows that he only has CPP files to process, there is simply no need to check for FORTRAN... 
+```
+, `src/engine/SCons/Tool/__init__.py`, ll. 64, we have to check against them for each source file we encounter. When a user knows that he only has CPP files to process, there is simply no need to check for FORTRAN... 
 So my ideas for improvements were: 
 
 1. Set suffixes to fixed strings for each OS in a special "fast C/CPP"-Tool. 
@@ -315,15 +314,15 @@ These observations have led to the development of another external Tool called "
 
 But mind the warning: It's still in a very experimental state and probably not ready for production work! 
 
-The following picture shows the update times of SCons with the "`fastcpp`" tool, against make: 
+The following picture shows the update times of SCons with the `fastcpp` tool, against make: 
 
-[[!img fastcpp_update.png] 
+![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/fastcpp_update.png) 
 
 and a comparison of SCons updates with/without the new builder: 
 
-[[!img fastcpp_compare_update.png] 
+![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/fastcpp_compare_update.png) 
 
-All the results and scripts for the "`fastcpp`" builder can be found in the folder  "`scons_testresults/scons230_trace/fastcpp`". 
+All the results and scripts for the `fastcpp` builder can be found in the folder  `scons_testresults/scons230_trace/fastcpp`. 
 
 
 # Continued speed analysis
@@ -335,20 +334,20 @@ Led by Eric Melski's remarks in his latest article
 
 Here are the result graphs for my machine, using CPython (left) and [PyPy](PyPy) (right): 
 
-[[!img cpython_pypy.png] 
+![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/cpython_pypy.png) 
 
-I checked both Python interpreters because I found some notices on the Internet that [PyPy](PyPy) wouldn't suffer from the same memory "`realloc`" problems as CPython. This turned out to be partly true, and [PyPy](PyPy) obviously has a somewhat lesser runtime increase...but it's still there. 
+I checked both Python interpreters because I found some notices on the Internet that [PyPy](PyPy) wouldn't suffer from the same memory `realloc` problems as CPython. This turned out to be partly true, and [PyPy](PyPy) obviously has a somewhat lesser runtime increase...but it's still there. 
 
 I also found this thread 
 
 * [https://mail.python.org/pipermail//portland/2011-August/001132.html](https://mail.python.org/pipermail//portland/2011-August/001132.html) 
 , and tried disabling the [GarbageCollector](GarbageCollector) for a full SCons run. But this didn't help at all and made runtimes even worse... 
 
-As Eric found out during his profilings, SCons would spend a lot of time in system call related methods like "`waitpid`" and "`fork`". So I started to have a close look at the internals, by traceing the whole run with "`strace`". The results (see folders "`scons230_trace/strace"` and "`strace_orig_logs"` in the "`scons_testresults"` repo) seemed to hint at problems with either the "`realloc`" of CPython's memory allocation, or the futex management in the Kernel. While comparing the running times of single system calls as recorded by strace, the two methods `mremap` and `set_robust_list` increased their runtime linearly during a build (while the memory usage went up). 
+As Eric found out during his profilings, SCons would spend a lot of time in system call related methods like `waitpid` and `fork`. So I started to have a close look at the internals, by traceing the whole run with `strace`. The results (see folders `scons230_trace/strace` and `strace_orig_logs` in the `scons_testresults` repo) seemed to hint at problems with either the `realloc` of CPython's memory allocation, or the futex management in the Kernel. While comparing the running times of single system calls as recorded by strace, the two methods `mremap` and `set_robust_list` increased their runtime linearly during a build (while the memory usage went up). 
 
 The following image displays the difference in accumulated time for two single compile commands (first, second) over the number of required syscalls. While the "first" graph was captured at the start of the build (within the first ten targets), the "second" evaluation is close to the end:  
 
-[[!img strace_cpython.png] 
+![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/strace_cpython.png) 
 
 It shows how the time needed for a single compile increases, throughout the build of the full project. So I patched the SCons sources, such that no shell/process would be spawned but only the target files got created by `touch`ing them in Python directly. 
 
@@ -395,7 +394,7 @@ diff -r d53323337b3a -r 1fc40f790145 src/engine/SCons/Action.py
 ```
 Then I ran the full benchmark again, with the following results (again CPython to the left, and [PyPy](PyPy) on the right side): 
 
-[[!img cpython_pypy_touch.png] 
+![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/cpython_pypy_touch.png) 
 
 In comparison to the results above, these curves clearly show how a large overhead gets introduced by spawning shells and waiting for the processes to finish. SCons itself (finding/processing tasks, keeping track of build signatures, scanning of implicit dependencies) appears to scale just fine. 
 
@@ -496,7 +495,7 @@ It should be compilable with:
 ```txt
 gcc -o spawn_test spawn_test.c
 ```
-The running times for the latter C program on my machine, as measured with "`/usr/bin/time`", are: 
+The running times for the latter C program on my machine, as measured with `/usr/bin/time`, are: 
 
 
 ```txt
@@ -511,7 +510,7 @@ cycles | elapsed time
 ```
 So, while the number of cycles (spawned processes) doubles in each step, the running time doesn't scale linearly with it.  
 
-I asked about this problem on the "`kernel-dev`" mailing list and "`glibc-help`". The Kernel list didn't deliver any answers (it was the wrong forum in hindsight), but some of the glibc users gave very helpful advice and insight in the following threads: 
+I asked about this problem on the `kernel-dev` mailing list and `glibc-help`. The Kernel list didn't deliver any answers (it was the wrong forum in hindsight), but some of the glibc users gave very helpful advice and insight in the following threads: 
 
 * [https://sourceware.org/ml/libc-help/2014-01/msg00038.html](https://sourceware.org/ml/libc-help/2014-01/msg00038.html) spawning (exec*/wait) shows non-constant time if memory grows 
 * [https://sourceware.org/ml/libc-help/2014-03/msg00015.html](https://sourceware.org/ml/libc-help/2014-03/msg00015.html) Memory consumption of iconv 
@@ -527,17 +526,17 @@ In parallel, the Parts team around Jason Kenny (Intel, Paris) reported to have e
 * [http://two.pairlist.net/pipermail/scons-dev/2014-April/001263.html](http://two.pairlist.net/pipermail/scons-dev/2014-April/001263.html) 
 They wrote a wrapper module (big thanks to its author Eugene Leskinen!) that is able to redefine the default subprocess.call() method. Under Posix systems it then uses the more lightweight posix_spawn() to create a new shell process. An option that is not directly available in the current implementations of the standard subprocess Python module. 
 
-This extension provides a significant speedup, because the slow `fork` is out of the way. Here are the runtimes (see also folder "`scons230_trace/stubprocess"` in the "`scons_testresults"` repo) for a clean build, compared to make: 
+This extension provides a significant speedup, because the slow `fork` is out of the way. Here are the runtimes (see also folder `scons230_trace/stubprocess` in the `scons_testresults` repo) for a clean build, compared to make: 
 
-[[!img compare_clean_make.png] 
+![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/compare_clean_make.png) 
 
 and compared to the default spawn method: 
 
-[[!img compare_clean.png] 
+![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/compare_clean.png) 
 
-We also compared the runtimes between SCons and make, for the patched sources (using STL to make up for more realistic CPP files) of the "Quest for performance" example from above (see the folder "`scons230_trace/stubprocess_patched"` in the "`scons_testresults"` repo): 
+We also compared the runtimes between SCons and make, for the patched sources (using STL to make up for more realistic CPP files) of the "Quest for performance" example from above (see the folder `scons230_trace/stubprocess_patched` in the `scons_testresults` repo): 
 
-[[!img stubprocess_patched.png] 
+![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/stubprocess_patched.png) 
 
 One can see how build times are only about 20% higher than for make, and if your CPP sources happen to be a "little more complicated" (driving the compile time for each source further up) you should be on the safe side...  
 
