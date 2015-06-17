@@ -1,7 +1,6 @@
-
 How to write a scons wrapper function. 
 
-_NOTE: as of SCons 0.98 (actually available as of the 0.97.0d20070809 checkpoint release), there will be a new API function [AddMethod](AddMethod) that is better (more portable and API-safe) than having to import SConsEnvironment and add your function to it._ 
+_NOTE: as of SCons 0.98 (actually available as of the `0.97.0d20070809` checkpoint release), there will be a new API function [AddMethod](AddMethod) that is better (more portable and API-safe) than having to import SConsEnvironment and add your function to it._ 
 
 If you have a sequence of SCons operations that's not well-captured by a Builder, or you just want to wrap up some SCons functions into a neat callable package, you probably want to make it look like a regular SCons environment method.  Here's how to do that: 
 
