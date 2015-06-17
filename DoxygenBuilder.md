@@ -1,16 +1,15 @@
 
-
 # Doxygen Builder
 
 The Doxygen builder will generate doxygen docs, given a Doxyfile. It will scan the Doxyfile and determine what directories will be created and what sources are used to generate the docs. This frees you up from writing special code to manage clean up and regeneration of the docs. 
 
-N.B. It seems there was a bug in scons versions before 0.97.0d20070918 which prevented dependencies from working for this builder. See [this email](http://scons.tigris.org/servlets/ReadMsg?list=users&msgNo=12255) to the mailing list for details. 
+N.B. It seems there was a bug in scons versions before `0.97.0d20070918` which prevented dependencies from working for this builder. See [this email](http://scons.tigris.org/servlets/ReadMsg?list=users&msgNo=12255) to the mailing list for details. 
 
-Russel Winder has started a <del>Bazaar branch on Launchpad</del> to try and acrete all the work found on and from this page into a single good tool. You may want to use this version rather than trying to replicate the various changes needed to reconcile all the variations reported on this page.  If you find any errors or improvements please contribute them back via a pull request rather than posting code to this page.  Thanks. 
+Russel Winder has started a Bazaar branch on Launchpad to try and acrete all the work found on and from this page into a single good tool. You may want to use this version rather than trying to replicate the various changes needed to reconcile all the variations reported on this page.  If you find any errors or improvements please contribute them back via a pull request rather than posting code to this page.  Thanks. 
 
 The above now appears to have moved to a Mercurial branch on Bitbucket: [https://bitbucket.org/russel/scons_doxygen](https://bitbucket.org/russel/scons_doxygen). 
 
-**Please use the <del>Bazaar</del> Mercurial branch above and not any of the codes below, which are left here just to preserve the historical record.** 
+**Please use the Bazaar Mercurial branch above and not any of the codes below, which are left here just to preserve the historical record.** 
 
 
 ## Usage
@@ -18,7 +17,7 @@ The above now appears to have moved to a Mercurial branch on Bitbucket: [https:/
 Check out the Mercurial repository into `site_scons/site_tools/doxygen`. Then, in your SConstruct file: 
 
 
-```python
+```
 #!python
 # scons buildfile
 
@@ -34,7 +33,7 @@ The original instructions for use are given below.
 Save the following script as file 'doxygen.py' and put its directory in the 'toolpath' list as shown in "Usage" below. 
 
 
-```python
+```
 #!python
 # vim: set et sw=3 tw=0 fo=awqorc ft=python:
 #
@@ -257,18 +256,19 @@ I had to make two changes to make this work.
 Here's a fix (around line 122): 
 
 
-```txt
-   #
-   # We're running in the top-level directory, but the doxygen
-   # configuration file is in the same directory as node; this means
-   # that relative pathnames in node must be adjusted before they can
-   # go onto the sources list
-   #
-   conf_dir = os.path.dirname(str(node))
+```
+#!python
+#
+# We're running in the top-level directory, but the doxygen
+# configuration file is in the same directory as node; this means
+# that relative pathnames in node must be adjusted before they can
+# go onto the sources list
+#
+conf_dir = os.path.dirname(str(node))
 
-   for node in data.get("INPUT", []):
-      if not os.path.isabs(node):
-         node = os.path.join(conf_dir, node)
+for node in data.get("INPUT", []):
+   if not os.path.isabs(node):
+      node = os.path.join(conf_dir, node)
 ```
 
 ### Note added by SK
@@ -276,16 +276,18 @@ Here's a fix (around line 122):
 The code above originally had the following initialization of the `action =` argument when creating the Builder: 
 
 
-```txt
-      action = env.Action("cd ${SOURCE.dir}  &&  ${DOXYGEN} ${SOURCE.file}"),
+```
+#!python
+action = env.Action("cd ${SOURCE.dir}  &&  ${DOXYGEN} ${SOURCE.file}"),
 ```
 The `env.Action()` call explicitly asks for the string to be evaluated at call time, when the action is created, which is why Robert found it necessary to double the `$` characters. (It probably did work in earlier versions, but variable substitution in construction environment methods has been "cleaned up" in some recent versions, and this may have been a casualty.) 
 
 Since there's nothing special about the action being created (no `strfunction`, for example), it's much simpler to just pass the command-line string to the Builder and let SCons create the Action object. 
 
 
-```txt
-      action = "cd ${SOURCE.dir}  &&  ${DOXYGEN} ${SOURCE.file}",
+```
+#!python
+action = "cd ${SOURCE.dir}  &&  ${DOXYGEN} ${SOURCE.file}",
 ```
 I updated the code above so that people who cut and paste without reading all the way to the bottom of the page shouldn't have this problem. 
 
@@ -317,7 +319,7 @@ Replace the line `token = env[token[2:-1]]` by `token = env[token[2:token.find("
 Robert Lupton noted that you have to change the source paths if you keep your Doxyfile in a subdirectory and use relative paths. I found that I had to do the same for the target path in the Doxyfile. Therefore, I added the following lines after line 160: 
 
 
-```python
+```
 #!python
    if not os.path.isabs(out_dir):
       conf_dir = os.path.dirname(str(source[0]))
@@ -331,7 +333,7 @@ This is essentially the same code as Robert Lupton's.
 The following code adds the tagfile to the target list. I added it in line 166: 
 
 
-```python
+```
 #!python
    # add the tag file if neccessary:
    tagfile = data.get("GENERATE_TAGFILE", "")
@@ -344,7 +346,7 @@ The following code adds the tagfile to the target list. I added it in line 166:
 To add the html templates from the Doxyfile to the list of sources, you need to apply Robert Lupton's change and add the following snippet in line 137: 
 
 
-```python
+```
 #!python
    # Add additional files to the list ouf source files:
    def append_additional_source(option):
@@ -369,13 +371,13 @@ You can easily add dependencies on other output file templates by adding additio
 I believe that the line 
 
 
-```txt
+```
 "MAN": ("YES", "man"),
 ```
 should read 
 
 
-```txt
+```
 "MAN": ("NO", "man"),
 ```
-I was getting unnecessary doxygen runs, and scons --debug-explain showed that doxygen.py thinks the man target is on by default when it isn't. 
+I was getting unnecessary doxygen runs, and `scons --debug-explain` showed that doxygen.py thinks the man target is on by default when it isn't. 
