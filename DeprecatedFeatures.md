@@ -5,14 +5,14 @@ In the table below, a '?' indicates an estimated or unknown value and a '??' ind
 TODO:  Go through old release notes and/or mailing list archives to nail down "Announced." 
 
 Stage       | Description
-:-----------|:-----------
-**Repl**    |  Replacement released
-**Annuc**   |  Announcement
-**Hidden**  |  Hidden Warning, off by default, can be turned on
-**Suppr**   |  Suppressible Warning, on by default, can be turned off
-**Mand**    |  Mandatory Warning, always on
-**Fatal**   |  Fatal Error, feature no longer available
-**Removed** |  Check removed, may cause Python error
+-----------:|:-----------
+Repl    |  Replacement released
+Annuc   |  Announcement
+Hidden  |  Hidden Warning, off by default, can be turned on
+Suppr   |  Suppressible Warning, on by default, can be turned off
+Mand    |  Mandatory Warning, always on
+Fatal   |  Fatal Error, feature no longer available
+Removed |  Check removed, may cause Python error
 
 
  **Feature**  |  **Description / Notes**  |  **Repl**  |  **Annuc**  |  **Hidden**  |  **Suppr**  |  **Mand**  |  **Fatal**  |  **Removed**
