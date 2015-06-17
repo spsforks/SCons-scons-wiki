@@ -1,10 +1,11 @@
-
 This page is intended to track the various features that are, or will be, deprecated, and their progress through our [DeprecationCycle](DeprecationCycle).  The idea is to have a place to track movement of these through the cycle so that, within the guidelines of the Cycle, we can be reasonably timely about shedding older features that may be slowing down or complicating the code base. 
 
 In the table below, a '?' indicates an estimated or unknown value and a '??' indicates a projected future time.  The most recently announced are at the top. 
 
 TODO:  Go through old release notes and/or mailing list archives to nail down "Announced." 
-[[!table header="no" class="mointable" data="""
+
+Stage       | Description
+-----------:|:-----------
 **Repl**    |  Replacement released
 **Annuc**   |  Announcement
 **Hidden**  |  Hidden Warning, off by default, can be turned on
@@ -12,9 +13,10 @@ TODO:  Go through old release notes and/or mailing list archives to nail down "A
 **Mand**    |  Mandatory Warning, always on
 **Fatal**   |  Fatal Error, feature no longer available
 **Removed** |  Check removed, may cause Python error
-"""]]
-[[!table header="no" class="mointable" data="""
- **Feature**  |  **Description / Notes**  |  **Repl**  |  **Annuc**  |  **Hidden**  |  **Suppr**  |  **Mand**  |  **Fatal**  |  **Removed** 
+
+
+ **Feature**  |  **Description / Notes**  |  **Repl**  |  **Annuc**  |  **Hidden**  |  **Suppr**  |  **Mand**  |  **Fatal**  |  **Removed**
+:-----|:------|:---|:---|:----|:----|:----|:----|:----|
  Python 2.7  |  Drop support for Python 2.7  |  N/A  |  ??  |  ??  |  ??  |  ??  |  ??  |  never 
  Python 2.6  |  Drop support for Python 2.6  |  N/A  |  ??  |  ??  |  ??  |  ??  |  ??  |  never 
  Python 2.5  |  Drop support for Python 2.5  |  N/A  |  ??  |  ??  |  ??  |  ???  |  ??  |  never 
@@ -43,4 +45,3 @@ TODO:  Go through old release notes and/or mailing list archives to nail down "A
  `Taskmaster.Task.` `needs_execute()`  |  TBD:  internal method; may be used by user-defined subclasses  |  should always be overridden || |  ?  |  2.0  |  2.1??  |  ??  |  ?? 
  `Scanner.Scanner` class  |  TBD:  unused internal class; may be used by user code  |  ?  |  ?  |  ?  |  ?  |  ?  |  ?  |  gone 
  `Scanner.Selector` class  |  TBD:  unused internal class; may be used by user code  |  ?  |  ?  |  ?  |  ?  |  ?  |  ?  |  gone 
-"""]]
