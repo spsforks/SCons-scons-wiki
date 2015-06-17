@@ -1,4 +1,3 @@
-
 The function presented here is useful if: 
 
 * You've got one environment used to create many targets (too many to start messing with). 
@@ -8,9 +7,9 @@ This function wraps a given emitter with another emitter that adds another file 
 
 Replaceable emitters (as of SCons 0.96.90): 
 
-* **PROGEMITTER** - emitter for Program builder 
-* **SHLIBEMITTER** - emitter for [SharedLibrary](SharedLibrary) builder 
-* **LIBEMITTER** - emitter for Library builder 
+* `PROGEMITTER` - emitter for Program builder 
+* `SHLIBEMITTER` - emitter for [SharedLibrary](SharedLibrary) builder 
+* `LIBEMITTER` - emitter for Library builder 
 
 ## The Function
 
