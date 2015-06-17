@@ -89,7 +89,7 @@ As my later experiments showed (see the section "Continued analysis" below), the
 
 A comparison of the ancient v1.2.0 with the recent v2.3.0 release (see the folder `scons230_vs_make/genscons` in the `scons_testresults` repo) didn't show any large differences in runtime behaviour. So for the remaining tests, I decided to switch to a current revision from latest development. 
 
-I picked revision `#0c9c8aff8f46` of the SCons trunk. This means we talk about the stable 2.3.0 release, plus some additional patches towards 2.3.1 (right after replacing the documentation toolchain). 
+I picked revision 0c9c8aff8f46 of the SCons trunk. This means we talk about the stable 2.3.0 release, plus some additional patches towards 2.3.1 (right after replacing the documentation toolchain). 
 
 
 ### The generate_libs.py script
@@ -285,7 +285,7 @@ Disclaimer: It's currently not in a state of "running everywhere", but especiall
 
 ## Results
 
-With this testsuite I profiled the `#0c9c8aff8f46` revision of SCons v2.3.0 mentioned above, in order to have some figures for reference. I won't go into full detail about all the different profiling and results graphs, just check the `testresults/default` folder for yourself. 
+With this testsuite I profiled the 0c9c8aff8f46 revision of SCons v2.3.0 mentioned above, in order to have some figures for reference. I won't go into full detail about all the different profiling and results graphs, just check the `testresults/default` folder for yourself. 
 
 In general, the running time of SCons is distributed over a lot of different modules and functions, making it difficult to identify a single place that is suited for optimization. However, by cycling through patching the source code and rerunning the tests I found two places where a lot of time gets spent on the wrong things in my opinion. At least this is where we could spare a few cycles, especially for large projects with a lot of C/CPP files: 
 
