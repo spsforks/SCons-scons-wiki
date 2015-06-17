@@ -1,5 +1,4 @@
 
-
 # Analyzing source trees, based on dependency graphs
 
 
@@ -36,7 +35,7 @@ Now looking at complicated DOT graphs is a snap...have a try!
 
 ## Examples
 
-The following files were created with the sources for SCons 1.2.0.d20090223 and Waf 1.5.8, they are all available in two versions: 
+The following files were created with the sources for `SCons 1.2.0.d20090223` and `Waf 1.5.8`, they are all available in two versions: 
 
 1. The nodes contain not only the class names, but also methods/attributes ("_fc" suffix) and 
 1. class names only (no special suffix). 
