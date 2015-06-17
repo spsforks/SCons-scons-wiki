@@ -5,7 +5,7 @@ In the table below, a '?' indicates an estimated or unknown value and a '??' ind
 TODO:  Go through old release notes and/or mailing list archives to nail down "Announced." 
 
 Stage       | Description
------------:|:-----------
+:-----------|:-----------
 Repl    |  Replacement released
 Annuc   |  Announcement
 Hidden  |  Hidden Warning, off by default, can be turned on
