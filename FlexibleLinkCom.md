@@ -1,5 +1,4 @@
-
-Goal: to have a more flexible LINKCOM, so that we can put options in any order. Right now, we are force to have LINKFLAGS LIBPATH LIBS. In particular, if we want to put linkflags between libs, this is not possible right now wo rewrwiting link actions. 
+Goal: to have a more flexible `LINKCOM`, so that we can put options in any order. Right now, we are force to have `LINKFLAGS` `LIBPATH` `LIBS`. In particular, if we want to put linkflags between libs, this is not possible right now wo rewrwiting link actions. 
 
 None of below is meant as a prototype: this is just to show the basic concept. 
 
