@@ -1,10 +1,11 @@
 
-
-## ApproveChanges
+**ApproveChanges**
 
 The ApproveChanges action for MoinMoin permits the approval of page changes made by untrusted users. Such changes are queued on a separate subpage of each page edited by untrusted users, so if such a user edits FrontPage, the edited version will be saved as a revision of FrontPage/ApprovalQueue. By using the ApproveChanges action, reviewers can approve acceptable changes and incorporate them into the original (parent) page. The ApprovalQueue subpage is never seen by anyone other than reviewers. 
 
-[[!toc 3]] 
+**Table of Contents**
+
+[TOC]
 
 
 ## Finding Queued Changes
