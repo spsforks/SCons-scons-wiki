@@ -74,7 +74,7 @@ Provided you have all of the necessary utilities installed, this should be a sim
 
 ```txt
   $ rm -rf build
-  $ python bootstrap.py
+  $ python bootstrap.py VERSION=$VERSION
 ```
 ### Test the Candidate Packages
 This script is kept in the distribution as bin/xxxxxxxxx:
