@@ -21,7 +21,7 @@ The location of the SCons Mercurial archive:
 The version string, which should look something like this: 
 
 ```
-$ VERSION=3.2.0.final.0
+$ export VERSION=3.2.0
 ```
 ### Check Out Release
 

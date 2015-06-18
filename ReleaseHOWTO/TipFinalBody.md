@@ -5,7 +5,7 @@
 !INCLUDE "InitHG.md"
 
 ```
-$ VERSION=3.2.0.final.0
+$ export VERSION=3.2.0
 ```
 ### Check Out Release
 
