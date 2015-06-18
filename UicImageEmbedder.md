@@ -1,5 +1,4 @@
 
-
 ## Rationale
 
 Qt's uic tool has the ability to embed binary images into a c++ source file. Trolltech call this an 'image collection'. While porting to scons the build system of a project that used this uic feature I developed a quick and dirty builder to do the job. I hope someone finds this useful. 
@@ -8,7 +7,8 @@ Qt's uic tool has the ability to embed binary images into a c++ source file. Tro
 ## The Builder
 
 
-```txt
+```
+#!python
 def embed_images( target, source, env ) :
         output_file_str = str(target[0])
         input_files = [ str(src_item) for src_item in source ]
