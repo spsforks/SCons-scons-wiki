@@ -1,5 +1,4 @@
 
-
 # O'Caml Builder
 
 [O'Caml](http://www.ocaml.org/) is statically-typed mixed paradigm programming language. Its toolchain functions somewhat differently from that of [gcc](http://gcc.gnu.org/), and it's currently unsupported by [SCons](http://www.scons.org/). Since I'd like to use [SCons](http://www.scons.org/) to build an [O'Caml](http://www.ocaml.org/) project, I'm adding the necessary code. 
@@ -12,7 +11,9 @@ Russel Winder has created a Bazaar branch of a SCons OCaml tool based on this co
 ## Tools
 
 Let's have a closer look at the tools provided by the [O'Caml](http://www.ocaml.org/) distribution: 
-[[!table header="no" class="mointable" data="""
+
+Tool | Description
+-----:|:--------------
 **ocaml**  | a interactive bytecode interpreter 
 **ocamlc**  | a bytecode compiler 
 **ocamlopt**  | a native code compiler 
@@ -23,11 +24,11 @@ Let's have a closer look at the tools provided by the [O'Caml](http://www.ocaml.
 **ocamlyacc**  | Ocaml Yacc 
 **ocamllex**  | Ocaml Lex 
 **ocamlmklib**  | generate libraries with mixed C / Caml code 
-"""]]
-
 
 ## Extensions
-[[!table header="no" class="mointable" data="""
+
+Extension| Description
+------:|:-----
 **.ml**  | a source file 
 **.mli**  | a module interface file 
 **.cmi**  | a compiled interface 
@@ -37,10 +38,10 @@ Let's have a closer look at the tools provided by the [O'Caml](http://www.ocaml.
 **.cmxa**  |  a native library 
 **.mll**  | Ocaml Lex file 
 **.mly**  | Ocaml Yacc file 
-"""]]
 
-* ocamlc generates **.cmi** files from **.mli** files, and **.cmo** files from **.ml** files 
-* ocamlopt generates **.cmi** files from **.mli** files and **.cmx** and **.o** files from **.ml** files 
+**ocamlc** generates **.cmi** files from **.mli** files, and **.cmo** files from **.ml** files
+
+**ocamlopt** generates **.cmi** files from **.mli** files and **.cmx** and **.o** files from **.ml** files 
 
 ## Scanners
 
@@ -53,7 +54,7 @@ _The above is O’Caml’s equivalent to Python’s `from ModuleName import *`. 
 Here's a scanner: 
 
 
-```python
+```
 #!python
 # use re.MULTILINE flag, so '^' matches at the beginning of the
 # string and at the beginning of each line, i.e. after each newline.
@@ -86,7 +87,7 @@ which works like Object, Library and Program. You can customize command line opt
 Ocaml Tool file : 
 
 
-```python
+```
 #!python
 # Ocaml Tool
 # version: 0.2 (12/30/2005)
@@ -324,7 +325,7 @@ print_endline "hello ocaml world !";;
 The SConstruct file : 
 
 
-```python
+```
 #!python
 # SConstruct
 import ocaml
@@ -339,10 +340,11 @@ o = env.OcamlObject('object', 'object.ml')
 l = env.OcamlLibrary('lib', 'lib.ml')
 env.OcamlProgram('prog', 'prog.ml', OCAML_LIBS=l, OCAML_OBJS=o)
 ```
+
 This is the building process : 
 
 
-```txt
+```
 $ ls
 lib.ml  object.ml  ocaml.py  ocaml.pyc  prog.ml  SConstruct
 $ scons prog
