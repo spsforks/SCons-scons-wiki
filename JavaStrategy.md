@@ -1,6 +1,10 @@
+**Table of Contents**
 
-******Overview:****** This page arose out of a bug party discussion where it became clear that the core SCons developers didn't have the background or experience to evalutate the importance of Java issues.  The intent of this page is to encourage the Java community to provide that perspective, focusing on three elements: what SCons does well, what it does poorly, and what it doesn't do at all.  With that information, the SCons developers can have an idea of what should be kept, what should be improved, and what should be added.  It is hoped that this page will evolve into a consensus between the Java community and the SCons developers, and create an outline of the steps we need to take in the future. [[!toc ]] 
+[TOC]
 
+# Overview
+
+This page arose out of a bug party discussion where it became clear that the core SCons developers didn't have the background or experience to evalutate the importance of Java issues.  The intent of this page is to encourage the Java community to provide that perspective, focusing on three elements: what SCons does well, what it does poorly, and what it doesn't do at all.  With that information, the SCons developers can have an idea of what should be kept, what should be improved, and what should be added.  It is hoped that this page will evolve into a consensus between the Java community and the SCons developers, and create an outline of the steps we need to take in the future.
 
 # An Introductory Polemic (originally an email by Russel Winder)
 
