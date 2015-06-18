@@ -1,5 +1,6 @@
+**Table of Contents**
 
-[[!toc 3]] 
+[TOC]
 
 
 # SCons Release Team
