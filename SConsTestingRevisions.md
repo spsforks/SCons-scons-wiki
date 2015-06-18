@@ -1,18 +1,15 @@
-
 **This is old now -- pretty much all of this has been added to our test infrastructure as of December 2012.** -- [GaryOberbrunner](GaryOberbrunner) 
 
 
 
 ---
 
- 
 
-
-<div>
 Very preliminary.  Don't hesitate to add your ideas.  Note that the original topic has been extended by a new section on using the test infrastructure with third-party extensions. 
 
-[[!toc 2]] 
+**Table of Contents**
 
+[TOC]
 
 # SCons Testing (and QMTest)
 
