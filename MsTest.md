@@ -1,5 +1,4 @@
 
-
 ## Integrating mstest and coverage reporting in 3rd party Build system with scons
 
 
@@ -26,21 +25,23 @@ How to do it?
 * Then mstest builder will convert generated XML file to html by using coverage.xsl. So from 10 Mb xml file you get small html report like this: This is the coverage report 
 
 # Assembly coverage
-[[!table header="no" class="mointable" data="""
-Assembly  | Blocks not covered  | % blocks not covered 
-my1.dll  | 2419               of               4008  | 60.3542914171657 
-my2.dll  | 125               of               146  | 85.6164383561644 
-my3.dll  | 56               of               74  | 75.6756756756757 
-my4.dll  | 105               of               384  | 27.34375 
-my5.dll  | 401               of               463  | 86.6090712742981 
-my6.dll  | 1605               of               3934  | 40.7981698017285 
-my7.dll  | 287               of               458  | 62.6637554585153 
-"""]]
+
+Assembly  | Blocks not covered  | % blocks not covered
+:---------|:----------------|:--------------
+my1.dll  | 2419 of 4008 | 60.3542914171657 
+my2.dll  | 125 of 146  | 85.6164383561644 
+my3.dll  | 56 of 74  | 75.6756756756757 
+my4.dll  | 105 of 384  | 27.34375 
+my5.dll  | 401 of  463  | 86.6090712742981 
+my6.dll  | 1605 of 3934  | 40.7981698017285 
+my7.dll  | 287 of 458  | 62.6637554585153 
+
 
 If you want to modify mstest2xml.exe, there is .Net code for it, also it depends on Microsoft.[VisualStudio](VisualStudio).Coverage.Analysis.dll, so add it as reference: 
 
 
-```txt
+```
+#!cpp
 using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.CodeCoverage;
