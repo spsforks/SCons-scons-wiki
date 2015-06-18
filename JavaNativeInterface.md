@@ -1,8 +1,7 @@
 
-
 # Building Java Native Interfaces
 
-Although _S``Cons_ supports the creation of Java Native Interface (JNI) header files _via_ Java``H(), building and linking _C_ or _C++_ JNI libraries is another matter. _S``Cons_ does not report _where_ the JNI include files or libraries are stored. We need that information to point to the header files and/or libraries needed by JNI.  The following example shows how to build JNI libraries on multiple platforms using Sun's Java Development Kit (JDK). 
+Although _SCons_ supports the creation of Java Native Interface (JNI) header files _via_ JavaH(), building and linking _C_ or _C++_ JNI libraries is another matter. _SCons_ does not report _where_ the JNI include files or libraries are stored. We need that information to point to the header files and/or libraries needed by JNI.  The following example shows how to build JNI libraries on multiple platforms using Sun's Java Development Kit (JDK). 
 
 The python code `ConfigureJNI.py` below first searches for a shell environment variable `JAVA_HOME`. If `JAVA_HOME` is not found, it then searches for the java compiler and uses this information to set `JAVA_HOME`. From the java home directory, the build environment's `CPPPATH` and `LIBPATH` are set appropriately. Additional `CCFLAGS`, `SHLINKFLAGS`, and `SHLIBSUFFIX` variables are updated in the build environment to allow cygwin or OS X (darwin) to properly build and link a shared library  suitable for JNI. 
 
@@ -10,7 +9,7 @@ The python code `ConfigureJNI.py` below first searches for a shell environment v
 ##### file: ConfigureJNI.py
 
 
-```python
+```
 #!python 
 import os
 import sys
