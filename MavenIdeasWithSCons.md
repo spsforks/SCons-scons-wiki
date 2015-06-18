@@ -1,8 +1,10 @@
 
+**Using Some Maven Ideas And Best Practices With SCons**
 
-# Using Some Maven Ideas And Best Practices With SCons
+**Table of Contents**
 
-[[!toc ]] 
+[TOC]
+
 ## Abstract
 
 Up to now we used `make` to build most of our projects. However, in our new mid-size project we decided to use `scons` instead. Some requirements which had to be fulfilled are (as you will see, we tried to integrate some of the ideas introduced by the build tool [maven](http://maven.apache.org/)):  
@@ -56,10 +58,11 @@ project
     |--src
        |--main
        |  |--c++ <-- source code goes here 
-```Step 2
+```
+
+Step 2
 : 
 Create the corresponding pom for `helloworld` 
-
 
 
 
@@ -70,14 +73,16 @@ project
     |--src
        |--main
           |--c++
-```Step 3
+```
+
+Step 3
 : 
 The `pom.scons` file is actually a `SConscript`. The following example defines the `Program` `helloworld` at version `0.9`. The `ext` key of the dependency `pthread` is set to `yes`, thus before building the artifact, the existance of the external library `phtread` is checked. The resulting artifact is copied (`exported`) to the common `bin` location. 
 
 
 
 
-```python
+```
 #!python 
 # file: helloworld/pom.scons
 # This SConscript contains no build logic but the project object model only. 
@@ -95,7 +100,9 @@ env['pom']['exports'] = [
     {'source':'main/helloworld-0.9', 'target':'helloworld', 'type':'bin'}]
 targets = build(env)
 Return('targets')
-```Step 4
+```
+
+Step 4
 : 
 Build and install the program `helloworld`. By default `helloworld` will be copied to `$HOME/local/bin`. If the artifact would be a `SharedLibrary`, it would be copied to `$HOME/local/lib` by default and so on. 
 
@@ -105,7 +112,9 @@ Build and install the program `helloworld`. By default `helloworld` will be copi
 ```txt
 # cd project/helloworld
 # sconswrapper compile install
-```Step 5
+```
+
+Step 5
 : 
 Now assume, `helloworld` depends on an internal library called `libhelloworld`. Create new subproject `libhelloworld` including the common directory structure. 
 
@@ -124,14 +133,16 @@ project
     |--src
        |--main
           |--c++ 
-```Step 6
+```
+
+Step 6
 : 
 Create the corresponding pom for `libhelloworld`. 
 
 
 
 
-```python
+```
 #!python 
 # file: libhelloworld/pom.scons
 # This SConscript contains no build logic but the project object model only.
@@ -149,14 +160,16 @@ env['pom']['exports'] = [
     {'source':'main/libhelloworld- 0.9.so', 'target':'libhelloworld.so', 'type':'lib'}]
 targets = build(env)
 Return('targets')
-```Step 7
+```
+
+Step 7
 : 
 Modify the project object model for `helloworld` by just adding new dependency `helloworld`, which is automatically expanded to `libhelloworld.so` by `scons`. The `ext` key is set to `no`, thus scons does not check the existence of the library before building. 
 
 
 
 
-```python
+```
 #!python 
 # file: helloworld/pom.scons
 # This SConscript contains no build logic but the project object model only.
@@ -175,7 +188,9 @@ env['pom']['exports'] = [
     {'source':'main/helloworld-0.9', 'target':'helloworld', 'type':'bin'}] 
 targets = build(env)
 Return('targets')
-```Step 8
+```
+
+Step 8
 : 
 Now assume, you don't want to build each artifact (`helloworld`, `libhelloworld`) manually, but let scons resolve the dependencies and build them  in the right order. Thus if you call `sconswrapper` at `project` level, `libhelloworld.so` should be built first, `helloworld` should be built next. For that to work simply add another pom for `project`. The artifact type `Meta` means: recursively search for subprojects and build them in the right order. 
 
@@ -197,7 +212,7 @@ project
           |--c++
 ```
 
-```python
+```
 #!python 
 # file: pom.scons
 # This SConscript contains no build logic but the project object model only.
@@ -213,7 +228,9 @@ env['pom']['deps'] = []
 env['pom']['exports'] = []
 targets = build(env)
 Return('targets')
-```Step 9
+```
+
+Step 9
 : 
 Build and install the top level project. As a result `libhelloworld` is built and copied to `$HOME/local/lib`. Next `helloworld` is built and copied to `$HOME/local/bin`.  
 
@@ -223,7 +240,9 @@ Build and install the top level project. As a result `libhelloworld` is built an
 ```txt
 # cd project
 # sconswrapper compile install
-```Step 10
+```
+
+Step 10
 : 
 Create documentation. For this to work `doxygen` must be in the path. 
 
@@ -233,7 +252,9 @@ Create documentation. For this to work `doxygen` must be in the path.
 ```txt
 # cd project 
 # sconswrapper site
-```Step 11
+```
+
+Step 11
 : 
 Clean up. This deletes all created `target` directories. To remove artifacts, created by the current phase only, use `sconswrapper <phase> -c`. 
 
