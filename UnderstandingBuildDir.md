@@ -1,7 +1,8 @@
+Okay, I have been trying to beat SCons into submission several times and I kept staring at BuildDir and how it should affect me.  I *think* I understand it as well as the malfunction most people have with it.  `BuildDir()` <ins>is</ins> somewhat crappily named, but only somewhat.  It does what the developers say it does, but they tend to explain the rare use case of multiple build types rather than the common use case of a pristine source tree off in la la land.  So, we present: 
 
-Okay, I have been trying to beat SCons into submission several times and I kept staring at BuildDir and how it should affect me.  I <ins>think</ins> I understand it as well as the malfunction most people have with it.  `BuildDir()` <ins>is</ins> somewhat crappily named, but only somewhat.  It does what the developers say it does, but they tend to explain the rare use case of multiple build types rather than the common use case of a pristine source tree off in la la land.  So, we present: 
+**Table of Contents**
 
-[[!toc ]] 
+[TOC]
 
 _Comment by [GregNoel](GregNoel): First, there's too much detail, so much so that the (extremely valid) points get lost.  Second, any attempt to explain BuildDir that doesn't contrast it with Repository is flawed, because that's <ins>exactly</ins> what delivers "a pristine source tree off in la la land."  Third, BuildDir is badly conflated with the [SCons build model](UsingBuildDir), so that should be discussed here as well.  Please contact me directly for more detailed suggestions._ 
 
