@@ -66,7 +66,7 @@ If any of the tests fail, fix the problem in `trunk` following your usual develo
 ### Archive Candidate Packages
 !INCLUDE "ArchivePackages.md"
 
- ### Update SourceForge
+### Update SourceForge
 !INCLUDE "UpdateSourceForge.md" 
 
 ### Update scons.org
