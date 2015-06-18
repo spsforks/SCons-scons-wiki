@@ -1,11 +1,11 @@
 
-
 # Selecting MSVS version
 
 By default, Scons' MSVS tool uses the highest installed version of MSVS for the compiler.  To change this, you must change the MSVS_VERSION construction variable. 
 
 
-```txt
+```
+#!python
   # This creates an environment which will use the 6.0 compiler even if higher
   # versions are installed on the machine.
   env60 = Environment(MSVS_VERSION = '6.0')
@@ -23,7 +23,8 @@ By default, Scons' MSVS tool uses the highest installed version of MSVS for the 
 ---
 
  This worked for me: 
-```txt
+```
+#!python
 opts = Options("SConsOptions")
 
 opts.AddOptions(
