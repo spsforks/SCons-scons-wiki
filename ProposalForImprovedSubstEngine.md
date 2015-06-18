@@ -1,5 +1,4 @@
 
-
 # Subst() rewrite proposal
 
 This is a proposal for a rewrite of the Subst logic in SCons. 
@@ -10,41 +9,59 @@ This is a proposal for a rewrite of the Subst logic in SCons.
 Issues with the current engine include: 
 
 1. The processing of {} symbols are not handled correctly. The engine incorrectly handle statements such as: 
-   * ```txt
+```
 "${Foo(${Boo})}"
 ```
 1. Escape handling has issues. This might not be as simple to deal with, but the current logic is much worse than it should be. 
 1. Non string types are not handled well. This is very much so for recursive substitution calls in which the escape handling gets invoked. For example: 
-   * ```python
+
+```
 #!python 
 env['FOO']=['Hello','world']
 env['CPPDEFINES']"$FOO"
 print env.subst("$_CPPDEFINES") 
  
-```we would like to see: 
-   * ```txt
+```
+
+we would like to see: 
+
+```txt
 /DHello /Dworld
  
-```but we get: 
-   * ```txt
+```
+
+but we get: 
+
+```txt
 /DHello world
-```Which is incorrect. In other cases depending how the substitute path is set you may get 
-   * ```txt
+```
+
+Which is incorrect. In other cases depending how the substitute path is set you may get 
+
+```txt
 "/DHello world"
-```which is also incorrect 
+```
+
+which is also incorrect 
 4.Current api's like subst_list() don't work correctly or act in strange ways. For example the subst_list() api will always return a list with one list of items, not a list of items. (This is the difference of getting ["hello", "world"]("hello", "world") vs ["hello", "world"]) 
 
 1. caching logic is not well defined. This leads to a lot of other code in SCons trying to cache certain values that it thinks should be ok to cache. This increases memory usage and makes it difficult to correct "clear" the cache or reevaluate when it might make sense to do so. 
 1. There some internal cases in which the user can hit bugs in the subst() engine in which internal classes that should work in cases of "adding" two string objects with the "+" operator should work but don't for some reason, do a bug in [UserString](UserString) or the class the sub-classes from it. 
 1. Certain action may be cumbersome to say in certain cases. For example: 
-   * ```python
+
+```
 #!python 
 env['Boo']="$somestuff"+env.Literal("${leave alone})+"$otherstuff"
-```it would be nice to be able to say in certain cases: 
-   * ```python
+```
+
+it would be nice to be able to say in certain cases: 
+
+```python
 #!python 
 env['Boo']="$somestuff${Literal('${leave alone}')}$otherstuff"
-```This allows a clearer understanding of what is needed that depending on special "hidden" string objects types that handle this, and might be corrupted with a str() call 
+```
+
+This allows a clearer understanding of what is needed that depending on special "hidden" string objects types that handle this, and might be corrupted with a str() call 
 
 ## Suggested improvements to the "string" grammar
 
@@ -71,21 +88,27 @@ ${LITERAL('value')
 
 ${APPEND('expression')}
 : evaluate the expression and returning a list of raw types (for example Node objects might be returned), appending the values to the parent container, given that it is not a string type(wording??) This allows for the expression to result in a list to be expanded in place correctly. For example: 
-   * ```python
+
+```
 #!python 
 env.Append(MYPATH=['path1', 'path2 with space'])
 env.Replace(CPPPATH=['path0',"$[MYPATH]"])
-```would result in the expected 
-   * ```txt
+```
+
+would result in the expected 
+
+```txt
 /Ipath0 /Ipath1 /I"path2 with space"
 ```
 
 
 not in the current 
 
-   * ```txt
+```txt
 /Ipath0 /Ipath1 path2 with spaces
-```${APPENDUNIQUE('expression',move=True)}, ${PREPENDUNIQUE('expression',move=True)}, ${PREPEND('expression')}
+```
+
+${APPENDUNIQUE('expression',move=True)}, ${PREPENDUNIQUE('expression',move=True)}, ${PREPEND('expression')}
 : Like append, but with the different logic. In the case unique, the optional move can be set to control how the order will be handled. It defaults to True ( False might be better if I have my logic backwards) which says if the value already exists, move the value to the end ( or start) of the collection. If False it would not add the value so the existing value would be used. 
 
 $['expression']
