@@ -1,9 +1,10 @@
-
 **NOTE:** This page seems outdated. Now [BuildDir](BuildDir) is called [VariantDir](VariantDir). - [note added by a completely lost user, in mai 2012] 
 
 **NOTE:**  We're trying to use this page as a forum to clarify how `BuildDir()` is intended to be used, how (and why) it may differ from the ways most people expect it to work, maybe figure out how to improve the interface so it's less counter-intuitive, etc.  **Please** add clarifying questions, post "why doesn't this work?" examples, add your own tips, etc.  Feel free to dive in and reorganize information if it helps make things clearer. - SK 
 
-[[!toc ]] 
+**Table of Contents**
+
+[TOC]
 
 
 # Dueling Models: SCons v. GNU | A Tutorial
