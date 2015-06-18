@@ -1,7 +1,9 @@
+**Here are some tips for using SCons with Mac OS X. **
 
-Here are some tips for using SCons with Mac OS X. 
+**Table of Contents**
 
-[[!toc ]] 
+[TOC]
+
 
 
 # Building Dynamic Libraries
