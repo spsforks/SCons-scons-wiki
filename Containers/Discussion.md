@@ -1,5 +1,8 @@
+**Table of Contents**
 
-[[!toc ]] 
+[TOC]
+
+
 ## Where's the other half?
 
 
