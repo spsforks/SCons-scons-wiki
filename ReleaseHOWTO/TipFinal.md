@@ -36,6 +36,12 @@ From within your base directory, execute this command:
 
 
 
+## Create Branch for Release
+
+```txt
+hg branch rel_$VERSION
+```
+
 
 ### Update Release Values
 
