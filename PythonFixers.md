@@ -1,5 +1,7 @@
+**Table of Contents**
 
-[[!toc 2]] 
+[TOC]
+
 # Fixers Available in 2to3
 
 By [GregNoel](GregNoel) 
@@ -31,8 +33,9 @@ So the major point of this exercise is to identify which fixers can be applied i
 The table below contains the 47 fixers available in Python 3.0.  The **Floor** column is the important one; it says which fixers may be safely applied with the specified floor.  The column can also specify "compat" which means the fixer is safe if the `compat` module provides forward compatibility or the column can specify "unused" which means it's a feature not used in SCons.  As our base Python version moves up, we can apply more of the fixers. 
 
 **CAVEAT:** _I am mostly concerned about fixers for a floor of Python 2.2, so this table is incomplete.  I'd like help completing the missing entries (or even confirming the entries that are present).  If you have knowledge about when fixers are safe to apply or can work on figuring it out empirically, please [contact me](GregNoel)._ 
-[[!table header="no" class="mointable" data="""
- **Fixer**[1]  |  **Floor**  |  **Description** 
+
+ **Fixer**[1]  |  **Floor**  |  **Description**
+:----|:----|:----
  `apply`[*](PythonFixers)  |  2.2  |  `apply(fn, arg, kw)` ==> `(fn)(*arg, **kw)` 
  `basestring`[*](PythonFixers)  |  unused  |  `basestring` ==> `str` 
  `buffer`[2][*](PythonFixers)  |  compat?  |  `buffer(...)` ==> `memoryview(...)` 
