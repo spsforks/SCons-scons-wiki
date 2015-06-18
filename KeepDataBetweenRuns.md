@@ -1,5 +1,4 @@
 
-
 ## Persist Data Between Runs
 
 [[!bug 1678]] is about being able to keep `--srcdir` command-line options between runs.  Since I see a need to keep configuration information between runs as well, I view fixing that bug as a prerequisite for future configuration work, so I'm providing as much insight as I can to make it easier to do.  And once a generic facility is in place, there's other information that could be kept between runs as well. 
@@ -19,26 +18,19 @@ There's an internal API for putting stuff in the file; some aspects of the API m
 ### Top Calculation
 
 Here are the conditions that can affect what needs to be done.  (Presumably something very similar to this scheme is already done to determine the location of the `.sconsign` file, but I wanted to make it explicit.)  **OUCH: Steven has pointed out that the `SConstruct` file may be in SCCS or RCS, so the search needs to include the default `SourceCode()` lookup as well.** 
-[[!table header="no" class="mointable" data="""
-**Name** | **Condition**
-||
+
+Name | Condition
+:---|:------
 top | `.scons.top` is present in current directory
 cur | A _SConstruct flavor_ (`SConstruct`, `Sconstruct`, or `sconstruct` file) is found in the current directory
 src | `--srcdir` options are present on command line
 up | one of the `--up` options is present
-"""]]
+
 
 Here are the actions that must be taken based upon the state of the contitions.  If a condition must be true, its column is marked with a '+'; if false, with a '-'; if don't care, with an 'x'.  The action column describes what to do.  A letter in parenthesis indicates a common action that is used in more than one place. 
-[[!table header="no" class="mointable" data="""
-t  
-o  
-p | c  
-u  
-r | s  
-r  
-c | u  
-p | **Action**
-|||||
+
+top | cur | src | up | action
+:-:|:-:|:-:|:-:|:---
 + | x | + | x | Error "extraneous --srcdir options present"
 + | x | - | x | (A) process `.scons.top` and proceed normally
 - | + | x | x | (B) create `.scons.top` and proceed normally
@@ -46,7 +38,7 @@ p | **Action**
 - | - | + | - | (C) If SConstruct flavor via `--srcdir`, use (B); otherwise error "SConscript not found"
 - | - | - | - | (GNU compatibility) set `--srcdir=..` and use (C)
 - | - | + | + | Damifino; needs a decision: is this more 'src' or 'up'?
-"""]]
+
 
 Action (B) to create a `.scons.top` file uses the primitive operation below to place a `SourceDir(`_dirname_`)` line in the file for each `--srcdir` command-line option. 
 
