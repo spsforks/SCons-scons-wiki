@@ -1,4 +1,3 @@
-
 If you are interested in a basic tutorial for compiling FORTRAN using SCons, [try this page](llarsen/FortranTutorial). Here is a simple setup for a multiple directory Fortran 90 project, along with some tips on using scons with Fortran. Fortran 90 is a little more complicated to compile than C, in the sense that compiling a single source file can lead to one or more module files, in addition to an object file. Other source files can depend on these module files. To make things worse, there is no standard naming scheme for module files, or standard flags for stipulating where module files should end up. 
 
 
@@ -241,4 +240,7 @@ As you can see, it is simply a question of duplicating the uppercase file, and u
 * -- [DrewMcCormack](DrewMcCormack) 
 Options specific to Intel FORTRAN compiler: 
 
-         * FORTRANMODDIRPREFIX = '-module ', 
+```
+#!python
+FORTRANMODDIRPREFIX = '-module ', 
+```
