@@ -1,7 +1,10 @@
+Third draft, with more examples and details.  This description now includes the entire future scope of what the `IAPAT` will do, even though only two aspects are currently explored.
 
-****Third draft, with more examples and details.  This description now includes the entire future scope of what the `IAPAT` will do, even though only two aspects are currently explored.**** 
+Note that this content is maintained elsewhere, so please don't change this page directly.  Instead, if you have comments, or find things wrong or inconsistent, let me know and I'll fix it as quickly as possible.  If it's something trivial (like a typo), contact me via the the email information in my [wiki home page](GregNoel).  If it's more significant, write me in the scons-dev mailing list, or create a section in the [discussion page](PlatformToolConfig/Discussion). Thanks!
 
-****Note that this content is maintained elsewhere, so please don't change this page directly.  Instead, if you have comments, or find things wrong or inconsistent, let me know and I'll fix it as quickly as possible.  If it's something trivial (like a typo), contact me via the the email information in my [wiki home page](GregNoel).  If it's more significant, write me in the scons-dev mailing list, or create a section in the [discussion page](PlatformToolConfig/Discussion). Thanks!**** 
+**Table of Contents**
+
+[TOC]
 
 
 # Introduction and Overview
