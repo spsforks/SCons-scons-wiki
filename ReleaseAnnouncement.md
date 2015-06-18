@@ -1,5 +1,6 @@
+**Table of Contents**
 
-[[!toc 3]] 
+[TOC]
 
 
 # Checkpoint Release HOWTO
@@ -266,13 +267,16 @@ And answering the interactive prompts.  If you do this, note that you should _no
 * Click `Submit/Refresh` 
 * Scroll down and check the `scons-*` packages you uploaded 
 * Click `Add Files and/or Refresh View` 
-* Edit the file info (NOTE: you must click `Update/Refresh` for _each_ file; this must be done one at a time): [[!table header="no" class="mointable" data="""
+* Edit the file info (NOTE: you must click `Update/Refresh` for _each_ file; this must be done one at a time): 
+
+File | Architecture | Extension
+:--|:--|:--
 `scons-0.XX.0dYYYYMMDD-.noarch.rpm` | Any | .rpm
 `scons-0.XX.0dYYYYMMDD-.src.rpm` | Any | Source .rpm
 `scons-0.XX.0dYYYYMMDD-.tar.gz` | Any | .gz
 `scons-0.XX.0dYYYYMMDD-.win32.exe` | i386 | .exe (32-bit Windows)
 `scons-0.XX.0dYYYYMMDD-.zip` | Any | .zip
-"""]]
+
 
 * Check `I'm sure` and click `Send Notice` in the `Email Release Notice` section at the bottom. 
 
@@ -288,10 +292,14 @@ And answering the interactive prompts.  If you do this, note that you should _no
 * Click `Submit/Refresh` 
 * Scroll down and check the `scons-local-*` packages you uploaded 
 * Click `Add Files and/or Refresh View` 
-* Edit the file info (NOTE: you must click `Update/Refresh` for _each_ file; this must be done one at a time): [[!table header="no" class="mointable" data="""
+* Edit the file info (NOTE: you must click `Update/Refresh` for _each_ file; this must be done one at a time):
+
+
+File | Architecture | Extension
+:--|:--|:--
 `scons-local-0.XX.0dYYYYMMDD.tar.gz` | Any | .gz
 `scons-local-0.XX.0dYYYYMMDD.zip` | Any | .zip
-"""]]
+
 
 * Check `I'm sure` and click `Send Notice` in the `Email Release Notice` section at the bottom. 
 
@@ -307,10 +315,13 @@ And answering the interactive prompts.  If you do this, note that you should _no
 * Click `Submit/Refresh` 
 * Scroll down and check the `scons-local-*` packages you uploaded 
 * Click `Add Files and/or Refresh View` 
-* Edit the file info (NOTE: you must click `Update/Refresh` for _each_ file; this must be done one at a time): [[!table header="no" class="mointable" data="""
+* Edit the file info (NOTE: you must click `Update/Refresh` for _each_ file; this must be done one at a time): 
+
+File | Architecture | Extension
+:--|:--|:--
 `scons-src-0.XX.0dYYYYMMDD.tar.gz` | Any | .gz
 `scons-src-0.XX.0dYYYYMMDD.zip` | Any | .zip
-"""]]
+
 
 * Check `I'm sure` and click `Send Notice` in the `Email Release Notice` section at the bottom. 
 
@@ -333,14 +344,16 @@ And answering the interactive prompts.  If you do this, note that you should _no
   $ cd scons.org
 ```
 Make the following changes to the following files: 
-[[!table header="no" class="mointable" data="""
+
+File | Description
+:---|:---
 `CHANGES.txt` | copy the new file from `build/scons/CHANGES.txt` in your packaging directory
 `includes/templates.php` | update `$latestrelease` to the value `0.XX.0dYYYYMMDD`
 `includes/versions.php` | update `$latestrelease` to the value `0.XX.0dYYYYMMDD`<BR>add the new version number to the `$docversions[]` and `$apiversions[]` lists<BR>**IMPORTANT:  shift the index numbers BY HAND!**
 `index.php` | add an announcement for the home page<BR>remove any out-of-date announcements
 `news-raw.xhtml` | add an announcement to the list (duplicate it from what you just added to `index.php`)
 `RELEASE.txt` | copy the new file from `build/scons/RELEASE.txt` in your packaging directory
-"""]]
+
 
 
 ```txt
@@ -370,10 +383,12 @@ Now point your browser to [http://www.scons.org/](http://www.scons.org/). If any
 ```txt
   $ svn co http://scons.tigris.org/svn/scons/trunk
   $ cd trunk
-```[[!table header="no" class="mointable" data="""
+```
+
+File | Description
+:--|:--
 `www/project_highlights.html` | Add a short highlight announcement that will appear at the top of all of the `scons.tigris.org` pages.
 `www/roadmap.html` | Update the text at the top to reflect that the latest available release is the new checkpoint release.
-"""]]
 
 
 ```txt
