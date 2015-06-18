@@ -1,5 +1,6 @@
+**Table of Contents**
 
-[[!toc ]] 
+[TOC]
 
 
 # Mercurial Workflow for SCons
