@@ -11,7 +11,7 @@ $ VERSION=3.2.0.final.0
 
 !INCLUDE "CheckOutRelease.md" 
 
-## Create Branch for Release
+### Create Branch for Release
 
 ```txt
 hg branch rel_$VERSION
