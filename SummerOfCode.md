@@ -1,8 +1,8 @@
+*A page for collecting central links and information about SCons' participation in the Google Summer of Code.*
 
-A page for collecting central links and information about SCons' participation in the Google Summer of Code. 
+**Table of Contents**
 
-[[!toc ]] 
-
+[TOC]
 
 # 2007 Post-Mortem
 
