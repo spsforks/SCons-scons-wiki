@@ -1,6 +1,9 @@
 # ParseDepends
 ParseDepends allows to parse compiler-generated dependency files and let SCons establish the listed dependencies.  ## What's that in aid of?
-As a rule of thumb, never use it unless you have to. SCons has scanners to extract implicit dependencies. However, sometimes the built-in scanners choke on pre-processor statements. Consider the following example: hello.c: ```txt
+As a rule of thumb, never use it unless you have to. SCons has scanners to extract implicit dependencies. However, sometimes the built-in scanners choke on pre-processor statements. Consider the following example: hello.c: 
+
+```
+#!C++
 #define FOO_HEADER "foo.h"
 
 #include FOO_HEADER
@@ -8,22 +11,48 @@ As a rule of thumb, never use it unless you have to. SCons has scanners to extra
 int main() {
         return FOO;
 }
-```foo.h: ```txt
+```
+foo.h:
+
+```
+#!C++
 #define FOO 42
-```SConstruct: ```txt
+```
+
+SConstruct: 
+
+```
+#!python
 Program('hello.c')
-``````txt
+```
+
+```
 scons --tree=prune
-```As the dependency tree reveals, SCons does not know about foo.h and does not recompile hello.o when foo.h changes.  If the compiler is able to extract implicit dependencies and output those as Make rules, SCons can parse these files and properly set up the dependencies. ## Generate dependency files as a side effect
-Here is an example of how to let gcc generate a dependency file while compiling the object file: ```python
+```
+
+As the dependency tree reveals, SCons does not know about foo.h and does not recompile hello.o when foo.h changes.  If the compiler is able to extract implicit dependencies and output those as Make rules, SCons can parse these files and properly set up the dependencies. 
+
+## Generate dependency files as a side effect
+
+Here is an example of how to let gcc generate a dependency file while compiling the object file:
+
+```
 #!python 
 Program('hello.c', CCFLAGS = '-MD -MF hello.d')
 ParseDepends('hello.d')
 SideEffect('hello.d', 'hello.o')
-```GCC generates a dependency file that looks like the following: ```txt
+```
+
+GCC generates a dependency file that looks like the following:
+
+```txt
 hello.o: hello.c foo.h
-```There is one problem with this approach: Read the [full story here](http://scons.tigris.org/servlets/ReadMsg?listName=dev&msgNo=709). To wrap it up, ParseDepends does not read the file in the first pass, leading to unnecessary rebuilds in the second pass. The reason is, that the signature changes as new dependencies are added (foo.h in the example above). ## Generate dependency files in advance
-If you want to extract the dependencies (and call ParseDepends) before building the object files, the only viable solution is to use a multi-stage builder with a source scanner: ```python
+```
+
+There is one problem with this approach: Read the [full story here](http://scons.tigris.org/servlets/ReadMsg?listName=dev&msgNo=709). To wrap it up, ParseDepends does not read the file in the first pass, leading to unnecessary rebuilds in the second pass. The reason is, that the signature changes as new dependencies are added (foo.h in the example above). ## Generate dependency files in advance
+If you want to extract the dependencies (and call ParseDepends) before building the object files, the only viable solution is to use a multi-stage builder with a source scanner: 
+
+```
 #!python 
 def parsedep(node, env, path):
         print "ParseDepends(%s)" % str(node)
@@ -50,10 +79,13 @@ dep = env.ExtractDependencies('hello.c')
 obj = env.Object('hello.c')
 env.Requires(obj, dep)
 env.Program(obj)
-```Some notes: 
+```
+
+Some notes:
+
 * The scanner needs to be called when the file exists 
-      * **scan_check** ensures the node exists before calling the scanner 
-      * A **target_scanner** in depbuild does not work (it's called _before_ the .d file exists) 
+    * **scan_check** ensures the node exists before calling the scanner 
+    * A **target_scanner** in depbuild does not work (it's called _before_ the .d file exists) 
 * The Copy action is useless, the depparse builder exists only to execute a **source_scanner** 
 * The dependency file must be generated before the object, therefore the order-only prerequisite 
 
