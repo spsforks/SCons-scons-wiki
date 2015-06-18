@@ -7,7 +7,7 @@ Provided you have all of the necessary utilities installed, this should be a sim
 
 ```txt
   $ rm -rf build bootstrap
-  $ python bootstrap.py
+  $ python bootstrap.py VERSION=$VERSION
 ```
 While you're waiting for the candidate packages to be built, open another shell window and proceed with preparing the test script.  Make sure that $SVN and $VERSION are set up as shell variables as described above. 
 

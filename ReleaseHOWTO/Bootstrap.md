@@ -3,5 +3,5 @@ Provided you have all of the necessary utilities installed, this should be a sim
 
 ```txt
   $ rm -rf build
-  $ python bootstrap.py
+  $ python bootstrap.py VERSION=$VERSION
 ```
