@@ -1,5 +1,4 @@
 
-
 # Simplified Release Procedure for 2012 and later
 
 The procedure has been used for all releases since 2.2.0. 
@@ -9,12 +8,13 @@ The procedure has been used for all releases since 2.2.0.
 
 * validate and update all documentation files by calling: 
 
+```txt
    python bin/docs-update-generated.py
    python bin/docs-validate.py
    python bin/docs-create-example-outputs.py
+```
+* then check all diffs for the files in `docs/generated/*`.
 
-
-, then check all diffs for the files in `docs/generated/*`. 
 * Commit the auto-generated doc changes to current branch ("Regenerated docs for X.Y.Z release.") 
 * update CHANGES.txt (should already be up to date) 
 * update Announce.txt (not for checkpoints): add section for this release, important user-visible changes only.  This is really long since it also has old releases.  Is it useful? 
@@ -25,6 +25,8 @@ The procedure has been used for all releases since 2.2.0.
 * update `ReleaseConfig` and run `python bin/update-release-info.py release` (this modifies CHANGES, Release and Announce -- that's why you should commit the above first.) 
 * build packages and doc: `python bootstrap.py >& build-XYZ.log` (good idea to save build logfile somewhere) 
 * test them: `python runtest.py -a` (Q: aren't there special tests to test the unpacked installers?) 
+
+```txt
 You should now have the following in build/dist: 
 
   scons-$VERSION-1.noarch.rpm
@@ -39,6 +41,7 @@ You should now have the following in build/dist:
   scons-local-$VERSION.zip
   scons-src-$VERSION.tar.gz
   scons-src-$VERSION.zip
+```
 
 The .linux-x86_64 ones are not needed and may be deleted; the others all get uploaded to SF. 
 
