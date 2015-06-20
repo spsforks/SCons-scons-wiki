@@ -1,4 +1,3 @@
-
 # Simplified Release Procedure for 2012 and later
 
 The procedure has been used for all releases since 2.2.0. 
@@ -64,12 +63,14 @@ The .linux-x86_64 ones are not needed and may be deleted; the others all get upl
 ## Prepare Announcement and announce to all
 
 * Use Announce.txt and/or Release.txt as blurb 
-* Update scons.org.  Much of the hard work is already done by the script.  You just have to manually edit these files in public_html/production: [[!table header="no" class="mointable" data="""
-`includes/versions.php`  | update `$latestrelease`, update `$docversions[]` and `$apiversions[]` list 
-`index.php`  | add an announcement for the home page  
-remove any out-of-date announcements 
-`news-raw.xhtml`  | add an announcement to the list (duplicate it from what you just added to `index.php`) 
-"""]]
+* Update scons.org.  Much of the hard work is already done by the script.  You just have to manually edit these files in public_html/production:
+
+| File   | Changes  |
+|---|---|
+| includes/versions.php  | update `$latestrelease`, update `$docversions[]` and `$apiversions[]` list  |
+|index.php  | add an announcement for the home page remove any out-of-date announcements  |
+| news-raw.xhtml  | add an announcement to the list (duplicate it from what you just added to `index.php`  |
+
 
 * Commit the above changes to hg and push. 
 * Update Sourceforge: 
