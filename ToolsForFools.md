@@ -84,7 +84,7 @@ def generate(env):
 def exists(env):
     return 1
 ```
-That's all, nothing else needed. You can save this file as `__init__.py` (this is not the SConstruct anymore!) and copy it to your `site_scons/site_tools/jal` folder. For more infos about how and where to install your Tools, visit our Wiki at [http://www.sons.org/wiki/ToolsIndex](http://www.sons.org/wiki/ToolsIndex) and read section 17.7 _Where To Put Your Custom Builders and Tools_ please. 
+That's all, nothing else needed. You can save this file as `__init__.py` (this is not the SConstruct anymore!) and copy it to your `site_scons/site_tools/jal` folder. For more infos about how and where to install your Tools, visit our Wiki at [http://www.scons.org/wiki/ToolsIndex](http://www.scons.org/wiki/ToolsIndex) and read section 17.7 _Where To Put Your Custom Builders and Tools_ please. 
 
 For using our new "`jalv2`" Tool we would write an SConstruct, something like this: 
 
