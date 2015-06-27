@@ -12,7 +12,8 @@ Pros:
 * Support for many platforms, compilers, and targets built-in. 
 * Has auto-configuration abilities. 
 * Can be distributed with the software product, so users do not need to install it. This reduces the dependencies your users need to python, which almost everyone already has (or can easily get) 
-* No need for intermediate steps like generating a makefile and then using a makefile; likewise, no need for many tools like automake, autoconf, autoreconf, make, ... scons is all-in-one, self-contained, usable with a single call, making it easier to users 
+* No need for intermediate steps like generating a makefile and then using a makefile; likewise, no need for many tools like automake, autoconf, autoreconf, make, ... scons is all-in-one, self-contained, usable with a single call, making it easier for users 
+
 Cons: 
 
 * Based on a general-purpose programming language, Python. This means writing even a basic build file requires you to know a bit about Python and its syntax. 
