@@ -5,10 +5,7 @@
 
 # Updating documentation
 
-
-<div>
 This article describes the current state of the SCons documentation toolchain, as present in versions 2.3.x and higher. It's based on the file `doc/overview.rst` in the source repository, so go there first to add or change text please. 
-</div>
 
 ## Introduction
 
@@ -30,8 +27,8 @@ The toolchain is set up, such that the User has a very restricted view on this w
 If he is a really nice user, he cares about validating his XML files against our special "SCons Docbook DTD/XSD". Either during typing, supported by his XML editor, or by executing a special script 
 
 
-```txt
-    python bin/docs-validate.py
+```
+python bin/docs-validate.py
 ```
 from the top source folder afterwards. Preferably both. 
 
@@ -40,8 +37,8 @@ Everything's looking okay, all validation passed? Good, then he simply commits h
 Additionally, he can create the single documents on his side if he wants to get a feel for how the final result looks (and who doesn't?). Each of the document folders (`design`, `developer`, `man`, `python10`, `reference`, and `user`) contains an `SConstruct` file along with the actual XML files. You can call 
 
 
-```txt
-    python ../../src/script/scons.py
+```
+python ../../src/script/scons.py
 ```
 from within the directory, and have the MAN pages or HTML created...even PDF, if you have a renderer installed (`fop`, `xep` or `jw`). 
 
@@ -50,7 +47,7 @@ If you haven't already downloaded the documentation sources to your computer, pl
 
 ## Requirements
 
-You need to have the Python binding for either `libxml2` or `lxml` installed. For rendering PDF documents, you'll need a program like `fop`, `xep` or `jw` available in your system-wide `$PATH`. Creating the EPUB output files of the [UserGuide](UserGuide) and the MAN page, both depend on the Ghostscript executable `gs` for creating the front cover image.  `fop` requires Java but is easily installed via `apt-get` on Debian/Ubuntu.  `jw` is available for Debian/Ubuntu as part of the `docbook-utils` package.  You'll also need `epydoc` in the `python-epydoc` package. 
+You need to have the Python binding for either `libxml2` or `lxml` installed. For rendering PDF documents, you'll need a program like `fop`, `xep` or `jw` available in your system-wide `$PATH`. Creating the EPUB output files of the [UserGuide](UserGuide) and the MAN page, both depend on the Ghostscript executable `gs` for creating the front cover image.  `fop` requires Java but is easily installed via `apt-get` on Debian/Ubuntu. `jw` is available for Debian/Ubuntu as part of the `docbook-utils` package.  You'll also need `epydoc` in the `python-epydoc` package. 
 
 
 ## Validation
@@ -79,8 +76,8 @@ of the User guide's text.
 By calling the script 
 
 
-```txt
-    python bin/docs-update-generated.py
+```
+python bin/docs-update-generated.py
 ```
 you can recreate the lists of entities (`*.mod`) in the `generated` folder, if required. At the same time, this will generate the `*.gen` files, which list the full description of all the Builders, Tools, Functions and CVars for the MAN page and the guide's appendix. 
 
@@ -94,8 +91,8 @@ In the User Guide, we support automatically created examples. This means that th
 A short description about how these examples have to be defined, can be found at the start of the file `bin/SConsExamples.py`. Call 
 
 
-```txt
-    python bin/docs-create-example-outputs.py
+```
+python bin/docs-create-example-outputs.py
 ```
 from the top level source folder, to run all examples through SCons. 
 
@@ -137,10 +134,10 @@ XSLT transformation scripts for converting the special SCons tags like `scons_ou
 # Old toolchain
 
 
-<div>
-******This is the documentation for SCons versions before 2.3.x; see also the [discussion page](DeveloperGuide/Documentation/Discussion) for some points that got discussed and finally led to the new [DocBook](DocBook)-based approach above.****** 
-</div>
-Documentation sources for Docbook are maintained in doc/*/*.xml files. For the ones that require preprocessing to insert examples, the primary source files are doc/*/*.in.  We have our own preprocessing stage to update and insert examples into XML sources before they are processed. 
+
+**This is the documentation for SCons versions before 2.3.x; see also the [discussion page](DeveloperGuide/Documentation/Discussion) for some points that got discussed and finally led to the new [DocBook](DocBook)-based approach above.** 
+
+Documentation sources for Docbook are maintained in `doc/*/*.xml` files. For the ones that require preprocessing to insert examples, the primary source files are `doc/*/*.in`.  We have our own preprocessing stage to update and insert examples into XML sources before they are processed. 
 
 
 ## List of tools you'll need to build documentation
@@ -163,14 +160,10 @@ These package names can be passed directly to 'apt-get install' for Ubuntu or De
 * docbook-xsl 
 * docbook2x 
 * man2html 
-[[GaryOberbrunner](GaryOberbrunner) 15-Jul-12] As of Ubuntu 10.04, some of the above pkgs don't exist.  These do: 
 
-   * `apt-get install python-epydoc jade openjade texinfo texlive-latex-extra jadetex docbook docbook-dsssl docbook-to-man docbook-utils docbook-xml docbook-xsl docbook2x man2html` 
-and the doc seems to build OK with those packages (and their dependencies). 
+[[GaryOberbrunner](GaryOberbrunner) 15-Jul-12] As of Ubuntu 10.04, some of the above pkgs don't exist.  These do: `apt-get install python-epydoc jade openjade texinfo texlive-latex-extra jadetex docbook docbook-dsssl docbook-to-man docbook-utils docbook-xml docbook-xsl docbook2x man2html` and the doc seems to build OK with those packages (and their dependencies). 
 
-Not strictly doc-related, but if you're doing release builds, you also need rpm if you're on a non-RedHat/CentOS machine: 
-
-   * `apt-get install rpm` 
+Not strictly doc-related, but if you're doing release builds, you also need rpm if you're on a non-RedHat/CentOS machine: `apt-get install rpm`.
 
 ## Steps to update or add content to the User Guide
 
@@ -191,4 +184,4 @@ Not strictly doc-related, but if you're doing release builds, you also need rpm 
 
 The following image depicts the single steps of a full build for the documentation. The first (and zeroth) column shows the required tools (= dependencies) for each section (= second column). 
 
-[[!img doc_single_run.png] 
+![](Documentation/doc_single_run.png) 
