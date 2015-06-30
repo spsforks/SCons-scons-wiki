@@ -1,5 +1,6 @@
+**Table of Contents**
 
-[[!toc ]] 
+[TOC]
 
 
 # Updating documentation
@@ -13,7 +14,7 @@ This article describes the current state of the SCons documentation toolchain, a
 
 This text tries to give an overview of the current SCons documentation toolchain. The interested user should be able to better understand where and how the text he writes is processed. It is also a reference for core developers and the release team. 
 
-[[!img overview.png] 
+![](Documentation/overview.png)
 
 The diagram above roughly shows the steps that we currently need for creating all the MAN pages, User manuals and reference documents. You may think: "Geeez, that looks so complicated. Why can't they simply convert XML files to PDF with Docbook, or use reST?" Please be patient, and continue reading. Things will get a little clearer soon. 
 
