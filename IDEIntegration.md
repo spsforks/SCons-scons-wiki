@@ -19,7 +19,8 @@ Below are instructions to get started using scons with some particular IDEs.
 1. In the project settings, just add "scons" as the build command , and "scons -c" as the clean command and configuration is done. 
 1. You should now be able to build using scons by using the build menu from visual studio. 
 Note: VS2005 seems to need absolute paths to filenames for the click-on-errors integration to work. --[björnen](björnen) 
-
+1. For debug build the command should be "scons debug=1"
+1. For Rebuild All: "scons -c & scons" ("scons -c & scons  debug=1" for debug)
 
 ## Xcode (Mac OS X)
 
