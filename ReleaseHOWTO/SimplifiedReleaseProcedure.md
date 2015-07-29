@@ -50,9 +50,15 @@ The .linux-x86_64 ones are not needed and may be deleted; the others all get upl
 
 * commit the changes made by update-release-info.py onto a release branch: 
 
+
+```
+#!bash
+
    hg branch rel_<NAME>
    hg commit (message: final auto updates for x.y.z release)
    hg tag <NAME> (e.g. 2.2.0)
+```
+
 
 ## Upload Software and Doc
 
