@@ -1134,44 +1134,41 @@ AC_C_BIGENDIAN
 
 
 ```txt
-# This code was tested on Intel, AMD 64, and Cell (Playstation 3)
-
-# Python already knows what endian it is, just ask Python.
-
-def checkEndian(context):
-    context.Message("checking endianess ... ")
-
-    import struct
-
-    array = struct.pack('cccc', '\x01', '\x02', '\x03', '\x04')
-
-    i = struct.unpack('i', array)
-
-    # Little Endian
-    if i == struct.unpack('<i', array):
-        context.Result("little")
-        return "little"
-
-    # Big Endian
-    elif i == struct.unpack('>i', array):
-        context.Result("big")
-        return "big"
-
-    context.Result("unknown")
-    return "unknown"
-
-conf = Configure(env, custom_tests = { 'checkEndian' : checkEndian }
-
-endian = conf.checkEndian()
-
-if endian == "little" :
-    # something
-
-elif endian == "big" :
-    # something else
-
-else:
-    # unknown endianess
+#############################
+def Check_C_BIGENDIAN(context):
+    context.Message("checking for Big Endianness ... ")
+    src="""
+#if defined(__MACH__)
+#include <machine/endian.h>
+#elif defined(OS_SOLARIS)
+#include <sys/isa_defs.h>
+#ifdef _LITTLE_ENDIAN
+#define LITTLE_ENDIAN
+#else
+#define BIG_ENDIAN
+#endif
+#elif defined(OS_FREEBSD) || defined(OS_OPENBSD) || defined(OS_NETBSD) || defined(OS_DRAGONFLYBSD)
+#include <sys/types.h>
+#include <sys/endian.h>
+#else
+#include <endian.h>
+#endif
+#ifdef LITTLE_ENDIAN
+#define IS_LITTLE_ENDIAN 1
+#else
+#define IS_LITTLE_ENDIAN (__BYTE_ORDER == __LITTLE_ENDIAN)
+#endif
+#ifdef IS_LITTLE_ENDIAN
+    mychoke choke = IS_LITTLE_ENDIAN;
+#endif
+    int main() { return 0;}
+"""
+    ret=context.TryCompile(src,".cpp")
+    context.Result(ret)
+    if ret:
+        context.Define("WORDS_BIGENDIAN") 
+    return ret
+###############################
 ```
 AC_C_CONST 
 
@@ -1548,6 +1545,43 @@ AC_SYS_LARGEFILE
 
 
 ```txt
+################################
+def Check_SYS_LARGEFILE(context):
+    LARGEFILE=context.sconf.get_disable("LARGEFILE")
+    # Taken from Fossies - Tries to enable 64-bit off_t 
+    fseeko=context.sconf.CheckFunc('fseeko')
+    if fseeko:
+        context.env.Append(CPPDEFINES = ['HAVE_FSEEKO'],WXCONFIG_CPPDEFINES = ['HAVE_FSEEKO'])
+        src="""
+#include <stdio.h>
+#include <sys/types.h>
+"""
+        offt=context.sconf.CheckTypeSize('off_t',src)
+        if offt<8 and offt>0:
+            flags=context.env.Dictionary()['CPPFLAGS']
+            context.env.Append(CPPDEFINES=['_FILE_OFFSET_BITS=64'],WXCONFIG_CPPDEFINES=['_FILE_OFFSET_BITS=64'])
+            offt=context.CheckTypeSize('off_t',src)
+            if offt < 8:
+                context.env.Replace(CPPFLAGS=flags)
+        elif offt == 0:
+            #set default value to 4
+            offt=4
+        sys.stdout.write( "sizeof(off_t)=%i\n"%offt)
+        context.env.Append(CPPDEFINES = ['_FILE_OFFSET_BITS='+str(offt*8)],WXCONFIG_CPPDEFINES = ['_FILE_OFFSET_BITS='+str(offt*8)])
+        context.Message("Checking for System LargeFile support")
+        if fseeko and int(offt)>=8:
+            context.env.Append(CPPDEFINES = ['_LARGE_FILES'],WXCONFIG_CPPDEFINES = ['_LARGE_FILES'])
+            rc=True
+        else:
+            rc=False
+        context.Result(rc)
+        if rc:
+            context.sconf.Define("HAVE_LARGEFILE_SUPPORT",1)
+        #ignoring old gcc and hpux need for STDC_EXT - upgrade gcc
+        return rc
+    else:
+        return fseek0
+##############################
 
 ```
 AC_SYS_LONG_FILE_NAMES 
