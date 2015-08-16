@@ -217,6 +217,7 @@ Pros:
 * A set of diffrent pretty output modes available by default. 
 * Pythonic API, compared to SCons use of [CamelCase](CamelCase). 
 * Makes use of features provided by newer versions of Python. 
+
 Cons: 
 
 * Not as wide platform and tool support compared to SCons. 
