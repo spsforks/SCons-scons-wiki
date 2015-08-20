@@ -88,7 +88,7 @@ Matlab (Mex)  | Git  | [https://github.com/marcecj/scons_matlab](https://github.
 Sphinx  | Mercurial  | [http://bitbucket.org/zondo/sphinx-scons/overview](http://bitbucket.org/zondo/sphinx-scons/overview)  | hg clone [https://bitbucket.org/zondo/sphinx-scons](https://bitbucket.org/zondo/sphinx-scons) 
 [sphinx4scons](sphinx4scons)  | Mercurial  | [https://bitbucket.org/wingbrant/sphinx4scons/](https://bitbucket.org/wingbrant/sphinx4scons/)  | hg clone [https://bitbucket.org/wingbrant/sphinx4scons](https://bitbucket.org/wingbrant/sphinx4scons) 
 [Vala](ValaBuilder)  | Mercurial  | [https://bitbucket.org/russel/scons_vala](https://bitbucket.org/russel/scons_vala)  | hg clone [https://bitbucket.org/russel/scons_vala](https://bitbucket.org/russel/scons_vala) vala 
-[Watcom](Watcom)  | Git  | [https://bitbucket.org/cr1901/scons-wat](https://bitbucket.org/cr1901/scons-wat)  | git clone [http://code.google.com/p/scons-wat/](http://code.google.com/p/scons-wat/) watcom 
+[Watcom](Watcom)  | Git  | [https://bitbucket.org/cr1901/scons-wat](https://bitbucket.org/cr1901/scons-wat)  | git clone [https://bitbucket.org/cr1901/scons-wat](https://bitbucket.org/cr1901/scons-wat) watcom 
 X10  | Mercurial  | [https://bitbucket.org/russel/scons_x10](https://bitbucket.org/russel/scons_x10)  | hg clone [https://bitbucket.org/russel/scons_x10](https://bitbucket.org/russel/scons_x10) x10 
 
 (*) The D tool is no longer developed outside of the SCons source tree (as it once was) to enable correct integration between D, C++ and C in multi-language systems.  D tool development now happens in [a clone of the SCons repository specifically for developing the D tool](https://bitbucket.org/russel/scons_d_tooling). 
