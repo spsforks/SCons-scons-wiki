@@ -1,4 +1,4 @@
-# Simplified Release Procedure for 2012 and later
+# Current SCons Release Procedure
 
 The procedure has been used for all releases since 2.2.0. 
 
