@@ -2,6 +2,19 @@
 
 The procedure has been used for all releases since 2.2.0. 
 
+## Tag Release in Mercurial
+
+* Move work to a release branch. It's currently necessary to do this first as the build will use the branch name when building the REVISION string it substitutes into many of the files.
+
+
+```
+#!bash
+
+   hg branch rel_<NAME>
+   hg commit (message: final auto updates for x.y.z release)
+   hg tag <NAME> (e.g. 2.2.0)
+```
+
 
 ## Prepare Binaries and Doc
 
@@ -45,19 +58,6 @@ You should now have the following in build/dist:
 The .linux-x86_64 ones are not needed and may be deleted; the others all get uploaded to SF. 
 
 * You have to rename the scons-$VERSION.win32.exe to scons-$VERSION-setup.exe; the build SConstruct should be fixed to do this.  (Note that the upload script requires this.) 
-
-## Tag Release in Mercurial
-
-* commit the changes made by update-release-info.py onto a release branch: 
-
-
-```
-#!bash
-
-   hg branch rel_<NAME>
-   hg commit (message: final auto updates for x.y.z release)
-   hg tag <NAME> (e.g. 2.2.0)
-```
 
 
 ## Upload Software and Doc
