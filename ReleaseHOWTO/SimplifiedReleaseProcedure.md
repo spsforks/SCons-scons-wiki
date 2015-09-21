@@ -16,8 +16,8 @@ The procedure has been used for all releases since 2.2.0.
 
 * Commit the auto-generated doc changes to current branch ("Regenerated docs for X.Y.Z release.") 
 * update CHANGES.txt (should already be up to date) 
-* update Announce.txt (not for checkpoints): add section for this release, important user-visible changes only.  This is really long since it also has old releases.  Is it useful? 
-* update Release.txt: this gets its content *replaced* for each release.  New functionality, deprecated functionality, changed functionality, and fixes.  Get this from CHANGES.txt.  Add new contributors to list at end. 
+* update ANNOUNCE.txt (not for checkpoints): add section for this release, important user-visible changes only.  This is really long since it also has old releases.  Is it useful? 
+* update RELEASE.txt: this gets its content *replaced* for each release.  New functionality, deprecated functionality, changed functionality, and fixes.  Get this from CHANGES.txt.  Add new contributors to list at end. 
 * edit `debian/changelog`. Be careful of formatting here, it gets machine-parsed. 
 * NOTE: I think Announce and Release are backwards; Release should be complete release notes for all versions (latest at top) and Announce should be a short blurb of just this release.  FIXME! 
 * Commit this to the current branch (normally default branch in hg, unless this release is coming off a branch). 
