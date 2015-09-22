@@ -1,9 +1,5 @@
 # The SCons Wiki:
 
-*Disclaimer: Still being ported from moin*
-
-** The content is taken from a snapshot of the SCons wiki.  If you notice missing content please send email to the users mailing list**
-
 Welcome to the home of the [SCons](http://www.scons.org) wiki! This wiki is an open forum for development and use of [SCons](http://www.scons.org/). Please, do feel free to contribute.
 
 # About SCons ![](http://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Im-jabber.svg/48px-Im-jabber.svg.png)
