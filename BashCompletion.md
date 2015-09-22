@@ -1,5 +1,4 @@
 
-
 # Bash Completion for SCons
 
 Bash completion makes using SCons much easier:  hitting tab after an incomplete word will present a list of possible options if there is more than one completion or complete the rest of the word if there is only one completion.  Completion is context sensitive, if there is a - at the beginning of the word then only command line options will be completed, if there is no - at the beginning of the word then SCons will be run in silent, dry-run, debug mode in order to ascertain what possible targets are available. 
@@ -9,7 +8,7 @@ To use this script you can:
 1. Append this to your personal Bash completion configuration, usually ~/.bash_completion. 
 1. Add this file inthe directory /etc/bash_completion.d (if you have super-user privileges. 
 1. Create a personal ~/bash_completion.d directory, put the file in there and then ensure you have appropriate code in ~/.bash_completion.  I have the code:```txt
-# -*- mode:shell-script -*-
+```bash 
 for file in bash_completion.d/*
 do
     [[ ${file##*/} != @(*~|*.bak|*.swp|\#*\#|*.dpkg*|.rpm*) ]] &&
