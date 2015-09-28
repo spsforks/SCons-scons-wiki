@@ -19,7 +19,7 @@ Our toolchain not only produces beautiful HTML and PDF files, but it also perfor
 
 ## Writer's view
 
-The toolchain only allows the User a restricted view on this whole "document processing cycle"; therefore, the User should only be concerned about updating or adding to documentation text. Even when adding a completely new chapter, the User can simply fire up an XML editor of choice and type away. A few configurations for XML editors [supporting WYSIWYG editing](DeveloperGuide/WysiwygDocumentation) are provided. 
+The toolchain only allows the User a restricted view on this whole "document processing cycle"; therefore, the User should only be concerned about updating or adding to documentation text. Even when adding a completely new chapter, the User can simply fire up an XML editor of choice and type away. A few configurations for XML editors [supporting WYSIWYG editing](/DeveloperGuide/WysiwygDocumentation) are provided. 
 
 Really nice Users also care about validating XML files against our special "SCons Docbook DTD/XSD".  This can be acheived via an XML editor or executing the SCons document validation script: `python bin/docs-validate.py`
 from the top source folder afterwards or, preferably, both. 
