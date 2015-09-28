@@ -78,7 +78,7 @@ Note that these output files are not actually needed for editing the documents. 
 Documents are in the folders `design`, `developer`, `man`, `python10`, `reference`, and `user`.
 
 editor_configs
-: Prepared [configuration sets for the validating WYSIWYG XML editors XmlMind and Serna](DeveloperGuide/WysiwygDocumentation). Try the latter because the XXE config requires you to have a full version (costing a few hundred bucks) and is therefore untested. For installing the Serna config, simply copy the `scons` folder into the `plugins` directory of your installation. Likewise, the XXE files from the `xmlmind` folder have to be copied into `~/.xxe4/` under Linux. 
+: Prepared [configuration sets for the validating WYSIWYG XML editors XmlMind and Serna](/DeveloperGuide/WysiwygDocumentation). Try the latter because the XXE config requires you to have a full version (costing a few hundred bucks) and is therefore untested. For installing the Serna config, simply copy the `scons` folder into the `plugins` directory of your installation. Likewise, the XXE files from the `xmlmind` folder have to be copied into `~/.xxe4/` under Linux. 
 
 
 generated
