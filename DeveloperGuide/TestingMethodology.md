@@ -1,11 +1,8 @@
 # SCons Testing Methodology
 
-[[!toc ]] 
+**Note: This text is a copy of the file `QMTest/test-framework.rst` in the source repository. Please synch your changes/additions to this page accordingly.** 
 
 
-<div>
-Note: This text is a copy of the file `QMTest/test-framework.rst` in the source repository. Please synch your changes/additions to this page accordingly. 
-</div>
 SCons uses extensive automated tests to try to ensure quality. The primary goal is that users should be able to upgrade from version to version without any surprise changes in behavior. 
 
 In general, no change goes into SCons unless it has one or more new or modified tests that demonstrably exercise the bug being fixed or the feature being added. There are exceptions to this guideline, but they should be just that, "exceptions". When in doubt, make sure it's tested. 
