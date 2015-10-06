@@ -402,4 +402,4 @@ See also [DevelopingTests](DevelopingTests) for more info on writing and debuggi
 
 (This content is also provided in [a page by itself](TestingMethodology/QMTestMethods) to make it easier to search.) 
 
-[[!inline pages="/QMTestMethods" quick="yes" raw="yes"]] 
+
