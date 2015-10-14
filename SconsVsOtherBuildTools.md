@@ -55,6 +55,7 @@ When compared to scons, CMake is :
 * Requires less code for common tasks 
 * Arguably more stable 
 * Supports outputting to projects like Code::Blocks, Xcode, etc. which scons does not 
+
 But : 
 
 * Uses its own language, reinventing the wheel and not providing access to the extensibility and power of a real language. 
