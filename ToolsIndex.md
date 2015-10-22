@@ -39,7 +39,7 @@ Solaris (sunos)  | `/opt/sfw/scons`
 Linux/HPUX/... (other) | `/usr/share/scons` 
  | `~/.scons`
 
-(see also sect. 19.7 [http://scons.org/doc/production/HTML/scons-user/x3697.html](http://scons.org/doc/production/HTML/scons-user/x3697.html) in the User's Guide). 
+(see also sect. 18.7 [http://scons.org/doc/production/HTML/scons-user/ch18s07.html](http://scons.org/doc/production/HTML/scons-user/ch18s07.html) in the User's Guide). 
 
 This makes the tool available but it must be included explicitly in a SCons build by creating an Environment with a `tools` entry since only named tools from the SCons core are initialized automatically when SCons runs. Example: 
 
@@ -70,7 +70,7 @@ dvipdfm  | Git  | [https://github.com/ptomulik/scons-tool-dvipdfm](https://githu
 [Eiffel](EiffelStudioTool)  | Bazaar  | [https://launchpad.net/scons-eiffel](https://launchpad.net/scons-eiffel)  | bzr branch lp:scons-eiffel eiffel 
 Erlang  | Mercurial  | [https://bitbucket.org/russel/scons_erlang](https://bitbucket.org/russel/scons_erlang)  | hg clone [https://bitbucket.org/russel/scons_erlang](https://bitbucket.org/russel/scons_erlang) erlang 
 fastcpp  | Mercurial  | [https://bitbucket.org/dirkbaechle/scons_fastcpp](https://bitbucket.org/dirkbaechle/scons_fastcpp)  | hg clone [https://bitbucket.org/dirkbaechle/scons_fastcpp](https://bitbucket.org/dirkbaechle/scons_fastcpp) fastcpp 
-[GccCov](GccCov)  | Git  | [https://github.com/ptomulik/scons-tool-gcccov](https://github.com/ptomulik/scons-tool-gcccov)  | git clone [https://github.com/ptomulik/scons-tool-gcccov](https://github.com/ptomulik/scons-tool-gcccov) gcccov 
+GccCov  | Git  | [https://github.com/ptomulik/scons-tool-gcccov](https://github.com/ptomulik/scons-tool-gcccov)  | git clone [https://github.com/ptomulik/scons-tool-gcccov](https://github.com/ptomulik/scons-tool-gcccov) gcccov 
 Go  | Mercurial  | [https://bitbucket.org/russel/scons-go-tool](https://bitbucket.org/russel/scons-go-tool)  | hg clone [https://bitbucket.org/russel/scons-go-tool](https://bitbucket.org/russel/scons-go-tool) go 
 Gnuplot  | Git  | [https://github.com/ptomulik/scons-tool-gnuplot](https://github.com/ptomulik/scons-tool-gnuplot)  | git clone [https://github.com/ptomulik/scons-tool-gnuplot](https://github.com/ptomulik/scons-tool-gnuplot) gnuplot 
 Go  | Git  | [http://github.com/alberts/goscons/tree/master/goscons/](http://github.com/alberts/goscons/tree/master/goscons/)  | git clone git://github.com/alberts/goscons.git 
