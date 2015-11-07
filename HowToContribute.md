@@ -1,5 +1,4 @@
 
-
 # How to contribute to SCons
 
 If you ever wanted to contribute to SCons but don't feel like "Joe Hacker" himself, here's a list of things you could do instead of programming. These are all good ways to give something back to the project, and they let the actual developers concentrate on what they do best: improving the code. 
@@ -33,7 +32,7 @@ Detect spelling errors, provide additional examples, restructure and rewrite con
 
 Answer questions
 : 
-Try to answer questions on our [mailing lists](http://www.scons.org/lists.php), or in other forums e.g. [StackOverflow](StackOverflow). Even if you don't have the exact answer at hand, asking for more specific information (What version of SCons do you use? On which OS?...) might help other developers to save time and fix the actual problem much quicker. 
+Try to answer questions on our [mailing lists](http://www.scons.org/lists.php), or in other forums e.g. [StackOverflow](http://stackoverflow.com/questions/tagged/scons). Even if you don't have the exact answer at hand, asking for more specific information (What version of SCons do you use? On which OS?...) might help other developers to save time and fix the actual problem much quicker. 
 
 
 Your opinion/experiences
