@@ -1,7 +1,6 @@
 Active open source projects which use SCons as their build system. 
 
 * [ASCEND](http://ascendwiki.cheme.cmu.edu/), a system modelling package for engineering. Latest [SConstruct](http://code.ascend4.org/ascend/trunk/SConstruct?view=markup). 
-* [Ardour](http://ardour.org) (Digital Audio Workstation) See [SConstruct](http://viewcvs.ardour.org/filedetails.php?repname=Ardour&path=/trunk/SConstruct) and the rest of the project 
 * [Aria Maestosa](http://ariamaestosa.sf.net) - a C++ MIDI editor and composition/notation application 
 * [Blender](http://www.blender.org) (Popular 3D suite). See [SConstruct](https://svn.blender.org/svnroot/bf-blender/trunk/blender/SConstruct) and the rest of the project, this is a complex setup. 
 * [Bombono](http://www.bombono.org) DVD authoring program with nice and clean GUI. 
