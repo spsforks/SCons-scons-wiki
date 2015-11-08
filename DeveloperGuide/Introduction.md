@@ -1,91 +1,81 @@
+**Table of Contents**
 
-[[!toc ]] 
-
+[TOC]
 
 # Welcome
 
-to the SCons Developer Guide. It provides pointers to all the material that we offer in various forms: [Wiki](http://www.scons.org/wiki), [webpage](http://www.scons.org), [UserGuide](http://www.scons.org/doc/production/HTML/scons-user.html), [MAN page](http://www.scons.org/doc/production/HTML/scons-man.html), ... 
+to the SCons Developer Guide. It provides pointers to all the material that we offer in various forms: [Wiki](http://www.scons.org/wiki), [webpage](http://www.scons.org), [user guide](http://www.scons.org/doc/production/HTML/scons-user.html), [MAN page](http://www.scons.org/doc/production/HTML/scons-man.html), ...
 
-However, when you start following links and flipping pages for the first time, you'll probably get lost very soon. That's sort of expected, and nothing to be ashamed of. ;) In the following sections we try to outline the steps and documentation that you need, to simply "get things done". Think of it as a kind of "Quickstart" document... 
+However, when you start following links and flipping pages for the first time, you'll probably get lost very soon. That's sort of expected, and nothing to be ashamed of. ;)
+In the following sections we try to outline the steps and documentation that you need, to simply "get things done". Think of it as a kind of "Quickstart" document...
 
-SCons is a matured project that has been around since 2001, and a lot of thought and development effort has gone into it already. We have a single dedicated mission: developing and providing a replacement for `make` and the GBS `Autotools`. And we have lots of users---single persons, open-source projects, universities and companies---, which rely on SCons' stability and cross-platform capabilities. For the development team it's really important to not let these people down.  
+SCons is a matured project that has been around since 2001, and a lot of thought and development effort has gone into it already. We have a single dedicated mission: developing and providing a replacement for `make` and the GBS `Autotools`. And we have lots of users---single persons, open-source projects, universities and companies---, which rely on SCons' stability and cross-platform capabilities. For the development team it's really important to not let these people down.
 
-That's why we have certain workflows in place, which may look over-engineered at first. But they stood the test of time, and they help us to develop a very robust and stable tool for our users...and that's the main reason for things being as they are. You can find a rather detailed description of our basic guidelines at 
+That's why we have certain workflows in place, which may look over-engineered at first. But they stood the test of time, and they help us to develop a very robust and stable tool for our users...and that's the main reason for things being as they are. You can find a rather detailed description of our basic guidelines at
 
-* [http://www.scons.org/guidelines.php](http://www.scons.org/guidelines.php) 
-So, please try to stick to our rules and be prepared to have a "long breath" when you're about to make larger changes, or during reviews of your pull requests. ;) 
+* [http://www.scons.org/guidelines.php](http://www.scons.org/guidelines.php)
 
-If this will be your first contribution to an open-source project ever, you might want to check out a video like Julie Pichon's [I want to help! How to make your first contribution to open-source](http://pyvideo.org/video/2988/i-want-to-help-how-to-make-your-first-contributi) from the [EuroPython](EuroPython) 2014 in Berlin. It describes the basic steps that most projects out there follow, and SCons is no exception. Beginners can find bugs, that are good to start with, in our list of [easy issues to fix](http://scons.org/wiki/DeveloperGuide/EasyIssuesToFix), or on [OpenHatch.org](http://openhatch.org/projects/SCons). 
+So, please try to stick to our rules and be prepared to have a "long breath" when you're about to make larger changes, or during reviews of your pull requests. ;)
 
-Finally, if anything is unclear or the descriptions on this page raise further questions, please contact us at our User mailing list. You can write to [scons-users@scons.org](mailto:scons-users@scons.org) straight away, but take into account that it's a moderated list and your post has to get "waved through" each time. So if you want to get a quick answer, or plan to be part of our community on a regular basis, you might want to consider subscribing to the list [http://four.pairlist.net/mailman/listinfo/scons-users](http://four.pairlist.net/mailman/listinfo/scons-users) instead. 
+If this will be your first contribution to an open-source project ever, you might want to check out a video like Julie Pichon's [I want to help! How to make your first contribution to open-source](http://pyvideo.org/video/2988/i-want-to-help-how-to-make-your-first-contributi) from the [EuroPython 2014](https://ep2014.europython.eu/) in Berlin. It describes the basic steps that most projects out there follow, and SCons is no exception. Beginners can find bugs, that are good to start with, in our list of [easy issues to fix](EasyIssuesToFix), or on [OpenHatch.org](http://openhatch.org/projects/SCons).
+
+Finally, if anything is unclear or the descriptions on this page raise further questions, please contact us at our user mailing list. You can write to [scons-users@scons.org](mailto:scons-users@scons.org) straight away, but take into account that it's a moderated list and your post has to get "waved through" each time. So if you want to get a quick answer, or plan to be part of our community on a regular basis, you might want to consider subscribing to the list [http://four.pairlist.net/mailman/listinfo/scons-users](http://four.pairlist.net/mailman/listinfo/scons-users) instead.
 
 
 # Getting the sources
 
-Your contributions and changes will get accepted via pull requests, so you'll have to create a personal account on [http://bitbucket.org](http://bitbucket.org), fork the "default" SCons repository, and then clone your private copy to your computer. The Wiki page  
+Your contributions and changes will get accepted via pull requests, so you'll have to create a personal account on [http://bitbucket.org](http://bitbucket.org), fork the "default" SCons repository, and then clone your private copy to your computer.
+The Wiki page [SconsMercurialWorkflows](../SconsMercurialWorkflows) lists these steps in larger detail. It also describes how to push your changes back up to Bitbucket, such that you can finally create the pull request.
 
-* [SconsMercurialWorkflows](SconsMercurialWorkflows) 
-lists these steps in larger detail. It also describes how to push your changes back up to Bitbucket, such that you can finally create the pull request. 
+There are also the two pages following pages explaining how branches and the source tree are organized:
 
-There are also the two pages 
+* [DeveloperGuide/MercurialBranches](MercurialBranches)
+* [DeveloperGuide/SourceWalkThrough](SourceWalkThrough)
 
-* [DeveloperGuide/MercurialBranches](DeveloperGuide/MercurialBranches) 
-* [DeveloperGuide/SourceWalkThrough](DeveloperGuide/SourceWalkThrough) 
-, explaining how branches and the source tree are organized. 
-
-So, you have the sources...now what? 
+So, you have the sources... now what?
 
 
 # Working on documentation
 
-The documentation for SCons is basically split in two parts: We have the main documents for the [UserGuide](http://www.scons.org/doc/production/HTML/scons-user.html) and [MAN page](http://www.scons.org/doc/production/HTML/scons-man.html) in the `doc` subfolder. Then, there are also the descriptions of the Tools, Builders and Variables as they appear in the appendices A-C of the [UserGuide](http://www.scons.org/doc/production/HTML/scons-user.html). You can find them in "`*.xml`" files, parallel to the actual sources in the `src/engine/SCons` folder. 
+The documentation for SCons is basically split in two parts: We have the main documents for the [user guide](http://www.scons.org/doc/production/HTML/scons-user.html) and [MAN page](http://www.scons.org/doc/production/HTML/scons-man.html) in the `doc` subfolder. Then, there are also the descriptions of the Tools, Builders and Variables as they appear in the appendices A-C of the [user guide](http://www.scons.org/doc/production/HTML/scons-user.html). You can find them in "`*.xml`" files, parallel to the actual sources in the `src/engine/SCons` folder.
 
-Check out 
+Check out [DeveloperGuide/Documentation](Documentation) for a full description of the DocBook toolchain that we're using currently.
 
-* [DeveloperGuide/Documentation](DeveloperGuide/Documentation) 
-for a full description of the [DocBook](DocBook) toolchain that we're using currently. 
+Make your editorial changes, then validate all the documents as described in the [toolchain documentation](Documentation). Required dependencies for this validation step are the Python bindings for either "`libxml2`" or "`lxml`", so make sure to have one of them installed in your system.
 
-Make your editorial changes, then validate all the documents as described in the [toolchain documentation](DeveloperGuide/Documentation). Required dependencies for this validation step are the Python bindings for either "`libxml2`" or "`lxml`", so make sure to have one of them installed in your system. 
-
-If the validation was successful, you can commit your changes locally, push them to your SCons fork, and then create a pull request. 
+If the validation was successful, you can commit your changes locally, push them to your SCons fork, and then create a pull request.
 
 
 # Fixing and developing the core sources
 
-After cloning the sources, you want to run SCons from the local tree directly. Check the development tree description at 
+After cloning the sources, you want to run SCons from the local tree directly. Check the [development tree description](https://bitbucket.org/scons/scons), which can also be found as `README.rst` at the top-level of your source folder, and find out how to use the `bootstrap.py` script.
 
-* [https://bitbucket.org/scons/scons](https://bitbucket.org/scons/scons) 
-, which can also be found as `README.rst` at the top-level of your source folder, and find out how to use the `bootstrap.py` script. 
-
-As you may have read in our [development guidelines](http://www.scons.org/guidelines.php), we do a lot of [testing](DeveloperGuide/TestingMethodology). Before starting to develop new features or fixing bugs, it's a good idea to run the whole test suite with 
-
+As you may have read in our [development guidelines](http://www.scons.org/guidelines.php), we do a lot of [testing](TestingMethodology). Before starting to develop new features or fixing bugs, it's a good idea to run the whole test suite with
 
 ```txt
 python runtest.py -a
 ```
-first. This way, you can check that there are no tests failing on your system in the current revision. 
 
-If they are all passing (there may be several "No results", depending on which tools are available), you can start with development. Change sources and add files as required, then commit your changes locally. While doing this, you should work directly on the "`default`" branch with bookmarks, as described in [DeveloperGuide/MercurialBranches](DeveloperGuide/MercurialBranches). No named branches, please. 
+This way, you can check that there are no tests failing on your system in the current revision.
 
-Please help us to improve and extend our regression test suite. For a bugfix add one, or more, test(s) that break before applying your changes, and succeed after. When adding features, try to create end-to-end tests covering the new functionality. The "Testing Howto" at 
+If they are all passing (there may be several "No results", depending on which tools are available), you can start with development. Change sources and add files as required, then commit your changes locally. While doing this, you should work directly on the "`default`" branch with bookmarks, as described in [DeveloperGuide/MercurialBranches](MercurialBranches). No named branches, please.
 
-* [DeveloperGuide/TestingMethodology](DeveloperGuide/TestingMethodology) 
-explains all the details. Try to write your tests, such that they work cross-platform. 
+Please help us to improve and extend our regression test suite. For a bugfix add one, or more, test(s) that break before applying your changes, and succeed after. When adding features, try to create end-to-end tests covering the new functionality. The "Testing Howto" at [DeveloperGuide/TestingMethodology](TestingMethodology) explains all the details. Try to write your tests, such that they work cross-platform.
 
-Ensure that your source changes are properly documented. Especially when changing and adding features, it is expected that you update comments and the XML files accordingly (see section above).  Edit the file "`src/CHANGES.txt`" by adding your name and a short note, reflecting your contributions. 
+Ensure that your source changes are properly documented. Especially when changing and adding features, it is expected that you update comments and the XML files accordingly (see section above).  Edit the file "`src/CHANGES.txt`" by adding your name and a short note, reflecting your contributions.
 
-Finally, run the testsuite (`runtest.py`) again, to ensure that your changes didn't break any of the former behaviour (regression test). 
+Finally, run the testsuite (`runtest.py`) again, to ensure that your changes didn't break any of the former behaviour (regression test).
 
-If all tests pass, you can commit your changes locally, push them to your personal SCons fork, and then create a pull request. 
+If all tests pass, you can commit your changes locally, push them to your personal SCons fork, and then create a pull request.
 
 
 # Reviews
 
-After you have submitted a pull request, your changes will get reviewed by other developers. Be prepared to receive comments and getting asked questions. Often you'll be asked to update your pull request for seemingly minute details. Please don't take this as an offense, this is part of the quality process we try to adhere to. It doesn't happen only to you, but even to very experienced developers...and we caught several subtle bugs this way already. 
+After you have submitted a pull request, your changes will get reviewed by other developers. Be prepared to receive comments and getting asked questions. Often you'll be asked to update your pull request for seemingly minute details. Please don't take this as an offense, this is part of the quality process we try to adhere to. It doesn't happen only to you, but even to very experienced developers...and we caught several subtle bugs this way already.
 
-We usually wait for comments about a week per pull request (just as a rule of thumb). Once the review phase is over, your commits get merged into the mainline. 
+We usually wait for comments about a week per pull request (just as a rule of thumb). Once the review phase is over, your commits get merged into the mainline.
 
 
 # Editing the webpages
 
-Send a mail to our User ML and ask for help. Our webpage sources are currently (2014-05-02) still stuck in SVN, so you'll better get in contact with one of the Web admins. Then you can discuss the changes you'd like to make, and get more infos about the required process. 
+Send a mail to our User ML and ask for help. Our webpage sources are currently (2014-05-02) still stuck in SVN, so you'll better get in contact with one of the Web admins. Then you can discuss the changes you'd like to make, and get more infos about the required process.
