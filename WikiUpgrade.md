@@ -23,7 +23,6 @@ Wiki lacks [Builder](Builder) and [Tool](Tool) pages with definition of these ba
 
 ### Bugs
 
-* [SconsQuickReference](SconsQuickReference) linked from the front page doesn't work as a reference - it is just a wiki search that is confusing 
 * The [SyntaxReference](SyntaxReference) page for editing Wiki pages in German does not exist (would be [SyntaxReferenz](SyntaxReferenz)). Is this a configuration/install problem, or do the users really have to roll their own page for each language? 
 
 ### Wishes

@@ -18,7 +18,6 @@ Greg Noel thinks that the current Moin wiki version (and a link to the Moin``Moi
 Wiki lacks [[Builder]] and [[Tool]] pages with definition of these basic concepts. This should be done to help people put their Contributions into either ContributedBuilders, SconsToolbox or ToolsIndex. Even though SconsToolbox contains a note "Don't put Builders and Tools here.", there is still a lot of *Tool pages there. It should be renamed then. -- [[techtonik]] <<DateTime(2011-02-05T10:02:27Z)>>
 
 === Bugs ===
- * SconsQuickReference linked from the front page doesn't work as a reference - it is just a wiki search that is confusing
  * The SyntaxReference page for editing Wiki pages in German does not exist (would be SyntaxReferenz). Is this a configuration/install problem, or do the users really have to roll their own page for each language?
 
 === Wishes ===
