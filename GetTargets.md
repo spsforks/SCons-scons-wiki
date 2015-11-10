@@ -1,23 +1,30 @@
+**How to get the list of targets the user entered on command line ?**
 
-You want to get the list of targets the user entered on the command line so you can preprocess them for some reason. 
+SCons provides a conveniant variable [COMMAND_LINE_TARGETS](http://www.scons.org/doc/production/HTML/scons-user.html#sect-command-line-targets) containing the list of all targets specified on the command line.
 
-This example shows how you can prevent a target ('.' in this case) from being used: 
-
+This example shows how you can prevent a target ('.' in this case) from being used:
 
 ```txt
- import SCons.Script
- import sys
+if '.' in COMMAND_LINE_TARGETS:
+   print "error: You may not use the '.' target, please use 'all' or name a specific target."
+   Exit(1)
 
- all_args = sys.argv[1:]
- parser = SCons.Script.OptParser()
- options, targets = parser.parse_args(all_args)
- #print `targets`
-
- if ('.' in targets):
-   print "You may not use '.', please use 'all' or name a specific target."
-   Exit(0)
-
- env = Environment()
- env.Alias('all', ['.'])
+env = Environment()
+env.Alias('all', ['.'])
 ```
-(What about COMMAND_LINE_TARGETS? [http://www.scons.org/doc/0.96.95/HTML/scons-user/x1301.html](http://www.scons.org/doc/0.96.95/HTML/scons-user/x1301.html) ) 
+
+Running SCons on this particular SConstruct will provide the following result:
+
+```txt
+$ scons .
+scons: Reading SConscript files ...
+error: You may not use the '.' target, please use 'all' or name a specific target.
+
+$ scons all
+scons: Reading SConscript files ...
+scons: done reading SConscript files.
+scons: Building targets ...
+scons: 'all' is up to date.
+scons: done building targets.
+```
+
