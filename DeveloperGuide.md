@@ -20,7 +20,7 @@ This is the SCons Developer Guide.  Start here to [learn how to contribute to SC
     * [Mercurial workflows](DeveloperGuide/MercurialWorkflows), explains how to work with Mercurial to submit your patches
     * [Accepting pull requests](DeveloperGuide/AcceptingPullRequests), howto for the SCons admin
     * [SconsBuildRequirements](SconsBuildRequirements), which packages you need for a full build
-    * [Packaging](DeveloperGuide/SconsPackaging)
+    * [Packaging](../ReleaseHOWTO/SimplifiedReleaseProcedure)
 * [Architecture](DeveloperGuide/ArchitectureOverview)
     * [Installation](DeveloperGuide/Installation) (the way SCons is meant to be found)
     * [Nodes](DeveloperGuide/Nodes) (Dir, File, Value, ...)
