@@ -27,10 +27,7 @@ Finally, if anything is unclear or the descriptions on this page raise further q
 Your contributions and changes will get accepted via pull requests, so you'll have to create a personal account on [http://bitbucket.org](http://bitbucket.org), fork the "default" SCons repository, and then clone your private copy to your computer.
 The Wiki page [SconsMercurialWorkflows](../SconsMercurialWorkflows) lists these steps in larger detail. It also describes how to push your changes back up to Bitbucket, such that you can finally create the pull request.
 
-There are also the two pages following pages explaining how branches and the source tree are organized:
-
-* [DeveloperGuide/MercurialBranches](MercurialBranches)
-* [DeveloperGuide/SourceWalkThrough](SourceWalkThrough)
+For a short description of how the source tree is organized you can refer to: [DeveloperGuide/SourceWalkThrough](SourceWalkThrough)
 
 So, you have the sources... now what?
 
@@ -58,7 +55,7 @@ python runtest.py -a
 
 This way, you can check that there are no tests failing on your system in the current revision.
 
-If they are all passing (there may be several "No results", depending on which tools are available), you can start with development. Change sources and add files as required, then commit your changes locally. While doing this, you should work directly on the "`default`" branch with bookmarks, as described in [DeveloperGuide/MercurialBranches](MercurialBranches). No named branches, please.
+If they are all passing (there may be several "No results", depending on which tools are available), you can start with development. Change sources and add files as required, then commit your changes locally. While doing this, you should work directly on the "`default`" branch with bookmarks. No named branches, please.
 
 Please help us to improve and extend our regression test suite. For a bugfix add one, or more, test(s) that break before applying your changes, and succeed after. When adding features, try to create end-to-end tests covering the new functionality. The "Testing Howto" at [DeveloperGuide/TestingMethodology](TestingMethodology) explains all the details. Try to write your tests, such that they work cross-platform.
 
