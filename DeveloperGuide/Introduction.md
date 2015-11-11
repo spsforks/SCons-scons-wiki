@@ -25,7 +25,7 @@ Finally, if anything is unclear or the descriptions on this page raise further q
 # Getting the sources
 
 Your contributions and changes will get accepted via pull requests, so you'll have to create a personal account on [http://bitbucket.org](http://bitbucket.org), fork the "default" SCons repository, and then clone your private copy to your computer.
-The Wiki page [SconsMercurialWorkflows](../SconsMercurialWorkflows) lists these steps in larger detail. It also describes how to push your changes back up to Bitbucket, such that you can finally create the pull request.
+The page [DeveloperGuide/MercurialWorkflows](MercurialWorkflows) lists these steps in larger detail. It also describes how to push your changes back up to Bitbucket, such that you can finally create the pull request.
 
 For a short description of how the source tree is organized you can refer to: [DeveloperGuide/SourceWalkThrough](SourceWalkThrough)
 

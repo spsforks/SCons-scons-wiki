@@ -19,7 +19,7 @@ This is the SCons Developer Guide.  Start here to [learn how to contribute to SC
    * [Easy issues to fix](DeveloperGuide/EasyIssuesToFix) from our Tigris bug tracker 
    * [Documentation](DeveloperGuide/Documentation) 
    * [Writing and debugging tests](DeveloperGuide/TestingMethodology) 
-   * [Mercurial workflows](SconsMercurialWorkflows), explains how to submit your patches 
+   * [Mercurial workflows](DeveloperGuide/MercurialWorkflows), explains how to work with Mercurial to submit your patches
    * [Accepting pull requests](DeveloperGuide/AcceptingPullRequests), howto for the SCons admin 
    * [SconsBuildRequirements](SconsBuildRequirements), which packages you need for a full build 
    * [Packaging](DeveloperGuide/SconsPackaging) 
