@@ -1,11 +1,11 @@
-Active open source projects which use SCons as their build system. 
+Active open source projects which use SCons as their build system:
 
-* [ASCEND](http://ascendwiki.cheme.cmu.edu/), a system modelling package for engineering. Latest [SConstruct](http://code.ascend4.org/ascend/trunk/SConstruct?view=markup). 
+* [ASCEND](http://ascendwiki.cheme.cmu.edu/), a system modelling package for engineering ([SConstruct](http://code.ascend4.org/ascend/trunk/SConstruct?view=markup))
 * [Aria Maestosa](http://ariamaestosa.sf.net) - a C++ MIDI editor and composition/notation application ([SConstruct](http://sourceforge.net/p/ariamaestosa/code/HEAD/tree/trunk/SConstruct))
-* [Blender](http://www.blender.org) (Popular 3D suite). See [SConstruct](https://svn.blender.org/svnroot/bf-blender/trunk/blender/SConstruct) and the rest of the project, this is a complex setup. 
-* [Bombono](http://www.bombono.org) DVD authoring program with nice and clean GUI. 
-* [Cantera](https://code.google.com/p/cantera/) A toolkit for chemical kinetics and thermodynamics. Uses SCons for building a C++ library, Python packages, a Matlab toolbox, and Windows installers. 
-* [CLAM](http://clam.iua.upf.edu) C++ Library for Audio and Music, a framework to develop sophisticated audio analysis and transformations. See [Main SConstruct](https://iua-share.upf.edu/svn/clam/trunk/CLAM/SConstruct) 
+* [Blender](http://www.blender.org) - Popular 3D suite ([SConstruct](https://svn.blender.org/svnroot/bf-blender/trunk/blender/SConstruct)
+* [Bombono](http://www.bombono.org) DVD authoring program with nice and clean GUI
+* [Cantera](www.cantera.org) A toolkit for chemical kinetics and thermodynamics. Uses SCons for building a C++ library, Python packages, a Matlab toolbox, and Windows installers ([SConstruct](https://github.com/Cantera/cantera/blob/master/SConstruct))
+* [CLAM](http://clam-project.org) C++ Library for Audio and Music, a framework to develop sophisticated audio analysis and transformations ([SConstruct](http://clam-project.org/clam/trunk/CLAM/SConstruct))
 * [Consodoc](http://consodoc.com/) (XML publishing server). 
 * [Csound](http://csound.sourceforge.net/) (a sound synthesis language) See [SConstruct](http://cvs.sourceforge.net/viewcvs.py/csound/csound5/SConstruct?view=markup) 
 * [FreeNOS](http://www.freenos.org) - a microkernel operating system written in C++. 
