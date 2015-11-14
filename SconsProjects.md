@@ -6,7 +6,6 @@ Active open source projects which use SCons as their build system:
 * [Bombono](http://www.bombono.org) DVD authoring program with nice and clean GUI
 * [Cantera](www.cantera.org) A toolkit for chemical kinetics and thermodynamics. Uses SCons for building a C++ library, Python packages, a Matlab toolbox, and Windows installers ([SConstruct](https://github.com/Cantera/cantera/blob/master/SConstruct))
 * [CLAM](http://clam-project.org) C++ Library for Audio and Music, a framework to develop sophisticated audio analysis and transformations ([SConstruct](http://clam-project.org/clam/trunk/CLAM/SConstruct))
-* [Csound](http://csound.sourceforge.net/) (a sound synthesis language) See [SConstruct](http://cvs.sourceforge.net/viewcvs.py/csound/csound5/SConstruct?view=markup) 
 * [FreeNOS](http://www.freenos.org) - a microkernel operating system written in C++. 
 * [FreeOrion](http://www.freeorion.org/) (Galactic conquest game). See [SConstruct](https://freeorion.svn.sourceforge.net/svnroot/freeorion/trunk/FreeOrion/SConstruct) 
 * [Freesteam](http://freesteam.sf.net/) (Steam properties library) See [SConstruct](http://freesteam.cvs.sourceforge.net/freesteam/freesteam/SConstruct?revision=1.32&view=markup). Uses SCons since version 0.6. 
