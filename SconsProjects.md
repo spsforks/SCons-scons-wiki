@@ -1,5 +1,6 @@
 Active open source projects which use SCons as their build system:
 
+* [Godot](http://www.godotengine.org) - Game Engine ([SConstruct](https://www.godotengine.org))
 * [ASCEND](http://ascendwiki.cheme.cmu.edu/), a system modelling package for engineering ([SConstruct](http://code.ascend4.org/ascend/trunk/SConstruct?view=markup))
 * [Aria Maestosa](http://ariamaestosa.sf.net) - a C++ MIDI editor and composition/notation application ([SConstruct](http://sourceforge.net/p/ariamaestosa/code/HEAD/tree/trunk/SConstruct))
 * [Blender](http://www.blender.org) - Popular 3D suite ([SConstruct](https://svn.blender.org/svnroot/bf-blender/trunk/blender/SConstruct))
