@@ -7,7 +7,7 @@ Active open source projects which use SCons as their build system:
 * [Cantera](www.cantera.org) - a toolkit for chemical kinetics and thermodynamics. Uses SCons for building a C++ library, Python packages, a Matlab toolbox, and Windows installers ([SConstruct](https://github.com/Cantera/cantera/blob/master/SConstruct))
 * [CLAM](http://clam-project.org) - a C++ Library for Audio and Music, a framework to develop sophisticated audio analysis and transformations ([SConstruct](http://clam-project.org/clam/trunk/CLAM/SConstruct))
 * [FreeNOS](http://www.freenos.org) - a microkernel operating system written in C++ ([SConstruct](https://code.google.com/p/freenos/source/browse/SConstruct))
-* [Freesteam](http://freesteam.sf.net/) (Steam properties library) See [SConstruct](http://freesteam.cvs.sourceforge.net/freesteam/freesteam/SConstruct?revision=1.32&view=markup). Uses SCons since version 0.6. 
+* [Freesteam](http://freesteam.sf.net/) - steam and water properties library ([SConstruct](http://sourceforge.net/p/freesteam/code/HEAD/tree/trunk/SConstruct))
 * [FSP Project](http://fsp.sourceforge.net/) (File transfer protocol) 
 * [GL O.B.S.](http://globs.sourceforge.net/) GL Open Benchmark Suite. See [Main SConstruct](http://globs.svn.sourceforge.net/viewvc/globs/globs/trunk/SConstruct?view=markup), [Benchmarks SConstruct](http://globs.svn.sourceforge.net/viewvc/globs/benchmarks/trunk/SConstruct?view=markup) 
 * [Groovy](http://groovy.codehaus.org) - Groovy is a dynamic programming language for the JVM that work symbiotically with Java. The build of Groovy itself is Ant but the [build of the native laucher is SCons](http://fisheye.codehaus.org/browse/groovy/trunk/groovy/modules/native_launcher/SConstruct?r=HEAD). 
