@@ -1,9 +1,8 @@
+**UPDATE: SCons 1.3.0 and later ships with the [Substfile](http://www.scons.org/doc/production/HTML/scons-user.html#b-Substfile) builder which works like this tool.**
 
-UPDATE: SCons 1.3.0 and later ships with [textfile.Substfile](http://scons.org/doc/production/HTML/scons-user/a8588.html#b-Substfile) builder which works like this tool. 
+Here's a tool that does substitutions from a dictionary on a file.  This code is freely available for your use. --[GaryOberbrunner](GaryOberbrunner)
 
-Here's a tool that does substitutions from a dictionary on a file.  This code is freely available for your use. --[GaryOberbrunner](GaryOberbrunner) 
-
-This should work with 0.96.91 or later; earlier versions may or may not work due to the import statement (but the rest should be OK). 
+This should work with 0.96.91 or later; earlier versions may or may not work due to the import statement (but the rest should be OK).
 
 
 ```python
@@ -80,8 +79,8 @@ def TOOL_SUBST(env):
     env['BUILDERS']['SubstInFile'] = Builder(action=subst_action, emitter=subst_emitter)
 
 ```
-Here's how to use it: 
 
+Here's how to use it:
 
 ```python
 #!python
@@ -93,6 +92,7 @@ env=Environment(tools=('default', TOOL_SUBST))
 env.SubstInFile('foo.out', 'foo.in',
                 SUBST_DICT={'%FOO%': 'FooValue'})
 ```
-I found I needed to add `varlist=['SUBST_DICT']` as a keyword argument to the subst_action for Scons to regenerate the output file if the SUBST_DICT has changed and the output file already exists.  --[TimPotter](TimPotter) 
 
-Hi Tim; that's what the subst_emitter is supposed to do; I wonder why it didn't work for you?  If you send me a testcase (on [dev@scons.tigris.org](mailto:dev@scons.tigris.org)) I'll look into it.  I'd like to get this into SCons sometime, so I'm interested in improving it. --[GaryOberbrunner](GaryOberbrunner) 
+I found I needed to add `varlist=['SUBST_DICT']` as a keyword argument to the subst_action for Scons to regenerate the output file if the SUBST_DICT has changed and the output file already exists.  --[TimPotter](TimPotter)
+
+Hi Tim; that's what the subst_emitter is supposed to do; I wonder why it didn't work for you?  If you send me a testcase (on [dev@scons.tigris.org](mailto:dev@scons.tigris.org)) I'll look into it.  I'd like to get this into SCons sometime, so I'm interested in improving it. --[GaryOberbrunner](GaryOberbrunner)
