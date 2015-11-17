@@ -1,60 +1,60 @@
-
 # O'Caml Builder
 
-[O'Caml](http://www.ocaml.org/) is statically-typed mixed paradigm programming language. Its toolchain functions somewhat differently from that of [gcc](http://gcc.gnu.org/), and it's currently unsupported by [SCons](http://www.scons.org/). Since I'd like to use [SCons](http://www.scons.org/) to build an [O'Caml](http://www.ocaml.org/) project, I'm adding the necessary code. 
+[O'Caml](http://www.ocaml.org/) is statically-typed mixed paradigm programming language. Its toolchain functions somewhat differently from that of [gcc](http://gcc.gnu.org/), and it's currently unsupported by [SCons](http://www.scons.org/). Since I'd like to use [SCons](http://www.scons.org/) to build an [O'Caml](http://www.ocaml.org/) project, I'm adding the necessary code.
 
-_Please note_ that I'm a novice when it comes to SCons, so if you can improve something on this page, please do! 
+_Please note_ that I'm a novice when it comes to SCons, so if you can improve something on this page, please do!
 
-Russel Winder has created a Bazaar branch of a SCons OCaml tool based on this code.  It can be found at [https://code.launchpad.net/~russel/sconsaddons/ocaml](https://code.launchpad.net/~russel/sconsaddons/ocaml) 
+Russel Winder has created a Bazaar branch of a SCons OCaml tool based on this code.  It can be found at [https://bitbucket.org/russel/scons_ocaml](https://bitbucket.org/russel/scons_ocaml)
 
 
 ## Tools
 
-Let's have a closer look at the tools provided by the [O'Caml](http://www.ocaml.org/) distribution: 
+Let's have a closer look at the tools provided by the [O'Caml](http://www.ocaml.org/) distribution:
 
-Tool | Description
------:|:--------------
-**ocaml**  | a interactive bytecode interpreter 
-**ocamlc**  | a bytecode compiler 
-**ocamlopt**  | a native code compiler 
-**ocamlfind**  | an environment querying tool 
-**ocamldep**  | a utility for determining build dependencies 
-**ocamldoc**  | a utility for generating documentation embedded in source code 
-**ocamlmktop**  | Building custom toplevel systems 
-**ocamlyacc**  | Ocaml Yacc 
-**ocamllex**  | Ocaml Lex 
-**ocamlmklib**  | generate libraries with mixed C / Caml code 
+Tool           | Description
+--------------:|:----------------------------------------------------------------
+**ocaml**      | a interactive bytecode interpreter
+**ocamlc**     | a bytecode compiler
+**ocamlopt**   | a native code compiler
+**ocamlfind**  | an environment querying tool
+**ocamldep**   | a utility for determining build dependencies
+**ocamldoc**   | a utility for generating documentation embedded in source code
+**ocamlmktop** | Building custom toplevel systems
+**ocamlyacc**  | Ocaml Yacc
+**ocamllex**   | Ocaml Lex
+**ocamlmklib** | generate libraries with mixed C / Caml code
+
 
 ## Extensions
 
-Extension| Description
-------:|:-----
-**.ml**  | a source file 
-**.mli**  | a module interface file 
-**.cmi**  | a compiled interface 
-**.cmo**  | a bytecode compiled object 
-**.cma**  | a bytecode library 
-**.cmx**  | a native compiled object 
-**.cmxa**  |  a native library 
-**.mll**  | Ocaml Lex file 
-**.mly**  | Ocaml Yacc file 
+Extension | Description
+---------:|:---------------------------
+**.ml**   | a source file
+**.mli**  | a module interface file
+**.cmi**  | a compiled interface
+**.cmo**  | a bytecode compiled object
+**.cma**  | a bytecode library
+**.cmx**  | a native compiled object
+**.cmxa** | a native library
+**.mll**  | Ocaml Lex file
+**.mly**  | Ocaml Yacc file
 
 **ocamlc** generates **.cmi** files from **.mli** files, and **.cmo** files from **.ml** files
 
-**ocamlopt** generates **.cmi** files from **.mli** files and **.cmx** and **.o** files from **.ml** files 
+**ocamlopt** generates **.cmi** files from **.mli** files and **.cmx** and **.o** files from **.ml** files
 
 ## Scanners
 
-O'Caml modules are opened using the syntax: 
+O'Caml modules are opened using the syntax:
 
-`open ModuleName` 
+`open ModuleName`
 
-_The above is O’Caml’s equivalent to Python’s `from ModuleName import *`. The scanner below won’t find dependencies on modules that aren’t `open`’ed, such as just using the module name. For instance, to use the `map` function from the `List` module, you just say `List.map`, and you don’t need to mention `List` anywhere else. You’ll need to use the `ocamldep` command to get the dependencies, in general._ 
+_The above is O’Caml’s equivalent to Python’s `from ModuleName import *`. The scanner below won’t find dependencies on modules that aren’t `open`’ed, such as just using the module name. For instance, to use the `map` function from the `List` module, you just say `List.map`, and you don’t need to mention `List` anywhere else. You’ll need to use the `ocamldep` command to get the dependencies, in general._
 
-Here's a scanner: 
+Here's a scanner:
 
 
-```
+```python
 #!python
 # use re.MULTILINE flag, so '^' matches at the beginning of the
 # string and at the beginning of each line, i.e. after each newline.
@@ -74,20 +74,21 @@ mlscan_bytecode = Scanner(function = mlfile_scan_bytecode, skeys = ['.ml'])
 
 ## Ocaml Tool
 
-This tool provides four builders : 
+This tool provides four builders:
 
-* [OcamlObject](OcamlObject) 
-* [OcamlLibrary](OcamlLibrary) 
-* [OcamlProgram](OcamlProgram) 
-* [OcamlPack](OcamlPack) 
-which works like Object, Library and Program. You can customize command line options and choose between a bytecode executable, a native one or a toplevel (interactive loop). 
+* OcamlObject
+* OcamlLibrary
+* OcamlProgram
+* OcamlPack
 
-[OcamlPack](OcamlPack) is used for packing several object into one (see option -pack of ocamlc). 
+which works like Object, Library and Program. You can customize command line options and choose between a bytecode executable, a native one or a toplevel (interactive loop).
 
-Ocaml Tool file : 
+OcamlPack is used for packing several object into one (see option -pack of ocamlc).
+
+Ocaml Tool file:
 
 
-```
+```python
 #!python
 # Ocaml Tool
 # version: 0.2 (12/30/2005)
@@ -282,7 +283,7 @@ def generate(env):
                 OCAMLMKTOP='ocamlmktop',
                 OCAMLFIND='ocamlfind',
                 #OCAMLDEP='ocamldep',           # not used
-                OCAML_PP='',                            # not needed by default
+                OCAML_PP='',                    # not needed by default
                 OCAML_DEBUG=0,
                 OCAML_PROFILE=0,
                 OCAMLC_FLAGS='',
@@ -292,18 +293,22 @@ def generate(env):
                 OCAML_OBJS=[],
                 OCAML_PACKS=[],
                 OCAML_PATH=[],
-                OCAML_CODE=''                           # bytecode, toplevel or native
+                OCAML_CODE=''                   # bytecode, toplevel or native
         )
 def exists(env):
         return env.Detect('ocaml')
 ```
-There is three files : lib.ml, object.ml and prog.ml, we want to build the executable _prog_. 
 
-The dependencies are : 
 
-* prog: object.cmx lib.cmxa prog.ml 
-* object.cmx: object.ml lib.cmxa 
-* lib.cmxa: lib.ml 
+# Example
+
+There are three files: lib.ml, object.ml and prog.ml, we want to build the executable _prog_.
+
+The dependencies are:
+
+* prog: object.cmx lib.cmxa prog.ml
+* object.cmx: object.ml lib.cmxa
+* lib.cmxa: lib.ml
 
 ```txt
 (* lib.ml *)
@@ -322,10 +327,11 @@ open Graph.Builder;;
 open Object;;
 print_endline "hello ocaml world !";;
 ```
-The SConstruct file : 
+
+The SConstruct file:
 
 
-```
+```python
 #!python
 # SConstruct
 import ocaml
@@ -335,13 +341,14 @@ env = Environment(
         OCAML_DEBUG=0,
         OCAML_PROFILE=0
 )
+
 env.Tool('ocaml', '.')
 o = env.OcamlObject('object', 'object.ml')
 l = env.OcamlLibrary('lib', 'lib.ml')
 env.OcamlProgram('prog', 'prog.ml', OCAML_LIBS=l, OCAML_OBJS=o)
 ```
 
-This is the building process : 
+This is the building process:
 
 
 ```
@@ -355,10 +362,12 @@ ocamlopt -a -o lib.cmxa -ccopt -L/usr/lib/ocaml/3.08.3/ocamlgraph -I /usr/lib/oc
 ocamlopt -c -o object.cmx -ccopt -L/usr/lib/ocaml/3.08.3/ocamlgraph -I /usr/lib/ocaml/3.08.3/ocamlgraph object.ml
 ocamlopt -o prog -ccopt -L/usr/lib/ocaml/3.08.3/ocamlgraph -I /usr/lib/ocaml/3.08.3/ocamlgraph lib.cmxa object.cmx prog.ml
 scons: done building targets.
+
 $ ls
 lib.a    lib.cmxa  object.cmi  object.o   prog      prog.ml
 lib.cmi  lib.ml    object.cmx  ocaml.py   prog.cmi  prog.o
 lib.cmx  lib.o     object.ml   ocaml.pyc  prog.cmx  SConstruct
+
 $ scons -c
 scons: Reading SConscript files ...
 scons: done reading SConscript files.
@@ -381,3 +390,4 @@ lib.ml
 object.ml
 hello ocaml world !
 ```
+
