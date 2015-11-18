@@ -1,5 +1,4 @@
 
-
 ## Very long command lines on Windows
 
 by [PhilMartin](PhilMartin) 
@@ -81,12 +80,12 @@ Many thanks to Tobias Sargeant for working out most of this, especially the Pyth
 
 ### Remarks
 
-* This solution based on Create``Process works great. Thank you very much. Many people out there ignore how many toolchains don't accept any kind of command line indirection (because based on GNU gcc without many changes) but only work on MS Windows (because the provider wanted to have a nice MFC-based IDE around it, for example). Even when the toolchain accept indirection files, the solution you give here is preferable because it is slightly faster. 
-* This solution requires win32 extension. It comes standard with Active``State distributions, for example, but not with all Python distributions. 
-* The maximum command line length that you can pass to Create``Process is **32766**. Past that limit you get an error msg saying 'parameter incorrect' (but not which parameter and not why is it incorrect). You still need the Temp``File``Munge trick to deal with lines longer than that. 
-* There is no such thing as "standard Windows commands". The one you name are actually shell commands. You should expect that they are not executed by the Create``Process because that one takes executables. They will be executed as expected if you pass the shell as executable (cmd.exe) and then your commands (del, mkdir, etc.) as arguments. 
-* It is good to know that this solution works if you give a full absolute path for the executable to run. If not, Create``Process does some search but not the PATH search that you may expect (see the MSDN doc on it). If you fail to give the complete path or if the executable is not there for some reason, you get an error msg saying "file not found" but not which file is not found. 
-* This solution is known not to work with some toolchains (Real``View ARM, Infineon Tri``Core). They give internal errors even when env['ENV'] has all the environment variables that they require. Fortunately, they all accept indirection of the command line to a temporary file. 
+* This solution based on CreateProcess works great. Thank you very much. Many people out there ignore how many toolchains don't accept any kind of command line indirection (because based on GNU gcc without many changes) but only work on MS Windows (because the provider wanted to have a nice MFC-based IDE around it, for example). Even when the toolchain accept indirection files, the solution you give here is preferable because it is slightly faster. 
+* This solution requires win32 extension. It comes standard with ActiveState distributions, for example, but not with all Python distributions. 
+* The maximum command line length that you can pass to CreateProcess is **32766**. Past that limit you get an error msg saying 'parameter incorrect' (but not which parameter and not why is it incorrect). You still need the TempFileMunge trick to deal with lines longer than that. 
+* There is no such thing as "standard Windows commands". The one you name are actually shell commands. You should expect that they are not executed by the CreateProcess because that one takes executables. They will be executed as expected if you pass the shell as executable (cmd.exe) and then your commands (del, mkdir, etc.) as arguments. 
+* It is good to know that this solution works if you give a full absolute path for the executable to run. If not, CreateProcess does some search but not the PATH search that you may expect (see the MSDN doc on it). If you fail to give the complete path or if the executable is not there for some reason, you get an error msg saying "file not found" but not which file is not found. 
+* This solution is known not to work with some toolchains (RealView ARM, Infineon TriCore). They give internal errors even when env['ENV'] has all the environment variables that they require. Fortunately, they all accept indirection of the command line to a temporary file. 
 * An alternative solution is to use another Python. I used successfully the Cygwin-based Python interpreter to drive MS Windows-based toolchains not accepting any indirection. That also stops working at the 32kb limit. But the solution based on win32 extension you present here is simpler to set up and to use. 
 by [AdrianNeagu](AdrianNeagu) 
 
