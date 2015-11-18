@@ -1,19 +1,21 @@
-
-
 # SCons Tool for Cheetah
 
-Provides a SCons tool that allows SConstruct scripts to build files from Cheetah templates. 
+Provides a SCons tool that allows SConstruct scripts to build files from [Cheetah templates](http://www.cheetahtemplate.org).
 
+
+### Builders
 
 ```python
 #!python
+
 import SCons.Builder
 import pickle
 
 def makeCheetahCommand(target, source, env, for_signature):
-    base = 'export PYTHONPATH="${TARGET.dir}" &&' 
+    base = 'export PYTHONPATH="${TARGET.dir}" &&'
     base += 'cheetah fill --stdout --nobackup '
     sourceAndTarget = '$SOURCE >> $TARGET'
+
     if 'PICKLE' in env:
         env.Depends(target, env['PICKLE'])
         return base + '--pickle $PICKLE ' + sourceAndTarget
@@ -26,16 +28,18 @@ cheetahBldr = SCons.Builder.Builder(
     single_source = True,
 )
 
+
 def pickle_function(target, source, env):
     for i in range(len(target)):
         print(target[i])
         pickle.dump(source[i].read(), open(str(target[i]), 'wb'))
     return None
-    
+
 pickleBldr = SCons.Builder.Builder(
     action = pickle_function,
     suffix = '.pkl'
 )
+
 
 def generate(env):
     env['BUILDERS']['Cheetah'] = cheetahBldr
@@ -46,11 +50,14 @@ def exists(env):
     return env.Detect('cheetah')
 
 ```
-Use it something like this: 
 
+
+### Example
 
 ```python
 #!python
+
 pickle = env.Pickle('vars.pkl', Value({'var1':1, 'var2':2}))
 env.Cheetah('output.txt', 'input.tmpl', PICKLE=pickle)
 ```
+
