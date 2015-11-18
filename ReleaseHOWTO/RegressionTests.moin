@@ -1,4 +1,0 @@
-To run the tests, simply execute this command:
-{{{
-  $ python runtest.py -a
-}}}

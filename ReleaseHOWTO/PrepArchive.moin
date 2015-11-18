@@ -1,3 +1,0 @@
-[[ReleaseHOWTO/PrepArchive|FIXME]] Prep the archive
-
-[[ReleaseHOWTO/PrepArchive|FIXME]] If any of the candidate packages fail, fix the problem in `trunk` following your usual development practices and [[#StartDryRun| go and do another dry run]].
