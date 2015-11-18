@@ -1,30 +1,34 @@
+**How to statically link the c++ runtime libraries (and statically link libgcc) in a sconsy way ?**
 
-How to statically link the c++ runtime libraries (and statically link libgcc) in a sconsy way: 
+As of scons 2.0.1 adding LINKFLAGS="--static" to Program() seems to work.
 
-As of scons 2.0.1 adding LINKFLAGS="--static" to Program() seems to work on Ubuntu 10.4. 
+Example:
 
-Example: 
 ```txt
 Program("test.cxx",
-                                LIBS=["boost_unit_test_framework"],
-        LIBPAH = ["/usr/lib", "/usr/local/lib"],
+        LIBS = ["boost_unit_test_framework"],
+        LIBPATH = ["/usr/lib", "/usr/local/lib"],
         LINKFLAGS="--static")
 ```
-Previous methods are: 
+
+---
 
 
 ```python
 #!python
 
-env=Environment();
-static=env.Command('libstdc++.a',None,Action('ln -s `g++ -print-file-name=libstdc++.a` $TARGET'));
-lib=env.StaticLibrary(target='mylib',source='mylib.cpp',LIBPATH='.',LINKFLAGS='-static-libgcc',LIBS=[static]);
-prog=env.Program(target='myprog',source='main.cpp',LIBS=[static,lib],LINKFLAGS='-static-libgcc',LIBPATH='.');
+env = Environment();
+
+static = env.Command('libstdc++.a', None, Action('ln -s `g++ -print-file-name=libstdc++.a` $TARGET'));
+lib = env.StaticLibrary(target='mylib', source='mylib.cpp', LIBPATH='.', LINKFLAGS='-static-libgcc', LIBS=[static]);
+
+env.Program(target='myprog', source='main.cpp', LIBS=[static,lib], LINKFLAGS='-static-libgcc', LIBPATH='.');
 ```
-Warning: the first recipe wont work with scons 0.96.1 or lower. 
 
-How to statically link on Solaris 5.8, GCC 3.2 and SCons 0.96.1: 
+Warning: this first recipe wont work with scons 0.96.1 or lower.
 
+
+---
 
 ```python
 #!python
@@ -38,3 +42,4 @@ env = Environment(
 
 prog = env.Program(target='myprog',source='main.cpp');
 ```
+
