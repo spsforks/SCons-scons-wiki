@@ -1,6 +1,5 @@
 Active open source projects which use SCons as their build system:
 
-* [Godot](http://www.godotengine.org) - Game Engine ([SConstruct](https://www.godotengine.org))
 * [ASCEND](http://ascendwiki.cheme.cmu.edu/), a system modelling package for engineering ([SConstruct](http://code.ascend4.org/ascend/trunk/SConstruct?view=markup))
 * [Aria Maestosa](http://ariamaestosa.sf.net) - a C++ MIDI editor and composition/notation application ([SConstruct](http://sourceforge.net/p/ariamaestosa/code/HEAD/tree/trunk/SConstruct))
 * [Blender](http://www.blender.org) - Popular 3D suite ([SConstruct](https://svn.blender.org/svnroot/bf-blender/trunk/blender/SConstruct))
@@ -11,7 +10,8 @@ Active open source projects which use SCons as their build system:
 * [Freesteam](http://freesteam.sf.net/) - steam and water properties library ([SConstruct](http://sourceforge.net/p/freesteam/code/HEAD/tree/trunk/SConstruct))
 * [FSP Project](http://fsp.sourceforge.net/) - File Transfer Protocol ([SConstruct](http://fsp.bzr.sourceforge.net/bzr/fsp/fsp/annotate/head%3A/SConstruct))
 * [GL O.B.S.](http://globs.sourceforge.net/) - GL Open Benchmark Suite ([SConstruct](http://sourceforge.net/p/globs/code/HEAD/tree/globs/trunk/SConstruct), [Benchmarks SConstruct](http://sourceforge.net/p/globs/code/HEAD/tree/benchmarks/trunk/SConstruct))
-* [Groovy](http://groovy.codehaus.org) - Groovy is a dynamic programming language for the JVM that work symbiotically with Java. The build of Groovy itself is Ant but the [build of the native laucher is SCons](http://fisheye.codehaus.org/browse/groovy/trunk/groovy/modules/native_launcher/SConstruct?r=HEAD). 
+* [Godot](http://www.godotengine.org) - Game Engine ([SConstruct](https://github.com/godotengine/godot/blob/master/SConstruct))
+* [Groovy](http://groovy.codehaus.org) - Groovy is a dynamic programming language for the JVM that work symbiotically with Java. The build of Groovy itself is Ant but the [build of the native laucher is SCons](http://fisheye.codehaus.org/browse/groovy/trunk/groovy/modules/native_launcher/SConstruct?r=HEAD)
 * [GtkRadiant](http://www.qeradiant.com) (level editor for Id technology games). You can read the [SConstruct](https://zerowing.idsoftware.com/svn/radiant/GtkRadiant/trunk/SConstruct) and the [SConscript](https://zerowing.idsoftware.com/svn/radiant/GtkRadiant/trunk/SConscript) online. 
 * [IntensityEngine](http://www.syntensity.com/toplevel/intensityengine/) An open source platform for 3D games and virtual worlds. 
 * [Hydrogen](http://www.hydrogen-music.org/) - advanced drum machine for GNU/Linux 
@@ -68,5 +68,6 @@ Non Open source projects which use SCons as their build system.
 * [http://www.doom3.com](http://www.doom3.com) iD Software's Doom 3 SDK includes the internally used Scons files. 
 * [COPS 2170: The Power of Law](http://www.polgame.com/eng/) (cyberpunk style tactical strategy with RPG elements) 
 * [ALFA: Antiterror](http://www.alfaantiterror.com) (tactical simulation) 
-* [Pin](http://rogue.colorado.edu/Pin) (Binary Instrumentation Tool) 
+* [Pin](http://rogue.colorado.edu/Pin) (Binary Instrumentation Tool)
+
 On 2008-02-17, Mark Brown scanned the packages in the Debian distribution for packages that used SCons. There may be some false positives due to the nature of the scan, but he found 35 packages. Many of them don't seem to be listed above. If someone has some spare cycles, tracking down the projects missing above and adding them would be a good thing. Here's the list: abakus aqsis ardour balder2d belpic blender blockattack btanks cheesetracker codeine create-resources csstidy darcs-buildpackage dc-qt dfsbuild gaia gtkrsync hg-buildpackage hpodder jppy kstreamripper linuxdcpp lprof mixxx nsis oregano pingus pouetchess pyexiv2 rafkill skim telepathy-inspector tla-buildpackage wlassistant yafray 
