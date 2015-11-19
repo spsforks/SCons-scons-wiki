@@ -130,7 +130,7 @@ See the [Examples](http://www.scons.org/doc/HTML/scons-man.html#lbBB) section to
 * [SconsLatexThesisSkeleton](SconsLatexThesisSkeleton): A more elaborate way to build LaTeX documents with SCons, including automatic file format conversion 
 * [StaticallyLink](StaticallyLink): Statically link g++ libraries 
 * [CudaTool](CudaTool) - tool for NVidia's CUDA 
-* [Building Debian packages](http://qandr.org/quentin/writings/debscons.html) 
+* [Building Debian packages](http://quentinsf.com/writings/debscons/) 
 * Quite a bunch of SCons techniques, including the use of SConf, can be seen in the [http://madman.sf.net](http://madman.sf.net) madman build scripts. 
 
 ## Full-blown Examples
