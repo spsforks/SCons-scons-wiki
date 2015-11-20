@@ -11,7 +11,7 @@ Active open source projects which use SCons as their build system:
 * [FSP Project](http://fsp.sourceforge.net/) - File Transfer Protocol ([SConstruct](http://fsp.bzr.sourceforge.net/bzr/fsp/fsp/annotate/head%3A/SConstruct))
 * [GL O.B.S.](http://globs.sourceforge.net/) - GL Open Benchmark Suite ([SConstruct](http://sourceforge.net/p/globs/code/HEAD/tree/globs/trunk/SConstruct), [Benchmarks SConstruct](http://sourceforge.net/p/globs/code/HEAD/tree/benchmarks/trunk/SConstruct))
 * [Godot](http://www.godotengine.org) - Game Engine ([SConstruct](https://github.com/godotengine/godot/blob/master/SConstruct))
-* [GtkRadiant](http://www.qeradiant.com) (level editor for Id technology games). You can read the [SConstruct](https://zerowing.idsoftware.com/svn/radiant/GtkRadiant/trunk/SConstruct) and the [SConscript](https://zerowing.idsoftware.com/svn/radiant/GtkRadiant/trunk/SConscript) online.
+* [GtkRadiant](http://icculus.org/gtkradiant/) - level editor for Id technology games ([SConstruct](https://github.com/TTimo/GtkRadiant/blob/master/SConstruct))
 * [IntensityEngine](http://www.syntensity.com/toplevel/intensityengine/) An open source platform for 3D games and virtual worlds. 
 * [Hydrogen](http://www.hydrogen-music.org/) - advanced drum machine for GNU/Linux 
 * [LProf](http://lprof.sourceforge.net) - ICC Profile creation application for color managing your imaging devices. 
