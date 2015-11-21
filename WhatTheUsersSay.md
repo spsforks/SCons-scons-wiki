@@ -2,6 +2,8 @@
 
 ...to external pages and blogs, where users report about their experiences with SCons.
 
+* [SCons Intro: A Sane Software Construction Tool](http://www.ostricher.com/2014/09/scons-intro/) and other [SCons articles](http://www.ostricher.com/tag/scons/) (Itamar Ostricher)
+
 * [Bye autotools and hello Scons](http://brainbaking.com/bye-autotools-hello-scons/) (Wouter Groeneveld)
 
 * [Using SCons Effectively](http://blog.bfitz.us/?p=1679) (Brian Fitzgerald)
