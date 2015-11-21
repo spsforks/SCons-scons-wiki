@@ -1,29 +1,26 @@
-
-
 # Links
 
-...to external pages and blogs, where users report about their experiences with SCons. 
+...to external pages and blogs, where users report about their experiences with SCons.
 
-[http://brainbaking.com/bye-autotools-hello-scons/](http://brainbaking.com/bye-autotools-hello-scons/) 
+* [Bye autotools and hello Scons](http://brainbaking.com/bye-autotools-hello-scons/) (Wouter Groeneveld)
 
-[http://blog.bfitz.us/?p=1679](http://blog.bfitz.us/?p=1679) 
+* [Using SCons Effectively](http://blog.bfitz.us/?p=1679) (Brian Fitzgerald)
 
-[http://blog.bfitz.us/?cat=5](http://blog.bfitz.us/?cat=5) 
+* [Adding/Overriding SCons Tools](http://blog.bfitz.us/?p=2463) (Brian Fitzgerald)
 
-[http://cplus.about.com/od/introductiontoprogramming/a/Getting-Started-With-Scons.htm](http://cplus.about.com/od/introductiontoprogramming/a/Getting-Started-With-Scons.htm) 
+* [Getting Started with SCons](http://cplus.about.com/od/introductiontoprogramming/a/Getting-Started-With-Scons.htm) (David Bolton)
 
-[http://esr.ibiblio.org/?p=3089](http://esr.ibiblio.org/?p=3089) 
+* [SCons is full of win today](http://esr.ibiblio.org/?p=3089) (Eric Raymond)
 
-[http://www.bravegnu.org/blog/make-to-scons.html](http://www.bravegnu.org/blog/make-to-scons.html) 
+* [From Make to SCons](http://www.bravegnu.org/blog/make-to-scons.html) (Vijay Kumar)
 
-[http://freecode.com/articles/stop-the-autoconf-insanity-why-we-need-a-new-build-system](http://freecode.com/articles/stop-the-autoconf-insanity-why-we-need-a-new-build-system) 
+* [Stop the autoconf insanity! Why we need a new build system.](http://freecode.com/articles/stop-the-autoconf-insanity-why-we-need-a-new-build-system) (Andrew McCall)
 
-[http://www.intenct.info/raymond.penners/2011/scons-build-better/](http://www.intenct.info/raymond.penners/2011/scons-build-better/) 
+* [SCons — build your software better](http://www.intenct.info/raymond.penners/2011/scons-build-better/) (Raymond Penners)
 
-[http://www.c-plusplus.net/forum/136144-full](http://www.c-plusplus.net/forum/136144-full) 
+* [Alternatives to Make, Part II](http://blog.quirk.es/2008/10/alternatives-to-make-part-ii.html) (Richard Quirk)
 
-[http://theperpetualprototype.blogspot.de/2013/02/replacing-make-with-scons.html](http://theperpetualprototype.blogspot.de/2013/02/replacing-make-with-scons.html) 
+* [http://www.c-plusplus.net/forum/136144-full](http://www.c-plusplus.net/forum/136144-full)
 
-[http://stackoverflow.com/questions/14388552/scons-hierachical-build](http://stackoverflow.com/questions/14388552/scons-hierachical-build) 
+* [Replacing Make with SCons](http://theperpetualprototype.blogspot.de/2013/02/replacing-make-with-scons.html)
 
-[http://blog.quirk.es/2008/10/alternatives-to-make-part-ii.html](http://blog.quirk.es/2008/10/alternatives-to-make-part-ii.html) 
