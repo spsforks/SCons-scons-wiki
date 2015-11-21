@@ -5,6 +5,7 @@ Active open source projects which use SCons as their build system:
 * [Blender](http://www.blender.org) - Popular 3D suite ([SConstruct](https://svn.blender.org/svnroot/bf-blender/trunk/blender/SConstruct))
 * [Bombono](http://www.bombono.org) DVD authoring program with nice and clean GUI
 * [Cantera](www.cantera.org) - a toolkit for chemical kinetics and thermodynamics. Uses SCons for building a C++ library, Python packages, a Matlab toolbox, and Windows installers ([SConstruct](https://github.com/Cantera/cantera/blob/master/SConstruct))
+* [Chaste](http://www.cs.ox.ac.uk/chaste/) - Cancer, Hearth and Soft Tissue Environment, a general purpose simulation package for biology and physiology ([SConstruct](https://chaste.cs.ox.ac.uk/trac/browser/trunk/SConstruct))
 * [CLAM](http://clam-project.org) - a C++ Library for Audio and Music, a framework to develop sophisticated audio analysis and transformations ([SConstruct](http://clam-project.org/clam/trunk/CLAM/SConstruct))
 * [FreeNOS](http://www.freenos.org) - a microkernel operating system written in C++ ([SConstruct](https://code.google.com/p/freenos/source/browse/SConstruct))
 * [Freesteam](http://freesteam.sf.net/) - steam and water properties library ([SConstruct](http://sourceforge.net/p/freesteam/code/HEAD/tree/trunk/SConstruct))
