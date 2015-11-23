@@ -34,12 +34,15 @@ Active open source projects which use SCons as their build system:
 * [S.C.O.U.R.G.E.](http://scourgeweb.org/tiki-index.php) A cross platform, open source rogue-like game. See [SConstruct](http://scourge.svn.sourceforge.net/viewvc/scourge/trunk/scourge/SConstruct?view=markup) 
 * [SuperCollider](http://supercollider.sourceforge.net) (Realtime sound synthesis server and language) See [SConstruct](http://supercollider.svn.sourceforge.net/viewvc/supercollider/trunk/SConstruct&view=markup) 
 * [Syx](http://code.google.com/p/syx) (Smalltalk-80 implementation). See [SConstruct](http://syx.googlecode.com/svn/trunk/SConstruct). This setup includes test and plugins, working on posix and win32. 
+* [The Battle for Wesnoth](http://www.wesnoth.org/) - free turn-based tactical strategy game ([SConstruct](https://github.com/wesnoth/wesnoth/blob/master/SConstruct))
 * [Ubitrack](http://ubitrack.org) Tracking for Mixed-/Augmented Reality applications, Chair for Computer Aided Medical Procedures and Augmented Reality, Technical University Munich 
 * [UFO2000](http://ufo2000.sourceforge.net/) (turn based tactical multiplayer game) See [SConstruct](http://ufo2000.svn.sourceforge.net/viewvc/ufo2000/trunk/SConstruct?view=markup) 
 * [v8](http://code.google.com/p/v8/) (Google's open source [JavaScript](JavaScript) engine.) See [SConstruct](http://code.google.com/p/v8/source/browse/trunk/SConstruct) 
 * [VMime Library](http://www.vmime.org/) (Mail library) See [SConstruct](http://vmime.cvs.sourceforge.net/vmime/vmime/SConstruct?view=markup) 
 * [YafaRay](http://www.yafaray.org/) A free open-source raytracing engine. 
-Less active projects, which use SCons as their build system: 
+
+
+Less active projects, which use SCons as their build system:
 
 * [Aztec 3D](http://aztec.sourceforge.net/) - 3D Modelling Tool. See the main SConstruct file here[SConstruct](http://cvs.sourceforge.net/viewcvs.py/*checkout*/aztec/SConstruct?content-type=text/plain&amp;rev=1.1) and the config SConscript [scons.AztecConfig](http://cvs.sourceforge.net/viewcvs.py/*checkout*/aztec/aztec/scons.AztecConfig?content-type=text/plain&amp;rev=1.7). We also use SCons to build [FreeType](http://www.freetype.org), [lib3DS](http://lib3ds.sourceforge.net), [DevIL Image Library](http://openil.sourceforge.net) and [Mozilla's Javascript](http://www.mozilla.org/js) 
 * [NeoEngine](http://www.neoengine.org) ([OpenSource](OpenSource) 3D Engine) See [SConstruct](https://secure.emedia-solutions-wolf.de:4432/svn/neoengine/trunk/neoengine/SConstruct) and the SConscript in the subdirectory folders 
@@ -57,7 +60,9 @@ Projects which previously used SCons as their build system:
 * [KDevelop](http://www.kdevelop.org/) (IDE for C++ and other languages) They created a proof of concept for using scons, but later [switched](http://lwn.net/Articles/188693) to CMake. 
 * [bksys](http://freehackers.org/~tnagy/bksys.html) was a scons-based build system used by kde programs. In 2006 it evolved into [waf](http://code.google.com/p/waf), a competitor for SCons. 
 * [Delta3D](http://delta3d.org/) Open source gaming and simulations engine, switched to CMake 
-Non Open source projects which use SCons as their build system. 
+
+
+Non Open source projects which use SCons as their build system:
 
 * [ISTS TCP BIOS](http://7eq.ath.cx/repos/ISTS%20BIOS%20TCP/) A proprietary loader software for a telecomunications traffic simulator 
 * [Battlefield 1942](http://www.eagames.com/official/battlefield/1942/us/home.jsp) (FPS and vehicle action game) 
