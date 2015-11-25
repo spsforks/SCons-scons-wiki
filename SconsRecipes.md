@@ -1,145 +1,206 @@
-**This is the place to share tips, examples, and short scripts.**
-
-The SCons [ManPage](http://www.scons.org/doc/HTML/scons-man.html) also contains a number of quick examples. 
-
-See the [Examples](http://www.scons.org/doc/HTML/scons-man.html#lbBB) section towards the bottom of the page. 
+**This is the place to share tips, examples, and short scripts. Do not hesitate to contribute!**
 
 **Table of Contents**
 
 [TOC]
 
+** Additional resources**
+
+* The official SCons [user guide](http://scons.org/doc/production/HTML/scons-user.html) itself contains a lot of examples.
+* The SCons [Man page](http://www.scons.org/doc/HTML/scons-man.html) also contains a number of [quick examples](http://www.scons.org/doc/HTML/scons-man.html#examples) toward the bottom of the page.
+
+
 ---
 
-## Scons : Extending and getting info
 
-* [SconsVersion](SconsVersion): how to retrieve the version of scons from your script 
-* [WrapperFunctions](WrapperFunctions): you want to wrap up a bit of SCons and python as a new Environment method without modifying scons itself 
-* An [ExportImportShortcutHack](ExportImportShortcutHack). 
+# SCons: Getting info
 
-## Command-Line Arguments and Help
+* [SCons Version](SconsVersion) - retrieve the version of SCons from your script
+* [SCons Dump Environment](DumpEnv) - dump the contents of the construction environment
 
-* [ArgumentQuoting](ArgumentQuoting) in actions 
-* [UsingCommandLineArguments](UsingCommandLineArguments): Using ARGUMENTS 
-* [AutomaticHelpFromAliases](AutomaticHelpFromAliases): technique for injecting helper functions into environment and wrapping Alias() to get Help() automatically 
 
-## Configuration
+---
 
-* [SconsAutoconf](SconsAutoconf): How to add autoconf functionality to your scons builds. 
-* [Autoconf recipes](AutoconfRecipes): a few autoconf macro implementations. 
-* [GenerateConfig](GenerateConfig): generating a config.h file 
-* [SavingVariablesToAFile](SavingVariablesToAFile) - saving the value of some variables to a file and loading them back 
-* [UpdateOnlySomeVariables](UpdateOnlySomeVariables) - Update some variables in an environment without overwriting changes to others. 
 
-## Targets
+# SCons: Extending
 
-* [GetTargets](GetTargets): you want to look at the targets the user entered 
-* [PhonyTargets](PhonyTargets): A close approximation of a target that is always built 
-* [DependsAndAliases](DependsAndAliases): How to ensure Alias() work correctly with Depends() 
+* [wrapper for python functions](WrapperFunctions) - wrap up a bit of SCons and python as a new Environment method without modifying scons itself
+* [avoid Import()/Export() statements](ExportImportShortcutHack) - hack to avoid using Import() in SConscripts
+* [arguments quoting](ArgumentQuoting) - a tip on arguments quoting in SCons actions
+
+
+---
+
+
+# Command-line arguments and help
+
+* [customize SCons command-line](UsingCommandLineArguments) - the different way of interacting with your scripts from the command-line
+* [automatic help for Aliases](AutomaticHelpFromAliases) - technique for injecting helper functions into environment and wrapping Alias() to get Help() automatically
+
+
+---
+
+
+# Build configuration
+
+* [SCons Autoconf](SconsAutoconf) - add autoconf functionality to your scons builds
+* [Autoconf recipes](AutoconfRecipes) - some additional autoconf macro implementations
+* [config source file](GenerateConfig) - generating a config.h file to use along with the sources
+* [saving variables to a file](SavingVariablesToAFile) - saving the value of some variables to a file and loading them back
+* [update only some variables](UpdateOnlySomeVariables) - update some variables in an environment without overwriting changes to others
+
+
+---
+
+
+# Build logs
+
+* [log SCons output to a file](BuildLog) - write SCons output to a file as well as the screen
+* [colorize build messages](ColorBuildMessages) - replace the raw build commands printed to the screen with colored messages
+* [using colorgcc](ColorGcc) - using the [colorgcc](http://www.mindspring.com/~jamoyers/software/) wrapper to colorize the output of compilers with warning/error messages matching the gcc output format
+* [customize command-lines printed by SCons](HidingCommandLinesInOutput) - how to hide all or part of the printed command lines for prettier build logs
+
+
+---
+
+
+# Increasing performance and large builds
+
+* [faster builds](GoFastButton) - options you can use to make SCons faster by sacrificing build accuracy
+* [prevent building everything](PreventBuildingOfEverything) - you have a big hierarchical tree of projects...
+* [proxy dependencies](ProxyDependencies) - a simple way to avoid inefficiencies when you have commands that consume lots of input files and produce lots of output files
+* [target driven builder creation](TargetDrivenBuilderCreation) - avoid scanning large source trees on startup by only queuing up dependencies on demand for things SCons actually needs to build
+* [limit cache size](LimitCacheSizeWithProgress) - prevent the cache directory to grow indefinitely
+
+
+---
+
+
+# Build organization
+
+* [modular example](ModularExample) - a modular way to support multiple systems and build multiple setups at a time
+* [simultaneous variant builds](SimultaneousVariantBuilds) - build different variants (e.g. debug/release, target/host) at the same time
+* [serialise for shared resources](SerialiseForSharedResources) - tell scons to run particular tasks in series, while letting others run in parallel
+* [multiple directory Fortran build](MultipleDirectoryFortranBuild) - setup a multiple-directory Fortran 90 project
+
+
+---
+
+
+# Targets
+
+### General tips
+
+* [get SCons targets](GetTargets) - look at the targets the user entered
+* [using phony targets](PhonyTargets) - defining a target that is always built
+* [using Alias() with Depends()](DependsAndAliases) - ensure Alias() work correctly with Depends() statements
 
 ### Install & Uninstall Targets
 
-* [InstallTargets](InstallTargets): writing install and uninstall targets 
-* [InstallationPrefix](InstallationPrefix) 
-* [PlatformIndependedInstallationTool](PlatformIndependedInstallationTool) 
+* [install targets](InstallTargets) - adding 'install' and 'uninstall' targets
+* [installation prefix](InstallationPrefix) - adding a prefix path for install
+* [platform independent installation tool](PlatformIndependedInstallationTool) - a tool to ease multiplatform installation
 
 ### Clean Targets
 
-* [CustomCleanActions](CustomCleanActions): Having an Action run when scons is in clean mode 
-
-## Tree Problems
-
-* [NonDeterministicDependencies](NonDeterministicDependencies) How to incorperate builders which can produce an unknown number of results 
-
-## Source Files
-
-* [BuildDirGlob](BuildDirGlob) lets you glob for source files from a build directory. 
-* [ExternalFiles](ExternalFiles): how to use other source files not recognized by scons (e.g. linker scripts) 
-* [UsingCvs](UsingCvs): how to download source files from a CVS server 
-* [WgetSourceCode](WgetSourceCode): How to use sourcecode() methods to 'wget' files 
-* [DynamicSourceGenerator](DynamicSourceGenerator): how to use a source generator that puts out many source files, by having scons add targets dynamically. 
-* [FindTargetSources](FindTargetSources): Find sources and headers for a target when generating MSVSProject. 
-* [AddFilesDynamically](AddFilesDynamically) to every build per-environment 
-* [MFObject](MFObject): Compile multiple source files with a single invocation of the compiler 
-* [ExplicitlyCallCppScanner](ExplicitlyCallCppScanner): How to explicitly call the C/CPP scanner on a source file in your SConstruct/SConscript. 
-
-## Building and Linking
-
-* [UsingOrigin](UsingOrigin): using $ORIGIN to specify runtime search path for libraries 
-* [UsingPkgConfig](UsingPkgConfig): many libraries these days come with .pc files, such as GTK+, but how do you use them? 
-* [SharedLibrarySignatureOverride](SharedLibrarySignatureOverride): avoid relinking every program when a shared library is rebuilt. 
-* [BuildTimeCallback](BuildTimeCallback): How to have a function called at build time 
-* [RightNow](RightNow): Build one or more targets during the SConscript reading phase, then continue reading SConscripts 
-
-### Build Dirs
-
-* [UsingBuildDir](UsingBuildDir) 
-* [UnderstandingBuildDir](UnderstandingBuildDir) 
-
-### Build logs
-
-* [BuildLog](BuildLog): How to write SCons output to a file as well as the screen. 
-* [ColorBuildMessages](ColorBuildMessages): Replace the raw build commands printed to the screen with colored messages 
-* [ColorGcc](ColorGcc): using the [colorgcc](http://www.mindspring.com/~jamoyers/software/) wrapper to colorize the output of compilers with warning / error messages matching the gcc output format. 
-* [HidingCommandLinesInOutput](HidingCommandLinesInOutput): how to hide all or part of the printed command lines for prettier build logs. 
-
-## Environment
-
-* [ImportingEnvironmentSettings](ImportingEnvironmentSettings) from your process environment. 
-* [EnvValue](EnvValue): A value node which substitutes variables from the environment 
-* Using [ExternalTools](ExternalTools) from within SCons frequently requires certain types of environment variable inheritance. 
-
-## Testing
-
-* [ValgrindMemChecker](ValgrindMemChecker): Automatic running of valgrind on executables 
-* [UnitTests](UnitTests): Running unit tests with an Alias or Command 
-
-## Multiple Projects
-
-* [SconstructMultiple](SconstructMultiple): multiple projects, build dir, debug/release 
-* [SconstructMultipleAll](SconstructMultipleAll): build all, multiple projects, build dir, debug/release 
-* [SconstructMultipleRefactored](SconstructMultipleRefactored): clean up redundancy in [SconstructMultiple](SconstructMultiple) 
+* [custom clean actions](CustomCleanActions) - add additional actions for when scons is in clean mode
 
 
 ---
 
- 
 
+# Tree Problems
 
-## Increasing performance and large builds
-
-* The [GoFastButton](GoFastButton): options you can use to make SCons faster by sacrificing build accuracy 
-* [ModularExample](ModularExample): A modular way to support multiple systems and build multiple setups at a time. 
-* [SimultaneousVariantBuilds](SimultaneousVariantBuilds): How to make build different variants (e.g. debug/release, target/host) at the same time. 
-* [PreventBuildingOfEverything](PreventBuildingOfEverything): you have a big hierarchical tree of projects... 
-* [ProxyDependencies](ProxyDependencies): A simple way to avoid inefficiencies when you have commands that consume lots of input files and produce lots of output files. 
-* [TargetDrivenBuilderCreation](TargetDrivenBuilderCreation): Avoid scanning large source trees on startup by only queuing up dependencies on demand for things scons actually needs to build. 
-* [LimitCacheSizeWithProgress](LimitCacheSizeWithProgress): Prevent the cache directory to grow indefinitely. 
-* [SerialiseForSharedResources](SerialiseForSharedResources) : Tell scons to run particular tasks in series, while letting others run in parallel. 
+* [non deterministic dependencies](NonDeterministicDependencies) - incorporate builders producing an unknown number of results
+* [dynamic source generator](DynamicSourceGenerator) - dynamically add sources generated by a source generator that puts out many files
 
 
 ---
 
- 
+
+# Source Files
+
+* [dir glob](BuildDirGlob) - glob for source files from a build directory
+* [external files](ExternalFiles) - use other source files not recognized by scons (e.g. linker scripts)
+* [find target sources](FindTargetSources) - find sources and headers for a target (e.g. when generating MSVSProject)
+* [add files dynamically](AddFilesDynamically) - add files to every build per-environment
+* [MFObject](MFObject) - compile multiple source files with a single invocation of the compiler
+* [explicitly call CppScanner](ExplicitlyCallCppScanner) - explicitly call the C/CPP scanner on a source file in your SConstruct/SConscript
 
 
-## Misc
+---
 
-* [DumpEnv](DumpEnv): Dump the contents of the construction environment 
-* [JavaNativeInterface](JavaNativeInterface): how to build java native interface (JNI) libraries 
-* [MultipleDirectoryFortranBuild](MultipleDirectoryFortranBuild): how to setup a multiple-directory Fortran 90 project 
-* [SconsLatexThesisSkeleton](SconsLatexThesisSkeleton): A more elaborate way to build LaTeX documents with SCons, including automatic file format conversion 
-* [StaticallyLink](StaticallyLink): Statically link g++ libraries 
-* [CudaTool](CudaTool) - tool for NVidia's CUDA 
-* [Building Debian packages](http://quentinsf.com/writings/debscons/) 
-* Quite a bunch of SCons techniques, including the use of SConf, can be seen in the [http://madman.sf.net](http://madman.sf.net) madman build scripts. 
 
-## Full-blown Examples
+# Building and Linking
 
-* [AdvancedBuildExample](AdvancedBuildExample): This document describes how the [Bombyx](http://bombyx.sourceforge.net/) project is doing its builds. This configuration is interesting in that it builds for each target platform in a different directory, and has a very structured build. 
-* [ExtendedExample](ExtendedExample) A log of John Arrizza's quest to convert an Ant-based build system to SCons. 
-* [AllInSConstruct](AllInSConstruct) Bill Baxter's attempt at a SCons-based build system. 
-* [RpmHonchoTemp](RpmHonchoTemp): [JeffPitman](JeffPitman)'s adventure in coercing SCons to manage an RPM repository. 
-* [BasicSimpleProject](BasicSimpleProject): Andrew Lentvorski's venture to build Gambit with SCons on his way to cross-compiling 
-* [SimpleProject_1](SimpleProject_1): A simple project with libraries and profile information 
-* [MavenIdeasWithSCons](MavenIdeasWithSCons): An approach of using some maven ideas and best practices with SCons. 
-* [SDLWindowsApp](SDLWindowsApp): A typical SDL application on Windows (including icon and no annoying dialog pop-up) 
+* [using Origin](UsingOrigin) - using $ORIGIN to specify runtime search path for libraries
+* [using pkg-config](UsingPkgConfig) - many libraries these days come with .pc files, such as GTK+, but how do you use them?
+* [override shared library signature](SharedLibrarySignatureOverride) - avoid relinking every program when a shared library is rebuilt
+* [build-time callback](BuildTimeCallback) - add a function called at build time
+* [RightNow](RightNow) - build one or more targets during the SConscript reading phase, then continue reading SConscripts
+
+
+---
+
+
+# Build Dirs
+
+* [using BuildDir](UsingBuildDir)
+* [understanding BuildDir](UnderstandingBuildDir)
+
+
+---
+
+
+# Environment
+
+* [importing system environment settings](ImportingEnvironmentSettings) - importing settings from your process environment
+* [EnvValue](EnvValue) - a value node which substitutes variables from the environment
+* [using external tools](ExternalTools) - using external tools from within SCons frequently requires certain types of environment variable inheritance
+
+
+---
+
+
+# Testing
+
+* [unit tests](UnitTests) - running unit tests with an Alias or Command
+
+
+---
+
+
+# Multiple Projects
+
+* [SconstructMultipleRefactored](SconstructMultipleRefactored) - clean up redundancy in [SconstructMultiple](SconstructMultiple)
+* [SconstructMultipleAll](SconstructMultipleAll) - build all, multiple projects, build dir, debug/release
+* [SconstructMultiple](SconstructMultiple) - multiple projects, build dir, debug/release
+
+
+---
+
+
+# Misc
+
+* [java native interface](JavaNativeInterface) - build java native interface (JNI) libraries
+* [SconsLatexThesisSkeleton](SconsLatexThesisSkeleton): A more elaborate way to build LaTeX documents with SCons, including automatic file format conversion
+* [StaticallyLink](StaticallyLink): Statically link g++ libraries
+* [CudaTool](CudaTool) - tool for NVidia's CUDA
+* [Building Debian packages](http://quentinsf.com/writings/debscons/)
+* Quite a bunch of SCons techniques, including the use of SConf, can be seen in the [http://madman.sf.net](http://madman.sf.net) madman build scripts
+
+
+---
+
+
+# Full-blown Examples
+
+* [advanced build example](AdvancedBuildExample) - describes how the [Bombyx](http://bombyx.sourceforge.net/) project is doing its builds. This configuration is interesting in that it builds for each target platform in a different directory, and has a very structured build
+* [extended example](ExtendedExample) - alog of John Arrizza's quest to convert an Ant-based build system to SCons
+* [all in SConstruct](AllInSConstruct) - Bill Baxter's attempt at a SCons-based build system
+* [RpmHonchoTemp](RpmHonchoTemp) - [JeffPitman](JeffPitman)'s adventure in coercing SCons to manage an RPM repository
+* [basic simple project](BasicSimpleProject) - Andrew Lentvorski's venture to build Gambit with SCons on his way to cross-compiling
+* [SimpleProject_1](SimpleProject_1) - a simple project with libraries and profile information
+* [Maven ideas with SCons](MavenIdeasWithSCons) - an approach of using some maven ideas and best practices with SCons
+* [SDLWindowsApp](SDLWindowsApp) - a typical SDL application on Windows (including icon and no annoying dialog pop-up)
+
