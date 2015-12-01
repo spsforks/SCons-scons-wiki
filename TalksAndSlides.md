@@ -9,6 +9,7 @@ This page contains links to some talks about SCons that have been given in the p
 
 [http://pyvideo.org/video/2409/scons-software-bauen-in-python](http://pyvideo.org/video/2409/scons-software-bauen-in-python) - "SCons - Software bauen in Python", Dirk Baechle, PyCon.DE 2013 (German), the [slides are available too](https://bitbucket.org/dirkbaechle/scons_talks)
 
+[http://dl.afpy.org/pycon-fr-14/videos/25-10-2014-112947_bd16.mp4](http://dl.afpy.org/pycon-fr-14/videos/25-10-2014-112947_bd16.mp4) - ["Why SCons is not slow"](http://www.pycon.fr/2014/schedule/presentation/25/), Dirk Baechle, PyCon.Fr 2014 (English), the [slides are available too](https://bitbucket.org/dirkbaechle/scons_talks)
 
 # Presentations
 
