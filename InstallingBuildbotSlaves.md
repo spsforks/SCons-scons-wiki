@@ -84,7 +84,7 @@ Get the ZIP archive of the latest version (`buildbot-slave*.zip`), unzip it, and
 
 
 ```txt
-> c:\Python26\python.exe setup.py install
+> c:\Python27\python.exe setup.py install
 ```
 (Please, replace the path to Python with the version that you have installed.) 
 
@@ -112,19 +112,19 @@ c:\buildbot\buildslave
 
 
 ```txt
-> c:\Python26\Scripts\buildslave.bat --version
+> c:\Python27\Scripts\buildslave.bat --version
 ```
 should give you the version numbers of Twisted and buildbot. Now create your buildslave account and local info files with: 
 
 
 ```txt
-> c:\python26\Scripts\buildslave.bat create-slave -r . buildbot.scons.org:9989 your_builder_name your_password
+> c:\python27\Scripts\buildslave.bat create-slave -r . buildbot.scons.org:9989 your_builder_name your_password
 ```
 Then edit the files `info/admin` and `info/host` accordingly and finally start the slave with: 
 
 
 ```txt
-> c:\Python26\Scripts\buildslave.bat start c:\buildbot\buildslave
+> c:\Python27\Scripts\buildslave.bat start c:\buildbot\buildslave
 ```
 For setting the buildslave up as service, find more infos at: 
 
@@ -143,7 +143,7 @@ Okay, so assuming we have a command prompt with full admin access rights, first 
 
 
 ```txt
-> sc create BuildBot DisplayName= "Buildbot client" binPath= "c:\Python26\python.exe c:\Python26\Scripts\buildbot_service.py start c:\buildbot\buildslave " start= auto obj= LocalSystem
+> sc create BuildBot DisplayName= "Buildbot client" binPath= "c:\Python27\python.exe c:\Python27\Scripts\buildbot_service.py start c:\buildbot\buildslave " start= auto obj= LocalSystem
 ```
 Note, how there is always a separating blank between each "command=" and the actual value, and also at the end of the binPath value! 
 
