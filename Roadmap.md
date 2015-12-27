@@ -11,7 +11,6 @@ Additional tasks can be found on our [issue tracker](http://scons.tigris.org/pro
 ## SCons itself
 Task | Status | Assigned to |  Target version
 :----|:-------|------------:|:---------------
-Switch Node class to using slots  |  done  |  dirk  |  2.4 
 Integrating stubprocess.py wrapper for speedup  |  wip  |  gary, dirk  |  2.4 
 [Revamp of Tools subsystem](RevampToolsSubsystem)  |  wip  |  gary  |  
 GSoC 2013, collecting ideas/mentors and apply  |  open  |   |  
@@ -36,6 +35,7 @@ Rewrite/restructure "About SCons"/"Getting started" sections  |  open
 ## Done
 Switch trunk development to Mercurial ([DVCSMigration](DVCSMigration))  |  done (2011-11-21) | member
 :-----------------------------------------------------------------------|-------------------:|:------
+Switch Node class to using slots  |  done  |  dirk  |  2.4 
 Rewrite of [doc toolchain](DeveloperGuide/Documentation/Discussion)  |  done (2013-05-04, rev 0c9c8aff8f46)  |  dirk 
 New design for SCons docs (book/article)  |  done (2013-05-04, rev 0c9c8aff8f46)  |  dirk 
 [MoinMoin upgrade](WikiUpgrade) for further tweaking  |  done  |  techtonik 
