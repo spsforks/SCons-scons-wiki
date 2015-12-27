@@ -13,7 +13,7 @@ Task | Status | Assigned to |  Target version
 :----|:-------|------------:|:---------------
 Integrating stubprocess.py wrapper for speedup  |  wip  |  gary, dirk  |  2.5 
 [Revamp of Tools subsystem](RevampToolsSubsystem)  |  wip  |  gary  |  
-[Python 3 compatibility](Python3Compatibility) (including full Unicode support)  |  wip  |  gary  |  3.0
+[Python 3 compatibility](Python3Compatibility) (including full Unicode support)  |  wip  |  gary,russel  |  3.0
 [GitHub](GitHub) clone to get additional buildbot at [https://travis-ci.org/](https://travis-ci.org/)  |  open  |   |  
 [SConsInstaller](SConsInstaller), wrapup of GSoC 2009 by Lukas Erlinghagen |  open  |   |  
 Recursive Glob (ant-like)  |  wip  |  dirk  |  
