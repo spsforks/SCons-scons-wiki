@@ -13,11 +13,10 @@ Task | Status | Assigned to |  Target version
 :----|:-------|------------:|:---------------
 Integrating stubprocess.py wrapper for speedup  |  wip  |  gary, dirk  |  2.4 
 [Revamp of Tools subsystem](RevampToolsSubsystem)  |  wip  |  gary  |  
-GSoC 2013, collecting ideas/mentors and apply  |  open  |   |  
 Wrapup of all other old GSoC projects, including new structure for Wiki pages  |  open  |   |  
 [Python 3 compatibility](Python3Compatibility) (including full Unicode support)  |  wip  |  gary  |  
 [GitHub](GitHub) clone to get additional buildbot at [https://travis-ci.org/](https://travis-ci.org/)  |  open  |   |  
-Migrate current issues database from Tigris to [GoogleCode](GoogleCode) ([HostingSites](DVCSMigration/HostingSites))  |  [open](https://bitbucket.org/techtonik/dataliberation/src/default/issues/tigris/)  |  techtonik  |  
+Migrate current issues database from Tigris to Other ([HostingSites](DVCSMigration/HostingSites))  |  [open](https://bitbucket.org/techtonik/dataliberation/src/default/issues/tigris/)  |  techtonik  |  
 [SConsInstaller](SConsInstaller), wrapup of GSoC 2009 by Lukas Erlinghagen |  open  |   |  
 Recursive Glob (ant-like)  |  wip  |  dirk  |  
 Java support, partial redesign and adding functionality, e.g. for inner classes ([JavaStrategy](JavaStrategy) and [JavaSupport](JavaSupport))  |  open  |  jannijtmans,russel?  |  
@@ -27,13 +26,13 @@ TNG, refactor task scheduling  |  open  |    |
 
 
 ## Web stuff
-Rewrite/restructure "About SCons"/"Getting started" sections  |  open  
-:-------------------------------------------------------------|:-----
-[MoinMoin](MoinMoin) Roadmap plugin for this page  |  open
+Rewrite/restructure "About SCons"/"Getting started" sections  |  open   | member
+:-------------------------------------------------------------|:-----:|:-----
+Redesign website | wip | Bill
 
 
 ## Done
-Switch trunk development to Mercurial ([DVCSMigration](DVCSMigration))  |  done (2011-11-21) | member
+Switch trunk development to Mercurial ([DVCSMigration](DVCSMigration))  |  done (2015-12-27) | member
 :-----------------------------------------------------------------------|-------------------:|:------
 Switch Node class to using slots  |  done  |  dirk  |  2.4 
 Rewrite of [doc toolchain](DeveloperGuide/Documentation/Discussion)  |  done (2013-05-04, rev 0c9c8aff8f46)  |  dirk 
