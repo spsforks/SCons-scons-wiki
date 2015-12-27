@@ -11,7 +11,8 @@ Additional tasks can be found on our [issue tracker](http://scons.tigris.org/pro
 ## SCons itself
 Task | Status | Assigned to |  Target version
 :----|:-------|------------:|:---------------
-Integrating stubprocess.py wrapper for speedup  |  wip  |  gary, dirk  |  2.5 
+Integrating stubprocess.py wrapper for speedup  |  wip  |  gary, dirk  |  2.5
+[Issue 2264: cross-language scanner support](https://bitbucket.org/scons/scons/pull-requests/244/issue-2264-cross-language-scanner-support/diff)  | done/not released | William Blevins | 2.5
 [Revamp of Tools subsystem](RevampToolsSubsystem)  |  wip  |  gary  |  
 [Python 3 compatibility](Python3Compatibility) (including full Unicode support)  |  wip  |  gary,russel  |  3.0
 [GitHub](GitHub) clone to get additional buildbot at [https://travis-ci.org/](https://travis-ci.org/)  |  open  |   |  
