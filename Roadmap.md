@@ -11,7 +11,7 @@ Additional tasks can be found on our [issue tracker](http://scons.tigris.org/pro
 ## SCons itself
 Task | Status | Assigned to |  Target version
 :----|:-------|------------:|:---------------
-Switch Node class to using slots  |  wip  |  dirk  |  2.4 
+Switch Node class to using slots  |  done  |  dirk  |  2.4 
 Integrating stubprocess.py wrapper for speedup  |  wip  |  gary, dirk  |  2.4 
 [Revamp of Tools subsystem](RevampToolsSubsystem)  |  wip  |  gary  |  
 GSoC 2013, collecting ideas/mentors and apply  |  open  |   |  
