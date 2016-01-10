@@ -181,15 +181,6 @@ Cons:
    * gcc/icc/VS.NET/... 
    * and more 
 
-# Rant
-
-[Rant](http://make.rubyforge.org) is a build tool written in Ruby. 
-
-From a quick skim of the docs, it has a basic feature set compared with SCons. 
-
-A cool feature is creating a standalone Ruby script for distributions, so the build can be made without Rant installed. 
-
-
 # Makepp
 
 [Makepp](http://makepp.sourceforge.net) is a build system implemented entirely in Perl. Although it is 'backward compatible' with make it allows you to have Perl code and functions in your makefile. As the [Makepp](http://makepp.sourceforge.net) website states: 
