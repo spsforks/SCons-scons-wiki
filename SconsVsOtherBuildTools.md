@@ -135,6 +135,9 @@ Like any build environment with highly granular dependencies, Maven benefits fro
 
 Some argue that Maven is too heavyweight and complex for small projects, but outside the paradigm shift from a procedural to a declarative build description, it is really just the same question of whether to have a build system at all. Many people find that they are more comfortable without Makefiles, and for those folks, Maven will be similarly harmful for their needs. On the other hand, Maven has been extensively emulated in one degree or another by projects such as [Buildr](http://buildr.apache.org/), [Gradle](http://gradle.org) and [Ant+Ivy](http://ant.apache.org/ivy/) through their use of the Maven central repository. 
 
+# Gradle
+
+[Gradle](http://www.gradle.org) was originally a [Groovy](http://www.groovy-lang.org) implemented system for building Java and Groovy codes. Crucial buts have been reimplemented in Java, and a build server architecture created for speed of builds. Builds are specified in a Groovy-based build specification language, in this is it analogous to SCons and Python. Gradle is now the default build system for Android projects. Gradle has been extended to create native code builds. Initially this only covers C and C++.
 
 # TWW tools from TWW Inc.
 
