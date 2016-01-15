@@ -1,8 +1,7 @@
 
-
 # SCons and Eiffel
 
-This is a SCons tool for building [EiffelStudio](http://dev.eiffel.com) projects. It works with [EiffelStudio](http://dev.eiffel.com) 5.7 and above (although the latest [EiffelStudio](http://dev.eiffel.com) is recommended, currently 7.1). It has been tested on Windows (XP, 2003 and 7), Mac OS X (10.4, 10.5, 10.6 and 10.7) and Linux (Ubuntu 7.10 and 10.04). 
+This is a SCons tool for building [EiffelStudio](http://dev.eiffel.com) projects. It works with [EiffelStudio](http://dev.eiffel.com) 5.7 and above (although the latest [EiffelStudio](http://dev.eiffel.com) is recommended, currently 15.12). It has been tested on Windows (XP, 2003, 7, 2008 and 10), Mac OS X (everything from 10.4 to 10.11) and Linux (Ubuntu 7.10 and 10.04). 
 
 Put the builder in a script called _Eiffel.py_, in a directory that you reference with _toolpath_, as shown in the example below; or put it in a directory called _site_scons/site_tools_ as mentioned in the SCons man page. 
 
