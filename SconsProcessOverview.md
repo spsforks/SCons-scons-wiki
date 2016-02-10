@@ -77,7 +77,6 @@ These commands actually build stuff. They can affect files and directories on th
 **File system** | **Description**
 ---------------:|:---------------
 [Dir()](Dir()) |  a node representing a directory
-[Dir()](Dir()) |  a node representing a directory
 [File()](File()) | a node representing a file
 **Pseudo targets** | **Description**
 [Alias()](Alias()) | creates one or more phony targets that expand to one or more other targets
