@@ -11,7 +11,6 @@ SCons Wiki users / contributors
 * [JohnArrizza](JohnArrizza) 
 * [LeanidNazdrynau](LeanidNazdrynau) 
 * [LionelThiry](LionelThiry) 
-* [LokiEn](LokiEn) 
 * [MatthewNicholson](MatthewNicholson) 
 * [MichaelKoehmstedt](MichaelKoehmstedt) 
 * [MikiTebeka](MikiTebeka) 
