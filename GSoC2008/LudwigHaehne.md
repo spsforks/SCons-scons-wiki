@@ -118,10 +118,10 @@ An idea which could also help to improve runtime performance is to save the DAG 
 * [17] (./) Passes all tests (#10) 
 * [20] (./) Demo application ready to illustrate log analyzer (outputs statistics as HTML, delivered as an external module) 
 * [30] (./) Wiki page(s) describing test scenarios and the results of different memory reduction strategies 
-         * [Lazy initialization](LudwigHaehne/LazyInitialization) 
-         * [Breaking Reference Cycles](LudwigHaehne/ReferenceCycles) 
-         * [Block-wise MD5 hashing](LudwigHaehne/ChunkHashing) 
-         * [Classes with __slots__](LudwigHaehne/SlotClasses) 
+         * [Lazy initialization](WikiUsers/LudwigHaehne/LazyInitialization) 
+         * [Breaking Reference Cycles](WikiUsers/LudwigHaehne/ReferenceCycles) 
+         * [Block-wise MD5 hashing](WikiUsers/LudwigHaehne/ChunkHashing) 
+         * [Classes with __slots__](WikiUsers/LudwigHaehne/SlotClasses) 
 * [31] (./) Check-In successful memory reduction tweaks (passing all tests) 
          * [[!bug 2179]], [[!bug 2180]], [[!bug 2181]], [[!bug 2178]], [[!bug 2149]], [[!bug 2177]] 
 * [40] (./) Wiki page with [low memory footprint SCons usage recommendations](ReduceMemory) 

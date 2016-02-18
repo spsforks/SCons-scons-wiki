@@ -316,6 +316,6 @@ if 'SCONS_LIB_DIR' in os.environ:
 
 # Tutorials
 
-* [Lazy initialization](LudwigHaehne/LazyInitialization) introduces the basic features of the Heapmonitor 
-* [Breaking Reference Cycles](LudwigHaehne/ReferenceCycles) demonstrates how to use the Garbage tracking facility 
-* [Block-wise MD5 hashing](LudwigHaehne/ChunkHashing) shows how background monitoring can help detecting transient memory usage 
+* [Lazy initialization](WikiUsers/LudwigHaehne/LazyInitialization) introduces the basic features of the Heapmonitor 
+* [Breaking Reference Cycles](WikiUsers/LudwigHaehne/ReferenceCycles) demonstrates how to use the Garbage tracking facility 
+* [Block-wise MD5 hashing](WikiUsers/LudwigHaehne/ChunkHashing) shows how background monitoring can help detecting transient memory usage 

@@ -2,8 +2,8 @@
 
 ### Google Summer of Code Mentors
 
-* [StevenKnight](StevenKnight) 
-* [GaryOberbrunner](GaryOberbrunner) 
-* [GregNoel](GregNoel) 
-* [MarkFlacy](MarkFlacy) 
-* [LudwigHaehne](LudwigHaehne) 
+* [StevenKnight](WikiUsers/StevenKnight) 
+* [GaryOberbrunner](WikiUsers/GaryOberbrunner) 
+* [GregNoel](WikiUsers/GregNoel) 
+* [MarkFlacy](WikiUsers/MarkFlacy) 
+* [LudwigHaehne](WikiUsers/LudwigHaehne) 

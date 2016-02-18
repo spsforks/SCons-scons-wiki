@@ -73,4 +73,4 @@ static_obj, shared_obj = createObjBuilders(env)
 # Now SCons can find .cpp files in different locations
 static_obj.add_emitter('.cpp', my_emitter)
 ```
-* -- [MattDoar](MattDoar) 
+* -- [MattDoar](WikiUsers/MattDoar) 

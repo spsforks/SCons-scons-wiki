@@ -6,7 +6,7 @@ This page describes techniques for reducing the memory footprint of a SCons buil
 
 ## User Guide
 
-SCons implements some debugging facilities that can help to track down memory problems. If those are not sufficient, check out the [SCons Heapmonitor branch](LudwigHaehne/HeapMonitor). 
+SCons implements some debugging facilities that can help to track down memory problems. If those are not sufficient, check out the [SCons Heapmonitor branch](WikiUsers/LudwigHaehne/HeapMonitor). 
 
 
 ```txt
