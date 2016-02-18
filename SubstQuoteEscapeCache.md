@@ -238,103 +238,115 @@ xxx API backward compatibility `subst_once(xxx)` maybe just run `crack()` in env
 
 # Doodling
 
-A class that expands a token list.  Not terribly efficient.   
-`    class Interp:`   
-`        def __init__(self, env, special):`   
-`            self.env = env`   
-`            self.special = special`   
-`        def calc(self, l):`   
-`            self.buf = []`   
-`            self.interp(l)`   
-`            return ''.join(self.buf)`   
-`        def interp(self, l):`   
-`            for token in l:`   
-`                self.do_[token[0]](self, token)`   
-`        def do_whitespace(self, t):`   
-`            buf = self.buf`   
-`            if len(buf) and buf[-1][-1] != ' ':`   
-`                buf.append(' ')`   
-`        def do_word(self, t):`   
-`            self.buf.append(t[1])`   
-`        def do_nosig(self, t):`   
-`            self.interp(t[1])`   
-`        def do_sig(self, t):`   
-`            pass`   
-`        def do_indir(self, t):`   
-`            self.interp(self.env[t[1]])`   
-`        def do_special(self, t):`   
-`            self.buf.append(self.special[t[1]])`   
-`        def do_concat(self, t):`   
-`            pre = self.env[t[1]]`   
-`            post = self.env[t[3]]`   
-`            first = True`   
-`            for mid in self.env[t[2]]:`   
-`                if first: first = False`   
-`                else:     self.do_whitespace(())`   
-`                self.interp(pre)`   
-`                self.buf.append(mid)`   
-`                self.interp(post)`   
-`    # set up transfer table`   
-`    Interp.do_ = {}`   
-`    for f in dir(Interp):`   
-`        if f.startswith('do_') and f != 'do_':`   
-`            Interp.do_[f[3:]] = getattr(Interp, f)` 
+A class that expands a token list.  Not terribly efficient.
 
-Some tests:   
-`    env = {}`   
-`    special = {}`   
-`    interp = Interp(env, special)`   
-`    print 'null', interp.calc([`   
-`        ])`   
-`    print 'simple', interp.calc([`   
-`            ('word', 'token'),`   
-`        ])`   
-`    print 'adj', interp.calc([`   
-`            ('word', 'adjacent'),`   
-`            ('word', 'tokens'),`   
-`        ])`   
-`    print 'sep', interp.calc([`   
-`            ('word', 'whitespace-separated'),`   
-`            ('whitespace',),`   
-`            ('word', 'tokens'),`   
-`        ])`   
-`    for tt in ['nosig', 'sig']:`   
-`        # identical except for sig/nosig token`   
-`        print tt, interp.calc([`   
-`                ('word', 'a'),`   
-`                ('whitespace',),`   
-`                ('word', 'line'),`   
-`                ('whitespace',),`   
-`                (tt, [`   
-`                    ('word', 'not'),`   
-`                ]),`   
-`                ('whitespace',),`   
-`                ('word', 'for'),`   
-`                ('whitespace',),`   
-`                ('word', 'sig'),`   
-`            ])`   
-`    #`   
-`    env['CC'] = [('word', 'gcc')]`   
-`    env['SHCC'] = [('indir', 'CC')]`   
-`    env['PREFIX'] = [('word', '-l')]`   
-`    env['LIST'] = ['m', 'c']`   
-`    env['SUFFIX'] = []`   
-`    special['TARGET'] = 'prog'`   
-`    special['SOURCE'] = 'prog.c'`   
-`    print 'compile', interp.calc([`   
-`            ('indir', "SHCC"),`   
-`            ('whitespace',),`   
-`            ('word', '-o'),`   
-`            ('whitespace',),`   
-`            ('special', "TARGET"),`   
-`            ('whitespace',),`   
-`            ('word', '-O'),`   
-`            ('whitespace',),`   
-`            ('special', "SOURCE"),`   
-`            ('whitespace',),`   
-`            ('concat', "PREFIX", "LIST", "SUFFIX"),`   
-`        ])` 
+```
+#!python
 
+    class Interp:   
+        def __init__(self, env, special):   
+            self.env = env   
+            self.special = special   
+        def calc(self, l):   
+            self.buf = []   
+            self.interp(l)   
+            return ''.join(self.buf)   
+        def interp(self, l):   
+            for token in l:   
+                self.do_[token[0]](self, token)   
+        def do_whitespace(self, t):   
+            buf = self.buf   
+            if len(buf) and buf[-1][-1] != ' ':   
+                buf.append(' ')   
+        def do_word(self, t):   
+            self.buf.append(t[1])   
+        def do_nosig(self, t):   
+            self.interp(t[1])   
+        def do_sig(self, t):   
+            pass   
+        def do_indir(self, t):   
+            self.interp(self.env[t[1]])   
+        def do_special(self, t):   
+            self.buf.append(self.special[t[1]])   
+        def do_concat(self, t):   
+            pre = self.env[t[1]]   
+            post = self.env[t[3]]   
+            first = True   
+            for mid in self.env[t[2]]:   
+                if first: first = False   
+                else:     self.do_whitespace(())   
+                self.interp(pre)   
+                self.buf.append(mid)   
+                self.interp(post)   
+    # set up transfer table   
+    Interp.do_ = {}   
+    for f in dir(Interp):   
+        if f.startswith('do_') and f != 'do_':   
+            Interp.do_[f[3:]] = getattr(Interp, f) 
+
+```
+
+
+Some tests: 
+
+```
+#!python
+ 
+    env = {}   
+    special = {}   
+    interp = Interp(env, special)   
+    print 'null', interp.calc([   
+        ])   
+    print 'simple', interp.calc([   
+            ('word', 'token'),   
+        ])   
+    print 'adj', interp.calc([   
+            ('word', 'adjacent'),   
+            ('word', 'tokens'),   
+        ])   
+    print 'sep', interp.calc([   
+            ('word', 'whitespace-separated'),   
+            ('whitespace',),   
+            ('word', 'tokens'),   
+        ])   
+    for tt in ['nosig', 'sig']:   
+        # identical except for sig/nosig token   
+        print tt, interp.calc([   
+                ('word', 'a'),   
+                ('whitespace',),   
+                ('word', 'line'),   
+                ('whitespace',),   
+                (tt, [   
+                    ('word', 'not'),   
+                ]),   
+                ('whitespace',),   
+                ('word', 'for'),   
+                ('whitespace',),   
+                ('word', 'sig'),   
+            ])   
+    #   
+    env['CC'] = [('word', 'gcc')]   
+    env['SHCC'] = [('indir', 'CC')]   
+    env['PREFIX'] = [('word', '-l')]   
+    env['LIST'] = ['m', 'c']   
+    env['SUFFIX'] = []   
+    special['TARGET'] = 'prog'   
+    special['SOURCE'] = 'prog.c'   
+    print 'compile', interp.calc([   
+            ('indir', "SHCC"),   
+            ('whitespace',),   
+            ('word', '-o'),   
+            ('whitespace',),   
+            ('special', "TARGET"),   
+            ('whitespace',),   
+            ('word', '-O'),   
+            ('whitespace',),   
+            ('special', "SOURCE"),   
+            ('whitespace',),   
+            ('concat', "PREFIX", "LIST", "SUFFIX"),   
+        ]) 
+
+```
 
 # Incorporate later
 
