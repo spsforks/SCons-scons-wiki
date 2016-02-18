@@ -1,10 +1,8 @@
-
 SCons Wiki users / contributors 
 
 * [AdrianNeagu](AdrianNeagu) 
 * [AmirSzekely](AmirSzekely) 
 * [AnthonyRoach](AnthonyRoach) 
-* [ChrisSincock](ChrisSincock) 
 * [DanCrosta](DanCrosta) 
 * [DavidMasterson](DavidMasterson) 
 * [DrewMcCormack](DrewMcCormack) 
