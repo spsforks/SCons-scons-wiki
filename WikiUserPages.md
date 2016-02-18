@@ -22,7 +22,6 @@ SCons Wiki users / contributors
 * [SteveLeblanc](SteveLeblanc) 
 * [StevenKnight](StevenKnight) 
 * [TerrelShumway](TerrelShumway) 
-* [ThomasBruyelle](ThomasBruyelle) 
 * [TimotheeBesset](TimotheeBesset) 
 * [TobiasRundström](TobiasRundström) 
 * [WilliamDeegan](WilliamDeegan) 
