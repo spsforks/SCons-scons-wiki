@@ -192,4 +192,4 @@ hg update default
 ```
 , to ensure that your new changes and commits will be as close as possible to the mainline development. Thank you.
 
-For SCons maintainers' side of the mercurial workflow, see [DeveloperGuide/AcceptingPullRequests](DeveloperGuide/AcceptingPullRequests).
+For SCons maintainers' side of the mercurial workflow, see [AcceptingPullRequests](AcceptingPullRequests).
