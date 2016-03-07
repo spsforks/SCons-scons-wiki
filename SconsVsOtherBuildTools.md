@@ -234,6 +234,6 @@ There's some rough and incomplete documentation in the [WAF wiki](http://code.go
 
 [dmoz.org](http://dmoz.org/Computers/Software/Build_Management/) also has a short list of build tools. In particular there is a list of [Make tools](http://dmoz.org/Computers/Software/Build_Management/Make_Tools/). 
 
-[Make alternatives](http://freshmeat.net/articles/view/1715/) A few suggestions of alternatives to make.  ( Link is 404 - Mar 5, 2016)
+[Make alternatives](http://freecode.com/articles/make-alternatives) A few suggestions of alternatives to make.
 
 [Benchmarks of various C++ build tools](http://psycle.svn.sourceforge.net/viewvc/psycle/branches/bohan/wonderbuild/benchmarks/time.xml) Compares the speed of SCons, Waf, Wonderbuild, Jam, Make, the Autotools, CMake, VCBuild ... 
