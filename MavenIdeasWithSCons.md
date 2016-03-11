@@ -1,4 +1,3 @@
-
 **Using Some Maven Ideas And Best Practices With SCons**
 
 **Table of Contents**
@@ -268,7 +267,7 @@ Clean up. This deletes all created `target` directories. To remove artifacts, cr
 
 ## Sources
 
-The [sources](sources.zip) used in this Wiki: 
+The [sources](https://bitbucket.org/scons/scons/wiki/MavenIdeasWithSCons/sources.zip) used in this Wiki: 
 sconswrapper
 : 
 This is the shell wrapper script calling scons with `SConstruct`. 
