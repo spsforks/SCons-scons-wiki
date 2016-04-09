@@ -57,8 +57,6 @@ You should now have the following in build/dist:
 
 The .linux-x86_64 ones are not needed and may be deleted; the others all get uploaded to SF. 
 
-* You have to rename the scons-$VERSION.win32.exe to scons-$VERSION-setup.exe; the build SConstruct should be fixed to do this.  (Note that the upload script requires this.) 
-
 
 ## Upload Software and Doc
 
