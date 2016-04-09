@@ -61,19 +61,20 @@ The .linux-x86_64 ones are not needed and may be deleted; the others all get upl
 ## Upload Software and Doc
 
 * There is now a shell script to do this: `bin/upload-release-files.sh X.Y.Z mysfusername` as long as [SourceForge](SourceForge) and scons.org have your ssh pub key and you're using SSH Agent Forwarding. 
-* It uploads all the packages to SF, uploads the doc to scons.org, unpacks it, and updates the doc symlinks. 
+* It uploads all the packages to SF, uploads the doc to scons.org, unpacks it, and updates the doc symlinks.
+** You will be prompted for your password numerous times. 
 * You may still have to tell SF that the new release dirs exist in its File Manager (it's a bit buggy). 
 
 ## Prepare Announcement and announce to all
 
 * Use Announce.txt and/or Release.txt as blurb 
-* Update scons.org.  Much of the hard work is already done by the script.  You just have to manually edit these files in public_html/production:
+* Update scons.org
+  * Update the scons-new-website repo.  
 
 | File   | Changes  |
 |---|---|
-| includes/versions.php  | update `$latestrelease`, update `$docversions[]` and `$apiversions[]` list  |
-|index.php  | add an announcement for the home page remove any out-of-date announcements  |
-| news-raw.xhtml  | add an announcement to the list (duplicate it from what you just added to `index.php`  |
+| versions.py  | update SCONS_PRODUCTION_VERSION, SCONS_PRIOR_VERSION, SCONS_API_VERSIONS  |
+| content/releases/release-###.rst | add an announcement |
 
 
 * Commit the above changes to hg and push. 
@@ -89,8 +90,7 @@ The .linux-x86_64 ones are not needed and may be deleted; the others all get upl
 
 ## After Release
 
-* On default branch, copy all the changes from the release branch back to the default branch.  (XXX: then why do we have the release branch??) 
-      * `hg diff -r default:X.Y.Z | patch -p1` 
+* On Bitbucket create a pull request from the branch. Bitbucket will give you a URL when you push and create the branch which will take you to a page to do just this.
 * On default branch, run `python bin/update-release-info.py post` to go back to develop mode. 
 * Commit those changes after review 
 There is more detail on some of the steps here at [http://www.scons.org/wiki/ReleaseHOWTO/TipBetaBody](http://www.scons.org/wiki/ReleaseHOWTO/TipBetaBody) although that is still based on the old svn system. 
