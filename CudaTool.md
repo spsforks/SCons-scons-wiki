@@ -1,4 +1,3 @@
-
 # About
 
 The following tool, cuda (**cuda.py**) is for using the [CUDA Toolkit](https://developer.nvidia.com/cuda-toolkit) by *NVidia*. See the end of the page for an example SConscript for building the _simpleGL_ sample that comes with the SDK and some notes. 
@@ -32,7 +31,7 @@ def CUDANVCCStaticObjectEmitter(target, source, env):
                 lifile = os.path.splitext(file.rstr())[0] + '.linkinfo'
                 env.SideEffect( lifile, file )
                 env.Clean( file, lifile )
-       return tgt, src
+        return tgt, src
 
 def CUDANVCCSharedObjectEmitter(target, source, env):
         tgt, src = SCons.Defaults.SharedObjectEmitter(target, source, env)
