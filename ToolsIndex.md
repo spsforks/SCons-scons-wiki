@@ -89,6 +89,7 @@ Sphinx  | Mercurial  | [http://bitbucket.org/zondo/sphinx-scons/overview](http:/
 [sphinx4scons](sphinx4scons)  | Mercurial  | [https://bitbucket.org/wingbrant/sphinx4scons/](https://bitbucket.org/wingbrant/sphinx4scons/)  | hg clone [https://bitbucket.org/wingbrant/sphinx4scons](https://bitbucket.org/wingbrant/sphinx4scons) 
 [Vala](ValaBuilder)  | Mercurial  | [https://bitbucket.org/russel/scons_vala](https://bitbucket.org/russel/scons_vala)  | hg clone [https://bitbucket.org/russel/scons_vala](https://bitbucket.org/russel/scons_vala) vala 
 [Watcom](Watcom)  | Git  | [https://bitbucket.org/cr1901/scons-wat](https://bitbucket.org/cr1901/scons-wat)  | git clone [https://bitbucket.org/cr1901/scons-wat](https://bitbucket.org/cr1901/scons-wat) watcom 
+Xcode | Mercurial | [https://bitbucket.org/al45tair/scons-xcode](https://bitbucket.org/al45tair/scons-xcode) | hg clone [https://bitbucket.org/al45tair/scons-xcode](https://bitbucket.org/al45tair/scons-xcode) xcode
 X10  | Mercurial  | [https://bitbucket.org/russel/scons_x10](https://bitbucket.org/russel/scons_x10)  | hg clone [https://bitbucket.org/russel/scons_x10](https://bitbucket.org/russel/scons_x10) x10 
 
 (*) The D tool is no longer developed outside of the SCons source tree (as it once was) to enable correct integration between D, C++ and C in multi-language systems.  D tool development now happens in [a clone of the SCons repository specifically for developing the D tool](https://bitbucket.org/russel/scons_d_tooling). 
@@ -133,4 +134,3 @@ Please also regard the special page [ToolsBazaarWorkflows](ToolsBazaarWorkflows)
 In many ways all branches for a given tool are equal; all branches are effectively forks of the tool.  The mainline is the one agreed to be the mainline and is the one to be indexed above. 
 
 For more detailed infos about Bazaar and DVCS in general, you should also visit the [UsingBzr](http://scons.org/wiki/UsingBzr) page. 
-
