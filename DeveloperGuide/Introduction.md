@@ -13,7 +13,7 @@ SCons is a matured project that has been around since 2001, and a lot of thought
 
 That's why we have certain workflows in place, which may look over-engineered at first. But they stood the test of time, and they help us to develop a very robust and stable tool for our users...and that's the main reason for things being as they are. You can find a rather detailed description of our basic guidelines at
 
-* [http://www.scons.org/guidelines.php](http://www.scons.org/guidelines.php)
+* [http://scons.org/guidelines.html](http://scons.org/guidelines.html)
 
 So, please try to stick to our rules and be prepared to have a "long breath" when you're about to make larger changes, or during reviews of your pull requests. ;)
 
