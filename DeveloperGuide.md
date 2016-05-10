@@ -44,7 +44,7 @@ This is the SCons Developer Guide.  Start here to [learn how to contribute to SC
 Other resources:
 
 * The [man page](http://www.scons.org/doc/HTML/scons-man.html), especially the [Extending SCons](http://www.scons.org/doc/HTML/scons-man.html#lbAO) section.
-* Be sure to check out the [developer guidelines](http://www.scons.org/guidelines.php)
+* Be sure to check out the [developer guidelines](http://scons.org/guidelines.html)
 * [JavaSupport](JavaSupport)
 * [LatexSupport](LatexSupport) (and TeX)
 * [VisualizeDependencies](VisualizeDependencies) - display of large source graphs (DOT format) with yEd
@@ -53,7 +53,9 @@ Other resources:
 
 ---
 
- This is a work in progress. Let's start discussing what needs to go in this guide.
+**This is a work in progress.**
 
-* Known topic with no place to live yet: .sconsign.  The architecture section is organized more-or-less in time order and this topic doesn't fit that particularly well.  [JGN 19 Jan 2007]
-* I put in links for sections that I thought were pretty solid, but there are a number of areas where the topics are still flexible.  Someone with more knowledge of the internals should clarify those aspects. [JGN 19 Jan 2007]
+Items to add:
+
+* More information on .sconsign file.
+
