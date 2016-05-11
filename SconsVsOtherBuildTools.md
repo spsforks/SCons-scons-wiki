@@ -47,7 +47,7 @@ GNU Autotools generate a 'configure' script which can be bundled with your sourc
 
 # CMake
 
-[CMake](http://www.cmake.org) is a principal competitor to both GNU Autotools and SCons.  It is a build system _generator_, i.e. after running CMake, the user has a native Visual Studio file at his disposal, or a native Makefile, or nmake file, or whatever their preference is.  Off-the-shelf build capabilties are comprehensive and proven for large scale software development.  The implementation architecture is far more unified than GNU Autotools and it runs much faster.  CMake has its own scripting language that runs on all platforms that CMake targets.  It is Yet Another Scripting Language, which puts some people off, but it has the advantage of not introducing any additional language dependencies to a project. 
+[CMake](http://www.cmake.org) is a principal competitor to both GNU Autotools and SCons.  It is a build system _generator_, i.e. after running CMake, the user has a native Visual Studio file at his disposal, or a native Makefile, or nmake file, or whatever their preference is.  Off-the-shelf build capabilities are comprehensive and proven for large scale software development.  The implementation architecture is far more unified than GNU Autotools and it runs much faster.  CMake has its own scripting language that runs on all platforms that CMake targets.  It is Yet Another Scripting Language, which puts some people off, but it has the advantage of not introducing any additional language dependencies to a project. 
 
 When compared to scons, CMake is : 
 
@@ -79,7 +79,7 @@ There are several variants of Jam out there.
 * Then it was updated by [the folks behind FreeType](http://freetype.sourceforge.net/jam/). Also known as FTJam. 
 * There is a version maintained by the Boost people, called [Boost Jam](http://www.boost.org/tools/build/v1/build_system.htm). Also known as BJam, it supports language extensions -- such as modules and classes -- that are required to actually put together a build system of any sophistication. See [Boost Build V2](http://boost.org/boost-build2/). 
 * Now there is a new version of Jam called [KJam](http://www.oroboro.com/kjam). It's a complete rewrite of Jam with many extensions and improvements to the language. It has a distributed mode where build jobs can be spawned on a load-balanced peer network of build servers. 
-Jam is similar to Make in that it is based on dependency triggered execution of commands. It comes with a very small, but extensible, set of functions ("rules") that make "building simple things simple and building complicated things manageable." That's true up to the point that you need to do some very simple things portably. Even the creation of dynamic libraries is not supported by the default ruleset. You can always extend these rules, but eventually you will run into the limits of the Jam language'e expressivity. 
+Jam is similar to Make in that it is based on dependency triggered execution of commands. It comes with a very small, but extensible, set of functions ("rules") that make "building simple things simple and building complicated things manageable." That's true up to the point that you need to do some very simple things portably. Even the creation of dynamic libraries is not supported by the default ruleset. You can always extend these rules, but eventually you will run into the limits of the Jam language'e expressiveness. 
 
 Boost.Build is a system build on the Boost.Jam substrate. Like Make, it is able to deduce a sequence of build steps given just sources and a target type. Unlike Make, it knows about different types of compilers that are common on various systems, and the different steps involved in compiling for Windows vs Unix. This knowledge allows the user to describe what needs to be built in high-level terms, without concern for low-level details such as the compiler's specific flags, the way that the operating system handles dynamic libraries. The goal is to be able to write a single, simple, build description (Jamfile) that is likely to work with any compiler and/or operating system, even ones you can't personally test on. It also has built-in support for variant builds, options (e.g. include paths and threading options) associated with the _usage_ of particular libraries, and the running of test cases (including automatically setting up necessary environment variables such as LD_LIBRARY_PATH). 
 
@@ -137,15 +137,15 @@ Some argue that Maven is too heavyweight and complex for small projects, but out
 
 # Gradle
 
-[Gradle](http://www.gradle.org) was originally a [Groovy](http://www.groovy-lang.org) implemented system for building Java and Groovy codes. Crucial buts have been reimplemented in Java, and a build server architecture created for speed of builds. Builds are specified in a Groovy-based build specification language, in this is it analogous to SCons and Python. Gradle is now the default build system for Android projects. Gradle has been extended to create native code builds. Initially this only covers C and C++.
+[Gradle](http://www.gradle.org) was originally a [Groovy](http://www.groovy-lang.org) implemented system for building Java and Groovy codes. Crucial bits have been reimplemented in Java, and a build server architecture created for speed of builds. Builds are specified in a Groovy-based build specification language, in this is it analogous to SCons and Python. Gradle is now the default build system for Android projects. Gradle has been extended to create native code builds. Initially this only covers C and C++.
 
 # TWW tools from TWW Inc.
 
-Cross-Platform Application Dvelopment and Management solutions are in need to deal with the computing world we created. 
+Cross-Platform Application Development and Management solutions are in need to deal with the computing world we created. 
 
 For one of CPAD solutions please see [http://www.gnustep.org](http://www.gnustep.org). TWW tools is one of CPAM solutions, it use 
 
-XML and Python to glue together the incompatiable operating systems to minimize the cost of maintaining applicatoins on different OS. 
+XML and Python to glue together the incompatible operating systems to minimize the cost of maintaining applications on different OS. 
 
 TWW tools match create,package and manage phases of software application management. 
 
