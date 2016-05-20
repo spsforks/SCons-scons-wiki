@@ -1,7 +1,4 @@
-
 The following sections try to outline a few workflows for managing external SCons Tools as packages on Launchpad (Bazaar). 
-
-[[!toc 1]] 
 
 
 # Basic branching
