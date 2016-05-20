@@ -1,5 +1,4 @@
 
-[[!toc 1]] <a name="one_lexer"></a> 
 # One Lexer or Multiple?
 
 
