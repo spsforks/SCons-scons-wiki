@@ -1,5 +1,7 @@
 # ParseDepends
-ParseDepends allows to parse compiler-generated dependency files and let SCons establish the listed dependencies.  ## What's that in aid of?
+ParseDepends allows to parse compiler-generated dependency files and let SCons establish the listed dependencies.  
+
+## What's that in aid of?
 As a rule of thumb, never use it unless you have to. SCons has scanners to extract implicit dependencies. However, sometimes the built-in scanners choke on pre-processor statements. Consider the following example: hello.c: 
 
 ```
@@ -49,7 +51,9 @@ GCC generates a dependency file that looks like the following:
 hello.o: hello.c foo.h
 ```
 
-There is one problem with this approach: Read the [full story here](http://scons.tigris.org/servlets/ReadMsg?listName=dev&msgNo=709). To wrap it up, ParseDepends does not read the file in the first pass, leading to unnecessary rebuilds in the second pass. The reason is, that the signature changes as new dependencies are added (foo.h in the example above). ## Generate dependency files in advance
+There is one problem with this approach: Read the [full story here](http://scons.tigris.org/servlets/ReadMsg?listName=dev&msgNo=709). To wrap it up, ParseDepends does not read the file in the first pass, leading to unnecessary rebuilds in the second pass. The reason is, that the signature changes as new dependencies are added (foo.h in the example above). 
+
+## Generate dependency files in advance
 If you want to extract the dependencies (and call ParseDepends) before building the object files, the only viable solution is to use a multi-stage builder with a source scanner: 
 
 ```
