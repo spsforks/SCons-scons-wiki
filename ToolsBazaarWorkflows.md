@@ -52,43 +52,47 @@ which pushes it to the automatically created "trunk" series.
 
 Select the "trunk" series in the Project's main page 
 
-[[!img click_series_in_overview.png] 
+![IMAGE](https://bitbucket.org/scons/scons/wiki/ToolsBazaarWorkflows/click_series_in_overview.png)
+
+
 
 "Create a new milestone" and enter a version number 
 
-[[!img create_milestone.png] 
+![IMAGE](https://bitbucket.org/scons/scons/wiki/ToolsBazaarWorkflows/create_milestone.png)
+
 
 Back in the overview page for the "trunk" series, create a new release 
 
-[[!img create_release.png] 
+![IMAGE](https://bitbucket.org/scons/scons/wiki/ToolsBazaarWorkflows/create_release.png)
+
 
 Fill out the form for the release and confirm 
 
-[[!img enter_data_and_confirm.png] 
+![IMAGE](https://bitbucket.org/scons/scons/wiki/ToolsBazaarWorkflows/enter_data_and_confirm.png)
 
 Go back to the tool's page on Launchpad, and do a refresh in your browser. Then click on the "trunk" series link. You should see a page like this: 
 
-[[!img trunkseries1.png] 
+![IMAGE](https://bitbucket.org/scons/scons/wiki/ToolsBazaarWorkflows/trunkseries1.png)
 
 If this has not been done already, link the uploaded branch to this series. Clicking on "Link the branch to this series", select the "trunk" branch... 
 
-[[!img trunkseries2.png] 
+![IMAGE](https://bitbucket.org/scons/scons/wiki/ToolsBazaarWorkflows/trunkseries2.png)
 
 and get the addition of the series confirmed, after clicking  
 
-[[!img trunkseries3.png] 
+![IMAGE](https://bitbucket.org/scons/scons/wiki/ToolsBazaarWorkflows/trunkseries3.png)
 
 Now you can add your TAR archive for download 
 
-[[!img add_file_for_download.png] 
+![IMAGE](https://bitbucket.org/scons/scons/wiki/ToolsBazaarWorkflows/add_file_for_download.png)
 
 ... 
 
-[[!img file_was_uploaded.png] 
+![IMAGE](https://bitbucket.org/scons/scons/wiki/ToolsBazaarWorkflows/file_was_uploaded.png)
 
 and the archive should get available for download. 
 
-[[!img release_downloadable.png] 
+![IMAGE](https://bitbucket.org/scons/scons/wiki/ToolsBazaarWorkflows/release_downloadable.png)
 
 
 # Additional links
