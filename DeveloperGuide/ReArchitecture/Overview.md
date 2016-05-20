@@ -1,4 +1,3 @@
-
 This is the main entry page for working out a redesigned architecture suitable for SCons' feature set, but designed with performance in mind. 
 
 A previous initial mish-mash of exists at [../Initial](DeveloperGuide/ReArchitecture/Initial), but that page is now deprecated.  We're transferring the salvageable content to this hierarchy. 
@@ -18,19 +17,20 @@ Methodology:  Things that have been more-or-less decided upon, or are an initial
 
 
 ## Terminology
-[[!table header="no" class="mointable" data="""
- DAG  |  [Directed Acyclic Graph](http://en.wikipedia.org/wiki/Directed_acyclic_graph).  In this architecture, one DAG records the dependency relationship between Entities and the transverse dual DAG is calculated from it to determine the build order. 
- Dependency graph  |  The graph of dependencies between individual Entities.  The graph forms a DAG. 
- Dual  |  In graph theory, a graph calculated from an initial graph by transforming its nodes to arcs and arcs to nodes.[1] 
- Entity  |  Technically, the node (junction connected by arcs) of the dependency graph.  Entities represent files, directories, Python values, _etc._ 
- Schedule graph  |  The graph of (((successors?))) between schedule items, giving the legal build order.  The graph forms a DAG. 
- Schedule items  |  Technically, the node (junction connected by arcs) of the schedule graph.  We currently anticipate these items will be implemented in the `Executor` objects (or a wrapping class). 
- Transverse  |  In graph theory, a graph calculated from an initial graph by reversing the direction of its arcs. 
-"""]]
+| What | Definition |
+|------|------------|
+| DAG  |  [Directed Acyclic Graph](http://en.wikipedia.org/wiki/Directed_acyclic_graph).  In this architecture, one DAG records the dependency relationship between Entities and the transverse dual DAG is calculated from it to determine the build order. 
+| Dependency graph  |  The graph of dependencies between individual Entities.  The graph forms a DAG. 
+| Dual  |  In graph theory, a graph calculated from an initial graph by transforming its nodes to arcs and arcs to nodes.[1] 
+| Entity  |  Technically, the node (junction connected by arcs) of the dependency graph.  Entities represent files, directories, Python values, _etc._ 
+| Schedule graph  |  The graph of (((successors?))) between schedule items, giving the legal build order.  The graph forms a DAG. 
+| Schedule items  |  Technically, the node (junction connected by arcs) of the schedule graph.  We currently anticipate these items will be implemented in the `Executor` objects (or a wrapping class). 
+| Transverse  |  In graph theory, a graph calculated from an initial graph by reversing the direction of its arcs. 
+
 
 [1] (((SK:  Greg, I'm trying to educate myself about the graph theory, and this doesn't look like the correct definition of "dual".  On the face of it, you can't just transform nodes to arcs, because arcs by definition have two endpoints and a node in the original graph with multiple arcs can't suddenly become a an arc in the dual that points to more than two nodes.  The definition I see for "dual" transforms each _plane region_ in the original graph into a node in the dual.  Please clarify.)))  
 
-<a name="TODO"></a> 
+
 ## TODO
 
 Things that still need to be added: 
