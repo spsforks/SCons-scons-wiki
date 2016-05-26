@@ -2,8 +2,8 @@
 
 *The most frequently-asked frequently asked questions*
 
-1. [Why doesn't SCons find my compiler/linker/etc.? I can execute it just fine from the command line.][1]
-1. [How do I install files? The Install() method doesn't do anything. In general, how do I build anything outside my current directory?][2]
+1. [Why doesn't SCons find my compiler/linker/etc.? I can execute it just fine from the command line.](#markdown-header-why-doesnt-scons-find-my-compilerlinkeretc-i-can-execute-it-just-fine-from-the-command-line)
+1. [How do I install files? The Install() method doesn't do anything. In general, how do I build anything outside my current directory?](#markdown-header-how-do-i-install-files-the-install-method-doesnt-do-anything-in-general-how-do-i-build-anything-outside-my-current-directory)
 
 **Table of Contents**
 
@@ -90,7 +90,6 @@ If you have time and/or resources to contribute, contact scons-dev AT scons DOT 
 
 # SCons Questions
 
-[1]:
 ## Why doesn't SCons find my compiler/linker/etc.? I can execute it just fine from the command line.
 
 A common problem for new users is that SCons can't seem to find a compiler, linker, or other utility that they can run just fine from the command line. This is almost always because, by default, SCons does not use the same PATH environment variable that you use from the command line, so it can't find a program that has been installed in a "non-standard" location unless you tell it how. Here is the explanation from the SCons man page: 
@@ -140,7 +139,6 @@ env.Program('foo', 'foo.c')
 
 This will make the program compile correctly, but SCons will not find the dependencies in the "inc" subdirectory and the program will not be rebuilt if any of those #include files change.
 
-[2]:
 ## How do I install files? The Install() method doesn't do anything. In general, how do I build anything outside my current directory?
 
 By default, SCons only builds what you tell it to, and anything that these files depend on (no matter where they live). If you don't specify differently, SCons builds "." (_i.e._, all the targets in and under the current directory). If you want SCons to build/install targets outside the current directory, you have to tell it to do so somehow. There are four ways you might do this: 
