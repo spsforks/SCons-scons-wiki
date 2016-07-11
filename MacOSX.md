@@ -387,3 +387,18 @@ cd $SOURCE_DIR
 
 # This passes the stderr output from scons (and GCC) through sed to change identified relative path .h files to absolute path.  Note the filename matching criteria [a-zA-Z/_] may need some modification for special characters / numbers in filename.
 ```
+
+# Generating Xcode project files
+
+The [scons-xcode package](https://bitbucket.org/al45tair/scons-xcode) can generate Xcode project files that work by running SCons.  Once installed, all you need is to add a call to `env.XcodeProject` to your SConstruct file, for instance:
+
+```
+env = Environment(tools=['default', 'Xcode'])
+
+myprog = env.Program('build/MyProg', ['src/main.cc'])
+
+env.XcodeProject('MyProject.xcodeproj',
+                 products=myprog)
+```
+
+See [the project page](https://bitbucket.org/al45tair/scons-xcode) for more information and installation instructions.
