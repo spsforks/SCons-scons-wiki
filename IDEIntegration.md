@@ -22,6 +22,8 @@ Note: VS2005 seems to need absolute paths to filenames for the click-on-errors i
 1. For debug build the command should be "scons debug=1"
 1. For Rebuild All: "scons -c & scons" ("scons -c & scons  debug=1" for debug)
 
+Alternatively, you can use [the `MSVSProject()` builder](http://scons.org/doc/production/HTML/scons-user.html#b-MSVSProject) in your SConstruct file to generate a Visual Studio project file.
+
 ## Xcode (Mac OS X)
 
 1. File->New Project, choose "External Build System" 
@@ -34,6 +36,7 @@ Note: VS2005 seems to need absolute paths to filenames for the click-on-errors i
 1. Use Debug -> Breakpoints menu to add a symbolic breakpoint at main() - just type main where it says 'Double click for Symbol' - if you don't add this break point none of the breakpoints set in the editors will work, because gdb doesn't have the symbol information until you start debugging ([Jim Ingham suggests](http://www.cocoabuilder.com/archive/message/xcode/2006/8/15/8869) turning off "Lazy Symbol Loading" in Debug Preferences.) 
 See also the hint to get proper error parsing on [MacOSX](MacOSX). 
 
+Alternatively, you can use [scons-xcode](https://bitbucket.org/al45tair/scons-xcode) to generate project files automatically.
 
 ## Eclipse
 
