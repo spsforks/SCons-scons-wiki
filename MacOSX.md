@@ -356,9 +356,9 @@ Then Install() will copy resources.
 You could enhance this by checking whether dest/rsrc exists, and only use [CpMac](CpMac) in that case. dest/rsrc is one way to get to the resource fork of a file; the syntax refers to the file as if it were a directory so it's a little unusual, but it does work. 
 
 
-# Get absolute path name in error messages (for XCode integration)
+# Get absolute path name in error messages (for Xcode integration)
 
-If you use SCons as external build tool within an XCode 3.2 through at least 4.5 project, then the parsing of error messages is broken, because XCode expects absolute path names, while SCons calls the C/C++ compiler with relative path names.  Some modifications and intervention is possible so that compiler errors generated through XCode are 'clickable' and browse to the correct source code location.  GCC formats the output in the same way that source files are specified. Therefore, we need to change the way SCons calls the compiler such that it usese absolute path names to source code: 
+If you use SCons as external build tool within an Xcode 3.2 through at least 4.5 project, then the parsing of error messages is broken, because Xcode expects absolute path names, while SCons calls the C/C++ compiler with relative path names.  Some modifications and intervention is possible so that compiler errors generated through Xcode are 'clickable' and browse to the correct source code location.  GCC formats the output in the same way that source files are specified. Therefore, we need to change the way SCons calls the compiler such that it usese absolute path names to source code: 
 
 
 ```txt
@@ -375,11 +375,11 @@ Here is one such method:
 ```txt
 #!/bin/bash
 #!/bin/bash
-# Call this build_script from XCode as 'external build system'
+# Call this build_script from Xcode as 'external build system'
 # Macro Definitions:
 # $SCONS_EXEC : path to scons command
 # $SOURCE_DIR : base path to project source
-# $1          : argument passed to script from XCode, i.e. build target
+# $1          : argument passed to script from Xcode, i.e. build target
 
 cd $SOURCE_DIR
 
