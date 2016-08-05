@@ -28,7 +28,7 @@ Once all all validation passes, all that's left is a pull request on Bitbucket. 
 
 Additionally, single documents can be created to get a feel for how the final result looks. Each of the document folders, `design`, `developer`, `man`, `python10`, `reference`, and `user`, contains an `SConstruct` file along with the actual XML files. By calling `python ../../src/script/scons.py` from within the directory, the User can have the MAN pages, HTML, and even PDF generated if you have a renderer installed: `fop`, `xep` or `jw`. 
 
-If you haven't already downloaded the documentation sources to your computer, please visit [DeveloperGuide/Introduction](DeveloperGuide/Introduction) now. It will give you pointers, and lead you through the steps of setting up a local repository. Then, you can find the documentation stuff in the folder `doc` at the top-level. 
+If you haven't already downloaded the documentation sources to your computer, please visit [Introduction](DeveloperGuide/Introduction) now. It will give you pointers, and lead you through the steps of setting up a local repository. Then, you can find the documentation stuff in the folder `doc` at the top-level. 
 
 ## Requirements
 
