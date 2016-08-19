@@ -1,9 +1,6 @@
-
 A page for the actual Rearchitecture design. 
 
-This should, ideally, not reference the current SCons design and/or implementation.  For that, go to [DeveloperGuide/ReArchitecture/Implementation](DeveloperGuide/ReArchitecture/Implementation). 
-
-[[!toc 4]] 
+This should, ideally, not reference the current SCons design and/or implementation.  For that, go to [Implementation](Implementation). 
 
 
 # Classes
