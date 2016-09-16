@@ -1,6 +1,8 @@
 # The SCons Wiki:
 
-Welcome to the home of the [SCons](http://www.scons.org) wiki! This wiki is an open forum for development and use of SCons. Please, do feel free to contribute.
+Welcome to the home of the [SCons](http://www.scons.org) wiki!
+
+This wiki is an open forum for development and use of SCons. Please, do feel free to contribute.
 
 
 # About SCons ![](http://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Im-jabber.svg/48px-Im-jabber.svg.png)
