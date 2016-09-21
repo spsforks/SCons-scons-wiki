@@ -1,4 +1,3 @@
-
 Here is a spot to discuss LaTeX/TeX build tool issues. 
 
 What commands, packages that create files are supported?: 
@@ -37,7 +36,7 @@ This SConstruct file is appropriate to a setting where an author maintains perso
 
 # A skeletal thesis file
 
-Dr Nicola Talbot from the University of East Anglia provides a wealth of tips and tutorials concerning LaTeX on his [Latex Related Information](http://theoval.sys.uea.ac.uk/~nlct/latex/) web site.  For a simple yet realistic initial test, you might try the skeletal thesis file he recommends in _Using LaTeX to Write a PhD Thesis_: 
+Dr Nicola Talbot from the University of East Anglia provides a wealth of tips and tutorials concerning LaTeX on his [Latex Related Information](http://theoval.sys.uea.ac.uk/~nlct/latex/) web site.  For a simple yet realistic initial test, you might try the skeletal thesis file she recommends in _Using LaTeX to Write a PhD Thesis_: 
 
 
 ```txt
