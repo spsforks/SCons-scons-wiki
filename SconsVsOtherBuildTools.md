@@ -92,7 +92,7 @@ Another problem is that the built files depend only on the source files and not 
 
 # qmake
 
-Qmake is the [build system created by Trolltech](http://doc.trolltech.com/3.0/qmake.html) for their Qt toolkit. 
+Qmake is the [build system created by Trolltech](http://doc.qt.io/qt-5/qmake-manual.html) for their Qt toolkit. 
 
 Pretty similar in concept to Jam. Brief build files and lots of built-in knowledge of specific compilers for building on different platforms. The main motivation, however, seems to be that Trolltech wanted their build system to automatically recognize moc and uic steps. SCons has support for these build types built in as well. 
 
