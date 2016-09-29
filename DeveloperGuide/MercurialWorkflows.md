@@ -105,7 +105,8 @@ Then go to "`bitbucket.org/<my_user>/<my_fork_name>`" and click "Pull request", 
 
 ## Rebasing changes
 
-Rebasing is needed to place your commits on top of fresh changes from main repository.
+Feel free to use the Rebase feature to place your commits on top of fresh changes from the main repository, as long as your changes are local only and haven't been pushed to your public repo yet. Otherwise you may confuse the Bitbucket interface, which means that Bitbucket won't be able to update your pull requests automatically anymore. For a git-centered discussion of why "rebase" should only be used in a local context, see also [the drm-next thread](http://lwn.net/Articles/328438/).
+
 ```txt
 # first make sure there is new stuff in repository
 hg incoming
