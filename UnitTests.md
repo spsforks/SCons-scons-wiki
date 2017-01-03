@@ -1,4 +1,3 @@
-
 Want to have "scons test" run your unit tests? 
 
 Here are two suggestions: 
@@ -28,7 +27,6 @@ Check out [PhonyTargets](PhonyTargets) for another way of defining a 'test' targ
 
 Note that program[0].path might give issues when running on OS'es that do not explicitly search for executables in the current directory (Unix-like OS'es where you explicitly need to add '.' as a search path). In that case, you can use the following: 
 
-
 ```python
 #!python
 # Build one or more test runners.
@@ -40,6 +38,22 @@ AlwaysBuild(test_alias)
 ```
 <span style="display:none">This doesn't work if your unit test program depends on a certain shared library that resides on the same folder as the unit test program since the environment variable LD_LIBRARY_PATH needs to be edited.</span> 
 
+# Alias with Command
+If you want your unit test being invoked only on demand, the following work for me (java unit test)
+
+```
+#!python
+
+# Launches ant -q when typing "scons"
+env.Command(target = 'compiled.txt',
+            source = mySources,
+            action = ['ant jar-types  -f build.xml'),
+                      'type NUL > ' + 'compiled.txt'])
+
+# Launches ant junit-tests when typing "scons runtest"
+testAlias = env.Alias('runtest', '', 'ant run -f ' + os.path.join(javaTestRoot, 'build.xml'))
+env.AlwaysBuild(testAlias)
+```
 
 # Command
 
