@@ -47,7 +47,7 @@ If you want your unit test being invoked only on demand, the following work for 
 # Launches ant -q when typing "scons"
 env.Command(target = 'compiled.txt',
             source = mySources,
-            action = ['ant jar-types  -f build.xml'),
+            action = ['ant jar-types  -f build.xml',
                       'type NUL > ' + 'compiled.txt'])
 
 # Launches ant junit-tests when typing "scons runtest"
