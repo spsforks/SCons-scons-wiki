@@ -79,6 +79,7 @@ Jinja2  | Git  | [https://github.com/hgomersall/scons-jinja](https://github.com/
 Matlab (Mex)  | Git  | [https://github.com/marcecj/scons_matlab](https://github.com/marcecj/scons_matlab)  | git clone [https://github.com/marcecj/scons_matlab](https://github.com/marcecj/scons_matlab) matlab 
 [MFObject](MFObject)  | Bazaar  | [https://code.launchpad.net/~asomers/sconsaddons/mfobject](https://code.launchpad.net/~asomers/sconsaddons/mfobject)  | bzr branch lp:~asomers/sconsaddons/mfobject 
 [OCaml](OcamlBuilder)  | Mercurial  | [https://bitbucket.org/russel/scons_ocaml](https://bitbucket.org/russel/scons_ocaml)  | hg clone [https://bitbucket.org/russel/scons_ocaml](https://bitbucket.org/russel/scons_ocaml) ocaml 
+Perl | Mercurial  | [https://bitbucket.org/carandraug/scons-perl5](https://bitbucket.org/carandraug/scons-perl5)  | hg clone [https://carandraug@bitbucket.org/carandraug/scons-perl5](https://carandraug@bitbucket.org/carandraug/scons-perl5) scons-perl5 
 pkg-config | Git  | [https://github.com/manuelnaranjo/scons-pkg-config](https://github.com/manuelnaranjo/scons-pkg-config)  | git clone [https://github.com/manuelnaranjo/scons-pkg-config](https://github.com/manuelnaranjo/scons-pkg-config) pkg-config 
 [Protocol Buffers](ProtocBuilder)  | Mercurial  | [https://bitbucket.org/russel/scons_protobuf](https://bitbucket.org/russel/scons_protobuf)  | hg clone [https://bitbucket.org/russel/scons_protobuf](https://bitbucket.org/russel/scons_protobuf) protoc 
 [Qt4](Qt4Tool)  | Mercurial  | [https://bitbucket.org/dirkbaechle/scons_qt4](https://bitbucket.org/dirkbaechle/scons_qt4)  | hg clone [https://bitbucket.org/dirkbaechle/scons_qt4](https://bitbucket.org/dirkbaechle/scons_qt4) qt4 
@@ -134,4 +135,4 @@ Please also regard the special page [ToolsBazaarWorkflows](ToolsBazaarWorkflows)
 * adding a downloadable Tarball to your release 
 In many ways all branches for a given tool are equal; all branches are effectively forks of the tool.  The mainline is the one agreed to be the mainline and is the one to be indexed above. 
 
-For more detailed infos about Bazaar and DVCS in general, you should also visit the [UsingBzr](http://scons.org/wiki/UsingBzr) page. 
+For more detailed infos about Bazaar and DVCS in general, you should also visit the [UsingBzr](http://scons.org/wiki/UsingBzr) page.
