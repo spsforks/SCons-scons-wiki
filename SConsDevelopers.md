@@ -28,15 +28,12 @@ The following table describes some of the different duties a contributor to the 
 
 Duty | Contributor | Responsibilities
 :----|------------:|:----------------
-Bug Farmer | ? | Ensures that bugs are assigned to someone and that a patch is created (NEED MORE)
-Patch Snatcher | ? | Monitors mailing lists for patches; if the patch is not applied in short order, ensures that it is entered in the patch queue
-Patch Queue Manager | ? | Tracks patches in the patch queue; determines what additional work is needed and pushes to have that work done; passes accepted patches to integration manager
-Integration Manager | [StevenKnight](StevenKnight) | Verifies that the patch passes regression tests; applies patch to trunk
-Release Manager | ? | Identifies patches to go into next release; when patches have been applied, creates release; coordinates with packagers to distribute release
-Webmaster | [GaryOberbrunner](GaryOberbrunner) | Manages the [WebSite](WebSite); point of contact for web provider (NEED MORE)
-Tigris Tamer | [GaryOberbrunner](GaryOberbrunner) | Deals with administrivia for archive access and issue tracker
-SF Tamer | ? | Deals with residual issues from SourceForge
-FAQ Maintainer  | [SohailSomani](SohailSomani)  |  Monitors mailing lists for FAQ worthy material and updates [FrequentlyAskedQuestions](FrequentlyAskedQuestions) 
+Integration Manager | [William Deegan](@bdbaddog) | Monitors and processes pull requests
+Release Manager | [William Deegan](@bdbaddog) | Identifies patches to go into next release; when patches have been applied, creates release; coordinates with packagers to distribute release
+Webmaster | [William Deegan](@bdbaddog) | Manages the [WebSite](WebSite); point of contact for web provider 
+Tigris Tamer | [William Deegan](@bdbaddog) | Deals with administrivia for archive access and issue tracker
+SF Tamer | [William Deegan](@bdbaddog) | Deals with residual issues from SourceForge
+FAQ Maintainer  | [William Deegan](@bdbaddog)  |  Monitors mailing lists for FAQ worthy material and updates [FrequentlyAskedQuestions](FrequentlyAskedQuestions) 
 
 
 ## Component View of SCons Responsibilities
@@ -52,4 +49,3 @@ Sufficiently large Components can be further divided into Subcomponents, but it 
 Components  | Subcomponents  | Description  | Affected Files  | Developers  | QA  | Notes 
 ------------|----------------|--------------|-----------------|-------------|-----|------
  | | | | | |
-
