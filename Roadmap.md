@@ -11,10 +11,10 @@ Additional tasks can be found on our [issue tracker](http://scons.tigris.org/pro
 ## SCons itself
 Task | Status | Assigned to |  Target version
 :----|:-------|------------:|:---------------
-Integrating stubprocess.py wrapper for speedup  |  wip  |  gary, dirk  |  2.5
+Integrating stubprocess.py wrapper for speedup  |  wip  |  gary, dirk  |  3.x
 [Issue 2264: cross-language scanner support](https://bitbucket.org/scons/scons/pull-requests/244/issue-2264-cross-language-scanner-support/diff)  | done/not released | William Blevins | 2.5
 [Revamp of Tools subsystem](RevampToolsSubsystem)  |  wip  |  gary  |  
-[Python 3 compatibility](Python3Compatibility) (including full Unicode support)  |  wip  |  gary,russel  |  3.0
+[Python 3 compatibility](Python3Compatibility) (including full Unicode support)  |  wip  |  bdbaddog  |  3.0
 [GitHub](GitHub) clone to get additional buildbot at [https://travis-ci.org/](https://travis-ci.org/)  |  open  |   |  
 [SConsInstaller](SConsInstaller), wrapup of GSoC 2009 by Lukas Erlinghagen |  open  |   |  
 Recursive Glob (ant-like)  |  wip  |  dirk  |  
@@ -26,16 +26,17 @@ TNG, refactor task scheduling  |  open  |    |
 ## Web stuff
 Rewrite/restructure "About SCons"/"Getting started" sections  |  open   | member
 :-------------------------------------------------------------|:-----:|:-----
-Redesign website | wip | Bill
+
 Migrate current issues database from Tigris to Other ([HostingSites](DVCSMigration/HostingSites))  |  [open](https://bitbucket.org/techtonik/dataliberation/src/default/issues/tigris/)  |  techtonik  |  
 
 
 ## Done
-Switch trunk development to Mercurial ([DVCSMigration](DVCSMigration))  |  done (2015-12-27) | member
+Switch trunk development to Mercurial ([DVCSMigration](DVCSMigration))  |  done (2017-04-14) | member
 :-----------------------------------------------------------------------|-------------------:|:------
+Redesign website | Done | Bill
 Switch Node class to using slots  |  done  |  dirk  |  2.4 
 Rewrite of [doc toolchain](DeveloperGuide/Documentation/Discussion)  |  done (2013-05-04, rev 0c9c8aff8f46)  |  dirk 
 New design for SCons docs (book/article)  |  done (2013-05-04, rev 0c9c8aff8f46)  |  dirk 
 [MoinMoin upgrade](WikiUpgrade) for further tweaking  |  done  |  techtonik 
 
-See also [SConsFutureProjects](SConsFutureProjects) for ideas considered for implementation. 
+See also [SConsFutureProjects](SConsFutureProjects) for ideas considered for implementation.
