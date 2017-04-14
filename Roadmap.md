@@ -12,7 +12,6 @@ Additional tasks can be found on our [issue tracker](http://scons.tigris.org/pro
 Task | Status | Assigned to |  Target version
 :----|:-------|------------:|:---------------
 Integrating stubprocess.py wrapper for speedup  |  wip  |  gary, dirk  |  3.x
-
 [Revamp of Tools subsystem](RevampToolsSubsystem)  |  wip  |  gary  |  
 [Python 3 compatibility](Python3Compatibility) (including full Unicode support)  |  wip  |  bdbaddog  |  3.0
 [GitHub](GitHub) clone to get additional buildbot at [https://travis-ci.org/](https://travis-ci.org/)  |  open  |   |  
@@ -26,7 +25,6 @@ TNG, refactor task scheduling  |  open  |    |
 ## Web stuff
 Rewrite/restructure "About SCons"/"Getting started" sections  |  open   | member
 :-------------------------------------------------------------|:-----:|:-----
-
 Migrate current issues database from Tigris to Other ([HostingSites](DVCSMigration/HostingSites))  |  [open](https://bitbucket.org/techtonik/dataliberation/src/default/issues/tigris/)  |  techtonik  |  
 
 
