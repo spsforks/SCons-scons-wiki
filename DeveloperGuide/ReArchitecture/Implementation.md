@@ -1,4 +1,1 @@
-
-A page for specific [ReArchitecture](ReArchitecture) implementation issues, specifically including issues concerning the ransition from the current implementation. 
-
-[[!toc 4]] 
+A page for specific [ReArchitecture](ReArchitecture) implementation issues, specifically including issues concerning the ransition from the current implementation.
