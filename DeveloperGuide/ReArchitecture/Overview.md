@@ -11,7 +11,7 @@ Methodology:  Things that have been more-or-less decided upon, or are an initial
 
 [UseCases](DeveloperGuide/ReArchitecture/UseCases) - The use cases we believe cover 90% of what users want and for which we will optimize performance. 
 
-[Design](DeveloperGuide/ReArchitecture/Design) - The design itself.  This should ideally not refer to existing SCons design or implementation.  (In practice, I'm sure it'll be hard to not have some leakage.) 
+[Design](Design) - The design itself.  This should ideally not refer to existing SCons design or implementation.  (In practice, I'm sure it'll be hard to not have some leakage.) 
 
 [Implementation](DeveloperGuide/ReArchitecture/Implementation) - How the current SCons implementation can be made to fit the new architecture. 
 
