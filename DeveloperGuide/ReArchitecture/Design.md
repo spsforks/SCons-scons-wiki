@@ -80,9 +80,8 @@ WILD IDEA:  Is it possible that `Alias` should basically be `Entity`, except as 
 
 The schedule graph is the transverse dual of the dependency graph: the schedule graph can be calculated from the dependency graph and the dependency graph can be calculated from the schedule graph. 
 
-[/Discussion#Is a schedule graph a dual?](DeveloperGuide/ReArchitecture/Design/Discussion) 
+[/Discussion#Is a schedule graph a dual?](Discussion) 
 
-(See related discussion about [GregNoel](GregNoel)'s research into a new TaskmasterNG algorithm at [GregNoel/TaskmasterNG](GregNoel/TaskmasterNG).) 
 
 
 ### Schedule items
@@ -100,7 +99,7 @@ A:  (((JGN))) Hmmm...  Actually, in TNG, the schedule items refer to `Entity` ob
 
 Conceptually, an arc in the schedule graph is labeled with an `Entity` from the dependency graph.  In reality, a given schedule arc represents the M*N arcs from the set of M sources that produce a common set of N targets. 
 
-[/Discussion#Schedule arcs](DeveloperGuide/ReArchitecture/Design/Discussion) 
+[/Discussion#Schedule arcs](Discussion) 
 
 
 ## Environment
@@ -137,7 +136,7 @@ That said, I'm not 100% sure what would end up here if the actual environment va
 (((JGN: I use the term "context" for the class with no name, probably a [SubstitutionEnvironment](SubstitutionEnvironment) or something derived from it, that carries around the nascent Environment initialization from Configure, Variables, _etc_.))) 
 
 
-## Some catagorization to combine these classes
+## Some categorization to combine these classes
 
 An Action is an object that represents some sort of activity.  A Tool sets up Builders and provides them with Tool-specific Actions and other information to make them work.  A Builder creates an Executor to apply an Action on a set of Entities. xxx 
 
@@ -154,7 +153,7 @@ xxx (((Maybe belongs in its own second-level head?)))
 
 ### Builder
 
-[Should Builders return Executors?](DeveloperGuide/ReArchitecture/Design/Discussion) 
+[Should Builders return Executors?](Discussion) 
 
 Eliminate emitters by subclassing?  That is, a Program() is really just a subclass of File with some additional methods and logic specific to what a Program Node needs? 
 
@@ -164,7 +163,7 @@ Eliminate emitters by subclassing?  That is, a Program() is really just a subcla
 
 ### Executor
 
-[Should Builders return Executors?](DeveloperGuide/ReArchitecture/Design/Discussion) 
+[Should Builders return Executors?](Discussion) 
 
 One-to-one with DAGNodes?  Maybe the same?   
 (((JGN: Yes, modulo leaves of the dependency graph, which do not always have unique `Executor` objects.)))   
@@ -184,13 +183,13 @@ xxx
 
 ## Emitters
 
-[Emitters v. Scanners discussion](DeveloperGuide/ReArchitecture/Design/Discussion) 
+[Emitters v. Scanners discussion](Discussion) 
 
 xxx 
 
 
 ## Scanners
 
-[Emitters v. Scanners discussion](DeveloperGuide/ReArchitecture/Design/Discussion) 
+[Emitters v. Scanners discussion](Discussion) 
 
-xxx 
+xxx
