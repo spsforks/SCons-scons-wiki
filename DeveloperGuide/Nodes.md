@@ -1,10 +1,6 @@
-
-
 # SCons Nodes
 
 (((TODO: Nodes are the meat and bones of what SCons does ...))) 
-
-[[!toc ]] 
 
 
 ## Types of Nodes
@@ -201,4 +197,4 @@ Here are the details:
 * Otherwise, `Node.scan()` will end up calling `Executor.scan_sources()` to use the appropriate source scanner on the sources of this build and `Executor.scan_targets()` to use the appropriate target scanner on the targets of this build.  Both of them call the underlying... 
       * `Executor.scan()` method, which contains common logic to (_e.g._) look for the right scanner for the different file suffixes.  For each Node involved, the executor calls... 
             * `Node.get_implicit_deps()`, which exists so that (in theory) the underlying scanner object can just open and search for `#include` lines in a single file, and `Node.get_implicit_deps()` can handle re-invoking the appropriate scanner on the files found for the `#include` lines.  (In retrospect, this was probably an architectural mistake; it would probably be cleaner to just let the scanner itself handle all of that re-invocation, much like a C preprocessor itself would.)  For each TEXT MISSING. 
-                  * `Node.FS.File.get_found_includes()`, which actually handles invocation of a scanner object on this particular type of Node. 
+                  * `Node.FS.File.get_found_includes()`, which actually handles invocation of a scanner object on this particular type of Node.
