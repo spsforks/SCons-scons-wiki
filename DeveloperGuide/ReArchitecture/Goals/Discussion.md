@@ -4,7 +4,7 @@ This page exists primiarily so we can go back-and-forth on certain contentious t
 
 [TOC]
 
-<a name="CPPPATH"></a> 
+
 ## O(1) CPPPATH
 
 SK is proposing adding the following as a goal: 
