@@ -35,32 +35,32 @@ Methodology:  Things that have been more-or-less decided upon, or are an initial
 
 Things that still need to be added: 
 
-   * External inputs (information collected from "outside" SConscripts): 
-         * Configuration and configure tests (including Python `sys` and `os` modules) 
-         * Variables and option files (including shell variables?) 
-         * Command-line flags and overrides 
-   * Variable substitution and quoting 
-   * Backward compatibility (i.e., `compat`) 
-   * CacheDir 
-         * Resolving races in parallel builds 
-         * Multiple architectures in the same cache 
-         * Caches on shared filesystems 
-               * Simultaneous builds on same machine 
-               * Simultaneous builds on different machines 
-         * Better support for remote builds 
-         * General topic of races? 
-   * I don't have a good categorization for this topic: 
-         * Named projects with versioning 
-         * Automated install targets 
-         * Installing via staging areas 
-         * Packaging source distributions 
-         * Packaging binary distributions 
-         * Generally, think automake and autoconf 
-   * Testing (i.e., running users' tests to validate their products) 
-   * I18n (builders and whatnot to support translations and the like) 
-   * I18n (dealing with internationalized files, filesystems, text, ...) 
-   * Special run modes: 
-         * Clean (-c) "levels" of cleaning? 
-         * Query (-q) 
-         * Help (-h -H) 
-   * Reducing global clutter by grouping related names into a class (Action.Copy) 
+* External inputs (information collected from "outside" SConscripts): 
+     * Configuration and configure tests (including Python `sys` and `os` modules) 
+     * Variables and option files (including shell variables?) 
+     * Command-line flags and overrides 
+* Variable substitution and quoting 
+* Backward compatibility (i.e., `compat`) 
+* CacheDir 
+     * Resolving races in parallel builds 
+     * Multiple architectures in the same cache 
+     * Caches on shared filesystems 
+           * Simultaneous builds on same machine 
+           * Simultaneous builds on different machines 
+     * Better support for remote builds 
+     * General topic of races? 
+* I don't have a good categorization for this topic: 
+     * Named projects with versioning 
+     * Automated install targets 
+     * Installing via staging areas 
+     * Packaging source distributions 
+     * Packaging binary distributions 
+     * Generally, think automake and autoconf 
+* Testing (i.e., running users' tests to validate their products) 
+* I18n (builders and whatnot to support translations and the like) 
+* I18n (dealing with internationalized files, filesystems, text, ...) 
+* Special run modes: 
+     * Clean (-c) "levels" of cleaning? 
+     * Query (-q) 
+     * Help (-h -H) 
+* Reducing global clutter by grouping related names into a class (Action.Copy) 
