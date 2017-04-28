@@ -17,7 +17,7 @@ This is the encapsulating concept for all of the "things" that can get built or 
 
 ### File System entities
 
-[/Discussion#FileSystem entities](DeveloperGuide/ReArchitecture/Design/Discussion) 
+[/Discussion#FileSystem entities](Discussion) 
 
 
 #### Entry Stem Cell
