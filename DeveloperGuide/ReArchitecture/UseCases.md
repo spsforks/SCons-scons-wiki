@@ -1,9 +1,8 @@
-
 A page for the specific use case(s) we're trying to design for. 
 
 This is _not_ intended to cover all of the functionality, but instead to list the common use cases that we believe cover "90%" of what users want from SCons.  The goal is to design the architecture for optimal performance of these "90%" cases.  Functionality outside of the "90%" use cases defined here will be supported (eventually), but performance may suffer. 
 
-[[!toc 4]] 
+[TOC]
 
 
 # THE Performance Test Configuration
@@ -258,4 +257,4 @@ The test configuration generator consists of a number of components.  Each compo
 
 ## Source
 
-(((Contains some number of sources and/or headers.  Subroutine for other categories.  If not used in the current directory, the sources are used by a higher-level directory and the headers are added to the include list.))) 
+(((Contains some number of sources and/or headers.  Subroutine for other categories.  If not used in the current directory, the sources are used by a higher-level directory and the headers are added to the include list.)))
