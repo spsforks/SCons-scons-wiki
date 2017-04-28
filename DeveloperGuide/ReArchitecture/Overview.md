@@ -7,13 +7,13 @@ Methodology:  Things that have been more-or-less decided upon, or are an initial
 
 ## Settled
 
-[Goals](DeveloperGuide/ReArchitecture/Goals) - The requirements spec (where we use the term "Goals" because these won't all be hard-and-fast). 
+[Goals](Goals) - The requirements spec (where we use the term "Goals" because these won't all be hard-and-fast). 
 
-[UseCases](DeveloperGuide/ReArchitecture/UseCases) - The use cases we believe cover 90% of what users want and for which we will optimize performance. 
+[UseCases](UseCases) - The use cases we believe cover 90% of what users want and for which we will optimize performance. 
 
 [Design](Design) - The design itself.  This should ideally not refer to existing SCons design or implementation.  (In practice, I'm sure it'll be hard to not have some leakage.) 
 
-[Implementation](DeveloperGuide/ReArchitecture/Implementation) - How the current SCons implementation can be made to fit the new architecture. 
+[Implementation](Implementation) - How the current SCons implementation can be made to fit the new architecture. 
 
 
 ## Terminology
@@ -63,4 +63,4 @@ Things that still need to be added:
      * Clean (-c) "levels" of cleaning? 
      * Query (-q) 
      * Help (-h -H) 
-* Reducing global clutter by grouping related names into a class (Action.Copy) 
+* Reducing global clutter by grouping related names into a class (Action.Copy)
