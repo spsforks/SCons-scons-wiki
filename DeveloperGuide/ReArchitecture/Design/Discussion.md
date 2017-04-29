@@ -64,7 +64,6 @@ I think this also takes us a big step closer to being able to add steps at build
 
 A problem: What to return from `Object('foo.c bar.c'.split())`?  When it was just a list of nodes, it was simple, but if we're going to return an object, it must somehow be a composite object containing (or referring to) both build steps.  Something to figure out. 
 
-<a name="emit-v-scan"></a> 
 # Emitters v. Scanners
 
 SCons currently divides processing between an emitter (run at parse time to identify secondary sources and targets) and scanners (run at build time to identify additional upstream dependencies).  The SCons design did not anticipate that an emitter might need to examine the file in order to make these determinations. 
