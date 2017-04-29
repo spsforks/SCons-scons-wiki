@@ -9,9 +9,9 @@ to the SCons Developer Guide. It provides pointers to all the material that we o
 However, when you start following links and flipping pages for the first time, you'll probably get lost very soon. That's sort of expected, and nothing to be ashamed of. ;)
 In the following sections we try to outline the steps and documentation that you need, to simply "get things done". Think of it as a kind of "Quickstart" document...
 
-SCons is a matured project that has been around since 2001, and a lot of thought and development effort has gone into it already. We have a single dedicated mission: developing and providing a replacement for `make` and the GBS `Autotools`. And we have lots of users---single persons, open-source projects, universities and companies---, which rely on SCons' stability and cross-platform capabilities. For the development team it's really important to not let these people down.
+SCons is a mature project that has been around since 2001, and a lot of thought and development effort has gone into it already. We have a single dedicated mission: developing and providing a replacement for `make` and the GBS `Autotools`. And we have lots of users---individuals, open-source projects, universities and companies---, which rely on SCons' stability and cross-platform capabilities. For the development team it's really important to not let these people down.
 
-That's why we have certain workflows in place, which may look over-engineered at first. But they stood the test of time, and they help us to develop a very robust and stable tool for our users...and that's the main reason for things being as they are. You can find a rather detailed description of our basic guidelines at
+That's why we have certain workflows in place, which may look over-engineered at first. But they've stood the test of time, and they help us to develop a very robust and stable tool for our users...and that's the main reason for things being as they are. You can find a rather detailed description of our basic guidelines at
 
 * [http://scons.org/guidelines.html](http://scons.org/guidelines.html)
 
