@@ -28,11 +28,11 @@ Upshot:  I'm suspicious that my suggestion is really just because I don't know h
 
 We'll configure the entire build with a set of common code and a set of code built into a configurable number of variants.  The default will be three variants, representing a Release variant, a Debug variant (Microsoft terminology) and a Profile variant: 
 
-   * Common code 
-         * Documentation 
-         * Java compilation 
-   * Variant code 
-         * C/C++ compilation 
+* Common code 
+  * Documentation 
+  * Java compilation 
+* Variant code 
+  * C/C++ compilation 
 
 ## One repository
 
@@ -49,14 +49,14 @@ The "canonical" performance case will be one repository.
 C/C++ compilation will be tested with the following default configuration: 
 
    * Sources 
-         * 1000 source `.c` / `.cpp` / `.cc` files 
-         * 3 `.y` (yacc/bison) files 
-         * 3 `.l` (flex/lex) files 
+       * 1000 source `.c` / `.cpp` / `.cc` files 
+       * 3 `.y` (yacc/bison) files 
+       * 3 `.l` (flex/lex) files 
    * Targets 
-         * 50 libraries 
-         * 20 executable programs: 
-               * one that incorporates all 50 libraries (representing the "main product") 
-               * 19 other smaller programs (representing smaller associated utilities or test programs) 
+       * 50 libraries 
+       * 20 executable programs: 
+          * one that incorporates all 50 libraries (representing the "main product") 
+          * 19 other smaller programs (representing smaller associated utilities or test programs) 
    * 100 `-I` (include) directories  
 Note:  this will actually expand to 200 `-I` options on the command line due to variant builds (or possibly 400 `-I` options if we use variant + repository) 
    * 10 `-L` (libpath) directories  
@@ -75,10 +75,10 @@ Note that all values will be configurable in the generated test, of course.
 Default Java configuration: 
 
    * Sources 
-         * 500 source `.java` files 
+       * 500 source `.java` files 
    * Targets 
-         * 500 generated `.class` files 
-         * 50 output `.jar` files ??? 
+       * 500 generated `.class` files 
+       * 50 output `.jar` files ??? 
    * classpath directories??? 
    * what else ??? 
 All values configurable. 
@@ -89,15 +89,15 @@ All values configurable.
 ## Documentation
 
    * Sources 
-         * Source scatter in ??? subdirectories 
-         * 100 input `.tex` files 
-         * 100 input `.latex` files 
-         * 100 input `.jpg` (or other graphics) files 
+     * Source scatter in ??? subdirectories 
+     * 100 input `.tex` files 
+     * 100 input `.latex` files 
+     * 100 input `.jpg` (or other graphics) files 
    * Targets 
-         * ??? man pages 
-         * ??? HTML pages 
-         * ??? PDF files 
-         * ??? PostScript files 
+     * ??? man pages 
+     * ??? HTML pages 
+     * ??? PDF files 
+     * ??? PostScript files 
    * what else ??? 
 Configurable. 
 
