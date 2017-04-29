@@ -75,4 +75,4 @@ We usually wait for comments about a week per pull request (just as a rule of th
 
 # Editing the webpages
 
-Send a mail to our User ML and ask for help. Our webpage sources are currently (2014-05-02) still stuck in SVN, so you'll better get in contact with one of the Web admins. Then you can discuss the changes you'd like to make, and get more infos about the required process.
+Send a mail to our User ML and ask for help.
