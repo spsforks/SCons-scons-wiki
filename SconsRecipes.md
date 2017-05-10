@@ -138,6 +138,7 @@
 * [override shared library signature](SharedLibrarySignatureOverride) - avoid relinking every program when a shared library is rebuilt
 * [build-time callback](BuildTimeCallback) - add a function called at build time
 * [RightNow](RightNow) - build one or more targets during the SConscript reading phase, then continue reading SConscripts
+* [Shared Library -Wl,--whole-archive](SharedLibraryWholeArchive) - Handling position dependent options relative to input files.
 
 
 ---
@@ -203,4 +204,3 @@
 * [SimpleProject_1](SimpleProject_1) - a simple project with libraries and profile information
 * [Maven ideas with SCons](MavenIdeasWithSCons) - an approach of using some maven ideas and best practices with SCons
 * [SDLWindowsApp](SDLWindowsApp) - a typical SDL application on Windows (including icon and no annoying dialog pop-up)
-
