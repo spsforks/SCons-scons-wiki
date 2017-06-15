@@ -15,8 +15,7 @@ Task | Status | Assigned to |  Target version
 Performance Work| wip | bdbaddog | 3.1
 Integrating stubprocess.py wrapper for speedup  |  wip  |  gary, dirk  |  3.x
 [Revamp of Tools subsystem](RevampToolsSubsystem)  |  wip  |  gary  |  
-
-[GitHub](GitHub) clone to get additional buildbot at [https://travis-ci.org/](https://travis-ci.org/)  |  open  |   |  
+[GitHub](http://github.com) Migrate to git/github [https://travis-ci.org/](https://travis-ci.org/)  |  open  | 3.x  |  
 Recursive Glob (ant-like)  |  wip  |  dirk  |  
 Java support, partial redesign and adding functionality, e.g. for inner classes ([JavaStrategy](JavaStrategy) and [JavaSupport](JavaSupport))  |  open  |  jannijtmans,russel?  |  
 TNG, refactor task scheduling  |  open  |    |  
