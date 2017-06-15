@@ -48,10 +48,8 @@ This wiki is an open forum for development and use of SCons. Please, do feel fre
 
  * [DeveloperGuide](DeveloperGuide) for those who wish to hack on the core code
  * [SConsDevelopers](SConsDevelopers) page assigning responsibilities for different parts of SCons (volunteer!)
- * [BugParty](BugParty), our weekly IRC sessions to triage and prioritize newly submitted (and backlogged) bugs and issues
  * [Buildbot](http://buildbot.scons.org/), our automatically running [build](http://buildbot.scons.org/console) and [performance](http://buildbot.scons.org/timings/) reports
  * [Installing buildbot slaves](InstallingBuildbotSlaves), examples and commands for setting up a [Buildbot](http://buildbot.scons.org/) slave (volunteer now!)
- * [Google Summer of Code Pages](GSoC)
  * [Roadmap](Roadmap)
 
 
@@ -59,4 +57,3 @@ This wiki is an open forum for development and use of SCons. Please, do feel fre
 **Other Wiki Notes**
 
 * [WikiUserPages](WikiUserPages), a page to find out about the people who edit this wiki (add yourself there!)
-
