@@ -11,11 +11,12 @@ Additional tasks can be found on our [issue tracker](http://scons.tigris.org/pro
 ## SCons itself
 Task | Status | Assigned to |  Target version
 :----|:-------|------------:|:---------------
+[Python 3 compatibility](Python3Compatibility) (including full Unicode support)  |  wip  |  bdbaddog  |  3.0
+Performance Work| wip | bdbaddog | 3.1
 Integrating stubprocess.py wrapper for speedup  |  wip  |  gary, dirk  |  3.x
 [Revamp of Tools subsystem](RevampToolsSubsystem)  |  wip  |  gary  |  
-[Python 3 compatibility](Python3Compatibility) (including full Unicode support)  |  wip  |  bdbaddog  |  3.0
+
 [GitHub](GitHub) clone to get additional buildbot at [https://travis-ci.org/](https://travis-ci.org/)  |  open  |   |  
-[SConsInstaller](SConsInstaller), wrapup of GSoC 2009 by Lukas Erlinghagen |  open  |   |  
 Recursive Glob (ant-like)  |  wip  |  dirk  |  
 Java support, partial redesign and adding functionality, e.g. for inner classes ([JavaStrategy](JavaStrategy) and [JavaSupport](JavaSupport))  |  open  |  jannijtmans,russel?  |  
 TNG, refactor task scheduling  |  open  |    |  
