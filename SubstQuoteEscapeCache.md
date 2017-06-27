@@ -1,4 +1,3 @@
-
 This is an attempt to understand (and possibly partially untangle) the issues surrounding variable expansion, quoting (of input regions), escaping (of output regions), and caching of environment variables.  Just to be perverse, I'm throwing in semantics for environment variables. 
 
 The original draft is by [Greg Noel](GregNoel), who is the first person in the text. 
@@ -23,7 +22,7 @@ There are several aspects that seem to be deeply entwined:
 * **Interpolating** The process of evaluating a `$...` expression within a string and substituting the results of the specified calculation.  The interpolated content may be empty. 
 * **Quoting** Identifying parts of a string as _literal_, where the content is to be passed through unchanged. 
 * **Escaping**  Rewriting a value such that the semantic content is unchanged when processed by a downstream scanner.  It is likely that there will be different downstream scanners, so there will be multiple escape processors. 
-* **Caching**  Minimizing the cost of a calculation by reusing a previously-calculated result when there would be no change. [[note]](SubstQuoteEscapeCache) 
+* **Caching**  Minimizing the cost of a calculation by reusing a previously-calculated result when there would be no change. 
 * **Listifying** Really need a better term.  Automatically treating certain environment variables as list-like, _i.e._, as if they were automatically `CLVar`s.  In other words, the equivalent of `property()` for an attribute of an object. 
 The desire is to untangle these concepts, make their implementations as independent of each other as possible, and try to speed things up in the process. 
 
@@ -34,7 +33,8 @@ Let's introduce some terminology:
 * **Tokenize** Evaluate a string and convert it into a sequence of tokens.  In our context, the result is a surface interpolation. 
 * **Whitespace** One or more spaces (or tabs or ...).  In general, consecutive whitespace may be compressed into a single space without loss of meaning.  Whitespace may or may not be a token type, depending on the design requirements. 
 * **(((more?)))** 
-<a name="cache_note"></a>[note] For us, the shallow interpolation is always safe to cache since it depends solely on the string itself; other interpolation types could also be cached if there is some way to invalidate them if the underlying values change.  It's unlikely that bottom interpolations could be made safe to cache in all cases. 
+
+For us, the shallow interpolation is always safe to cache since it depends solely on the string itself; other interpolation types could also be cached if there is some way to invalidate them if the underlying values change.  It's unlikely that bottom interpolations could be made safe to cache in all cases. 
 
 
 # The Design
@@ -66,6 +66,7 @@ Tokens pulled out of the string may be of several different types.  Tokens may o
    * Probably others as well 
 * A quoted expansion.  What to do with `"$var"` or `'$var'`?  Is it quoted or expansion?  If the latter, is the expansion considered quoted and not recursively tokenized? [3]  And what to do if `$var` is a list?  Is it one quoted value or a list of quoted values?  I can make a case for either. 
 * A quoted composite.  What to do with "The value of CC is $CC"?  Messier than the previous one. [4] 
+
 [1] While researching for this page, I found a <ins>lot</ins> of occurrences of `${VAR}`, particularly if `VAR` begins with an underscore.  They should be treated identically with `$VAR` since we can significantly optimize this case. 
 
 [2] These may be further subdivided into "safe" expressions (evaluations of `_concat` or `_stripixes` for example) and "unsafe" expressions (everything else).  The idea is that safe expressions are ones that have no uncontrolled side-effects and the variables they use can be identified, so we can think about caching their results.  An alternative is to allow `$_func(args)` for cases like that so they can be optimized. 
@@ -352,4 +353,4 @@ Some tests:
 
 Is `${VAR}` significantly more expensive than `$VAR`?  If so, we can start with some simple performance improvements there and see what it gets us. 
 
-Compile expressions as a part of lexing and save code so don't have to reparse. 
+Compile expressions as a part of lexing and save code so don't have to reparse.
