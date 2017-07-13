@@ -24,6 +24,7 @@ This wiki is an open forum for development and use of SCons. Please, do feel fre
  * [SconsTutorial2](SconsTutorial2) - More Syntax, Shared Libraries, Install Targets
  * [IDEIntegration](IDEIntegration) to use SCons from your favourite IDE
  * [FromQmakeToScons](FromQmakeToScons) - how to make the switch
+ * [SConsOnACluster](SConsOnACluster) - how to use SCons for high performance computing on many parellel machines
 
 
 # Further documentation ![](http://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Gnome-system-help.svg/48px-Gnome-system-help.svg.png)
