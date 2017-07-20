@@ -28,5 +28,9 @@ Thoughts on possible improvements for Subst().
     1. create a string for comparing signature  (this drops items between $( and $) )
 1. If the evaluated string is a callable, it is called as follows
 
+```
+#!python
+
     callable(target,source,env,for_signature)
-1. 
+```
+1.
