@@ -1,6 +1,6 @@
 Thoughts on possible improvements for Subst().
 
-# Generally the following are true for Subst #
+# Generally the following are True for Subst #
 1. There are few unique strings stored among all Environment()'s created or cloned
 1. Most cloned Environments are mostly the same as all (or many others)
 1. Subst() is called several orders of magnitude more than there are command lines and/or unique strings
@@ -14,3 +14,15 @@ Thoughts on possible improvements for Subst().
     * UNCHANGED_SOURCES
     * UNCHANGED_TARGETS
     * *callable values in Environment's dict.*
+
+
+# Notes about current implementation #
+1. The subst logic is called with a dictionary of local and global values and the string (or list, or dict) to be evaluated
+1. Most of the time the global dictionary passed is the values from the Environment() being used by the task to build the target (or to evaluate if the target is out of date which requires the command line string to be evaluated). The local dictionary passed may be the TARGET and SOURCE information.
+1. The subst logic often involves recursive calls to itself or it's peers (string, list, dict versions of subst)
+1. Subst current is composed of two steps
+    1. tokenize the string
+    1. recursively evaluate the string
+1. Subst can be called in two basic modes
+    1. create a command line
+    1. create a string for comparing signature  (this drops items between $( and $) )
