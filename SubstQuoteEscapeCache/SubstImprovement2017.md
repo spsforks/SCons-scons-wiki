@@ -4,13 +4,13 @@ Thoughts on possible improvements for Subst().
 1. There are few unique strings stored among all Environment()'s created or cloned
 1. Most cloned Environments are mostly the same as all (or many others)
 1. Subst() is called several orders of magnitude more than there are command lines and/or unique strings
-1. The following are potentially the only unique items for most command lines (and are thus not cacheable)
+1. The following are potentially the only unique items for most command lines (and are thus not cacheable) [ list from SCons.Environment.reserved_construction_var_names ](http://scons.org/doc/latest/HTML/scons-api/SCons.Environment-module.html#reserved_construction_var_names)
     * CHANGED_SOURCES
     * CHANGED_TARGETS
     * SOURCE
     * SOURCES
     * TARGET
-    * TARGETSx
+    * TARGETS
     * UNCHANGED_SOURCES
     * UNCHANGED_TARGETS
     * *callable values in Environment's dict.*
@@ -33,4 +33,9 @@ Thoughts on possible improvements for Subst().
 
     callable(target,source,env,for_signature)
 ```
-1.
+
+
+# Notes about improvement implementation #
+1. Tokenize Environment() variables when they are set.
+1. Scan tokens to identify directly accessed variables. Add these to set which will be checked to invalidate cache when other variables are set. (Including list above)
+1. Consider altering strings generated for signatures to exclude SOURCE and TARGET unless they are modified (.abspath,etc ).  This would allow using pre-expanded variables (for example CXXCOM would have everything but TARGET and SOURCE pre expanded, so for signatures this would be a LOT faster)
