@@ -50,8 +50,8 @@ Bill Deegan (SCons project co-manager) and Andrew Morrow (MongoDB) have been wor
 * Variable Substitution: Currently variable substitution, which is largely used to create the command lines run by SCons, uses an appreciable percentage (approximately 18% for a null incremental build) of SCons’ CPU runtime. By and large much of this evaluation is duplicate (and thus avoidable work). For the moderate sized build discussed above there are approximately 100k calls to evaluation substitutions. There are only 413 unique strings to be evaluated. Consider that the CXXCOM variable is expanded 2412 times for this build. The only variables which are guaranteed unique are the SOURCES and TARGETS, all others could be evaluated once and cached.
 
     * Prior work on this item:
-        * [Previous Discussion](../SubstQuoteEscapeCache/Discussion)
+        * [Previous Discussion](SubstQuoteEscapeCache/Discussion)
     * Working doc on current and areas for improvement:
-        * [New Approache](../SubstQuoteEscapeCache/SubstImprovement2017)
+        * [New Approach](SubstQuoteEscapeCache/SubstImprovement2017)
     * Method to address:
         * Consider pre-evaluating Environment() variables where reasonable. This could use some sort of copy-on-write between cloned Environments. This pre-evaluation would skip known target specific variables (TARGET,SOURCES,CHANGED_SOURCES, and a few others), so minimally the per command line substitution should be faster.
