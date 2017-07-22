@@ -38,4 +38,5 @@ Thoughts on possible improvements for Subst().
 # Notes about improvement implementation #
 1. Tokenize Environment() variables when they are set.
 1. Scan tokens to identify directly accessed variables. Add these to set which will be checked to invalidate cache when other variables are set. (Including list above)
-1. Consider altering strings generated for signatures to exclude SOURCE and TARGET unless they are modified (.abspath,etc ).  This would allow using pre-expanded variables (for example CXXCOM would have everything but TARGET and SOURCE pre expanded, so for signatures this would be a LOT faster)
+1. Consider altering strings generated for signatures to exclude SOURCE and TARGET unless they are modified (.abspath,etc ).  This would allow using pre-expanded variables (for example CXXCOM would have everything but TARGET and SOURCE pre expanded, so for signatures this should be a **LOT** faster)
+1. On env.Clone() make shallow copy of environment variables, and then use copy-on-write if the variable changed
