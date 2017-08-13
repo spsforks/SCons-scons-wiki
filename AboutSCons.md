@@ -1,4 +1,3 @@
-
 SCons is a build system (build tool, make tool or software construction tool) written in pure Python. SCons uses Python scripts as "configuration files" for software builds. Based on the design that won the Software Carpentry build tool competition, SCons solves a number of problems associated with build automation, especially with the classic and ubiquitous Make itself.
 
 In contrast to command automation tools like Fabric, where you specify a name of an action to execute, in build systems like SCons you specify the name of a target (usually a file or directory) that needs to be built. You can have abstract targets (Value nodes) and aliases for doing ordinary automation tasks, but the base principle is that you specify what you need built, and SCons figures out what needs to be done.  It builds a complete dependency graph (what nodes depend on other nodes and what commands each node needs) and then executes the minimal set of commands to bring the desired targets up to date.
@@ -17,3 +16,5 @@ Distinctive features of SCons include:
 * easy user extensibility
 
 See also: [SconsVsOtherBuildTools](SconsVsOtherBuildTools)
+
+See History: http://legacy.python.org/workshops/2002-02/papers/16/index.htm
