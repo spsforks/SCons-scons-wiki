@@ -97,9 +97,44 @@ There is more detail on some of the steps here at [http://www.scons.org/wiki/Rel
 
 It's OK to do the release-branch creation, commit and tag at the very end, just in case something goes wrong and packages need to be rebuilt. 
 
+# Upload to testpypi #
+
+```
+#!bash
+
+twine upload --repository-url https://test.pypi.org/legacy/ dist/scons-3.0.0.alpha.20170821.tar.gz
+```
+
+Test via:
+
+```
+#!bash
+
+virtualenv venv
+. venv/bin/activate
+pip install --index-url https://test.pypi.org/simple/ scons==3.0.0.alpha.20170821
+scons --version
+```
+
+# Upload to Pypi #
+
+```
+#!bash
+
+twine upload --repository-url https://test.pypi.org/legacy/ dist/scons-3.0.0.alpha.20170821.tar.gz
+```
+
+
+
+
+
+
+
+
+
 TODO: 
 
 * do we need both Announce.txt and RELEASE.txt?  Let's optimize for what we really need. 
 * research above FIXMEs 
 * integrate useful parts of [http://www.scons.org/wiki/ReleaseHOWTO/TipBetaBody](http://www.scons.org/wiki/ReleaseHOWTO/TipBetaBody) into this page, while keeping it short and to the point. 
-* make list of dependencies needed to produce release (e.g. for ubuntu: all doc tools, man2html, rpm) 
+* make list of dependencies needed to produce release (e.g. for ubuntu: all doc tools, man2html, rpm)
