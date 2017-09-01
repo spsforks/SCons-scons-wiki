@@ -50,8 +50,8 @@ for the versions of XXE with a major version number of 4. Later versions with a 
 * `%APPDATA%\XMLmind\XMLEditor5\` on Windows 2000, XP, Vista. 
 After a restart of the program, the SCons DTD is picked up automatically, and you can even select it when inserting new Books, Articles,... whatever. 
 
-[[!img colortest.png] 
 
+![xmlmind Screenshot](./WysiwygDocumentation/colortest.png)
 
 ### Syntext Serna Free
 Homepage
