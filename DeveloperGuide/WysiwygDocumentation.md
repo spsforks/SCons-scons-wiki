@@ -68,4 +68,4 @@ This is a good alternative to the [XmlMind](XmlMind) editor, however its "Insert
 Copy the prepared "`scons`" addon folder to the "`plugins`" directory of your _**Serna**_ installation. Depending on where and how you installed the program, you might need root access for this step. 
 
 
-![Serna Screenshot](/WysiwygDocumentation/serna3.png)
+![Serna Screenshot](./WysiwygDocumentation/serna3.png)
