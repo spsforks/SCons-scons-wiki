@@ -10,10 +10,10 @@ This is the SCons Developer Guide.  Start here to [learn how to contribute to SC
     * META: do you really need to?
         * [Writing builders](ToolsForFools), wrappers, and subclassing (don't need to change source)
         * Using scons_dir for extensions
-    * [Running from the source tree](https://bitbucket.org/scons/scons)
+    * [Running from the source tree](https://github.com/SConsProject/scons)
     * [DebuggingScons](DebuggingScons)
 * Contributing
-    * [Mailing lists](http://www.scons.org/lists.php) (hammering out an idea before jumping in)
+    * [Mailing lists](http://www.scons.org/lists.html) (hammering out an idea before jumping in)
     * [Easy issues to fix](DeveloperGuide/EasyIssuesToFix) from our Tigris bug tracker
     * [Documentation](DeveloperGuide/Documentation)
     * [Writing and debugging tests](DeveloperGuide/TestingMethodology)
