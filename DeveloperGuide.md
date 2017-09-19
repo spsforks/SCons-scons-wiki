@@ -4,7 +4,7 @@ This is the SCons Developer Guide.  Start here to [learn how to contribute to SC
 
 * [Introduction](DeveloperGuide/Introduction)
 * Getting the source
-    * hg clone [https://bitbucket.org/scons/scons](https://bitbucket.org/scons/scons)
+    * git clone [https://github.com/SConsProject/scons.git](https://github.com/SConsProject/scons.git)
     * [Source tree organization](DeveloperGuide/SourceWalkThrough)
 * Hacking on the source
     * META: do you really need to?
