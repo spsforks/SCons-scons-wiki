@@ -5,7 +5,7 @@ This is the SCons Developer Guide.  Start here to [learn how to contribute to SC
 * [Introduction](DeveloperGuide/Introduction)
 * Getting the source
     * git clone [https://github.com/SConsProject/scons.git](https://github.com/SConsProject/scons.git)
-    * [Source tree organization](DeveloperGuide/SourceWalkThrough)
+    * [Source tree organization](SourceWalkThrough) 
 * Hacking on the source
     * META: do you really need to?
         * [Writing builders](ToolsForFools), wrappers, and subclassing (don't need to change source)
