@@ -2,6 +2,9 @@
 
 [TOC]
 
+# See [GitWorkflows.md](Gitworkflows.md) for any work after September 18, 2017
+
+# Below is purely historical.
 
 # Mercurial Workflow for SCons
 
