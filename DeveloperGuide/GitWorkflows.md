@@ -1,10 +1,4 @@
-**Table of Contents**
-
-[TOC]
-
-
 # Git Workflow for SCons
-
 
 ## TL;DR
 
