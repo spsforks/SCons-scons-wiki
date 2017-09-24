@@ -30,7 +30,7 @@ For those who don't want to read the entire page, here is a quick summary:
 
 
 ```txt
-hg clone https://bitbucket.org/scons/scons
+git clone git@github.com:SConsProject/scons.git
 ```
 Now you should have a copy of the sources in the "`scons`" folder.
 
