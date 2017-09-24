@@ -10,7 +10,9 @@ For those who don't want to read the entire page, here is a quick summary:
 * `git remote add upstream git@github.com:SConsProject/scons.git`
 * `git fetch upstream`
 * `git checkout -b <your working branch> upstream/master`
-* Do your work See 
+* `git config branch.<your working branch>.remote origin`
+   * Without the above, git push would try to push your change to the upstream repo
+* Do your work 
 * git push
 * Go to web interface of you fork and push `Create pull request` button
 
