@@ -27,4 +27,4 @@ env.Command(out, mnode, act, MYSOURCES = in)
 ```
 This makes every node in `out` only depend on `mnode`, which in turn depends on each node in `in`. This can reduce the dependency processing significantly, as `mnode` only has to be verified once, and everything in `out` essentially recycles that work. 
 
-The dependencyes between `out` and `in` are preserved. If something in `in` changes, then the contents of `mnode` change, because it is generated using md5sum, and thus `out` nodes will get rebuilt. 
+The dependencies between `out` and `in` are preserved. If something in `in` changes, then the contents of `mnode` change, because it is generated using md5sum, and thus `out` nodes will get rebuilt. 
