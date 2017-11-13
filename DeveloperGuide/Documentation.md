@@ -1,8 +1,3 @@
-**Table of Contents**
-
-[TOC]
-
-
 # Updating documentation
 
 This article describes the SCons documentation toolchain in versions 2.3.x and higher. It's based on the file `doc/overview.rst` in the source repository, so go there first to add or change text please. 
@@ -19,7 +14,7 @@ Our toolchain not only produces beautiful HTML and PDF files, but it also perfor
 
 ## Writer's view
 
-The toolchain only allows the User a restricted view on this whole "document processing cycle"; therefore, the User should only be concerned about updating or adding to documentation text. Even when adding a completely new chapter, the User can simply fire up an XML editor of choice and type away. A few configurations for XML editors [supporting WYSIWYG editing](/DeveloperGuide/WysiwygDocumentation) are provided. 
+The toolchain only allows the User a restricted view on this whole "document processing cycle"; therefore, the User should only be concerned about updating or adding to documentation text. Even when adding a completely new chapter, the User can simply fire up an XML editor of choice and type away. A few configurations for XML editors [supporting WYSIWYG editing](DeveloperGuide/WysiwygDocumentation) are provided. 
 
 Really nice Users also care about validating XML files against our special "SCons Docbook DTD/XSD".  This can be acheived via an XML editor or executing the SCons document validation script: `python bin/docs-validate.py`
 from the top source folder afterwards or, preferably, both. 
