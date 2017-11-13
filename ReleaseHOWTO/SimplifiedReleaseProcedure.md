@@ -2,7 +2,7 @@
 
 The procedure has been used for all releases since 2.2.0. 
 
-## Tag Release in Mercurial
+## Tag Release in Git
 
 * Move work to a release branch. It's currently necessary to do this first as the build will use the branch name when building the REVISION string it substitutes into many of the files.
 
@@ -10,9 +10,8 @@ The procedure has been used for all releases since 2.2.0.
 ```
 #!bash
 
-   hg branch rel_<NAME>
-   hg commit (message: final auto updates for x.y.z release)
-   hg tag <NAME> (e.g. 2.2.0)
+   git fetch 
+   git checkout -b rel_<NAME> master
 ```
 
 
