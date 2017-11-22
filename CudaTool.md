@@ -5,7 +5,7 @@ The following tool, cuda (**cuda.py**) is for using the [CUDA Toolkit](https://d
 
 # The tool code
 
-**Note:** code migrated to [scons-contrib](https://github.com/SConsProject/scons-contrib)!
+**Note:** code migrated to [scons-contrib](https://github.com/SCons/scons-contrib)!
 
 # Sample
 

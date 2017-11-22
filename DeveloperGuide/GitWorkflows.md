@@ -4,7 +4,7 @@
 
 For those who don't want to read the entire page, here is a quick summary:
 
-* Visit main GitHub SCons Page [https://github.com/SCons/scons.git](https://github.com/SConsProject/scons.git)
+* Visit main GitHub SCons Page [https://github.com/SCons/scons.git](https://github.com/SCons/scons.git)
 * Fork scons repo from GitHub UI
 * `git clone <your repo URL>`
 * `git remote add upstream git@github.com:SCons/scons.git`
@@ -81,7 +81,7 @@ Once the pull request has been accepted, only if you were working on a feature b
 
 ## Before working on the next bug/feature
 
-If you have cycled through the sections above, your pull request should now be merged to the "master" branch of the mainline. Before you continue to work on the next bugfix or feature, it's a good idea to update the working copy of your personal fork with the latest commits to `https://github.com/SConsProject/scons`.
+If you have cycled through the sections above, your pull request should now be merged to the "master" branch of the mainline. Before you continue to work on the next bugfix or feature, it's a good idea to update the working copy of your personal fork with the latest commits to `https://github.com/SCons/scons`.
 
 So, do a:
 

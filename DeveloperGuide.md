@@ -4,13 +4,13 @@ This is the SCons Developer Guide.  Start here to [learn how to contribute to SC
 
 * [Introduction](DeveloperGuide/Introduction)
 * Getting the source
-    * git clone [https://github.com/SConsProject/scons.git](https://github.com/SConsProject/scons.git)
+    * git clone [https://github.com/SCons/scons.git](https://github.com/SCons/scons.git)
     * [Source tree organization](SourceWalkThrough) 
 * Hacking on the source
     * META: do you really need to?
         * [Writing builders](ToolsForFools), wrappers, and subclassing (don't need to change source)
         * Using scons_dir for extensions
-    * [Running from the source tree](https://github.com/SConsProject/scons)
+    * [Running from the source tree](https://github.com/SCons/scons)
     * [DebuggingScons](DebuggingScons)
 * Contributing
     * [Mailing lists](http://www.scons.org/lists.html) (hammering out an idea before jumping in)
