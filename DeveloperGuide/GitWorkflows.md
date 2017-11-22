@@ -4,10 +4,10 @@
 
 For those who don't want to read the entire page, here is a quick summary:
 
-* Visit main GitHub SCons Page [https://github.com/SConsProject/scons.git](https://github.com/SConsProject/scons.git)
+* Visit main GitHub SCons Page [https://github.com/SCons/scons.git](https://github.com/SConsProject/scons.git)
 * Fork scons repo from GitHub UI
 * `git clone <your repo URL>`
-* `git remote add upstream git@github.com:SConsProject/scons.git`
+* `git remote add upstream git@github.com:SCons/scons.git`
 * `git fetch upstream`
 * `git checkout -b <your working branch> upstream/master`
 * `git config branch.<your working branch>.remote origin`
@@ -19,7 +19,7 @@ For those who don't want to read the entire page, here is a quick summary:
 
 ## Guidelines
 
-* If you have a patch which follows the [submission guidelines (code, doc, test)](http://www.scons.org/guidelines.html) you can submit a [pull request](https://github.com/SConsProject/scons/pulls) at GitHub.
+* If you have a patch which follows the [submission guidelines (code, doc, test)](http://www.scons.org/guidelines.html) you can submit a [pull request](https://github.com/SCons/scons/pulls) at GitHub.
 * You need to create a free account at GitHub to send a pull requests
 * Patches are reviewed and accepted by the release team.
 * For point releases and fixes, apply the patch to the oldest supported release, then merge it to default branch (if necessary)
@@ -30,14 +30,14 @@ For those who don't want to read the entire page, here is a quick summary:
 
 
 ```txt
-git clone git@github.com:SConsProject/scons.git
+git clone git@github.com:SCons/scons.git
 ```
 Now you should have a copy of the sources in the "`scons`" folder.
 
 
 ## Fork repository on GitHub side for creating pull requests
 
-Login to [GitHub](https://github.com/), go to [https://github.com/SConsProject/scons](https://github.com/SConsProject/scons) and click the "fork" button (a blue arrow).
+Login to [GitHub](https://github.com/), go to [https://github.com/SCons/scons](https://github.com/SCons/scons) and click the "fork" button (a blue arrow).
 
 
 ## Making changes
