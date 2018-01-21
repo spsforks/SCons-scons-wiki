@@ -49,20 +49,20 @@ I think this indicates that if we're _really_ going to make significant progress
 So...  I've started wondering:  can we do something _radically_ different and better by shedding a whole bunch of the current semantics?  And yes, we'd need to end up finding a new way to support the old interface (backwards compatibility blah blah blah), but we can find ways to make that work.  For the sake of argument, then, throw out _all_ the old assumptions.  What if we try to do something drastically simple, like throw out all of the special cases that make current substitution so complicated (and slow): 
 
 * `$(` `$)` 
-   * Find other ways to let people exclude parts of command lines? 
-   * Maybe give them some completely different idiom for doing what they use `$(` `$)` for today?  Like a different way to specify build numbers. 
-   * Probably just drop the `$(` and `$)` around things like `-I` options, since it's a clever optimization but not crucial. 
+  * Find other ways to let people exclude parts of command lines? 
+  * Maybe give them some completely different idiom for doing what they use `$(` `$)` for today?  Like a different way to specify build numbers. 
+  * Probably just drop the `$(` and `$)` around things like `-I` options, since it's a clever optimization but not crucial. 
 * Arbitrary Python expressions in `${}` 
-   * This might be tough, because it's what we currently use to tack `-I` options onto the `CPPPATH` values (_e.g._) 
+  * This might be tough, because it's what we currently use to tack `-I` options onto the `CPPPATH` values (_e.g._) 
 * Executing callables 
-   * Would need to catalog what we use these for in our code and find other idioms 
+  * Would need to catalog what we use these for in our code and find other idioms 
 * White space compression 
-   * Right now, we take pains to compress white space for command-line signature calculation. 
-   * This seems like another "clever" optimization that's technically correct but complicates the logic, and in a way that many users find counter-intuitive.  If they add a space to the command line, why _not_ recompile it because it's different?  That's a simpler, less ambiguous rule than, "When you change a command line, SCons may or may not choose to rebuild depending on whether it thinks the change is significant..." 
+  * Right now, we take pains to compress white space for command-line signature calculation. 
+  * This seems like another "clever" optimization that's technically correct but complicates the logic, and in a way that many users find counter-intuitive.  If they add a space to the command line, why _not_ recompile it because it's different?  That's a simpler, less ambiguous rule than, "When you change a command line, SCons may or may not choose to rebuild depending on whether it thinks the change is significant..." 
 * Expand undefined variables as null strings 
-      * See SK's discussion below in the context of possible use of the Py3K `string.Formatter` class 
-      * This is the primary reason we didn't just use Python variable substitution originally:  `"%(CC)s -o %(TARGET)s %(CCFLAGS)s %(SOURCES)s" % env` generates a `KeyError` if (e.g.) `CCFLAGS` isn't defined in the environment. 
-      * Requiring that variables be defined might be acceptable (some people already prefer it) and might allow us to use standard Python formatting (or nearly standard). 
+  * See SK's discussion below in the context of possible use of the Py3K `string.Formatter` class 
+  * This is the primary reason we didn't just use Python variable substitution originally:  `"%(CC)s -o %(TARGET)s %(CCFLAGS)s %(SOURCES)s" % env` generates a `KeyError` if (e.g.) `CCFLAGS` isn't defined in the environment. 
+  * Requiring that variables be defined might be acceptable (some people already prefer it) and might allow us to use standard Python formatting (or nearly standard). 
 * Others I'm forgetting about right now (it's late...)? 
 If we unconstrain ourselves in this way, what would be the simplest possible canonical representation of variables that avoid getting into having to handle a lot of end cases? 
 
