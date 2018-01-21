@@ -37,6 +37,8 @@ Thoughts on possible improvements for Subst().
 
 # Notes about improvement implementation #
 1. Tokenize Environment() variables when they are set.
+   * Actually tokenize strings (and variables) which will be evaluated by Subst.  (As a user can call (repeatedly) env.Subst("$A $B ${some python logic}..") so ideally we'll tokenize this and store with the original string and other information needed to expand this into a simple string.
 1. Scan tokens to identify directly accessed variables. Add these to set which will be checked to invalidate cache when other variables are set. (Including list above)
-1. Consider altering strings generated for signatures to exclude SOURCE and TARGET unless they are modified (.abspath,etc ).  This would allow using pre-expanded variables (for example CXXCOM would have everything but TARGET and SOURCE pre expanded, so for signatures this should be a **LOT** faster)
+1. Consider altering strings generated for signatures to exclude SOURCE and TARGET unless they are modified (.abspath,etc ).  This would allow using pre-expanded variables (for example CXXCOM would have everything but TARGET and SOURCE pre expanded, so for signatures this should be a **LOT** faster). Also since the current signature information includes the sources and the targets (and other dependencies), we don't really need them to be in the string used to determine if we need to rebuild.
 1. On env.Clone() make shallow copy of environment variables, and then use copy-on-write if the variable changed
+1. Handle OverrideEnvironments().. They basically have a "layer" of new variable values which override the existing ones in their "parent" Environment()
