@@ -2,7 +2,7 @@ This is an attempt to understand (and possibly partially untangle) the issues su
 
 The original draft is by [Greg Noel](GregNoel), who is the first person in the text. 
 
-I'm maintaining this page elsewhere and sporadically copying it here.  If you have something to say and absolutely must get it in the wiki, please use the [discussion page](SubstQuoteEscapeCache/Discussion). 
+I'm maintaining this page elsewhere and sporadically copying it here.  If you have something to say and absolutely must get it in the wiki, please use the [discussion page](SubstQuoteEscapeCacheDiscussion). 
 
 xxx Needs to be reorganized; uses of concepts often preceeds their definition and some concepts discussed in scattered places. 
 
