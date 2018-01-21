@@ -53,12 +53,12 @@ So...  I've started wondering:  can we do something _radically_ different and be
    * Maybe give them some completely different idiom for doing what they use `$(` `$)` for today?  Like a different way to specify build numbers. 
    * Probably just drop the `$(` and `$)` around things like `-I` options, since it's a clever optimization but not crucial. 
 * Arbitrary Python expressions in `${}` 
-      * This might be tough, because it's what we currently use to tack `-I` options onto the `CPPPATH` values (_e.g._) 
+   * This might be tough, because it's what we currently use to tack `-I` options onto the `CPPPATH` values (_e.g._) 
 * Executing callables 
-      * Would need to catalog what we use these for in our code and find other idioms 
+   * Would need to catalog what we use these for in our code and find other idioms 
 * White space compression 
-      * Right now, we take pains to compress white space for command-line signature calculation. 
-      * This seems like another "clever" optimization that's technically correct but complicates the logic, and in a way that many users find counter-intuitive.  If they add a space to the command line, why _not_ recompile it because it's different?  That's a simpler, less ambiguous rule than, "When you change a command line, SCons may or may not choose to rebuild depending on whether it thinks the change is significant..." 
+   * Right now, we take pains to compress white space for command-line signature calculation. 
+   * This seems like another "clever" optimization that's technically correct but complicates the logic, and in a way that many users find counter-intuitive.  If they add a space to the command line, why _not_ recompile it because it's different?  That's a simpler, less ambiguous rule than, "When you change a command line, SCons may or may not choose to rebuild depending on whether it thinks the change is significant..." 
 * Expand undefined variables as null strings 
       * See SK's discussion below in the context of possible use of the Py3K `string.Formatter` class 
       * This is the primary reason we didn't just use Python variable substitution originally:  `"%(CC)s -o %(TARGET)s %(CCFLAGS)s %(SOURCES)s" % env` generates a `KeyError` if (e.g.) `CCFLAGS` isn't defined in the environment. 
