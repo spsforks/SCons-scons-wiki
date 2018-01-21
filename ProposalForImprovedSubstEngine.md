@@ -18,7 +18,7 @@ Issues with the current engine include:
 ```
 #!python 
 env['FOO']=['Hello','world']
-env['CPPDEFINES']"$FOO"
+env['CPPDEFINES']="$FOO"
 print env.subst("$_CPPDEFINES") 
  
 ```
@@ -43,9 +43,9 @@ Which is incorrect. In other cases depending how the substitute path is set you 
 ```
 
 which is also incorrect 
-4.Current api's like subst_list() don't work correctly or act in strange ways. For example the subst_list() api will always return a list with one list of items, not a list of items. (This is the difference of getting ["hello", "world"]("hello", "world") vs ["hello", "world"]) 
+4.Current API's like subst_list() don't work correctly or act in strange ways. For example the subst_list() api will always return a list with one list of items, not a list of items. (This is the difference of getting ["hello", "world"]("hello", "world") vs ["hello", "world"]) 
 
-1. caching logic is not well defined. This leads to a lot of other code in SCons trying to cache certain values that it thinks should be ok to cache. This increases memory usage and makes it difficult to correct "clear" the cache or reevaluate when it might make sense to do so. 
+1. Caching logic is not well defined. This leads to a lot of other code in SCons trying to cache certain values that it thinks should be ok to cache. This increases memory usage and makes it difficult to correct "clear" the cache or reevaluate when it might make sense to do so. 
 1. There some internal cases in which the user can hit bugs in the subst() engine in which internal classes that should work in cases of "adding" two string objects with the "+" operator should work but don't for some reason, do a bug in [UserString](UserString) or the class the sub-classes from it. 
 1. Certain action may be cumbersome to say in certain cases. For example: 
 
