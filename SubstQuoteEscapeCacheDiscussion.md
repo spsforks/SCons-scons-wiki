@@ -49,9 +49,9 @@ I think this indicates that if we're _really_ going to make significant progress
 So...  I've started wondering:  can we do something _radically_ different and better by shedding a whole bunch of the current semantics?  And yes, we'd need to end up finding a new way to support the old interface (backwards compatibility blah blah blah), but we can find ways to make that work.  For the sake of argument, then, throw out _all_ the old assumptions.  What if we try to do something drastically simple, like throw out all of the special cases that make current substitution so complicated (and slow): 
 
 * `$(` `$)` 
-      * Find other ways to let people exclude parts of command lines? 
-      * Maybe give them some completely different idiom for doing what they use `$(` `$)` for today?  Like a different way to specify build numbers. 
-      * Probably just drop the `$(` and `$)` around things like `-I` options, since it's a clever optimization but not crucial. 
+   * Find other ways to let people exclude parts of command lines? 
+   * Maybe give them some completely different idiom for doing what they use `$(` `$)` for today?  Like a different way to specify build numbers. 
+   * Probably just drop the `$(` and `$)` around things like `-I` options, since it's a clever optimization but not crucial. 
 * Arbitrary Python expressions in `${}` 
       * This might be tough, because it's what we currently use to tack `-I` options onto the `CPPPATH` values (_e.g._) 
 * Executing callables 
