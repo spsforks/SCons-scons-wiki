@@ -30,7 +30,7 @@ Rewrite/restructure "About SCons"/"Getting started" sections  |  open   | member
 
 Task | Status | Assigned to |  Target version
 :----|:-------|------------:|:---------------
-[GitHub](http://github.com) Migrate to GitHub and [https://travis-ci.org/](https://travis-ci.org/)  |  done  | bdbaddog | 3.x  |
+Migrate to [GitHub](http://github.com)  |  done  | bdbaddog | 3.x  |
 Migrate current issues database from Tigris to GitHub  |  done |  bdbaddog  |  3.0.1
 [Python 3 compatibility](Python3Compatibility) (including full Unicode support)  |  wip  |  bdbaddog  |  3.0
 Switch trunk development to Mercurial ([DVCSMigration](DVCSMigration))  |  done (2017-04-14) | member
