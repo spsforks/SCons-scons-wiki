@@ -11,11 +11,9 @@ Additional tasks can be found on our [issue tracker](http://scons.tigris.org/pro
 ## SCons itself
 Task | Status | Assigned to |  Target version
 :----|:-------|------------:|:---------------
-[Python 3 compatibility](Python3Compatibility) (including full Unicode support)  |  wip  |  bdbaddog  |  3.0
 Performance Work| wip | bdbaddog | 3.1
 Integrating stubprocess.py wrapper for speedup  |  wip  |  gary, dirk  |  3.x
 [Revamp of Tools subsystem](RevampToolsSubsystem)  |  wip  |  gary  |  
-[GitHub](http://github.com) Migrate to git/github [https://travis-ci.org/](https://travis-ci.org/)  |  open  | 3.x  |  
 Recursive Glob (ant-like)  |  wip  |  dirk  |  
 Java support, partial redesign and adding functionality, e.g. for inner classes ([JavaStrategy](JavaStrategy) and [JavaSupport](JavaSupport))  |  open  |  jannijtmans,russel?  |  
 TNG, refactor task scheduling  |  open  |    |  
@@ -23,14 +21,19 @@ TNG, refactor task scheduling  |  open  |    |
 
 
 ## Web stuff
+Task | Status | Assigned to |  Target version
+:----|:-------|------------:|:---------------
 Rewrite/restructure "About SCons"/"Getting started" sections  |  open   | member
-:-------------------------------------------------------------|:-----:|:-----
-Migrate current issues database from Tigris to Other ([HostingSites](DVCSMigration/HostingSites))  |  [open](https://bitbucket.org/techtonik/dataliberation/src/default/issues/tigris/)  |  techtonik  |  
 
 
 ## Done
+
+Task | Status | Assigned to |  Target version
+:----|:-------|------------:|:---------------
+[GitHub](http://github.com) Migrate to GitHub and [https://travis-ci.org/](https://travis-ci.org/)  |  done  | bdbaddog | 3.x  |
+Migrate current issues database from Tigris to GitHub  |  done |  bdbaddog  |  3.0.1
+[Python 3 compatibility](Python3Compatibility) (including full Unicode support)  |  wip  |  bdbaddog  |  3.0
 Switch trunk development to Mercurial ([DVCSMigration](DVCSMigration))  |  done (2017-04-14) | member
-:-----------------------------------------------------------------------|-------------------:|:------
 Redesign website | Done | Bill
 [Issue 2264: cross-language scanner support](https://bitbucket.org/scons/scons/pull-requests/244/issue-2264-cross-language-scanner-support/diff)  | done | William Blevins | 2.5
 Switch Node class to using slots  |  done  |  dirk  |  2.4 
