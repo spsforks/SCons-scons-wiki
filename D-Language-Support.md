@@ -1,6 +1,3 @@
-[TOC]
-
-
 # Available D compilers
 
 The D Programming language main website is [here](https://dlang.org/).
