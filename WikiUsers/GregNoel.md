@@ -9,9 +9,9 @@ During his professional career, Greg was one of the world's leading experts on t
 
 ### My Pages
 
-* [An analysis of the algorithm used by the Taskmaster to run the DAG](GregNoel/RunDAG1) 
-* [Documentation for the new Taskmaster I'm writing](GregNoel/TaskmasterNG) 
-* [An analysis of the steps in the Autotools toolchain](GregNoel/AutotoolSteps) 
+* [An analysis of the algorithm used by the Taskmaster to run the DAG](RunDAG1) 
+* [Documentation for the new Taskmaster I'm writing](TaskmasterNG) 
+* [An analysis of the steps in the Autotools toolchain](AutotoolSteps) 
 * [A model for the implementation of Autotools in SCons](SummerOfCodeIdeas/AutotoolSCons) 
 * [Triage and prioritize the Autotools standard macros](GregNoel/StandardMacros) 
 * [An analysis of the syntax of Automake input files](GregNoel/AutomakeSyntax) 
