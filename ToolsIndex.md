@@ -1,8 +1,3 @@
-**Table of Contents**
-
-[TOC]
-
-
 # Introduction
 
 SCons core provides tools implemented as Python modules.  This is fine for tools that are part of the SCons distribution, but for contributed tools supported separately from the SCons code repository, using modules is not the best architecture.  Fortunately, SCons allows for tools to be implemented as Python packages (i.e. directories with a file `__init__.py`).  This allows for tools to be managed as packages in distributed version control system (DVCS) branches and repositories -- a Python package is a directory and directories not files are the top-level thing managed by a DVCS (which is why it is easier to deal with packages rather than modules using a DVCS). 
