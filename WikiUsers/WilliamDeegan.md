@@ -13,7 +13,7 @@ Location: Bay Area, CA
 
 I'm the founder of Bad Dog Consulting, we specialize in build and regression automation (aka CM). 
 
-I've been using scons for about 4 years for building on linux, solaris, and windows. 
+I've been using SCons since 2005 for building on linux, solaris, and windows. 
 
 I am one of two co-manager's of the project along with [GaryOberbrunner](GaryOberbrunner) 
 
