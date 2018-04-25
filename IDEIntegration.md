@@ -1,7 +1,3 @@
-**Table of Contents**
-
-[TOC]
-
 # Integrating scons into IDEs
 
 IDEs can often parse the output of build tools like scons which output the warnings and errors from the compiler etc as if the IDE had called the compiler itself. By using scons with your favourite IDE the best of both worlds can be obtained. 
@@ -69,9 +65,14 @@ See [SCons Setup](http://www.kdevelop.org/mediawiki/index.php/FAQ#How_can_I_set_
 
 [SCons](http://www.scons.org) is a software construction tool.  KDevelop (as of version 3.2.2) does not support SCons projects directly.  However, it is possible to set up a project very simply using SCons by writing a "stub" Makefile and using the "Custom Makefiles" project type.  An example of a simple stub Makefile is the following (note that lines after target names should be indented with tabs, not spaces): 
 
-* project_name: 
-   * scons clean: 
-   * scons --clean 
+```txt
+project_name:
+   scons
+
+clean: 
+   scons --clean
+```
+
 This will enable the _Build Project_ and _Clean Project_ actions to work. 
 
 
