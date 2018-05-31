@@ -1,4 +1,4 @@
-SCons processes the commands in the [SConstruct](SConstruct) in order as they appear. These commands build a [DependencyTree](DependencyTree). The dependency tree contains [NodeObjects](Nodes) that correspond to some sort of object to be built. Which Nodes to build in the dependency tree is determined by the command line arguments given by the user. 
+SCons processes the commands in the [SConstruct](SConstruct) in order as they appear. These commands build a [DependencyTree](DependencyTree). The dependency tree contains [Node Objects](Nodes) that correspond to some sort of object to be built. Which Nodes to build in the dependency tree is determined by the command line arguments given by the user. 
 
 We now have a family of trees (a forest) that represent the topmost files to build. All of the files that are out of date are built. This process recurses to ensure all subsequent Nodes are built as needed. 
 
