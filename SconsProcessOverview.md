@@ -74,46 +74,58 @@ These commands actually build stuff. They can affect files and directories on th
 ---------------:|:---------------
 [Dir()](Dir()) |  a node representing a directory
 [File()](File()) | a node representing a file
+
 **Pseudo targets** | **Description**
+---------------:|:---------------
 [Alias()](Alias()) | creates one or more phony targets that expand to one or more other targets
 [Value()](Value()) | creates a node based on a string. If the string changes then the Value node is "out of date"
+
 **Common build objects** | **Description**
+---------------:|:---------------
 [Program()](Program()) | build an executable from one or more object files, or C, C++, D or Fortran source files
 [StaticLibrary()](StaticLibrary()) | builds a library file; .a in POSIX or .lib in Win32
 [StaticObject()](StaticObject()) or [Object()](Object()) | builds an object file; .o in POSIX or .obj in Win32
 [SharedLibrary()](SharedLibrary()) | builds a shared library; a .so on Posix, a .dll in Win32
+
 **Win32 specific** | **Description**
+---------------:|:---------------
 [MSVSProject()](MSVSProject()) | generates MS Visual Studio project (.vcproj and .sln) files
 [RES()](RES()) | build an MS Visual C++ resource .res file from a .rc file
 [TypeLibrary()](TypeLibrary()) | builds Win32 type library .tlb from an input .idl file
+
 **Java specific** | **Description**
+---------------:|:---------------
 [Java()](Java()) |  builds a java class file
 [JavaH()](JavaH()) |  builds a C header and source file for building Java native methods
 [RMIC()](RMIC()) | builds stub and skeleton files for remote objects from Java .class files
+
 **Lex/Yacc specific** | **Description**
+---------------:|:---------------
 [CFile()](CFile()) | builds a C source file given a lex or yacc input file
 [CXXFile()](CXXFile()) | builds a C++ source file given a lex or yacc input file
+
 **Moc specific** | **Description**
+---------------:|:---------------
 [M4()](M4()) |  builds an output file from an M4 input file
 [Moc()](Moc()) | builds an output file from an moc input file
 [Uic()](Uic()) | builds a header, an implemenation and a moc file from a .ui file
+
 **Documentation specific** | **Description**
+---------------:|:---------------
 [DVI()](DVI()) |  builds a .dvi file
 [PDF()](PDF()) | builds a .pdf file from a .dvi, .tex, .ltx or .latex input file
 [PostScript()](PostScript()) |  builds a .ps from a .dvi, .tex, .ltx or .latex input file
+
 **Archive specific** | **Description**
+---------------:|:---------------
 [Tar()](Tar()) | builds a tar archive from files and/or directories
 [Zip()](Zip()) | builds a zip file from files and/or directories
+
 **Install** | **Description**
+---------------:|:---------------
 [Install()](Install()) | installs one or more files in a destination directory
 [InstallAs()](InstallAs()) |  installs one or more files as specific file names
-**CM tools** | **Description**
-[SourceCode()](SourceCode()) | Arrange for non-existent source files to be fetched from a source code management system using the specified builder.
-[BitKeeper()](BitKeeper()) | A factory function that returns a Builder object to be used to fetch source files using [BitKeeper](BitKeeper).
-[CVS()](CVS()) | A factory function that returns a Builder object to be used to fetch source files from the specified CVS repository.
-[Perforce()](Perforce()) | A factory function that returns a Builder object to be used to fetch source files from the Perforce source code management system.
-[RCS()](RCS()) |  A factory function that returns a Builder object to be used to fetch source files from RCS.
-[SCCS()](SCCS()) | A factory function that returns a Builder object to be used to fetch source files from SCCS.
+
 
 # Admin/Bookkeeping Commands
 
@@ -129,7 +141,9 @@ These commands are for "admin" or bookkeeping purposes. They provide the "glue" 
 [PrependUnique()](PrependUnique()) | Prepends the specified keyword arguments to the beginning of construction variables in the environment.
 [Platform()](Platform()) | Returns a callable object that can be used to initialize a construction environment using the platform keyword of the Environment() method
 [Tool()](Tool()) | Returns a callable object that can be used to initialize a construction environment using the tools keyword of the Environment() method. 
+
 **Command-line and invocation** | **Description**
+---------------:|:---------------
 [Default()](Default()) | specifies one or more targets to build if not targets are specified on the command line
 [Help()](Help()) | indicates what to display when -h is used on the command line
 [Return()](Return()) | what to return when scons exits
@@ -137,7 +151,9 @@ These commands are for "admin" or bookkeeping purposes. They provide the "glue" 
 [GetLaunchDir()](GetLaunchDir()) | Returns the absolute path name of the directory from which scons was initially invoked.
 [GetOption()](GetOption()) | This function provides a way to query a select subset of the scons command line options from a SConscript file.
 [SetOption()](SetOption()) | This function provides a way to set a select subset of the scons command line options from a SConscript file. 
+
 **Run time environment** | **Description**
+---------------:|:---------------
 [SConsignFile()](SConsignFile()) | store the scons db in the given file
 [EnsurePythonVersion()](EnsurePythonVersion()) | Ensure that the Python version is at least x.y
 [EnsureSConsVersion()](EnsureSConsVersion()) | Ensure that the SCons version is at least x.y
@@ -146,17 +162,23 @@ These commands are for "admin" or bookkeeping purposes. They provide the "glue" 
 [GetBuildPath()](GetBuildPath()) | Returns the scons path name (or names) for the specified file (or files)
 [SourceSignatures()](SourceSignatures()) | This function tells SCons what type of signature to use for source files: MD5 or timestamp.
 [TargetSignatures()](TargetSignatures()) | This function tells SCons what type of signatures to use for target files: build or content. 
+
 **Decomposition** | **Description**
+---------------:|:---------------
 [SConscript()](SConscript()) | reads another scons file
 [Export()](Export()) | makes variables available to sconscript files
 [Import()](Import()) | pulls in the values of exported variables
 [BuildDir()](BuildDir()) | indicates that the build directory for a target
 [SConscriptChdir()](SConscriptChdir()) | Enable/Disable changing working directory when in an SConscript file 
+
 **Caching functions** | **Description**
+---------------:|:---------------
 [CacheDir()](CacheDir()) | Specifies that scons will maintain a cache of derived files in cache_dir
 [Local()](Local()) | The specified targets will have copies made in the local tree, even if an already up-to-date copy exists in a repository.
 [Repository()](Repository()) | Specifies that directory is a repository to be searched for files.
+
 **Utility functions** | **Description**
+---------------:|:---------------
 [Dictionary()](Dictionary()) | Returns a dictionary object containing copies of all of the construction variables in the environment.
 [FindFile()](FindFile()) | Search for file in the path specified by dirs. file may be a list of file names or a single file name.
 [WhereIs()](WhereIs()) | Searches for the specified executable program, returning the full path name to the program if it is found, and returning None if not.
@@ -176,20 +198,26 @@ These commands are used to perform actions, to specify when an action occurs, to
 [Ignore()](Ignore()) | The specified dependency file(s) will be ignored when deciding if the target file(s) need to be rebuilt. 
 [Precious()](Precious()) | Marks each given target as precious so it is not deleted before it is rebuilt. Normally scons deletes a target before building it. 
 [SideEffect()](SideEffect()) | Declares side_effect as a side effect of building target. 
+
 **Generic command objects** | **Description**
+---------------:|:---------------
 [Scanner()](Scanner()) | Creates a Scanner object for the specified function. You can use the Scanner function to define objects to scan new file types for implicit dependencies. 
 [Builder()](Builder()) | Creates a Builder object for the specified action. In general, you should only need to add a new Builder object when you want to build a new type of file or other external target. 
 [Action()](Action()) | Creates an Action object for the specified action. These are similar in concept to "tasks" in the Ant build tool, although the implementation is slightly different. These functions do not actually perform the specified action at the time the function is called, but instead return an Action object that can be executed at the appropriate time. 
 [Execute()](Execute()) | Executes an Action object immediately (at the time the command is read)
 [AddPostAction()](AddPostAction()) | Arranges for the specified action to be performed after the specified target has been built. 
 [AddPreAction()](AddPreAction()) | Arranges for the specified action to be performed before the specified target is built. 
+
 **Actions** | **Description**
+---------------:|:---------------
 [Chmod()](Chmod()) | Returns an Action object that changes the permissions on the specified dest file or directory to the specified mode. 
 [Copy()](Copy()) | Returns an Action object that will copy the src source file or directory to the dest destination file or directory.
 [Delete()](Delete()) | Returns an Action that deletes the specified entry, which may be a file or a directory tree.
 [Mkdir()](Mkdir()) | Returns an Action that creates the specified directory dir 
 [Move()](Move()) | Returns an Action that moves the specified src file or directory to the specified dest file or directory. 
 [Touch()](Touch()) | Returns an Action that updates the modification time on the specified file 
+
 ** Uncategorized** | **Description**
+---------------:|:---------------
 [Configure()](Configure()) | Creates a Configure object for integrated functionality similar to GNU autoconf 
 [ParseConfig()](ParseConfig()) | Calls the specified function to modify the environment as specified by the output of command. 
