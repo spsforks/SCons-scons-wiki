@@ -44,7 +44,7 @@ It would mean that caching implicit dependencies would be safe and there would b
 
 **Steven Knight, 2007-08-17**, comments by **Greg Noel**, further comment by **Steven Knight**, yet more comments by **Greg Noel**: 
 
-SK gave a semi-formal talk at VMware about the Big Signature Refactoring a few months ago.  The PowerPoint slides are [saved here](http://www.scons.org/Documents/Big-Signature-Refactoring.ppt).  I'm not completely sure how comprehensible it is without me being able to explain verbally the differences in the `.sconsign` file formats (for example). 
+SK gave a semi-formal talk at VMware about the Big Signature Refactoring a few months ago.  The PowerPoint slides are [saved here](https://docs.google.com/presentation/d/1dZoqyGkieJxY3jOD_g3jub_5oCd8mo6lA8DXIaeGXeA/edit#slide=id.i175).  I'm not completely sure how comprehensible it is without me being able to explain verbally the differences in the `.sconsign` file formats (for example). 
 
 There were a number of good issues raised at the meeting.  I've captured them here, along with my commentary in italics, mostly based on things I communicated back to the VMware attendees earlier but with some updates based on work since then: 
 
