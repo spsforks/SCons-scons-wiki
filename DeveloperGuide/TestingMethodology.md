@@ -1,6 +1,6 @@
 # SCons Testing Methodology
 
-**Note: This text is a copy of the file `QMTest/test-framework.rst` in the source repository. Please synch your changes/additions to this page accordingly.** 
+**Note: This text is a copy of the file `testing/framework/test-framework.rst` in the source repository. Please synch your changes/additions to this page accordingly.** 
 
 
 SCons uses extensive automated tests to try to ensure quality. The primary goal is that users should be able to upgrade from version to version without any surprise changes in behavior. 
@@ -13,7 +13,7 @@ In general, no change goes into SCons unless it has one or more new or modified 
 There are three types of SCons tests: 
 End-to-End Tests
 : 
-End-to-end tests of SCons are all Python scripts (`*.py`) underneath the `test/` subdirectory.  They use the test infrastructure modules in the `QMTest` subdirectory. 
+End-to-end tests of SCons are all Python scripts (`*.py`) underneath the `test/` subdirectory.  They use the test infrastructure modules in the `testing/framework` subdirectory. 
 
 
 Unit Tests
@@ -60,7 +60,7 @@ option--lo.py
 
 ## Running Tests
 
-The standard set of SCons tests are run from the top-level source directory by the `runtest.py` script. There is a `--qmtest` option that checks whether the `QMTest` package is installed on your system. If it can be found, then the `runtest.py` script will use it to carry out the tests. 
+The standard set of SCons tests are run from the top-level source directory by the `runtest.py` script.
 
 Help is available through the `-h` option: 
 
@@ -349,7 +349,7 @@ With versions of scons following 0.96.1, an internal exception during scons exec
 
 ## Test Infrastructure
 
-The test API is in `QMTest/TestSCons.py`.  `TestSCons` is a subclass of `TestCommon`, which is a subclass of `TestCmd`; all those python files are in `QMTest`.  Start in `QMTest/TestCmd.py` for the base API definitions, like how to create files (`test.write()`) and run commands (`test.run()`). 
+The test API is in `testing/framework/TestSCons.py`.  `TestSCons` is a subclass of `TestCommon`, which is a subclass of `TestCmd`; all those python files are in `testing/framework`.  Start in `testing/framework/TestCmd.py` for the base API definitions, like how to create files (`test.write()`) and run commands (`test.run()`). 
 
 You want to use `TestSCons` for the end-to-end tests in `test`, but `TestCmd` for the unit tests in the `src` folder. 
 
@@ -393,7 +393,7 @@ intelc = test.detect_tool('intelc', prog='icpc')
 if not intelc:
     test.skip_test("Could not load 'intelc' Tool; skipping test(s).\n")
 ```
-See `QMTest/TestSCons.py` for the `detect_tool` method.  It calls the tool's generate() method, and then looks for the given prog (tool name by default) in env['ENV']['PATH']. 
+See `testing/framework/TestSCons.py` for the `detect_tool` method.  It calls the tool's `generate()` method, and then looks for the given prog (tool name by default) in env['ENV']['PATH']. 
 
 See also [DevelopingTests](DevelopingTests) for more info on writing and debugging SCons tests. 
 
@@ -401,5 +401,3 @@ See also [DevelopingTests](DevelopingTests) for more info on writing and debuggi
 ## The Test Methods Themselves
 
 (This content is also provided in [a page by itself](TestingMethodology/QMTestMethods) to make it easier to search.) 
-
-
