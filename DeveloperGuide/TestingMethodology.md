@@ -400,4 +400,4 @@ See also [DevelopingTests](DevelopingTests) for more info on writing and debuggi
 
 ## The Test Methods Themselves
 
-(This content is also provided in [a page by itself](TestingMethodology/QMTestMethods) to make it easier to search.) 
+(This content is also provided in [a page by itself](QMTestMethods) to make it easier to search.) 
