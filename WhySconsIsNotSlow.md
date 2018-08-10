@@ -68,13 +68,13 @@ I ran my own series of builds as "clean build" (from scratch), "update" and as "
 
 The measured times don't show a dramatic quadratic increase as claimed. You'll certainly notice that the X axis is scaled differently. That's because I couldn't reach any higher number of C files without my machine starting to swap memory. At the maximum of 16500 C files, SCons required about 1GB of RAM for a clean build, and the update runs as well. The rest of my total 2GB was taken by the OS, which makes me wonder how Eric Melski was able to reach those high numbers of files. By letting the machine swap freely? This would explain the increase of build times, starting at about 20000 C files in his data. 
 
-Another thing is, that if a quadratic behaviour for the whole process can be seen, I'd expect at least one module or function to show `O(n**2)` behaviour or worse. I mean, if there were a design flaw to be found, it shouldn't affect the whole program/framework but only a part of it, like a module or a single function. This bug would then grow exponentially over the number of files, and drag the overall performance of SCons down. 
+Another thing is, that if a quadratic behaviour for the whole process can be seen, I'd expect at least one module or function to show `O(n**2)` behavior or worse. I mean, if there were a design flaw to be found, it shouldn't affect the whole program/framework but only a part of it, like a module or a single function. This bug would then grow exponentially over the number of files, and drag the overall performance of SCons down. 
 
 So I did a full profiling run with `cProfile.py` for the two project sizes `d` (8500 files) and `e` (16500 files). You'll find the complete results in the repo, with all the timings, memory consumption and `pstats` files. Here are the profiling results for an update run: 
 
-[melski_update_d.svg](melski_update_d.svg) 
+[melski_update_d.svg](/WhySconsIsNotSlow/melski_update_d.svg) 
 
-[melski_update_e.svg](melski_update_e.svg) 
+[melski_update_e.svg](/WhySconsIsNotSlow/melski_update_e.svg) 
 
 which don't show any significant difference or increase for the percentage of runtime in each function. 
 
