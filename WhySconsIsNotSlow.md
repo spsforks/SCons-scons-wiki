@@ -72,9 +72,9 @@ Another thing is, that if a quadratic behaviour for the whole process can be see
 
 So I did a full profiling run with `cProfile.py` for the two project sizes `d` (8500 files) and `e` (16500 files). You'll find the complete results in the repo, with all the timings, memory consumption and `pstats` files. Here are the profiling results for an update run: 
 
-[melski_update_d.svg](/WhySconsIsNotSlow/melski_update_d.svg) 
+[melski_update_d.svg](WhySconsIsNotSlow/melski_update_d.svg) 
 
-[melski_update_e.svg](/WhySconsIsNotSlow/melski_update_e.svg) 
+[melski_update_e.svg](WhySconsIsNotSlow/melski_update_e.svg) 
 
 which don't show any significant difference or increase for the percentage of runtime in each function. 
 
