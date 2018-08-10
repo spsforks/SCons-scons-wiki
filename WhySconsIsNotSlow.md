@@ -1,7 +1,3 @@
-**Table of Contents**
-
-[TOC]
-
 Looking around on the Internet, a lot of places can be found where people complain about SCons being horrendously slow, up to the point that it's unusable (for them). One of the most prominent ones seems to be a series of blog articles by Eric Melski: 
 * [http://blog.melski.net/2011/05/23/why-is-scons-so-slow/](http://blog.melski.net/2011/05/23/why-is-scons-so-slow/) 
 * [http://www.electric-cloud.com/blog/2010/03/08/how-scalable-is-scons/](http://www.electric-cloud.com/blog/2010/03/08/how-scalable-is-scons/) 
