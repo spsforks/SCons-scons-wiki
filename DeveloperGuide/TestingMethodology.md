@@ -357,24 +357,16 @@ The match functions work like this:
 
 TestSCons.match_re:: match each line with a RE 
 
-: Splits the lines into a list (unless they already are) 
-
-
-: splits the REs at newlines (unless already a list) and puts ^..$ around each 
-
-
-: then each RE must match each line.  This means there must be as many REs as lines. 
+  * Splits the lines into a list (unless they already are) 
+  * splits the REs at newlines (unless already a list) and puts ^..$ around each 
+  * then each RE must match each line.  This means there must be as many REs as lines. 
 
 
 TestSCons.match_re_dotall:: match all the lines against a single RE 
 
-: Joins the lines with newline (unless already a string) 
-
-
-: joins the REs with newline (unless it's a string) and puts ^..$ around the whole thing 
-
-
-: then whole thing must match with python re.DOTALL. 
+  * Joins the lines with newline (unless already a string) 
+  * joins the REs with newline (unless it's a string) and puts ^..$ around the whole thing 
+  * then whole thing must match with python re.DOTALL. 
 
 
 Use them in a test like this: 
