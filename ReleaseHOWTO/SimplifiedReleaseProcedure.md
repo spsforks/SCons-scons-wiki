@@ -45,7 +45,6 @@ You should now have the following in build/dist:
   scons-$VERSION.linux-x86_64.tar.gz
   scons-$VERSION.linux-x86_64.zip
   scons-$VERSION.tar.gz
-  scons-$VERSION.win32.exe
   scons-$VERSION.zip
   scons-doc-$VERSION.tar.gz
   scons-local-$VERSION.tar.gz
@@ -76,7 +75,7 @@ The .linux-x86_64 ones are not needed and may be deleted; the others all get upl
 | content/releases/release-###.rst | add an announcement |
 
 
-* Commit the above changes to hg and push. 
+* Commit the above changes to git and push. 
 * Update Sourceforge: 
    * set default downloads for each win/linux/mac etc. appropriately, using the "info" link on the right of each download. 
 * Update Tigris: 
@@ -89,7 +88,7 @@ The .linux-x86_64 ones are not needed and may be deleted; the others all get upl
 
 ## After Release
 
-* On Bitbucket create a pull request from the branch. Bitbucket will give you a URL when you push and create the branch which will take you to a page to do just this.
+* On GitHub create a pull request from the branch. GitHub will give you a URL when you push and create the branch which will take you to a page to do just this.
 * On default branch, run `python bin/update-release-info.py post` to go back to develop mode. 
 * Commit those changes after review 
 There is more detail on some of the steps here at [http://www.scons.org/wiki/ReleaseHOWTO/TipBetaBody](http://www.scons.org/wiki/ReleaseHOWTO/TipBetaBody) although that is still based on the old svn system. 
@@ -101,7 +100,7 @@ It's OK to do the release-branch creation, commit and tag at the very end, just 
 ```
 #!bash
 
-twine upload --repository-url https://test.pypi.org/legacy/ dist/scons-3.0.0.alpha.20170821.tar.gz
+twine upload --repository-url https://test.pypi.org/legacy/ dist/scons-*.tar.gz
 ```
 
 Test via:
@@ -120,7 +119,7 @@ scons --version
 ```
 #!bash
 
-twine upload --repository-url https://test.pypi.org/legacy/ dist/scons-3.0.0.alpha.20170821.tar.gz
+twine upload --repository-url https://test.pypi.org/legacy/ dist/scons-*.tar.gz
 ```
 
 
