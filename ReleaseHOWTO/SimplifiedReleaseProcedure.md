@@ -40,10 +40,6 @@ The procedure has been used for all releases since 2.2.0.
 ```txt
 You should now have the following in build/dist: 
 
-  scons-$VERSION-1.noarch.rpm
-  scons-$VERSION-1.src.rpm
-  scons-$VERSION.linux-x86_64.tar.gz
-  scons-$VERSION.linux-x86_64.zip
   scons-$VERSION.tar.gz
   scons-$VERSION.zip
   scons-doc-$VERSION.tar.gz
@@ -52,8 +48,6 @@ You should now have the following in build/dist:
   scons-src-$VERSION.tar.gz
   scons-src-$VERSION.zip
 ```
-
-The .linux-x86_64 ones are not needed and may be deleted; the others all get uploaded to SF. 
 
 
 ## Upload Software and Doc
