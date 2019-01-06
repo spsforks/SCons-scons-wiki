@@ -102,6 +102,7 @@ Test via:
 ```
 #!bash
 
+# Be sure to do this on both windows and non-windows systems
 virtualenv venv
 . venv/bin/activate
 pip install --index-url https://test.pypi.org/simple/ scons==3.0.0.alpha.20170821
