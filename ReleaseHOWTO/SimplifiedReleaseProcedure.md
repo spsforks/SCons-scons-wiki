@@ -93,8 +93,10 @@ It's OK to do the release-branch creation, commit and tag at the very end, just 
 
 ```
 #!bash
-
-twine upload --repository-url https://test.pypi.org/legacy/ dist/scons-*.tar.gz
+in build/scons, edit setup.py to uncomment setup.py
+python setup.py bdist_wheel
+python setup.py sdist --format=gztar
+twine upload --repository-url https://test.pypi.org/legacy/ dist/scons-*.tar.gz dist/*.whl
 ```
 
 Test via:
