@@ -70,6 +70,9 @@ You should now have the following in build/dist:
 
 
 * Commit the above changes to git and push. 
+* Tag and push tag
+`git tag #.#.#
+ git push --tags`
 * Update Sourceforge: 
    * set default downloads for each win/linux/mac etc. appropriately, using the "info" link on the right of each download. 
 * Update Tigris: 
@@ -116,7 +119,7 @@ scons --version
 ```
 #!bash
 
-twine upload --repository-url https://test.pypi.org/legacy/ dist/scons-*.tar.gz
+twine upload  dist/scons-*.tar.gz dist/*.whl
 ```
 
 
