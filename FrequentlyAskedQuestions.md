@@ -5,10 +5,6 @@
 1. [Why doesn't SCons find my compiler/linker/etc.? I can execute it just fine from the command line.](#markdown-header-why-doesnt-scons-find-my-compilerlinkeretc-i-can-execute-it-just-fine-from-the-command-line)
 1. [How do I install files? The Install() method doesn't do anything. In general, how do I build anything outside my current directory?](#markdown-header-how-do-i-install-files-the-install-method-doesnt-do-anything-in-general-how-do-i-build-anything-outside-my-current-directory)
 
-**Table of Contents**
-
-[TOC]
-
 # General Information
 
 ## What is SCons?
