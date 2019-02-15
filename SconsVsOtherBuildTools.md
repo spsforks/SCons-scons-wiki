@@ -66,7 +66,10 @@ To sum up, my very subjective opinion is that scons is a better idea, but CMake 
 
 # Makeit
 
-Makeit ([http://www.dscpl.com.au/projects/makeit/](http://www.dscpl.com.au/projects/makeit/)) is a wide-ranging, quick and venerable build system that was part of Graham Dumpleton's OSE. Under the hood it's little more than an aspect-oriented collection of GNU Make modules. App/lib build files are typically tiny - on the order of a half dozen to a dozen lines - and contain nothing more than a few parameter settings. Mainly tilted toward C/C++/Python development, Makeit supports very large multi-platform multi-compiler multi-target and multi-technology-path builds while hiding almost all low-level details from app and maintenance programmers. 
+_This tool is no longer available. Its only trace on the internet I found to-date is <https://sourceforge.net/projects/makeit/>_ 
+_But it does not contain any files._
+
+Makeit ([http://www.dscpl.com.au/projects/makeit/](http://www.dscpl.com.au/projects/makeit/)) is a wide-ranging, quick and venerable build system that was part of Graham Dumpleton's OSE. Under the hood it's little more than an aspect-oriented collection of GNU Make modules. App/lib build files are typically tiny - on the order of a half dozen to a dozen lines - and contain nothing more than a few parameter settings. Mainly tilted toward C/C++/Python development, Makeit supports very large multi-platform multi-compiler multi-target and multi-technology-path builds while hiding almost all low-level details from app and maintenance programmers.
 
 
 # Jam
