@@ -87,8 +87,8 @@ Sphinx  | Mercurial  | [http://bitbucket.org/zondo/sphinx-scons/overview](http:/
 [Vala](ValaBuilder)  | Mercurial  | [https://bitbucket.org/russel/scons_vala](https://bitbucket.org/russel/scons_vala)  | hg clone [https://bitbucket.org/russel/scons_vala](https://bitbucket.org/russel/scons_vala) vala 
 [Watcom](Watcom)  | Git  | [https://bitbucket.org/cr1901/scons-wat](https://bitbucket.org/cr1901/scons-wat)  | git clone [https://bitbucket.org/cr1901/scons-wat](https://bitbucket.org/cr1901/scons-wat) watcom 
 Xcode | Mercurial | [https://bitbucket.org/al45tair/scons-xcode](https://bitbucket.org/al45tair/scons-xcode) | hg clone [https://bitbucket.org/al45tair/scons-xcode](https://bitbucket.org/al45tair/scons-xcode) xcode
-Wayland | git | [https://git.sr.ht/~sircmpwn/scons-wayland-scanner](https://git.sr.ht/~sircmpwn/scons-wayland-scanner) | git clone [https://git.sr.ht/~sircmpwn/scons-wayland-scanner](https://git.sr.ht/~sircmpwn/scons-wayland-scanner) wayland-scanner
 X10  | Mercurial  | [https://bitbucket.org/russel/scons_x10](https://bitbucket.org/russel/scons_x10)  | hg clone [https://bitbucket.org/russel/scons_x10](https://bitbucket.org/russel/scons_x10) x10 
+Wayland | git | [https://git.sr.ht/~sircmpwn/scons-wayland-scanner](https://git.sr.ht/~sircmpwn/scons-wayland-scanner) | git clone [https://git.sr.ht/~sircmpwn/scons-wayland-scanner](https://git.sr.ht/~sircmpwn/scons-wayland-scanner) wayland-scanner
 
 (*) The D tool is no longer developed outside of the SCons source tree (as it once was) to enable correct integration between D, C++ and C in multi-language systems.  D tool development now happens in [a clone of the SCons repository specifically for developing the D tool](https://bitbucket.org/russel/scons_d_tooling). 
 
