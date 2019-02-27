@@ -6,6 +6,7 @@ For those who don't want to read the entire page, here is a quick summary:
 
 * Visit main GitHub SCons Page [https://github.com/SCons/scons.git](https://github.com/SCons/scons.git)
 * Fork scons repo from GitHub UI
+* **WINDOWS Developers:** If you're working on windows `git config --global core.eol lf` this forces files to checkout with lf rather than window standard crlf line endings and is necessary to insure that all the tests pass.  Some will fail if their test files are checked out with crlf line endings.
 * `git clone <your repo URL>`
 * `git remote add upstream git@github.com:SCons/scons.git`
 * `git fetch upstream`
