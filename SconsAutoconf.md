@@ -124,4 +124,4 @@ The SConf functions of scons are documented in the scons user guide.
 
 More (very detailed) information can be found under the "Configure Contexts" section of the scons [manpage](http://www.scons.org/doc/HTML/scons-man.html).  There are also instructions on how to write your own checks there. 
 
-Other autocong macros have been contributed in scons format in article [AutoconfRecipes](AutoconfRecipes) 
+Other autoconf macros have been contributed in scons format in article [AutoconfRecipes](AutoconfRecipes) 
