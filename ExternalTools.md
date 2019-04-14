@@ -1,5 +1,5 @@
 
-There are lots of tools you might want to have SCons launch instead of an editor. These frequently require certain types of environment variable inheritance, and SCons, by default does none of that. For example, let's say you want to use the most excellent tool ccache ([http://ccache.samba.org/](http://ccache.samba.org/) with your SConscript. You already know that you have to replace the tool with another, so you setup an environment like: 
+There are lots of tools you might want to have SCons launch instead of an editor. These frequently require certain types of environment variable inheritance, and SCons, by default does none of that. For example, let's say you want to use the most excellent tool ccache ([http://ccache.dev](http://ccache.dev)) with your SConscript. You already know that you have to replace the tool with another, so you setup an environment like: 
 
 `env = Environment( CXX = 'ccache g++' )` 
 
