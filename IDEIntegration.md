@@ -1,17 +1,17 @@
 # Integrating scons with IDEs
-
+## Rationale
 IDEs are great to use, but often have a few disadvantages:
 * Many are platform specific so the project files can't be used in a cross platform project.
 * The project settings are often configured using a complex GUI, and may be difficult to edit as text.
 * There is no where near the power of having python as a language to generate complex builds.
 
-To have most of the best features your favourite IDE without these down sides, use a minimal IDE project that calls SCons to build it.
+To have most of the best features of your favourite IDE without these down sides, use a minimal IDE project that calls SCons to build it.
 
-This works because when IDEs can parse the output of build tools like SCons and read the output from the compiler compiler as if the IDE had called the compiler directly.
+This works when IDEs parse the output of build tools and read the output from the compiler as if the IDE had called the compiler directly.
 
 By using SCons with your favourite IDE the best of both worlds can be obtained:
 
-* The build process is developed in a cross platform, text based flexible form, instead of all the build settings being recorded in some form only editable through GUI. 
+* The build process is developed in a cross platform, text based, flexible form, instead of all the build settings being recorded in some form only editable through GUI. 
 * All of the great features of the IDE are available - Text editors with code completion, debugging etc, clicking on errors to see the line of code that caused them etc.
 
 Below are instructions to get started using SCons with some particular IDEs. 
