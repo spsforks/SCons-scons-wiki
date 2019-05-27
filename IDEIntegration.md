@@ -1,19 +1,29 @@
-# Integrating scons into IDEs
+# Integrating scons with IDEs
 
-IDEs can often parse the output of build tools like scons which output the warnings and errors from the compiler etc as if the IDE had called the compiler itself. By using scons with your favourite IDE the best of both worlds can be obtained. 
+IDEs are great to use, but often have a few disadvantages:
+* Many are platform specific so the project files can't be used in a cross platform project.
+* The project settings are often configured using a complex GUI, and may be difficult to edit as text.
+* There is no where near the power of having python as a language to generate complex builds.
+
+To have most of the best features your favourite IDE without these down sides, use a minimal IDE project that calls SCons to build it.
+
+This works because when IDEs can parse the output of build tools like SCons and read the output from the compiler compiler as if the IDE had called the compiler directly.
+
+By using SCons with your favourite IDE the best of both worlds can be obtained:
 
 * The build process is developed in a cross platform, text based flexible form, instead of all the build settings being recorded in some form only editable through GUI. 
-* All of the great features of the IDE - Text editors with code completion, debugging etc, clicking on errors to see the line of code that caused them etc 
-Below are instructions to get started using scons with some particular IDEs. 
+* All of the great features of the IDE are available - Text editors with code completion, debugging etc, clicking on errors to see the line of code that caused them etc.
+
+Below are instructions to get started using SCons with some particular IDEs. 
 
 
 ## Visual Studio .NET 2003 / Visual Studio 2005 (Windows)
 
-1. Launch Visual Studio with the /useenv command line switch otherwise it won't be able to find scons. 
+1. Launch Visual Studio with the /useenv command line switch otherwise it won't be able to find SCons. 
 1. File->New Project General->Make File Project 
 1. Save the project into the same directory as your SConstruct file. 
 1. In the project settings, just add "scons" as the build command , and "scons -c" as the clean command and configuration is done. 
-1. You should now be able to build using scons by using the build menu from visual studio. 
+1. You should now be able to build using SCons by using the build menu from visual studio. 
 Note: VS2005 seems to need absolute paths to filenames for the click-on-errors integration to work. --[björnen](björnen) 
 1. For debug build the command should be "scons debug=1"
 1. For Rebuild All: "scons -c & scons" ("scons -c & scons  debug=1" for debug)
