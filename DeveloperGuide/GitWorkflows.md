@@ -47,7 +47,7 @@ Login to [GitHub](https://github.com/), go to [https://github.com/SCons/scons](h
 
 ## Rebasing changes
 
-Feel free to use the Rebase feature to place your commits on top of fresh changes from the main repository, as long as your changes are local only and haven't been pushed to your public repo yet. Otherwise you may confuse the Bitbucket interface, which means that Bitbucket won't be able to update your pull requests automatically anymore. For a git-centered discussion of why "rebase" should only be used in a local context, see also [the drm-next thread](http://lwn.net/Articles/328438/).
+Feel free to use the Rebase feature to place your commits on top of fresh changes from the main repository, as long as your changes are local only and haven't been pushed to your public repo yet. Otherwise you may confuse the Github interface, which means that Github won't be able to update your pull requests automatically anymore. For a git-centered discussion of why "rebase" should only be used in a local context, see also [the drm-next thread](http://lwn.net/Articles/328438/).
 
 ```txt
 # if there is, pull it - this doesn't move your code to pulled revision
