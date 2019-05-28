@@ -4,31 +4,34 @@
 
 For those who don't want to read the entire page, here is a quick summary:
 
-* Visit main GitHub SCons Page [https://github.com/SCons/scons.git](https://github.com/SCons/scons.git)
+* Visit the main GitHub SCons Page [https://github.com/SCons/scons.git](https://github.com/SCons/scons.git)
 * Fork scons repo from GitHub UI
-* **WINDOWS Developers:** If you're working on windows `git config --global core.eol lf` this forces files to checkout with lf rather than window standard crlf line endings and is necessary to insure that all the tests pass.  Some will fail if their test files are checked out with crlf line endings.
-* `git clone <your repo URL>`
+* **NOTE** for Windows developers: git will do the right thing in terms of preserving line endings in the git repository for your work. However, to run the SCons test suite against your local branch, which you should do to verify your changes don't break anything, you should run: `git config --global core.eol lf`. 
+This forces files to checkout with lf rather than the Windows standard crlf line endings and is necessary to ensure that all the tests pass.  Some will fail if their test files are checked out with crlf line endings.
+* `git clone <your_repo_URL>`
 * `git remote add upstream git@github.com:SCons/scons.git`
 * `git fetch upstream`
-* `git checkout -b <your working branch> upstream/master`
-* `git config branch.<your working branch>.remote origin`
-   * Without the above, git push would try to push your change to the upstream repo
+* `git checkout -b <your_working_branchname> upstream/master`
+* `git config branch.<your_working_branchname>.remote origin`
+  * Without the above, git push would try to push your change to the upstream repo
 * Do your work 
-* git push
-* Go to web interface of you fork and push `Create pull request` button
+* `git push`
+* Go to the web interface of your fork and push `Create pull request` button.
+* Fill in the template and submit.
 
+## Overview for Github Beginners
+
+To create Pull Requests ("hi, SCons maintainers, I am _Requesting_ you _Pull_ this set of changes into the official mainline"), you need to juggle a few things.  You need a git branch somewhere on github which will be associated with the branch you want to merge to.  Since most of us will not have the rights to do that in the SCons/scons repository, that will usually be a copy ("fork") in your own github account.  And you also need a copy to actually make changes to on your own computer.  So you fork the official repository, then clone your fork to your computer. You work on your own computer to make the changes and push those up to your github fork. Then you can create a PR, which is easy because github remembers your copy of SCons is associated with the official SCons repository.
 
 ## Guidelines
 
-* If you have a patch which follows the [submission guidelines (code, doc, test)](http://www.scons.org/guidelines.html) you can submit a [pull request](https://github.com/SCons/scons/pulls) at GitHub.
-* You need to create a free account at GitHub to send a pull requests
+* If you have a patch which follows the [submission guidelines](http://www.scons.org/guidelines.html) (code, doc, test) you can submit a [Pull Request ("PR")](https://github.com/SCons/scons/pulls) on GitHub.
+* A (free) GitHub account is needed.
 * Patches are reviewed and accepted by the release team.
 * For point releases and fixes, apply the patch to the oldest supported release, then merge it to default branch (if necessary)
 * Development is done on default branch; named branches are for maintenance and for some large features.
 
-
 ## Clone SCons repository
-
 
 ```txt
 git clone git@github.com:SCons/scons.git
@@ -43,8 +46,6 @@ Login to [GitHub](https://github.com/), go to [https://github.com/SCons/scons](h
 
 ## Making changes
 
-
-
 ## Rebasing changes
 
 Feel free to use the Rebase feature to place your commits on top of fresh changes from the main repository, as long as your changes are local only and haven't been pushed to your public repo yet. Otherwise you may confuse the Github interface, which means that Github won't be able to update your pull requests automatically anymore. For a git-centered discussion of why "rebase" should only be used in a local context, see also [the drm-next thread](http://lwn.net/Articles/328438/).
@@ -56,14 +57,20 @@ git fetch upstream
 git rebase upstream/master
 ```
 
-## Working on several "branches" at once
+## Working on several branches at once
 
-Use git branches
+git makes branches extremely cheap and easy - they're really just pointers in your git tree.  All changes intending to become Pull Requests should be on a separate branch. To start a new branch, update your view of the master branch from upstream, then branch from that state. The following sequence is one way to start working in a fresh branch named "foo":
+
+```
+git fetch upstream
+git rebase upstream/master
+git checkout -b foo
+```
 
 
 ## Updating a pull request
 
-After you submitted your pull request, it gets reviewed by other developers. Chances are high that you receive comments or questions about your changes (see also [the Developer Guide intro](DeveloperGuide/Introduction)). In some cases you'll get asked to add or correct things, so you have to update your request.
+After you submitted your pull request, it gets reviewed by other developers. Chances are high that you receive comments or questions about your changes (see also [the Developer Guide intro](DeveloperGuide/Introduction)). In some cases you'll be asked to add or correct things, so you have to update your request.
 
 For this, update your local "`scons`" copy to the corresponding bookmark, if required.
 
@@ -94,3 +101,7 @@ git checkout -b <new branch name> upstream/master
 , to ensure that your new changes and commits will be as close as possible to the mainline development. Thank you.
 
 For SCons maintainers' side of the git workflow, see [AcceptingPullRequests](AcceptingPullRequests).
+
+## Submitting your Pull Request
+
+Github will offer a templat to fill in when you try to subit a PR. Please pay attention, it's more than fits on the initial screen, so it needs to be scrolled, and some bits are supposed to be removed.  The commit message in your branch will be the initial summary, but you don't have to keep that exactly, the audience is a little different.  The commit message is backward-looking information, "what was the reason for this change".  The github PR summary is more trying to convince the maintainers why they should accept this change. That's a subtle difference, but you might want to be more verbose in the PR message in some cases. Don't forget to fill in the checklist. Depending on the change, test suite additions or changes may be required, and documentation may need to be updated. 
