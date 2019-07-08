@@ -14,7 +14,6 @@ This is the SCons Developer Guide.  Start here to [learn how to contribute to SC
     * [DebuggingScons](DebuggingScons)
 * Contributing
     * [Mailing lists](http://www.scons.org/lists.html) (hammering out an idea before jumping in)
-    * [Easy issues to fix](DeveloperGuide/EasyIssuesToFix) from our Tigris bug tracker
     * [Documentation](Documentation)
     * [Writing and debugging tests](TestingMethodology)
     * [git workflows](GitWorkflows), explains how to work with git to submit your patches
