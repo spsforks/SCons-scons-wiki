@@ -5,6 +5,13 @@
 
 ## To use local scons source rather than installed:
 
+### The simplest way is to just run as follows:
+
+```
+python <path to your sandbox>/src/scripts/scons.py
+```
+
+### Less simple way
 Put these lines in a shell script and run the script.  If you want to run it regularly, make the script executable and put it in your private bin directory. 
 
 
@@ -14,6 +21,9 @@ SCONS_LIB_DIR=/path_to_scons/src/engine
 export SCONS_LIB_DIR
 exec python /path_to_scons/src/script/scons.py .
 ```
+
+### The old fashioned way (almost no reason to do this way)
+
 You can also run from a checked-out SCons source dir using bootstrap.py, which takes the same args as SCons.  That should always use the SCons engine from where bootstrap.py is found. 
 ```python
 #!python 
