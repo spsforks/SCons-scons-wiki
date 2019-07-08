@@ -5,7 +5,7 @@
 
 ## Python
 
-To build SCons you need to have Python version 2.7 or later installed, as well as its developer package named `python-dev` under Debian. You'll also need the setuptools, named `python-setuptools`. 
+To build SCons you need to have Python version 2.7.* or version 3.5.0 or later installed, as well as its developer package named `python-dev` under Debian. You'll also need the setuptools, named `python-setuptools`. 
 
 
 ## Full builds, including all docs
