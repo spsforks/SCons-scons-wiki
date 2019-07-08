@@ -34,7 +34,6 @@ This is the SCons Developer Guide.  Start here to [learn how to contribute to SC
         * Running the DAG
         * Scanning for implicit dependencies
         * Dealing with signatures
-    * [Statistics](Statistics) (for debugging and performance measurement)
 * [Overview of Modules and Classes](Classes)
 * Improvement ideas
     * [SummerOfCodeIdeas](SummerOfCodeIdeas)
