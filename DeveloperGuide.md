@@ -17,7 +17,6 @@ This is the SCons Developer Guide.  Start here to [learn how to contribute to SC
     * [Documentation](Documentation)
     * [Writing and debugging tests](TestingMethodology)
     * [git workflows](GitWorkflows), explains how to work with git to submit your patches
-    * [Accepting pull requests](DeveloperGuide/AcceptingPullRequests), howto for the SCons admin
     * [SconsBuildRequirements](SconsBuildRequirements), which packages you need for a full build
     * [Packaging](ReleaseHOWTO/SimplifiedReleaseProcedure)
 * [Architecture](DeveloperGuide/ArchitectureOverview)
