@@ -20,9 +20,9 @@ This is the SCons Developer Guide.  Start here to [learn how to contribute to SC
     * [SconsBuildRequirements](SconsBuildRequirements), which packages you need for a full build
     * [Packaging](ReleaseHOWTO/SimplifiedReleaseProcedure)
 * [Architecture](ArchitectureOverview)
-    * [Installation](DeveloperGuide/Installation) (the way SCons is meant to be found)
-    * [Nodes](DeveloperGuide/Nodes) (Dir, File, Value, ...)
-    * [Signatures](DeveloperGuide/Signatures)
+    * [Installation](Installation) (the way SCons is meant to be found)
+    * [Nodes](Nodes) (Dir, File, Value, ...)
+    * [Signatures](Signatures)
     * Determining configuration
     * Environments and what they encapsulate
     * Tools
@@ -30,12 +30,12 @@ This is the SCons Developer Guide.  Start here to [learn how to contribute to SC
     * [Scanners](Scanners)
     * Parsing the SConscripts
     * Node management (building the DAG)
-    * [TaskMaster](DeveloperGuide/TaskMaster)
+    * [TaskMaster](TaskMaster)
         * Running the DAG
         * Scanning for implicit dependencies
         * Dealing with signatures
-    * [Statistics](DeveloperGuide/Statistics) (for debugging and performance measurement)
-* [Overview of Modules and Classes](DeveloperGuide/Classes)
+    * [Statistics](Statistics) (for debugging and performance measurement)
+* [Overview of Modules and Classes](Classes)
 * Improvement ideas
     * [SummerOfCodeIdeas](SummerOfCodeIdeas)
 
