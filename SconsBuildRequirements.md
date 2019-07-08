@@ -27,20 +27,3 @@ python bin/scons_dev_master.py build
 ```
 should automatically install the required packages, as mentioned above. 
 
-
-## Problem: recent Debian distros
-
-A problem exists for the Windows installer that gets created during the bootstrap.py process. Under more recent Debian distributions, e.g. Ubuntu Linux 14.04, the required "wininst*.exe" files aren't included in the "python*" packages anymore. That's because they are binary files without a source. But they are needed when the distutils try to create the installer, and the build stops with an error like: 
-
-
-```txt
-  error: [Errno 2] No such file or directory:
-'/usr/lib/python2.7/distutils/command/wininst-6.0.exe',
-/usr/lib/python2.7/distutils/command/wininst-6.0.exe not included in
-the Debian packages.
-```
-Against this, you can either download a standard Python source archive from [http://www.python.org](http://www.python.org) and extract the "*.exe" files from its folder `Lib/distutils/command`, or you simply grab the following archive: 
-
-[python-wininst.tgz](python-wininst.tgz) 
-
-. Then copy the "*.exe" files to the `distutils/command` folder of your local Python installation, e.g. `/usr/lib/python2.7/distutils/command`. Done. 
