@@ -3,7 +3,7 @@
 IDEs are great to use, but often have a few disadvantages:
 * Many are platform specific so the project files can't be used in a cross platform project.
 * The project settings are often configured using a complex GUI, and may be difficult to edit as text.
-* There is no where near the power of having python as a language to generate complex builds.
+* Project settings to drive a build are often in a unique syntax, with nowhere near the power of having Python as the language to control the build.
 
 To have most of the best features of your favourite IDE without these down sides, use a minimal IDE project that calls SCons to build it.
 
@@ -15,7 +15,6 @@ By using SCons with your favourite IDE the best of both worlds can be obtained:
 * All of the great features of the IDE are available - Text editors with code completion, debugging etc, clicking on errors to see the line of code that caused them etc.
 
 Below are instructions to get started using SCons with some particular IDEs. 
-
 
 ## Visual Studio .NET 2003 / Visual Studio 2005 (Windows)
 
@@ -54,8 +53,6 @@ SConsolidator is an Eclipse plug-in that provides tool integration for SCons in 
 * A special view for a convenient build target management of all workspace projects 
 * Graph visualization of build dependencies with numerous layout algorithms and search and filter functionality that enables debugging of SCons scripts 
 More information can be found at [http://sconsolidator.com](http://sconsolidator.com) and its update site is available at [http://www.sconsolidator.com/update](http://www.sconsolidator.com/update). 
-
-
 
 ---
 
