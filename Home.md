@@ -52,8 +52,7 @@ This wiki is an open forum for development and use of SCons. Please, do feel fre
  * [Buildbot](http://buildbot.scons.org/), our automatically running [build](http://buildbot.scons.org/console) and [performance](http://buildbot.scons.org/timings/) reports
  * [Installing buildbot slaves](InstallingBuildbotSlaves), examples and commands for setting up a [Buildbot](http://buildbot.scons.org/) slave (volunteer now!)
  * [Roadmap](Roadmap)
- * [PerformanceIdeas](PerformanceIdeas) page to record possibilities for improving SCons' performance
-
+ * [NeedForSpeed](NeedForSpeed) page to record possibilities for improving SCons' performance
 
 
 **Other Wiki Notes**
