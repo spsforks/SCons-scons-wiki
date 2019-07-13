@@ -2,10 +2,12 @@
 
 # SCons Bug Party
 
-The SCons _Bug Party_ is our semi-regular (bi-weekly?) session for examining and prioritizing open issues.  When we started in March, 2008, we had no triaged issues and 430 untriaged issues (_i.e._, issues with a milestone of `-unspecified-`).  Here's [how we're doing](http://scons.tigris.org/issues/reports.cgi?state=Open+issues&x=Assigned+to&y=Milestone) today. 
+The SCons _Bug Party_ was a semi-regular (bi-weekly?) session for examining and prioritizing (or "triaging") open issues.  When it started in March, 2008, we had no triaged issues and 430 untriaged issues (_i.e._, issues with a milestone of `-unspecified-`). Unfortunately the last recorded Bug Party was in May 2011.  This page is retained with interesting information should they be resurrected at a future time.
+
+Since the move to github, it is not as easy to generate a report of the issue status, as that system's issue-tracking is relatively unsophisticated.  We have an "untriaged" lavel which can identify bugs which need that kind of attention, but unfortunately someone has to take the time to add that label, and the number of project participants with rights to do that is quite small, so there's a bottleneck.  Nonetheless, you can follow the link to [untriaged bugs](https://github.com/scons/scons/issues?q=is%3Aissue+is%3Aopen+label%3Auntriaged).
 
 
-The next bug party will be on the `#scons` IRC channel ([irc://irc.freenode.net/#scons](irc://irc.freenode.net/#scons)), on 24 May, 2011 at 20h00 on the right coast (EDT), 17h00 on the left coast (PDT), and after midnight in most of Europe; for specific locations, check the [timezone information here](http://timeanddate.com/worldclock/fixedtime.html?month=5&day=24&year=2011&hour=17&min=0&sec=0&p1=283).  It should last between sixty and ninety minutes.  All are invited. 
+Bug triaging sessions take place on IRC (possibly in future a different interactive chat medium) and should last between sixty and ninety minutes.  All are invited. 
 
 
 ### Responsibilities of Release Team Members
