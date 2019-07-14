@@ -2,7 +2,7 @@ SCons processes the commands in the SConstruct in order as they appear. These co
 
 We now have a family of trees (a forest) that represent the topmost files to build. All of the files that are out of date are built. This process recurses to ensure all subsequent Nodes are built as needed.
 
-Note that this gives the appearance of SCons being two-pass.  If the commands don't contribute directly to building up the dependency tree, such as pure Python code that does not use the API, they can be executed right away, while commands which instruct SCons about targets, dependencies and other such matters are deferred until the full dependency picture is complete. As SCons is running it will tell you when it switches to the build phase:
+Note that this gives the appearance of SCons being two-pass.  If the commands don't contribute directly to building up the dependency tree, such as pure Python code that does not use the API, they can be executed right away, while commands which instruct SCons about targets, dependencies and other such matters don't cause execution until the full dependency picture is complete. As SCons is running it will tell you when it switches to the build phase:
 ```
 scons: done reading SConscript files.
 scons: Building targets ...
