@@ -1,6 +1,12 @@
 SCons processes the commands in the SConstruct in order as they appear. These commands build a dependency tree. The dependency tree contains [Node Objects](Nodes) that correspond to some sort of object to be built. Which Nodes to build in the dependency tree is determined by the command line arguments given by the user. 
 
-We now have a family of trees (a forest) that represent the topmost files to build. All of the files that are out of date are built. This process recurses to ensure all subsequent Nodes are built as needed. 
+We now have a family of trees (a forest) that represent the topmost files to build. All of the files that are out of date are built. This process recurses to ensure all subsequent Nodes are built as needed.
+
+Note that this gives the appearance of SCons being two-pass.  If the instructions don't contribute directly to building up the dependency tree they can be executed right away, while instructions which use the SCons API to instruct about targets, dependencies and other such matters wait until the full dependency picture end up creating commands which are run later. As SCons is running it will tell you when it switches to the build phase:
+```
+scons: done reading SConscript files.
+scons: Building targets ...
+```
 
 The following is pseudo code for the overall process that SCons follows: 
 
