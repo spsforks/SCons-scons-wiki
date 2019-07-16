@@ -4,7 +4,7 @@ See [SconsProcessOverview](SconsProcessOverview) for a high level view of SCons 
 
 ## SConstruct and Environment
 
-The main build configuration script for **SCons** is the `SConstruct` file. When the `scons` script is called, it will automatically search for this file in the current directory (actually, several different forms are acceptable - ['SConstruct', 'Sconstruct', 'sconstruct', 'SConstruct.py', 'Sconstruct.py', 'sconstruct.py']).
+The main build configuration script for **SCons** is the `SConstruct` file. When the `scons` script is called, it will automatically search for this file in the current directory (actually, several different forms are also found if used: `Sconstruct`, `sconstruct`, `SConstruct.py`, `Sconstruct.py`, `sconstruct.py`).
 
 The full SCons API is available for usage from SConstruct, including the **Environment** class. The Environment class describes a **Construction Environment** which controls a build; a build configuration may have several of these if there are different instructions for different parts of the build. Typically a build configuration instantiates this class very early, although it's certainly not required to do so at the very top. 
 
@@ -16,7 +16,7 @@ This sets up a basic environment. Now, you can set up build targets.
 ```python
 env.Program(target='bar', source=['foo.c'])
 ```
-This tells SCons that 'bar' is made from source file 'foo.c'. The Program builder has lots of smarts, and can figure out that this is a C language build and the the appropriate Action will invoke the C compiler to build it. Behind the scenes, SCons will also work out if there are other dependencies - for example if `foo.c` includes header files, and maybe those header files include other header files, those are all added to the dependency graph, and SCons can detect when `bar` needs to be rebuilt if any of those dependencies go out of date.
+This tells SCons that `bar` is made from source file `foo.c`. The Program builder has lots of smarts, and can figure out that this is a C language build and the the appropriate Action will invoke the C compiler to build it. Behind the scenes, SCons will also work out if there are other dependencies - for example if `foo.c` includes header files, and maybe those header files include other header files, those are all added to the dependency graph, and SCons can detect when `bar` needs to be rebuilt if any of those dependencies go out of date.
 
 For more complex programs you must set up a more specialized environment. For example, setting up the flags the compiler will use, additional directories to search for include files, etc.
 
@@ -35,14 +35,18 @@ Some parameters require specific lists, such as the source list. Reading the [Co
 
 ## Specifying A Default Target
 
-An important note is the **Default** command. It tells scons what to build by default. This controls which targets are built if the `scons` command is called without giving it targets.  If Default is not called, the default list is all targets.
+An important note is the **Default** command. It tells scons what to build by default. Scons always builds the targets it is given on the command line, and any targets that are necessary to be able to build the specifid targets. Default helps set up the list to build if no targets are given on the command line.  If Default is not used, scons selects all the targets for building, which may be too much in a larger project.
 
 ```python
 t = env.Program(target='bar', source=['foo.c'])
 Default(t)
 ```
 
-You can call Default many times to add to the default target list.
+You can call Default many times to build up the default target list. If it later turns out you want to build everything in spite of having a default list, you can give the current directory as an argument to scons, as in:
+
+```python
+scons .
+```
 
 **Tip:**
 You can pass the target name to Default(), but Steven Knight (author of SCons) recommends that you use the return value from your target as the default value instead of specifying the name. He explains it best: "The only stylistic suggestion I'll make is that if you use the object returned by `env.Program` as the input to `Default()`, then you'll be more portable, since you won't have to worry about whether the generated program will have a `.exe` suffix or not."
