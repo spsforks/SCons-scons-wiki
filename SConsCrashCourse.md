@@ -119,7 +119,7 @@ Many projects need to support building in several different ways from the same s
 Here is an example building the same targets in release and debug modes; in addition to setting the distinct variant directories, in this example a flag named `MODE` is passed to the SConscript so it can determine which build it is doing, and set up the environment for that build appropriately.
 
 ```python
-SConscript('SConscript', variant_dir='build_release', duplicate=0, exports={'MODE':'release'})
-SConscript('SConscript', variant_dir='build_debug',   duplicate=0, exports={'MODE':'debug'})
+SConscript('src/SConscript', variant_dir='build_release', duplicate=0, exports={'MODE':'release'})
+SConscript('src/SConscript', variant_dir='build_debug',   duplicate=0, exports={'MODE':'debug'})
 ```
 
