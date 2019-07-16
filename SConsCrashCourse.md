@@ -92,7 +92,7 @@ Link time flags
 env.Append(LINKFLAGS = ['-Wl,--rpath,/usr/local/lib/'])
 ```
 
-Add flags from a config (the `ParseConfig` method sorts the result of running an external command into the appropriate buckets - effectively it does an `Append` to `CPPDEFINES`, `CCFLAGS`, `LINKFLAGS`, etc. as necessary: see [ParseFlags in the manpage](https://scons.org/doc/3.0.5/HTML/scons-man.html#f-ParseFlags):
+Add flags from a config (the `ParseConfig` method sorts the result of running an external command into the appropriate buckets - effectively it does an `Append` to `CPPDEFINES`, `CCFLAGS`, `LINKFLAGS`, etc. as necessary (see [ParseFlags in the manpage](https://scons.org/doc/3.0.5/HTML/scons-man.html#f-ParseFlags) for details):
 
 ```python
 env.ParseConfig('pkg-config --cflags glib-2.0')
