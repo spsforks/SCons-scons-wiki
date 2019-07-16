@@ -99,10 +99,12 @@ Add flags from a config (the `ParseConfig` method sorts the result of running an
 env.ParseConfig('pkg-config --cflags glib-2.0')
 ```
 
-Building a more complex program that the example outlined above from several source files can be done the following way:
+Building a more complex program than the example outlined above from several source files, not all of which are always present, can be done by building up a list and then passing it to the builder in separate steps:
 ```python
-sources = [ 'main.cpp', 'utils.cpp', 'gui.cpp' ]
-env.Program(target = 'a.out', source = sources)
+sources = ['main.cpp', 'utils.cpp', 'args.cpp']
+if gui_mode:
+    sources.extend(['gui.cpp',])
+env.Program(target='a.out', source=sources)
 ```
 
 ## Extending the configuration: SConscript
@@ -111,7 +113,7 @@ As soon as the project extends beyond "extremely simple", you will probably want
 
 ```python
 SConscript('lib/SConscript')
-SConscript('src/SConscript')
+SConscript('test/SConscript')
 ```
 
 ##  Supporting mutiple builds: Variant directory
