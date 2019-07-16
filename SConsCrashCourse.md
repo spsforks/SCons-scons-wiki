@@ -18,6 +18,8 @@ env.Program(target='bar', source=['foo.c'])
 ```
 This tells SCons that `bar` is made from source file `foo.c`. SCons has rules for lots of common build tasks so you don't have to describe the actual commands to use. The Program builder figures out that this is a C language build and the the appropriate Action will invoke the appropriate C compiler to build it. Behind the scenes, SCons will also work out if there are other dependencies - for example if `foo.c` includes header files, and maybe those header files include other header files, those are all added to the dependency graph, and SCons can detect when `bar` needs to be rebuilt if any of those dependencies go out of date. This is a big improvement over older build systems that could not detect if a rebuild was needed due to a dependency unless you explicitly called out the dependency.
 
+As an additional bit of smarts, note that the *target* is named `bar`, that does not say the produced file is named `bar`. As a multi-platform build tool, SCons understands the needs of the platform it is generating for and deals with any required file suffixes (or prefixes) itself without you having to program in that information.
+
 For more complex programs you must set up a more specialized environment. For example, setting up the flags the compiler will use, additional directories to search for include files, etc.
 
 To do that you can specify named parameters such as `CCFLAGS` for C files or `CPPFLAGS` for the C++ Preprocessor. More of these can be seen below in this article and also in the [Configuration File Reference](http://www.scons.org/doc/production/HTML/scons-man.html#configuration_file_reference) section of the [man page](http://www.scons.org/doc/production/HTML/scons-man.html).
