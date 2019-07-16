@@ -4,7 +4,7 @@ See [SconsProcessOverview](SconsProcessOverview) for a high level view of SCons 
 
 ## SConstruct and Environment
 
-The main build configuration script for **SCons** is the `SConstruct` file. When the `scons` script is called, it will automatically search for this file in the current directory (actually, several different forms are also found if used: `Sconstruct`, `sconstruct`, `SConstruct.py`, `Sconstruct.py`, `sconstruct.py`).
+The main build configuration script for **SCons** is the `SConstruct` file. When the `scons` script is called, it will automatically search for this file in the current directory (actually, several alternate names are also searched for and will be used if found `Sconstruct`, `sconstruct`, `SConstruct.py`, `Sconstruct.py`, `sconstruct.py`).
 
 The full SCons API is available for usage from SConstruct, including the **Environment** class. The Environment class describes a **Construction Environment** which controls a build; a build configuration may have several of these if there are different instructions for different parts of the build. Typically a build configuration instantiates this class very early, although it's certainly not required to do so at the very top. 
 
@@ -16,7 +16,7 @@ This sets up a basic environment. Now, you can set up build targets.
 ```python
 env.Program(target='bar', source=['foo.c'])
 ```
-This tells SCons that `bar` is made from source file `foo.c`. The Program builder has lots of smarts, and can figure out that this is a C language build and the the appropriate Action will invoke the C compiler to build it. Behind the scenes, SCons will also work out if there are other dependencies - for example if `foo.c` includes header files, and maybe those header files include other header files, those are all added to the dependency graph, and SCons can detect when `bar` needs to be rebuilt if any of those dependencies go out of date.
+This tells SCons that `bar` is made from source file `foo.c`. SCons has rules for lots of common build tasks so you don't have to describe the actual commands to use. The Program builder figures out that this is a C language build and the the appropriate Action will invoke the appropriate C compiler to build it. Behind the scenes, SCons will also work out if there are other dependencies - for example if `foo.c` includes header files, and maybe those header files include other header files, those are all added to the dependency graph, and SCons can detect when `bar` needs to be rebuilt if any of those dependencies go out of date. This is a big improvement over older build systems that could not detect if a rebuild was needed due to a dependency unless you explicitly called out the dependency.
 
 For more complex programs you must set up a more specialized environment. For example, setting up the flags the compiler will use, additional directories to search for include files, etc.
 
@@ -31,7 +31,6 @@ env.Append(CCFLAGS='-O3')
 ```
 
 Some parameters require specific lists, such as the source list. Reading the [Configuration File Reference](http://www.scons.org/doc/production/HTML/scons-man.html#configuration_file_reference) should be very helpful.
-
 
 ## Specifying A Default Target
 
@@ -104,15 +103,20 @@ sources = [ 'main.cpp', 'utils.cpp', 'gui.cpp' ]
 env.Program(target = 'a.out', source = sources)
 ```
 
-## SConscript and variant dir
+## Extending the configuration: SConscript
 
-Most of the time you will want to do hierarchical builds, giving the responsability of building a particular module/library/subprogram to a subscript rather than stuffing everything in to the SConstruct file.
-In SCons this kind of script is called a SConscript.
+As soon as the project extends beyond "extremely simple", you will probably want to set up hierarchical builds, giving the responsability of describing a particular module/library/subprogram to a subsidiary script rather than stuffing everything in to the SConstruct file. These scripts are by default named `SConscript` (the same variation of names as show for `SConstruct` above also work here), and are invoked by a call to the `SConscript` method. A simple case might be to put the code for a library in a lib subdirectory, and test code in a test subdirectory.
 
-In order to keep the build clean, each SConscript will usually produce its build targets in a different *variant directory*.
-By doing this, sources and produced targets for a given configuration are separated from other configurations.
+```python
+SConscript('lib/SConscript')
+SConscript('src/SConscript')
+```
 
-A typical example is building the same targets in release and debug modes:
+##  Supporting mutiple builds: Variant directory
+
+Many projects need to support building in several different ways from the same sources.  A common case is a "debug" build with support for examining objects with debuggers, etc. and a "release" build that is stripped and optimized. SCons has the capability of supporting this through an instruction that tells it to use a *variant directory*. A variant directory is a build-specific location where the targets are placed, while the sources continue to come from the common location.
+
+Here is an example building the same targets in release and debug modes; in addition to setting the distinct variant directories, in this example a flag named `MODE` is passed to the SConscript so it can determine which build it is doing, and set up the environment for that build appropriately.
 
 ```python
 SConscript('SConscript', variant_dir='build_release', duplicate=0, exports={'MODE':'release'})
