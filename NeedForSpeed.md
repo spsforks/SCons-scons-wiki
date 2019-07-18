@@ -27,8 +27,8 @@ Performance is always a tricky subject. It is oft said that premature optimizati
 
 Performance issues can be roughly divided into:
  * The code is doing too much work.  For example, recomputing internal things that could have been saved from a previous build, repeating operations many times, not reusing build artefacts that might have been available, etc. Roughly speaking, "caching" and "memoizing". SCons does a lot of that already.
- * The code is doing work is has to, but slowly. This might include small language inefficiencies, too much recursion or otherwise deeply nested execution contexts, etc.  Profiling the code helps identify these.
- * The build configuration is suboptimal, causing scons to do too much. This case is out of the control of the scons developers and won't be considered here, but should not at all be discounted when someone complains their build is too slow. It would be cool if a tool could detect poor sconscript style, but that's a non-trivial task.
+ * The code is doing work is has to, but slowly. This might include small language inefficiencies, too much recursion or otherwise deeply nested execution contexts, etc.  Certianly, running a scanner over all the dependencies in a project with thousands of files takes some time. Profiling the code helps identify these areas.
+ * The build configuration is suboptimal, causing scons to work inefficiently. This case is out of the control of the scons developers and won't be considered here, but should not be discounted when someone complains their build is too slow. It would be cool if a tool could detect poor sconscript style, but that's a non-trivial task.
 
 Bill Deegan (SCons project co-manager) and Andrew Morrow (MongoDB) have been working together to understand some of the issues that lead to poor SCons performance in a real world (and fairly modestly sized) C++ codebase. The remaining sections capture some of the findings.
 
