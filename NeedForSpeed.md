@@ -2,6 +2,8 @@
 ## How Can We Make SCons Faster
 
 <!-- TOC -->
+<a name="contents">
+
  - [Introduction](#introduction)
  - [Python code usage](#python-code-usage)
  - [Start up time](#start-up-time)
@@ -40,11 +42,15 @@ There are many places in the codebase where while the code is correct, performan
 * Method to address
     * Profile the code looking for hotspots with cprofile and line_profiler. Then look for best implementations of code. (Use timeit if useful to compare implementations. There are examples of such in the [benchmark directory](https://github.com/SCons/scons/tree/master/bench).
 
+[back to contents](#contents)
+
 ### Start up time
 
 * A null incremental build is going to be the worst case for a build up to date, as we have to make sure all items are in a good state. Time to start building on diff should be a lot faster. SCons spends a lot of time having to read everything on second passes. We can use our cache much better to store states on what builds what, etc to avoid even having to read a file. If the file did not change we already know the node/builder tree it will provide. We already know the actions. We can start building items as soon as a MD5/time stamp check fails most of the time. Globs can store information about what it read and processed and only need to go off when we notice a directory timestamp. Avoiding processing build files and loading known state is much faster than processing the python code. My work (Jason Kenny) in Parts has shown this. The trick is knowing when you might have to load a file again to make sure custom logic get processed correctly.
 
 * In the case of Parts it would be great to load file concurrently and in parallel. I think I have a way to go this concurrently which I have not done yet. The main issue is the node FS object tree is a sync point for being parallel.
+
+[back to contents](#contents)
 
 ### Improved DAG traversal
 
@@ -52,6 +58,8 @@ One issue is that the DAG for doing builds is based on nodes. There is a bit of 
 
 * One big improvement this provides is that we only need to test if the sources or targets are out of date if the dependent builders are all up to date. If one of the is out of date, we just build, This vs we check each node and see if the build action has been done which requires extra scans and work in the current logic.
 * Given a builder is out of data you just mark all parents out of date. We only care about builders in a set that we don’t know are out of date yet. Simple tweaks on how we go through the tree can mean we only need to touch a few nodes.
+
+[back to contents](#contents)
 
 ### Serial DAG traversal
 
@@ -65,11 +73,15 @@ SCons walks the DAG to find out of date targets in a serial fashion. Once it fin
         * Investigate changing tree walk to generator
         * Investigate implementing tree walk using multiprocessing library
 
+[back to contents](#contents)
+
 ### The Dependency Graph is the Python Object Graph
 
 The target dependency DAG is modeled via python Node Object to Node Object linkages (e.g. a list of child nodes held in a node). As a result, the only way to determine up-to-date-ness is by deeply nested method calls that repeatedly traverse the Python object graph. An attempt is made to mitigate this by memoizing state at the leaves (e.g. to cache the result of stat calls), but this still results in a large number of python function invocations for even the simplest state checks, where a result is already known. Similarly, the lack of global visibility precludes using externally provided change information to bypass scans.
 * See above re generator
 * Investigate modeling state separately from the python Node graph via some sort of centralized scoreboarding mechanism, it seems likely that both the function call overhead could be eliminated and that local knowledge could be propagated globally more effectively.
+
+[back to contents](#contents)
 
 ### CacheDir 
 
@@ -85,6 +97,8 @@ There are some issues listed below. End-to-end caching functionality of SCons, i
     * Store signatures for items in cachedir and then use them directly when copying items from Cache.
     * Fix the CacheDir / MD5-Timestamp integration bug
 
+[back to contents](#contents)
+
 ### SConsign generation
 
 The generation of the SConsign file is monolithic, not incremental. This means that if only one object file changed, the entire database needs to be re-written. It also appears that the mechanism used to serialize it is itself slow. Moving to a faster serialization model would be good, but even better would be to move to a faster serialization model that also admitted incremental updates to single items.
@@ -93,6 +107,8 @@ The generation of the SConsign file is monolithic, not incremental. This means t
 * Method to address:
     * Replace sconsign with something faster than the current implementation, which is based on Pickle.
     * And/or Improve sconsign with something which can incrementally only write that which has changed.
+
+[back to contents](#contents)
 
 ### Configure check performance
 
@@ -103,6 +119,7 @@ Even cached Configure checks seems slow, and for a complex configured build this
     * Code inspection, look for improvements
     * Profile
 
+[back to contents](#contents)
 
 ### Variable Substitution
 
@@ -117,15 +134,21 @@ Currently variable substitution, which is largely used to create the command lin
 * Method to address:
     * Consider pre-evaluating Environment() variables where reasonable. This could use some sort of copy-on-write between cloned Environments. This pre-evaluation would skip known target specific variables (TARGET,SOURCES,CHANGED_SOURCES, and a few others), so minimally the per command line substitution should be faster.
 
+[back to contents](#contents)
+
 ### Process Spawning
 
 * (JK) I add this as We had submitted a sub process fix for POSIX systems. The code effect larger builds more than smaller builds because of forking behavior. I don’t believe it been added to SCons as of yet.
 * (JK) As a side design note, If we did make a multiprocessing setup for SCons, This might be less of an issue, as the “process” workers only need information about a build to run on. Changing of nodes state would have to be synced with the main process via messages as there would be no fast efficient way to share the whole tree across all the process.
 * (JK) Another thought is we might want to look at some nested parallel strategies to make a task like setup that might allow us to use the TBB python library to avoid the GIL issue. However, given my time on SCons/Parts I think the change of a taskmaster to go over a builder DAG will have the biggest effect
 
+[back to contents](#contents)
+
 ### Environment Creation
 
 * (JK) It easy to define lots of different environment in a large build. How you do this is can be subtitle and have a huge effect on build time. Ideally, you always want to clone the “default” environment you have or pass values into builders, not the environment. I feel that it better for SCons to define a more Default environment and all environment created are clones. I would also push to have all Clone be a copy of write environment. There are still cases in which the user needs a “clean” environment, however, in my experience, the common case of all the environments I have made in Parts are only small copy on write clones from a common base. I think we should have more copy on write higher up the stack. At the moment the class that does copy on write are used in builders, not in the Clones.
+
+[back to contents](#contents)
 
 ### General Thoughts from Jason Kenny
        
