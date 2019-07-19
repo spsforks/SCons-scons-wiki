@@ -37,10 +37,13 @@ Bill Deegan (SCons project co-manager) and Andrew Morrow (MongoDB) have been wor
 There are many places in the codebase where while the code is correct, performance based on cpython’s implementation can be improved by minor changes.
 
 * Examples
-    * Using for loops and hashes to uniquify a list. Simple change in Node class yielded approximately 15% speedup for null build
-    * Using `if x.find(‘some character’) >= 0` instead of `if ‘some character’ in x` (timeit benchmark shows a 10x speed difference)
+    * Using for loops and hashes to uniquify a list. Simple change in Node class yielded approximately 15% speedup for null build.
+    * Using `if x.find(‘some character’) >= 0` instead of `if ‘some character’ in x` (timeit benchmark shows a 10x speed difference).
+    * Whether EAFP or LBYL is better depends on the "hit" percentage: if a `try/except` takes the exception most times, then it probably costs more than doing a check up front, and vice versa. Don't even bother unless it's a piece of code that is called an awful lot.
+    * SCons has its own memoization code, or rather it has a framework for measuring whether the memoization is working effectively. Again, if hit percentage is low and the saved computation isn't all the expensive, memoization may not pay off. Note: `functools.lru_cache` could be an effective alternative to homegrown memoization, but it's Py3-only.
+    * Namespace lookups: it may be worth saving multilevel lookups (`SCons.Util.to_str` is going to be slower than `to_str`) if the reference happens in a loop where the line is executed frequently.
 * Method to address
-    * Profile the code looking for hotspots with cprofile and line_profiler. Then look for best implementations of code. (Use timeit if useful to compare implementations. There are examples of such in the [benchmark directory](https://github.com/SCons/scons/tree/master/bench).
+    * Profile the code looking for hotspots first with cprofile, then with line_profiler to examine the hotspot functions. Then look for best implementations of code. (Use timeit if useful to compare implementations. There are examples of such in the [benchmark directory](https://github.com/SCons/scons/tree/master/bench).
 
 [back to contents](#contents)
 
