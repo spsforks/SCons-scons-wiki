@@ -45,6 +45,8 @@ There are many places in the codebase where while the code is correct, performan
 * Method to address
     * Profile the code looking for hotspots first with cprofile, then with line_profiler to examine the hotspot functions. Then look for best implementations of code. (Use timeit if useful to compare implementations. There are examples of such in the [benchmark directory](https://github.com/SCons/scons/tree/master/bench).
 
+Special note on threading: Python is kind of famous for not getting as much speedup from threading as one might expect from capable machines with lots of cores.  This is because the Global Interpreter Lock (GIL) allows only one thread to be running Python code at a time.  However, the way SCons uses threading is not much affected by this - the threads are used in the Jobs module, and are used to spawn the external commands that drive the build - so from the point of view of Python, each running threat is "waiting for I/O" and not spending time blocked by the GIL.
+
 [back to contents](#contents)
 
 ### Start up time
