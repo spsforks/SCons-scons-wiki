@@ -21,9 +21,9 @@
 
 ### Introduction
 
-Performance is one of the major challenges facing SCons. When compared with other current options, particularly Ninja, in many cases performance can lag significantly. That said other options by and large lack the extensibility and many features of SCons.
+Performance is one of the major challenges facing SCons. When compared with other current options, particularly Ninja, in many cases performance can lag significantly. While SCons is a powerful and flexible way to construct simple and complex builds, no tool benefits from developers getting frustrated beacuse it's seen as wasting their time waiting around.
 
-Performance is always a tricky subject. It is oft said that premature optimization is the root of all evil (Knuth) but as SCons approaches 20 years old it's hard to say optimization based on observed problem areas is premature.  Of course a great deal of optimization has already been done on SCons code paths, so there isn't a lot of low-hanging fruit to pick. Performance is also relative:  SCons mainly asks other tools to do the real work, and in many cases, particularly small builds, the time SCons takes to figure out what it needs to do is dwarfed by the time spent once SCons calls out to the operating system to get `gcc` or `cl.exe` to actually compile a file. So it is important to measure on meaningful workloads.
+Performance is always a tricky subject. It is oft said that premature optimization is the root of all evil (Knuth) but as SCons approaches 20 years old it's hard to say optimization based on observed problem areas is premature.  Of course a great deal of optimization has already been done on SCons code paths, so there isn't a lot of low-hanging fruit to pick. Performance is also relative:  SCons asks other tools to do the actual work of building, and in many cases, particularly small builds, the time SCons takes to figure out what it needs to do is dwarfed by the time spent once SCons calls out to the operating system to get `gcc` or `cl.exe` to actually compile a file. So it is important to measure on meaningful workloads.
 
 Performance issues can be roughly divided into:
  * The code is doing too much work.  For example, recomputing internal things that could have been saved from a previous build, repeating operations many times, not reusing build artefacts that might have been available, etc. Roughly speaking, "caching" and "memoizing". SCons does a lot of that already.
@@ -40,11 +40,12 @@ There are many places in the codebase where while the code is correct, performan
 * Examples
     * Using for loops and hashes to uniquify a list. Simple change in Node class yielded approximately 15% speedup for null build.
     * Using `if x.find(‘some character’) >= 0` instead of `if ‘some character’ in x` (timeit benchmark shows a 10x speed difference).
-    * Whether EAFP or LBYL is better depends on the "hit" percentage: if a `try/except` takes the exception most times, then it probably costs more than doing a check up front, and vice versa. Don't even bother unless it's a piece of code that is called an awful lot.
+    * Whether EAFP or LBYL is better for performance depends on the "hit" percentage: if a `try/except` takes the exception most times, then it probably costs more than doing a check up front, and vice versa. Don't even bother unless it's a piece of code that is called an awful lot.
     * SCons has its own memoization code, or rather it has a framework for measuring whether the memoization is working effectively. Again, if hit percentage is low and the saved computation isn't all the expensive, memoization may not pay off. Examine the memo cache stats with the `--debug=memoization` flag. Note: `functools.lru_cache` could be an effective alternative to homegrown memoization, but it's Py3-only.
     * Namespace lookups: it may be worth saving multilevel lookups (`SCons.Util.to_str` is going to be slower than `to_str`) if the reference happens in a loop where the line is executed frequently.
 * Method to address
     * Profile the code looking for hotspots first with cprofile, then with line_profiler to examine the hotspot functions. Then look for best implementations of code. (Use timeit if useful to compare implementations. There are examples of such in the [benchmark directory](https://github.com/SCons/scons/tree/master/bench).
+    * Code performance-critical bits in C?  This hasn't really been considered as SCons has always been "pure Python", and introducing binary bits always vastly complicates the distribution. 
 
 Special note on threading: Python is kind of famous for not getting as much speedup from threading as one might expect from capable machines with lots of cores.  This is because the Global Interpreter Lock (GIL) allows only one thread to be running Python code at a time.  However, the way SCons uses threading is not much affected by this - the threads are used in the Jobs module, and are used to spawn the external commands that drive the build - so from the point of view of Python, each running threat is "waiting for I/O" and not spending time blocked by the GIL.
 
