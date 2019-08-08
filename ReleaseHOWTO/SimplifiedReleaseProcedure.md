@@ -79,13 +79,8 @@ git push --tags
 
 * Update Sourceforge: 
    * set default downloads for each win/linux/mac etc. appropriately, using the "info" link on the right of each download. 
-* Update Tigris: 
-   * check out tigris website: `svn checkout http://scons.tigris.org/svn/scons/ scons-tigris --username USERNAME` 
-   * Then edit the trunk/www/project-highlights and trunk/www/roadmap.html pages and svn commit.  That will make them live. 
-   * Manually add a new Announcement: log in to the site, then upper left Announcements, then in there Add New Announcement. 
-   * Add version to issue tracker: Issue Tracker, Configuration, Add/Edit, Add new version. 
-* Announce to scons-users and scons-dev 
-* Others? 
+* Announce to scons-users and scons-dev python list
+
 
 ## After Release
 
