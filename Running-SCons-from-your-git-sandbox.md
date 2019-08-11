@@ -15,11 +15,11 @@ python <path to your sandbox>/src/scripts/scons.py
 Put these lines in a shell script and run the script.  If you want to run it regularly, make the script executable and put it in your private bin directory. 
 
 
-```python
-#!python 
+```bash
+#!/usr/bin/env bash 
 SCONS_LIB_DIR=/path_to_scons/src/engine
 export SCONS_LIB_DIR
-exec python /path_to_scons/src/script/scons.py .
+exec python /path_to_scons/src/script/scons.py "$@"
 ```
 
 ### The old fashioned way (almost no reason to do this way)
