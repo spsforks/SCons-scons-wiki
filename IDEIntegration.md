@@ -1,5 +1,5 @@
 # Integrating scons with IDEs
-## Rationale
+## Introduction
 IDEs are great to use, but often have a few disadvantages:
 * Many are platform specific so the project files can't be used in a cross platform project.
 * The project settings are often configured using a complex GUI, and may be difficult to edit as text.
@@ -16,7 +16,7 @@ By using SCons with your favourite IDE the best of both worlds can be obtained:
 
 Below are instructions to get started using SCons with some particular IDEs. 
 
-## Visual Studio .NET 2003 / Visual Studio 2005 (Windows)
+## Visual Studio for Windows
 
 1. Launch Visual Studio with the /useenv command line switch otherwise it won't be able to find SCons. 
 1. File->New Project General->Make File Project 
@@ -29,7 +29,7 @@ Note: VS2005 seems to need absolute paths to filenames for the click-on-errors i
 
 Alternatively, you can use [the `MSVSProject()` builder](http://scons.org/doc/production/HTML/scons-user.html#b-MSVSProject) in your SConstruct file to generate a Visual Studio project file.
 
-## Xcode (Mac OS X)
+## Xcode for Mac OSX
 
 1. File->New Project, choose "External Build System" 
 1. Save the project into the same directory as your SConstruct file. 
