@@ -1,22 +1,45 @@
 # Integrating scons with IDEs
+
+<!-- TOC -->
+<a name="contents">
+
+ - [Introduction](#introduction)
+ - [Visual Studio for Windows](#visual-studio-for-windows)
+ - [Xcode for Mac OSX](#xcode-for-mac-osx) 
+ - [Eclipse](#eclipse)
+ - [KDevelop](#kdevelop)
+ - [Emacs and XEmacs](#emacs-and-xemacs)
+ - [Qt Creator](#qt-creator)
+ - [Geany](#geany) 
+ - [PyCharm](#pycharm) - recipe needed!
+ - [Visual Studio Code](#visual-studio-code) - recipe needed!
+ - [Atom](#atom) - recipe needed!
+ - [Sublime Text](#sublime-text) - recipe needed!
+ - [Eric](#eric) - recipe needed!
+<!-- /TOC -->
+
 ## Introduction
-IDEs are great to use, but often have a few disadvantages:
+Integrated Development Environments provide considerable ease of use to the developer, but may have a few disadvantages:
 * Many are platform specific so the project files can't be used in a cross platform project.
 * The project settings are often configured using a complex GUI, and may be difficult to edit as text.
 * Project settings to drive a build are often in a unique syntax, with nowhere near the power of having Python as the language to control the build.
 
-To have most of the best features of your favourite IDE without these down sides, use a minimal IDE project that calls SCons to build it.
+To have most of the best features of your favourite IDE without these downsides, you can use a minimal IDE project that calls SCons to actually build the project.
 
 This works when IDEs parse the output of build tools and read the output from the compiler as if the IDE had called the compiler directly.
 
 By using SCons with your favourite IDE the best of both worlds can be obtained:
 
 * The build process is developed in a cross platform, text based, flexible form, instead of all the build settings being recorded in some form only editable through GUI. 
-* All of the great features of the IDE are available - Text editors with code completion, debugging etc, clicking on errors to see the line of code that caused them etc.
+* All of the great features of the IDE are available - text editors with code completion, debugging etc, clicking on errors to see the line of code that caused them etc.
 
 Below are instructions to get started using SCons with some particular IDEs. 
 
+_Please note, some of these recipes are quite old, and may not be completely correct any longer. Please update as you find problems!_
+
 ## Visual Studio for Windows
+
+This was written for .NET 2003 / Visual Studio 2005
 
 1. Launch Visual Studio with the /useenv command line switch otherwise it won't be able to find SCons. 
 1. File->New Project General->Make File Project 
@@ -28,6 +51,8 @@ Note: VS2005 seems to need absolute paths to filenames for the click-on-errors i
 1. For Rebuild All: "scons -c & scons" ("scons -c & scons  debug=1" for debug)
 
 Alternatively, you can use [the `MSVSProject()` builder](http://scons.org/doc/production/HTML/scons-user.html#b-MSVSProject) in your SConstruct file to generate a Visual Studio project file.
+
+[back to contents](#contents)
 
 ## Xcode for Mac OSX
 
@@ -43,6 +68,8 @@ See also the hint to get proper error parsing on [MacOSX](MacOSX).
 
 Alternatively, you can use [scons-xcode](https://bitbucket.org/al45tair/scons-xcode) to generate project files automatically.
 
+[back to contents](#contents)
+
 ## Eclipse
 
 SConsolidator is an Eclipse plug-in that provides tool integration for SCons in Eclipse for a convenient C/C++ development experience. Its main features are: 
@@ -56,17 +83,17 @@ More information can be found at [http://sconsolidator.com](http://sconsolidator
 
 ---
 
- There is also and older Eclipse Plug-in for SCons, though its documentation is scarce to nonexistent (see [plugin](EclipsePlugin)). 
+There is also an older Eclipse Plug-in for SCons, though its documentation is scarce to nonexistent (see [plugin](EclipsePlugin)). 
 
 Pros: It offers integrated support for building doxygen documentation and cppunit tests. 
 
 Cons: It imposes a build tree hierarchy which may work for smaller projects, but would be cumbersome for larger projects. 
 
+[back to contents](#contents)
 
 ## KDevelop
 
 See [SCons Setup](http://www.kdevelop.org/mediawiki/index.php/FAQ#How_can_I_set_up_a_project_with_SCons.3F) and [Custom Project](http://www.kdevelop.org/mediawiki/index.php/FAQ#How_to_create_a_simple_project_with_just_a_Makefile_.28also_known_as_Custom_Project.29_.3F) at the KDevelop FAQ. Here's a quick copy of these two topics. 
-
 
 ### How can I set up a project with SCons?
 
@@ -87,6 +114,7 @@ This will enable the _Build Project_ and _Clean Project_ actions to work.
 
 Create a Custom Project. There is no direct way to create a custom project (i.e. a project which does use its own makefiles). Use Project->Import Existing Project instead. Remember to set the appropriate Project Type, labeled by an additional (Custom Makefiles) in the dialog. Use Project Options Early. Whenever you start a new project do not forget to set the Project->Project Options... to your needs. 
 
+[back to contents](#contents)
 
 ## Emacs and XEmacs
 
@@ -148,6 +176,7 @@ Hi [MaxEnt](MaxEnt) -- here's what I use, it's much simpler.  You'll need a rece
 ```
 -- [GaryOberbrunner](GaryOberbrunner) 
 
+[back to contents](#contents)
 
 ## Qt Creator
 
@@ -184,6 +213,7 @@ You are all set! :-)
 
 On the left pane, click on "Edit". You will find the previous view, with the project browser. Your scons project is ready to be be built. 
 
+[back to contents](#contents)
 
 ## Geany
 
@@ -203,4 +233,36 @@ set the compile and build command for the source type to "scons -j <cpu count>"
 
 set the working dir to "%p" (which is the base path of the project where the SConstruct file is). 
 
-Optional : set the source file independant build commands too, and scons -c for clean, all with %p as the working dir. 
+Optional : set the source file independant build commands too, and scons -c for clean, all with %p as the working dir.
+
+[back to contents](#contents)
+
+## PyCharm
+
+This section is waiting for a contribution!
+
+[back to contents](#contents)
+
+## Visual Studio Code
+
+This section is waiting for a contribution!
+
+[back to contents](#contents)
+
+## Atom
+
+This section is waiting for a contribution!
+
+[back to contents](#contents)
+
+## Sublime Text
+
+This section is waiting for a contribution!
+
+[back to contents](#contents)
+
+## Eric
+
+This section is waiting for a contribution!
+
+[back to contents](#contents)
