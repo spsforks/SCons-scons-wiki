@@ -7,8 +7,10 @@ The idea for these builders is created by the requirement that a project uses di
 1. download the source code of a library (eg tar.gz / tar.bz2) 
 1. unpack this file 
 1. build the source code with SCons to a shared / static library 
-1. install the header files and library 
-![](process.png)
+1. install the header files and library
+
+
+![process diagram](process.png)
 
 
 The picture shows the build process of a shared library, so the latest version of a library should be read from the project webpage, the download URL should be pushed to the builder, that gets the file, this file is pushed to a builder, which extracts the file and pushs the file content, which is needed by the shared library builder, to SCons [SharedLibrary](SharedLibrary) call, which is build finally the library. The update process is worked in an equal way, because only the URL changes.  
