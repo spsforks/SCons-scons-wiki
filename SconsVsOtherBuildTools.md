@@ -206,7 +206,7 @@ Cons:
 
 # Waf
 
-[Waf](http://freehackers.org/~tnagy/waf.html) is a build system written in python. It was invented because the KDE project needs a new build system. WAF is technically a fork of an older version of SCons, but it's been rewritten so extensively that, for all practical purposes, it should be considered a separate code base. 
+[Waf](https://waf.io) is a build system written in python. It was invented because the KDE project needs a new build system. WAF is technically a fork of an older version of SCons, but it's been rewritten so extensively that, for all practical purposes, it should be considered a separate code base. 
 
 Pros: 
 
