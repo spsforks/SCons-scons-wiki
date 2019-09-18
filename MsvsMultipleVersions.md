@@ -47,12 +47,12 @@ Help(opts.GenerateHelpText(env))
 if env["TOOL"] == "vc6":
     env["MSVS"] = {"VERSION": "6.0"}
     env["MSVS_VERSION"] = "6.0"
-    Tool("msvc")(env)
+    env.Tool("msvc")
 elif env["TOOL"] == "vc8":
     env["MSVS"] = {"VERSION": "8.0"} 
     env["MSVS_VERSION"] = "8.0"
-    Tool("msvc")(env)
+    env.Tool("msvc")
 elif env["TOOL"] == "gnu":
-    Tool("g++")(env)
+    env.Tool("g++")
 ```
 -- [IlguizLatypov](IlguizLatypov) 
