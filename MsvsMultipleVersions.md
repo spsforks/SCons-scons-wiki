@@ -55,4 +55,11 @@ elif env["TOOL"] == "vc8":
 elif env["TOOL"] == "gnu":
     env.Tool("g++")
 ```
--- [IlguizLatypov](IlguizLatypov) 
+
+# Usage which won't work
+
+``` python
+env=Environment()
+env['MSVC_VERSION'] = '14.2'
+# In this case msvc will already be initialized to the newest version before you set which version you'd like
+```
