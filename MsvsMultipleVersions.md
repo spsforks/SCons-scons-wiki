@@ -1,6 +1,6 @@
 # Selecting MSVC version
 
-By default, SCons' MSVC tool uses the highest installed version of the Microsoft Visual C++ compiler.  To change this, you must change the `MSVC_VERSION` construction variable. You can certainly just set the value in your SConscript, but it is often interesting to be able to specify the version you want on the command line without editing the scripts, such as when you want to perform verification builds against several different compiler versions. The following examples show a few different approaches. The manpage for the scons version you are using (see https://scons.org/docversions.html) shows the currently valid Visual C++ versions.
+By default, SCons' MSVC tool uses the highest installed version of the Microsoft Visual C++ compiler.  To change this, you must change the `MSVC_VERSION` construction variable before or at the same time that the tool is initialized. You can certainly just set the value in your SConscript, but it is often interesting to be able to specify the version you want on the command line without editing the scripts, such as when you want to perform verification builds against several different compiler versions. The following examples show a few different approaches. The manpage for the scons version you are using (see https://scons.org/docversions.html) shows the currently valid Visual C++ versions.
 
 ``` python
 # This creates an environment which will use the 14.0 compiler even if higher
