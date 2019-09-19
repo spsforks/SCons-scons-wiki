@@ -8,14 +8,12 @@ This function wraps a given emitter with another emitter that adds another file 
 Replaceable emitters (as of SCons 0.96.90): 
 
 * `PROGEMITTER` - emitter for Program builder 
-* `SHLIBEMITTER` - emitter for [SharedLibrary](SharedLibrary) builder 
+* `SHLIBEMITTER` - emitter for SharedLibrary builder 
 * `LIBEMITTER` - emitter for Library builder 
 
 ## The Function
 
-
 ```python
-#!python
 def add_file_to_emitter(env, emitter_name, file):
   try:
     original_emitter = env[emitter_name]
@@ -32,11 +30,9 @@ def add_file_to_emitter(env, emitter_name, file):
 
 ## Example Usage
 
-In this example, the environment is searched for a library called _somelib_. If this library is not found, add_file_to_emitter is called to add _somelibreplacement.c_ to every program built using the environment. 
-
+In this example, the environment is searched for a library called _somelib_. If this library is not found, `add_file_to_emitter` is called to add `somelibreplacement.c` to every program built using the environment. 
 
 ```python
-#!python
 env = Environment()
 conf = env.Configure()
 if not conf.CheckLib('somelib'):
@@ -47,9 +43,9 @@ conf.Finish()
 
 ## Changing the Emitter for StaticObject
 
-If you want to change where a builder finds its C/C++ source files, you want to change the emitter for the [StaticObject](StaticObject) builder, aka Object. Unfortunately, there is no OBJEMITTER currently defined, but another way to do it is shown below. 
+If you want to change where a builder finds its C/C++ source files, you want to change the emitter for the [StaticObject](StaticObject) builder, aka Object. Unfortunately, there is no OBJEMITTER currently defined, but another way to do it is shown below.
+
 ```python
-#!python
 # Assuming the BUILD_DIR is set to the location of the generated files
 # and some other generated files are in OTHER_BUILD_DIR
 def my_emitter(target, source, env):
