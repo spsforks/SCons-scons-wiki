@@ -7,9 +7,9 @@ This function wraps a given emitter with another emitter that adds another file 
 
 Replaceable emitters (as of SCons 0.96.90): 
 
-* `PROGEMITTER` - emitter for Program builder 
-* `SHLIBEMITTER` - emitter for SharedLibrary builder 
-* `LIBEMITTER` - emitter for Library builder 
+* `PROGEMITTER` - emitter for `Program` builder 
+* `SHLIBEMITTER` - emitter for `SharedLibrary` builder 
+* `LIBEMITTER` - emitter for `Library` builder 
 
 ## The Function
 
@@ -43,7 +43,7 @@ conf.Finish()
 
 ## Changing the Emitter for StaticObject
 
-If you want to change where a builder finds its C/C++ source files, you want to change the emitter for the [StaticObject](StaticObject) builder, aka Object. Unfortunately, there is no OBJEMITTER currently defined, but another way to do it is shown below.
+If you want to change where a builder finds its C/C++ source files, you want to change the emitter for the `StaticObject` builder, aka `Object`. Unfortunately, there is no `OBJEMITTER` currently defined, but another way to do it is shown below.
 
 ```python
 # Assuming the BUILD_DIR is set to the location of the generated files
