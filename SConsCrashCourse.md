@@ -36,7 +36,7 @@ Some parameters require specific lists, such as the source list. Reading the [Co
 
 ## Specifying A Default Target
 
-An important note is the **Default** command. It tells scons what to build by default. Scons always builds the targets it is given on the command line, and any targets that are necessary to be able to build the specifid targets. Default helps set up the list to build if no targets are given on the command line.  If Default is not used, scons selects all the targets for building, which may be too much in a larger project.
+An important note is the **Default** command. It tells scons what to build by default. Scons always builds the targets it is given on the command line, and any targets that are prerequisites to building the specifid targets. Default sets up the list to build if no targets are supplied on the command line.  If Default is not used, scons selects all the targets for building, which may be undesirable in a larger project.
 
 ```python
 t = env.Program(target='bar', source=['foo.c'])
@@ -68,12 +68,12 @@ Add compile-time flags
 env.Append(CCFLAGS = ['-g','-O3'])
 ```
 
-Add define
+Add preprocessor define. Note scons will supply the suitable prefix when invoking.
 ```python
 env.Append(CPPDEFINES=['BIG_ENDIAN'])
 ```
 
-Add define with value (e.g. -DRELEASE_BUILD=1)
+Add preprocessor define with value (e.g. -DRELEASE_BUILD=1)
 ```python
 env.Append(CPPDEFINES={'RELEASE_BUILD' : '1'})
 ```
@@ -83,7 +83,7 @@ Add library search path
 env.Append(LIBPATH = ['/usr/local/lib/'])
 ```
 
-Add libraries to link against
+Add libraries to link against. Note you use just the base name, scons will format this to be correct for the build system.
 ```python
 env.Append(LIBS = ['SDL_image','GL'])
 ```
