@@ -1,6 +1,8 @@
 # Selecting MSVC version
 
-By default, SCons' MSVC tool uses the highest installed version of the Microsoft Visual C++ compiler.  To change this, you must change the `MSVC_VERSION` construction variable before or at the same time that the tool is initialized. Note that the tool we be initialized by default if you do not specify ```tools=[]``` when you create an ```Enviroment```.  If you specify an empty tool list or a list which doesn't include msvc, then you can set `MSVC_VERSION` and then explicitly initialize the tool `env.Tool('msvc')`. You can certainly just set the value in your SConscript, but it is often interesting to be able to specify the version you want on the command line without editing the scripts, such as when you want to perform verification builds against several different compiler versions. The following examples show a few different approaches. The manpage for the scons version you are using (see https://scons.org/docversions.html) shows the currently valid Visual C++ versions.
+By default, SCons' MSVC tool uses the highest installed version of the Microsoft Visual C++ compiler.  To change this, you must change the `MSVC_VERSION` construction variable at the time the tool is initialized. Note that the tool will be initialized by default if you do not specify ```tools=[]``` when you create an ```Enviroment```.  If you specify an empty tool list or a list which doesn't include `msvc`, then you can set `MSVC_VERSION` and then explicitly initialize the tool `env.Tool('msvc')`.
+
+You can certainly just set the value in your SConscript, but it is often interesting to be able to specify the version you want on the command line without editing the scripts, such as when you want to perform verification builds against several different compiler versions. The following examples show a few different approaches. The manpage for the scons version you are using (see [version-specific doc table](https://scons.org/docversions.html)) shows the currently valid Visual C++ versions.
 
 ``` python
 # This creates an environment which will use the 14.0 compiler even if higher
@@ -28,8 +30,16 @@ vars.AddVariable(EnumVariable('MSVC_VERSION',
                               allowed_values=('14.0', '14.1', '14.2')))
 env = Environment(variables=vars)
 ```
+## Usage which won't work
 
----
+``` python
+# By the time MSVC_VERSION is set,  msvc will already be
+# initialized to the newest version and it's not even looked at
+env = Environment()
+env['MSVC_VERSION'] = '14.0'
+```
+## Older Example
+
 > Note: the following is old, `Options` objects have been replaced by `Variables`, and `MSVS_VERSION` is deprecated in favor of `MSVC_VERSION`. 
 
  This worked for me:
@@ -56,10 +66,3 @@ elif env["TOOL"] == "gnu":
     env.Tool("g++")
 ```
 
-# Usage which won't work
-
-``` python
-env=Environment()
-env['MSVC_VERSION'] = '14.2'
-# In this case msvc will already be initialized to the newest version before you set which version you'd like
-```
