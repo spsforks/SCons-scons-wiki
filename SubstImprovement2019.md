@@ -42,3 +42,23 @@ Thoughts on possible improvements for Subst().
 1. Consider altering strings generated for signatures to exclude SOURCE and TARGET unless they are modified (.abspath,etc ).  This would allow using pre-expanded variables (for example CXXCOM would have everything but TARGET and SOURCE pre expanded, so for signatures this should be a **LOT** faster). Also since the current signature information includes the sources and the targets (and other dependencies), we don't really need them to be in the string used to determine if we need to rebuild.
 1. On env.Clone() make shallow copy of environment variables, and then use copy-on-write if the variable changed
 1. Handle OverrideEnvironments().. They basically have a "layer" of new variable values which override the existing ones in their "parent" Environment()
+
+# Notes about building command lines.
+1. All command lines are built from a list of arguments
+1. All arguments are composed of one or more tokens
+1. Some arguments and/or tokens when evaluated can yield more arguments, others just yield more tokens
+
+```
+['a','$b','c']  where b can equal 'BLAH', or ['x','y','z']
+```
+Which would evaluate to `['a','BLAH','c'] or ['a','x','y','z',c']` respectively
+
+```
+['a','$b$c$d','d'] where b,c,d can equal respectively 'ONE','TWO','THREE'  or ['ONE','Four'], 'Five', Six
+```
+Which would evaluate to
+```
+['a','ONETWOTHREE','d']
+or
+['a','ONE','FOUR','FiveSix','d]
+```
