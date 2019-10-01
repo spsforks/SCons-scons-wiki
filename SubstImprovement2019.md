@@ -54,7 +54,10 @@ Thoughts on possible improvements for Subst().
 Which would evaluate to `['a','BLAH','c'] or ['a','x','y','z',c']` respectively
 
 ```
-['a','$b$c$d','d'] where b,c,d can equal respectively 'ONE','TWO','THREE'  or ['ONE','Four'], 'Five', Six
+['a','$b$c$d','d'] where 
+(b,c,d) = ('ONE','TWO','THREE')  
+or 
+(b,c,d) = ['ONE','Four'], 'Five', Six
 ```
 Which would evaluate to
 ```
