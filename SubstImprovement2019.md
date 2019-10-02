@@ -63,5 +63,5 @@ Which would evaluate to
 ```
 ['a','ONETWOTHREE','d']
 or
-['a','ONE','FOUR','FiveSix','d]
+['a','ONE','FOURFiveSix','d]
 ```
