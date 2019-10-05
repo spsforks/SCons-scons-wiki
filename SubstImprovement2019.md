@@ -43,7 +43,7 @@ Thoughts on possible improvements for Subst().
 1. On env.Clone() make shallow copy of environment variables, and then use copy-on-write if the variable changed
 1. Handle OverrideEnvironments().. They basically have a "layer" of new variable values which override the existing ones in their "parent" Environment()
 
-# Notes about building command lines.
+# Notes about building command lines (This uses internal api subst_list())
 1. All command lines are built from a list of arguments
 1. All arguments are composed of one or more tokens
 1. Some arguments and/or tokens when evaluated can yield more arguments, others just yield more tokens
