@@ -1,9 +1,5 @@
 _Note: this page may contain flammable opinions. This is a wiki, many have contributed to it. Please be considerate and balanced._ 
 
-**Table of Contents**
-
-[TOC]
-
 # SCons
 
 Pros: 
