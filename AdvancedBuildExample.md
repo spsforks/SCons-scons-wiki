@@ -61,20 +61,22 @@ Finally, there's the _tests/_ and _src/_ directories, which hold the source code
 
 Based on this, here's an example of what happens when you run SCons from the _ROOT/_ directory on a Mac OS X (Darwin) system: 
 
-      1. SCons reads the SConstruct file 
-      1. SConstruct imports the contents of build_support.py and build_config.py 
-      1. SConstruct uses a function ([SelectBuildDir](SelectBuildDir)) from build_support.py to figure out what the target build directory should be. 
-      1. The [SelectBuildDir](SelectBuildDir) function does some magic (explained later) to figure out that the darwin target should be built in _ROOT/build/darwin_. 
-      1. SConstruct switched to _ROOT/build/darwin_ and loads the SConscript file there 
-      1. This final SConscript file makes any last minute changes necessary to build on the target system and then starts the build like normal. 
+1. SCons reads the SConstruct file 
+1. SConstruct imports the contents of build_support.py and build_config.py 
+1. SConstruct uses a function ([SelectBuildDir](SelectBuildDir)) from build_support.py to figure out what the target build directory should be. 
+1. The [SelectBuildDir](SelectBuildDir) function does some magic (explained later) to figure out that the darwin target should be built in _ROOT/build/darwin_. 
+1. SConstruct switched to _ROOT/build/darwin_ and loads the SConscript file there 
+1. This final SConscript file makes any last minute changes necessary to build on the target system and then starts the build like normal. 
+
 While this may seem complex at first, it has a few very big advantages over just a single SConstruct build: 
 
-      1. If you want to change the configuration for a build, you just edit build_config.py 
-      1. If something weird needs to be done on a target platform, you just edit the ROOT/build/&lt;target&gt;/SConscript file. 
-      1. You shouldn't have to edit the ROOT/SConstruct file after you have it configured (even when you switch to a new target). 
-      1. Adding a new target is as easy as just making a new directory in _ROOT/build_ and adding an SConscript file with the required changes. 
-      1. SCons will default to the _ROOT/build/default_ directory if present, letting you put a generic SConscript file for any unkown targets. 
-      1. The build is localized to a single directory, which makes it a bit easier to organize multi-target builds. 
+1. If you want to change the configuration for a build, you just edit build_config.py 
+1. If something weird needs to be done on a target platform, you just edit the ROOT/build/&lt;target&gt;/SConscript file. 
+1. You shouldn't have to edit the ROOT/SConstruct file after you have it configured (even when you switch to a new target). 
+1. Adding a new target is as easy as just making a new directory in _ROOT/build_ and adding an SConscript file with the required changes. 
+1. SCons will default to the _ROOT/build/default_ directory if present, letting you put a generic SConscript file for any unkown targets. 
+1. The build is localized to a single directory, which makes it a bit easier to organize multi-target builds. 
+
 Finally, I have done most of the work for you, so you should just have to modify the files a bit to get things going and then you're done. 
 
 
