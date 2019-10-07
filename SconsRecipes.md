@@ -1,9 +1,5 @@
 **This is the place to share tips, examples, and short scripts. Do not hesitate to contribute!**
 
-**Table of Contents**
-
-[TOC]
-
 ** Additional resources**
 
 * The official SCons [user guide](http://scons.org/doc/production/HTML/scons-user.html) itself contains a lot of examples.
