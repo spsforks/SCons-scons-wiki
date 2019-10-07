@@ -1,10 +1,6 @@
 **NOTE:  This page was edited by hand into its current format by cutting-and-pasting a copy of the page that was saved at archive.org.  It is entirely possible that some formatting or other errors crept in during the editing process.  If you notice any errors, please correct them.** 
 
-This document describes the build used on the [Bombyx Project](http://bombyx.sourceforge.net/) in a way that is a tutorial of SCons. It covers various advanced topics in a bit of detail, and gives pointers to other documents that describe the technique in more detail. Some of the things shown here are "voodoo" and probably not standard. If you find a better way to do something, then please contact [me](mailto:zedshaw@zedshaw.com) with your suggestion. 
-
-Table of contents:
-
-[TOC] 
+This document describes the build used on the [Bombyx Project](http://bombyx.sourceforge.net/) in a way that is a tutorial of SCons. It covers various advanced topics in a bit of detail, and gives pointers to other documents that describe the technique in more detail. Some of the things shown here are "voodoo" and probably not standard. If you find a better way to do something, then please contact [me](mailto:zedshaw@zedshaw.com) with your suggestion.  
 
 # Introduction
 
