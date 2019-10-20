@@ -1,5 +1,4 @@
 
-* Also see [CustomBuilders](CustomBuilders), an automatically generated page - contains all pages with Builder in their names 
 * Also see [ToolsIndex](ToolsIndex), a list of external SCons Tools that are developed as packages and managed via a DVCS (Bazaar, Mercurial, Git,...) 
 
 # Builders
