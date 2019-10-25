@@ -222,6 +222,8 @@ This technique can still be seen throughout most of the end-to-end tests, but th
 
 Against this, we now have the possibility to copy single files or the contents of a local folder to the test directory. Since we can reuse these files/folders to setup several tests, we call them _fixtures_ in the following. 
 
+Note: fixtures must not be treated by SCons as runnable tests. To exclude them, see instructions in the above section named "Finding Tests".
+
 
 ### Directory fixtures
 
