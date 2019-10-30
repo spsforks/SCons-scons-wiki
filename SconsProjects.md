@@ -32,7 +32,6 @@ Active open source projects which use SCons as their build system:
 * [PowderToy](http://powdertoy.co.uk) - Create a landscape in this physics sandbox engine...and then blow it up! 
 * [PowerScribe3000](http://powerscribe3000.sourceforge.net) - CD and DVD discs indexer. 
 * [S.C.O.U.R.G.E.](http://scourgeweb.org/tiki-index.php) A cross platform, open source rogue-like game. See [SConstruct](http://scourge.svn.sourceforge.net/viewvc/scourge/trunk/scourge/SConstruct?view=markup) 
-* [SuperCollider](http://supercollider.sourceforge.net) (Realtime sound synthesis server and language) See [SConstruct](http://supercollider.svn.sourceforge.net/viewvc/supercollider/trunk/SConstruct&view=markup) 
 * [Syx](http://code.google.com/p/syx) (Smalltalk-80 implementation). See [SConstruct](http://syx.googlecode.com/svn/trunk/SConstruct). This setup includes test and plugins, working on posix and win32. 
 * [The Battle for Wesnoth](http://www.wesnoth.org/) - free turn-based tactical strategy game ([SConstruct](https://github.com/wesnoth/wesnoth/blob/master/SConstruct))
 * [Ubitrack](http://ubitrack.org) Tracking for Mixed-/Augmented Reality applications, Chair for Computer Aided Medical Procedures and Augmented Reality, Technical University Munich 
