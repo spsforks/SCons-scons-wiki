@@ -38,7 +38,7 @@ Active open source projects which use SCons as their build system:
 * [UFO2000](http://ufo2000.sourceforge.net/) (turn based tactical multiplayer game) See [SConstruct](http://ufo2000.svn.sourceforge.net/viewvc/ufo2000/trunk/SConstruct?view=markup) 
 * [v8](http://code.google.com/p/v8/) (Google's open source [JavaScript](JavaScript) engine.) See [SConstruct](http://code.google.com/p/v8/source/browse/trunk/SConstruct) 
 * [VMime Library](http://www.vmime.org/) (Mail library) See [SConstruct](http://vmime.cvs.sourceforge.net/vmime/vmime/SConstruct?view=markup) 
-* [YafaRay](http://www.yafaray.org/) A free open-source raytracing engine. 
+
 
 
 Less active projects, which use SCons as their build system:
