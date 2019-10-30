@@ -2,7 +2,6 @@ Active open source projects which use SCons as their build system:
 
 * [ASCEND](http://ascendwiki.cheme.cmu.edu/), a system modelling package for engineering ([SConstruct](http://code.ascend4.org/ascend/trunk/SConstruct?view=markup))
 * [Aria Maestosa](http://ariamaestosa.sf.net) - a C++ MIDI editor and composition/notation application ([SConstruct](http://sourceforge.net/p/ariamaestosa/code/HEAD/tree/trunk/SConstruct))
-* [Blender](http://www.blender.org) - Popular 3D suite ([SConstruct](https://svn.blender.org/svnroot/bf-blender/trunk/blender/SConstruct))
 * [Bombono](http://www.bombono.org) DVD authoring program with nice and clean GUI
 * [Cantera](www.cantera.org) - a toolkit for chemical kinetics and thermodynamics. Uses SCons for building a C++ library, Python packages, a Matlab toolbox, and Windows installers ([SConstruct](https://github.com/Cantera/cantera/blob/master/SConstruct))
 * [Chaste](http://www.cs.ox.ac.uk/chaste/) - Cancer, Hearth and Soft Tissue Environment, a general purpose simulation package for biology and physiology ([SConstruct](https://chaste.cs.ox.ac.uk/trac/browser/trunk/SConstruct))
