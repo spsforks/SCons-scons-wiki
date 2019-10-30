@@ -36,8 +36,6 @@ Active open source projects which use SCons as their build system:
 * [The Battle for Wesnoth](http://www.wesnoth.org/) - free turn-based tactical strategy game ([SConstruct](https://github.com/wesnoth/wesnoth/blob/master/SConstruct))
 * [Ubitrack](http://ubitrack.org) Tracking for Mixed-/Augmented Reality applications, Chair for Computer Aided Medical Procedures and Augmented Reality, Technical University Munich 
 * [UFO2000](http://ufo2000.sourceforge.net/) (turn based tactical multiplayer game) See [SConstruct](http://ufo2000.svn.sourceforge.net/viewvc/ufo2000/trunk/SConstruct?view=markup) 
-* [VMime Library](http://www.vmime.org/) (Mail library) See [SConstruct](http://vmime.cvs.sourceforge.net/vmime/vmime/SConstruct?view=markup) 
-
 
 
 Less active projects, which use SCons as their build system:
