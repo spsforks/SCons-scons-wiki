@@ -14,12 +14,11 @@ The command `scons --max-drift=1 --implicit-deps-unchanged` will execute your bu
 
 Another trick to making things faster is to avoid relinking programs when a shared library has been modified but not rebuilt. See [SharedLibrarySignatureOverride](SharedLibrarySignatureOverride) 
 
---- 
+---
 
 The following was suggested by [leanid nazdrynau in scons-users, May 2006](http://scons.tigris.org/servlets/ReadMsg?list=users&msgNo=7713):
 
-```
-#!python 
+```python 
 #Next line is important, it deactivates tools search for default variable, just note that now in SConscript you have 
 #to use env.Program(...) instead of simply Program().
 
@@ -34,9 +33,7 @@ However, for this trick to work, `CCFLAGS (CXXFLAGS)` has to come *after* `CPPFL
 
 Here is the code I use to put `CCFLAGS` after `CPPFLAGS`. It also imports software resource paths  from env variables. (Any comments to make this easier would be welcome.) 
 
-
-```
-#!python 
+```python 
 # CPPPATH trick, see http://www.scons.org/wiki/GoFastButton
 
 # For this to work, CCFLAGS (CXXFLAGS) have to come *after*
@@ -76,8 +73,7 @@ Another solution was suggested by Roberto De Vecchi on scons-users:
 After the env initialization, I'm overriding _CCINCFLAGS as follow: 
 
 
-```
-#!python
+```python
 env['_CPPINCFLAGS']='$( ${_concat(INCPREFIX, CPPPATH, INCSUFFIX, __env__, RDirs, TARGET, SOURCE)} $)' +\
                     '$( ${_concat(INCPREFIX, CPP3RDPARTYPATH, INCSUFFIX, __env__, RDirs, TARGET, SOURCE)} $)'
 ```
@@ -87,8 +83,7 @@ So I can selectively add an include path to `CCPPATH` or `CPP3RDPARTYPATH` and h
 ## Caching the `CPPDEFINES` flags in the compiler command
 
 
-```
-#!python
+```python
 c_defs = ['FOO1', 'FOO2'. ... , 'FOO100']
 import copy
 def_str = ' -D'.join(c_defs)
