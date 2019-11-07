@@ -6,8 +6,7 @@ This is a work in progress...
 In `Executor.scan()` we have 
 
 
-```
-#!python
+```python
     def scan(self, scanner, node_list):
         """Scan a list of this Executor's files (targets or sources) for
         implicit dependencies and update all of the targets with them.
@@ -50,8 +49,7 @@ So we either have a fixed scanner set for the currently used Builder, or (in the
 Remark: Because `Executor.get_build_scanner_path()` is called in the context above 
 
 
-```
-#!python
+```python
     def get_build_scanner_path(self, scanner):
         """Fetch the scanner path for this executor's targets and sources.
         """
@@ -73,8 +71,7 @@ In env.get_scanner(skey), the env-wise dictionary _gsm gets initialized lazily. 
 When the dict _gsm gets created, the list of SCANNERS for the current environment is processed (in reverse order! -> provides first match for the same suffixes/skeys). For each scanner the method get_skeys(env) gets called, and returns the expanded (like for `$CPPSUFFIXES`!) list of suffixes/skeys the scanner can handle allegedly. For each of these list items (skeys), the current scanner is then registered by 
 
 
-```
-#!python
+```python
   _gsm[skey] = scanner
 ```
 in the env-global dict of scanners. This implicitly assumes that the list of skeys, as returned from scanner.get_skeys() is unique.  
