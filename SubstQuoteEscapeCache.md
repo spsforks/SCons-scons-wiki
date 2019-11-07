@@ -241,8 +241,7 @@ xxx API backward compatibility `subst_once(xxx)` maybe just run `crack()` in env
 
 A class that expands a token list.  Not terribly efficient.
 
-```
-#!python
+```python
 
     class Interp:   
         def __init__(self, env, special):   
@@ -290,8 +289,7 @@ A class that expands a token list.  Not terribly efficient.
 
 Some tests: 
 
-```
-#!python
+```python
  
     env = {}   
     special = {}   
