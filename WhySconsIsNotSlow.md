@@ -115,7 +115,7 @@ The main reason for this is that the source files are actually empty, such that 
 The CPP and header sources in all the three benchmarks above look something like: 
 
 
-```txt
+```cpp
 ////////
 Header:
 ////////
@@ -144,7 +144,7 @@ class_0::~class_0() {}
 I tried to get a more realistic comparison, by throwing in some functions that are actually doing stuff and use the STL to some extent: 
 
 
-```txt
+```cpp
 ////////
 Header:
 ////////
@@ -287,8 +287,7 @@ In general, the running time of SCons is distributed over a lot of different mod
 
 1. The prefixes and suffixes for programs, objects and libraries in the default C/CPP builders are set as variables. For example the `Program` Builder in `src/engine/SCons/Tool/__init__.py`, ll. 196, uses:
 
-```
-#!python
+```python
 prefix = '$PROGPREFIX',
 suffix = '$PROGSUFFIX',
 src_suffix = '$OBJSUFFIX',
@@ -296,8 +295,7 @@ src_suffix = '$OBJSUFFIX',
 
 This means that they have to get substituted every time a corresponding target gets built. 
 1. Somewhat related to this is the flexibility that we offer when specifiying C/CPP source files. By adding a large list of different scanners for file suffixes,
-```
-#!python
+```python
 CSuffixes = [".c", ".C", ".cxx", ".cpp", ".c++", ".cc",
              ".h", ".H", ".hxx", ".hpp", ".hh",
              ".F", ".fpp", ".FPP",
@@ -352,7 +350,7 @@ The following image displays the difference in accumulated time for two single c
 It shows how the time needed for a single compile increases, throughout the build of the full project. So I patched the SCons sources, such that no shell/process would be spawned but only the target files got created by `touch`ing them in Python directly. 
 
 
-```txt
+```patch
 # HG changeset patch
 # Parent d53323337b3accbe3b88280fd0597580a1b5e894
 diff -r d53323337b3a -r 1fc40f790145 src/engine/SCons/Action.py
@@ -401,7 +399,7 @@ In comparison to the results above, these curves clearly show how a large overhe
 Inspired by Trevor Highland and his comment in [http://blog.melski.net/2013/12/11/update-scons-is-still-really-slow/](http://blog.melski.net/2013/12/11/update-scons-is-still-really-slow/), I wrote this little Python script that spawns single processes in quick succession. By allocating more and more memory at the same time, the runtimes for the single process calls seem to grow. 
 
 
-```txt
+```python
 import os
 import sys
 
@@ -435,7 +433,7 @@ if __name__ == "__main__":
 I then rewrote this to a C program, again trying to mimic SCons' basic process of repeatedly building targets and then collecting build infos in memory: 
 
 
-```txt
+```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -492,7 +490,7 @@ int main(int argc, char **argv)
 It should be compilable with: 
 
 
-```txt
+```console
 gcc -o spawn_test spawn_test.c
 ```
 The running times for the latter C program on my machine, as measured with `/usr/bin/time`, are: 
