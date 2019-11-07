@@ -13,8 +13,7 @@ You could use this code snippet as one solution to export/import env between 2 w
 
 Add in your bitbake file :
 
-```
-#!bitbake
+```bitbake
    inherit scons pkgconfig
    EXTRA_OESCONS += " CONFIG_ENVIRONMENT_IMPORT=True "
 
@@ -23,8 +22,7 @@ Add in your bitbake file :
 
 To this SConscript
  
-```
-#!python
+```python
 # Import env variables only if reproducibility is ensured
 if target_os in ['yocto']:
     env['CONFIG_ENVIRONMENT_IMPORT'] = True
