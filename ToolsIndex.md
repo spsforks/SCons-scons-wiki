@@ -39,47 +39,49 @@ env.Foo(Glob('*.foo'))
 
 # Have a pick (the actual index)
 
-The index of Tools maintained outside of SCons repository: 
+The index of Tools maintained outside of SCons repository. If the Name column is a link, follow it for more details.
 
 **Name**  | **DVCS**  | **Location**  | **Branch/Clone command** |
 ---------:|:----------|--------------:|:-------------------------|
-Chapel  | Mercurial  | [https://bitbucket.org/russel/scons_chapel](https://bitbucket.org/russel/scons_chapel)  | `hg clone https://bitbucket.org/russel/scons_chapel chapel` | 
-[C#](CsharpBuilder)  | Mercurial  | [https://bitbucket.org/russel/scons_csharp](https://bitbucket.org/russel/scons_csharp)  | `hg clone https://bitbucket.org/russel/scons_csharp csharp` | 
-[CPython](CPythonTool)  | Mercurial  | [https://bitbucket.org/dirkbaechle/scons_cpython](https://bitbucket.org/dirkbaechle/scons_cpython)  | `hg clone https://bitbucket.org/dirkbaechle/scons_cpython cpython` |
-D (*)  |   |   |  
-[Docbook](DocbookTool)  | Mercurial  | [https://bitbucket.org/dirkbaechle/scons_docbook](https://bitbucket.org/dirkbaechle/scons_docbook)  | `hg clone https://bitbucket.org/dirkbaechle/scons_docbook docbook` |
-Doxyfile  | Git  | [https://github.com/ptomulik/scons-tool-doxyfile](https://github.com/ptomulik/scons-tool-doxyfile)  | `git clone https://github.com/ptomulik/scons-tool-doxyfile` |
-[Doxygen](DoxygenBuilder)  | Mercurial  | [https://bitbucket.org/russel/scons_doxygen](https://bitbucket.org/russel/scons_doxygen)  | `hg clone https://bitbucket.org/russel/scons_doxygen doxygen` |
-dvipdfm  | Git  | [https://github.com/ptomulik/scons-tool-dvipdfm](https://github.com/ptomulik/scons-tool-dvipdfm)  | `git clone https://github.com/ptomulik/scons-tool-dvipdfm dvipdfm` | 
-[Eiffel](EiffelStudioTool)  | Bazaar  | [https://launchpad.net/scons-eiffel](https://launchpad.net/scons-eiffel)  | `bzr branch lp:scons-eiffel eiffel` |
-Erlang  | Mercurial  | [https://bitbucket.org/russel/scons_erlang](https://bitbucket.org/russel/scons_erlang)  | `hg clone https://bitbucket.org/russel/scons_erlang erlang` | 
-fastcpp  | Mercurial  | [https://bitbucket.org/dirkbaechle/scons_fastcpp](https://bitbucket.org/dirkbaechle/scons_fastcpp)  | `hg clone https://bitbucket.org/dirkbaechle/scons_fastcpp fastcpp` |
-GccCov  | Git  | [https://github.com/ptomulik/scons-tool-gcccov](https://github.com/ptomulik/scons-tool-gcccov)  | `git clone https://github.com/ptomulik/scons-tool-gcccov gcccov` | 
-Gnuplot  | Git  | [https://github.com/ptomulik/scons-tool-gnuplot](https://github.com/ptomulik/scons-tool-gnuplot)  | `git clone https://github.com/ptomulik/scons-tool-gnuplot gnuplot` |
-Go  | Git  | [http://github.com/alberts/goscons/tree/master/goscons/](http://github.com/alberts/goscons/tree/master/goscons/)  | `git clone git://github.com/alberts/goscons.git` |
-[GObject (gob2)](Gob2Tool)  | Mercurial  | [https://bitbucket.org/dirkbaechle/scons_gob2](https://bitbucket.org/dirkbaechle/scons_gob2)  | `hg clone https://bitbucket.org/dirkbaechle/scons_gob2 gob2` |
-[Haskell](GhcBuilder)  | Mercurial  | [https://bitbucket.org/russel/scons_haskell](https://bitbucket.org/russel/scons_haskell)  | `hg clone https://bitbucket.org/russel/scons_haskell haskell` |
-Jinja2  | Git  | [https://github.com/hgomersall/scons-jinja](https://github.com/hgomersall/scons-jinja)  | git clone [https://github.com/hgomersall/scons-jinja](https://github.com/hgomersall/scons-jinja) jinja 
-Matlab (Mex)  | Git  | [https://github.com/marcecj/scons_matlab](https://github.com/marcecj/scons_matlab)  | git clone [https://github.com/marcecj/scons_matlab](https://github.com/marcecj/scons_matlab) matlab 
-[MFObject](MFObject)  | Bazaar  | [https://code.launchpad.net/~asomers/sconsaddons/mfobject](https://code.launchpad.net/~asomers/sconsaddons/mfobject)  | bzr branch lp:~asomers/sconsaddons/mfobject 
-[OCaml](OcamlBuilder)  | Mercurial  | [https://bitbucket.org/russel/scons_ocaml](https://bitbucket.org/russel/scons_ocaml)  | hg clone [https://bitbucket.org/russel/scons_ocaml](https://bitbucket.org/russel/scons_ocaml) ocaml 
-Perl | Mercurial  | [https://bitbucket.org/carandraug/scons-perl5](https://bitbucket.org/carandraug/scons-perl5)  | hg clone [https://bitbucket.org/carandraug/scons-perl5](https://bitbucket.org/carandraug/scons-perl5) scons-perl5 
-pkg-config | Git  | [https://github.com/manuelnaranjo/scons-pkg-config](https://github.com/manuelnaranjo/scons-pkg-config)  | git clone [https://github.com/manuelnaranjo/scons-pkg-config](https://github.com/manuelnaranjo/scons-pkg-config) pkg-config 
-[Protocol Buffers](ProtocBuilder)  | Mercurial  | [https://bitbucket.org/russel/scons_protobuf](https://bitbucket.org/russel/scons_protobuf)  | hg clone [https://bitbucket.org/russel/scons_protobuf](https://bitbucket.org/russel/scons_protobuf) protoc 
-[Qt4](Qt4Tool)  | Mercurial  | [https://bitbucket.org/dirkbaechle/scons_qt4](https://bitbucket.org/dirkbaechle/scons_qt4)  | hg clone [https://bitbucket.org/dirkbaechle/scons_qt4](https://bitbucket.org/dirkbaechle/scons_qt4) qt4 
-[Qt5](Qt5Tool)  | Mercurial  | [https://bitbucket.org/dirkbaechle/scons_qt5](https://bitbucket.org/dirkbaechle/scons_qt5)  | hg clone [https://bitbucket.org/dirkbaechle/scons_qt5](https://bitbucket.org/dirkbaechle/scons_qt5) qt5 
-[reST (docutils)](ReStructuredTextBuilder)  | Mercurial  | [https://bitbucket.org/dirkbaechle/scons_rest](https://bitbucket.org/dirkbaechle/scons_rest)  | hg clone [https://bitbucket.org/dirkbaechle/scons_rest](https://bitbucket.org/dirkbaechle/scons_rest) rest 
-[RightNow](RightNow)  | Bazaar  | [https://code.launchpad.net/~asomers/sconsaddons/rightnow](https://code.launchpad.net/~asomers/sconsaddons/rightnow)  | bzr branch lp:~asomers/sconsaddons/rightnow 
-SIP  | Mercurial  | [https://bitbucket.org/dirkbaechle/scons_sip](https://bitbucket.org/dirkbaechle/scons_sip)  | hg clone [https://bitbucket.org/dirkbaechle/scons_sip](https://bitbucket.org/dirkbaechle/scons_sip) sip 
-Sphinx  | Mercurial  | [http://bitbucket.org/zondo/sphinx-scons/overview](http://bitbucket.org/zondo/sphinx-scons/overview)  | hg clone [https://bitbucket.org/zondo/sphinx-scons](https://bitbucket.org/zondo/sphinx-scons) 
-[sphinx4scons](sphinx4scons)  | Mercurial  | [https://bitbucket.org/wingbrant/sphinx4scons/](https://bitbucket.org/wingbrant/sphinx4scons/)  | hg clone [https://bitbucket.org/wingbrant/sphinx4scons](https://bitbucket.org/wingbrant/sphinx4scons) 
-[Vala](ValaBuilder)  | Mercurial  | [https://bitbucket.org/russel/scons_vala](https://bitbucket.org/russel/scons_vala)  | hg clone [https://bitbucket.org/russel/scons_vala](https://bitbucket.org/russel/scons_vala) vala 
-[Watcom](Watcom)  | Git  | [https://bitbucket.org/cr1901/scons-wat](https://bitbucket.org/cr1901/scons-wat)  | git clone [https://bitbucket.org/cr1901/scons-wat](https://bitbucket.org/cr1901/scons-wat) watcom 
-Xcode | Mercurial | [https://bitbucket.org/al45tair/scons-xcode](https://bitbucket.org/al45tair/scons-xcode) | hg clone [https://bitbucket.org/al45tair/scons-xcode](https://bitbucket.org/al45tair/scons-xcode) xcode
-X10  | Mercurial  | [https://bitbucket.org/russel/scons_x10](https://bitbucket.org/russel/scons_x10)  | hg clone [https://bitbucket.org/russel/scons_x10](https://bitbucket.org/russel/scons_x10) x10 
-Wayland | git | [https://git.sr.ht/~sircmpwn/scons-wayland-scanner](https://git.sr.ht/~sircmpwn/scons-wayland-scanner) | git clone [https://git.sr.ht/~sircmpwn/scons-wayland-scanner](https://git.sr.ht/~sircmpwn/scons-wayland-scanner) wayland-scanner
+Chapel  | Mercurial  | <https://bitbucket.org/russel/scons_chapel>  | `hg clone https://bitbucket.org/russel/scons_chapel chapel`
+[C#](CsharpBuilder)  | Mercurial  | <https://bitbucket.org/russel/scons_csharp>  | `hg clone https://bitbucket.org/russel/scons_csharp csharp`
+[CPython](CPythonTool)  | Mercurial  | <https://bitbucket.org/dirkbaechle/scons_cpython>  | `hg clone https://bitbucket.org/dirkbaechle/scons_cpython cpython`
+D [1]  |   |   |  
+[Docbook](DocbookTool)  | Mercurial  | <https://bitbucket.org/dirkbaechle/scons_docbook>  | `hg clone https://bitbucket.org/dirkbaechle/scons_docbook docbook`
+Doxyfile  | Git  | <https://github.com/ptomulik/scons-tool-doxyfile>  | `git clone https://github.com/ptomulik/scons-tool-doxyfile` 
+[Doxygen](DoxygenBuilder)  | Mercurial  | <https://bitbucket.org/russel/scons_doxygen>  | `hg clone https://bitbucket.org/russel/scons_doxygen doxygen`
+dvipdfm  | Git  | <https://github.com/ptomulik/scons-tool-dvipdfm>  | `git clone https://github.com/ptomulik/scons-tool-dvipdfm dvipdfm` | 
+[Eiffel](EiffelStudioTool)  | Bazaar  | <https://launchpad.net/scons-eiffel>  | `bzr branch lp:scons-eiffel eiffel` 
+Erlang  | Mercurial  | <https://bitbucket.org/russel/scons_erlang>  | `hg clone https://bitbucket.org/russel/scons_erlang erlang` | 
+fastcpp  | Mercurial  | <https://bitbucket.org/dirkbaechle/scons_fastcpp>  | `hg clone https://bitbucket.org/dirkbaechle/scons_fastcpp fastcpp`
+GccCov  | Git  | <https://github.com/ptomulik/scons-tool-gcccov>  | `git clone https://github.com/ptomulik/scons-tool-gcccov gcccov` | 
+Gnuplot  | Git  | <https://github.com/ptomulik/scons-tool-gnuplot>  | `git clone https://github.com/ptomulik/scons-tool-gnuplot gnuplot`
+Go  | Git  | <http://github.com/alberts/goscons/tree/master/goscons/>  | `git clone git://github.com/alberts/goscons.git`
+[GObject (gob2)](Gob2Tool)  | Mercurial  | <https://bitbucket.org/dirkbaechle/scons_gob2>  | `hg clone https://bitbucket.org/dirkbaechle/scons_gob2 gob2`
+[Haskell](GhcBuilder)  | Mercurial  | <https://bitbucket.org/russel/scons_haskell>  | `hg clone https://bitbucket.org/russel/scons_haskell haskell`
+Jinja2  | Git  | <https://github.com/hgomersall/scons-jinja>  | `git clone https://github.com/hgomersall/scons-jinja jinja`
+Matlab (Mex)  | Git  | <https://github.com/marcecj/scons_matlab>  | `git clone https://github.com/marcecj/scons_matlab matlab`
+[MFObject](MFObject)  | Bazaar  | <https://code.launchpad.net/~asomers/sconsaddons/mfobject>  | `bzr branch lp:~asomers/sconsaddons/mfobject`
+[OCaml](OcamlBuilder)  | Mercurial  | <https://bitbucket.org/russel/scons_ocaml>  | `hg clone https://bitbucket.org/russel/scons_ocaml ocaml`
+Perl | Mercurial  | <https://bitbucket.org/carandraug/scons-perl5>  | `hg clone https://bitbucket.org/carandraug/scons-perl5 scons-perl5`
+pkg-config | Git  | <https://github.com/manuelnaranjo/scons-pkg-config>  | `git clone https://github.com/manuelnaranjo/scons-pkg-config pkg-config`
+[Protocol Buffers](ProtocBuilder)  | Mercurial  | <https://bitbucket.org/russel/scons_protobuf>  | `hg clone https://bitbucket.org/russel/scons_protobuf protoc`
+[Qt4](Qt4Tool)  | Mercurial  | <https://bitbucket.org/dirkbaechle/scons_qt4>  | `hg clone https://bitbucket.org/dirkbaechle/scons_qt4 qt4`
+[Qt5](Qt5Tool)  | Mercurial  | <https://bitbucket.org/dirkbaechle/scons_qt5>  | `hg clone https://bitbucket.org/dirkbaechle/scons_qt5 qt5`
+[reST (docutils)](ReStructuredTextBuilder)  | Mercurial  | <https://bitbucket.org/dirkbaechle/scons_rest>  | `hg clone https://bitbucket.org/dirkbaechle/scons_rest rest`
+[RightNow](RightNow)  | Bazaar  | <https://code.launchpad.net/~asomers/sconsaddons/rightnow>  | `bzr branch lp:~asomers/sconsaddons/rightnow`
+SIP  | Mercurial  | <https://bitbucket.org/dirkbaechle/scons_sip>  | `hg clone https://bitbucket.org/dirkbaechle/scons_sip sip`
+Sphinx  | Mercurial  | <http://bitbucket.org/zondo/sphinx-scons/overview>  | `hg clone https://bitbucket.org/zondo/sphinx-scons`
+[sphinx4scons](sphinx4scons)  | Mercurial  | <https://bitbucket.org/wingbrant/sphinx4scons/>  | `hg clone https://bitbucket.org/wingbrant/sphinx4scons`
+[Vala](ValaBuilder)  | Mercurial  | <https://bitbucket.org/russel/scons_vala>  | `hg clone https://bitbucket.org/russel/scons_vala vala`
+[Watcom](Watcom)  | Git  | <https://bitbucket.org/cr1901/scons-wat>  | `git clone https://bitbucket.org/cr1901/scons-wat watcom`
+Xcode | Mercurial | <https://bitbucket.org/al45tair/scons-xcode> | `hg clone https://bitbucket.org/al45tair/scons-xcode xcode`
+X10  | Mercurial  | <https://bitbucket.org/russel/scons_x10>  | `hg clone https://bitbucket.org/russel/scons_x10 x10`
+Wayland | git | <https://git.sr.ht/~sircmpwn/scons-wayland-scanner> | `git clone https://git.sr.ht/~sircmpwn/scons-wayland-scanner wayland-scanner`
 
-(*) The D tool is no longer developed outside of the SCons source tree (as it once was) to enable correct integration between D, C++ and C in multi-language systems.  D tool development now happens in [a clone of the SCons repository specifically for developing the D tool](https://bitbucket.org/russel/scons_d_tooling). 
+
+
+[1]: The D tool is no longer developed outside of the SCons source tree (as it once was) to enable correct integration between D, C++ and C in multi-language systems.  D tool development now happens in [a clone of the SCons repository specifically for developing the D tool](https://bitbucket.org/russel/scons_d_tooling). 
 
 # Workflows
 
