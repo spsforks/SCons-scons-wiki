@@ -4,8 +4,7 @@ Recent versions of scons (>=0.08) know about nasm, so it is very likely that thi
 
 Here is an example of a nasm files builder ([nasm](http://octium.net/nasm/?page=home) is the netwide assembler): 
 
-```
-#!python
+```python
 nasm_builder = Builder(name='Nasm', action='nasm -f elf -o $TARGET $SOURCE', src_suffix='.nasm')
 nasm_env = Environment(BUILDERS = [nasm_builder])
 
