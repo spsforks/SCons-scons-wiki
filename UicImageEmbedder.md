@@ -7,8 +7,7 @@ Qt's uic tool has the ability to embed binary images into a c++ source file. Tro
 ## The Builder
 
 
-```
-#!python
+```python
 def embed_images( target, source, env ) :
         output_file_str = str(target[0])
         input_files = [ str(src_item) for src_item in source ]
