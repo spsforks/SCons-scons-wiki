@@ -17,30 +17,19 @@ Installing an external Tool requires you to clone (branch in Bazaar) the content
 
 In SCons 2.1 and later, the following paths are tried in order to detect SCons specific settings, like the `site_scons/site_tools` folder:
 
-OS (Platform)  | Path
---------------:|:----
-Windows (win32/cygwin) | `$ALLUSERSPROFILE\Application Data\scons` 
- | `$USERPROFILE\Local Settings\Application Data\scons` 
- | `$APPDATA\scons` 
- | `~\.scons` 
-MacOS X (darwin)  | `/Library/Application Support/SCons` 
- | `/opt/local/share/scons` 
- | `/sw/share/scons` 
- | `~/Library/Application Support/SCons` 
- | `~/.scons` 
-Solaris (sunos)  | `/opt/sfw/scons` 
- | `/usr/share/scons` 
- | `~/.scons` 
-Linux/HPUX/... (other) | `/usr/share/scons` 
- | `~/.scons`
+| OS (Platform)    | Paths         |
+|-----------------:|:--------------|
+| Windows<br> (win32/cygwin)      | `$ALLUSERSPROFILE\Application Data\scons`<br> `$USERPROFILE\Local Settings\Applicatio Data\scons`<br> `$APPDATA\scons`<br> `~\.scons` |
+| MacOS X (darwin) | `/Library/Application Support/SCons`<br> `/opt/local/share/scons`<br> `/sw/share/scons`<br> `~/Library/Application Support/SCons`<br> `~/.scons` |
+| Solaris (sunos)  | `/opt/sfw/scons`<br> `/usr/share/scons`<br> `~/.scons` |
+| Linux/HPUX/... (other) | `/usr/share/scons`<br> `~/.scons` |
 
 (see also sect. 18.7 [http://scons.org/doc/production/HTML/scons-user/ch18s07.html](http://scons.org/doc/production/HTML/scons-user/ch18s07.html) in the User's Guide). 
 
 This makes the tool available but it must be included explicitly in a SCons build by creating an Environment with a `tools` entry since only named tools from the SCons core are initialized automatically when SCons runs. Example: 
 
 
-```
-#!python
+```python
 # Create environment and init Tool foo
 env = Environment(tools=['foo'])
 
@@ -52,24 +41,24 @@ env.Foo(Glob('*.foo'))
 
 The index of Tools maintained outside of SCons repository: 
 
-**Name**  | **DVCS**  | **Location**  | **Branch/Clone command** 
----------:|:----------|--------------:|:------------------------
-Chapel  | Mercurial  | [https://bitbucket.org/russel/scons_chapel](https://bitbucket.org/russel/scons_chapel)  | hg clone [https://bitbucket.org/russel/scons_chapel](https://bitbucket.org/russel/scons_chapel) chapel 
-[C#](CsharpBuilder)  | Mercurial  | [https://bitbucket.org/russel/scons_csharp](https://bitbucket.org/russel/scons_csharp)  | hg clone [https://bitbucket.org/russel/scons_csharp](https://bitbucket.org/russel/scons_csharp) csharp 
-[CPython](CPythonTool)  | Mercurial  | [https://bitbucket.org/dirkbaechle/scons_cpython](https://bitbucket.org/dirkbaechle/scons_cpython)  | hg clone [https://bitbucket.org/dirkbaechle/scons_cpython](https://bitbucket.org/dirkbaechle/scons_cpython) cpython 
+**Name**  | **DVCS**  | **Location**  | **Branch/Clone command** |
+---------:|:----------|--------------:|:-------------------------|
+Chapel  | Mercurial  | [https://bitbucket.org/russel/scons_chapel](https://bitbucket.org/russel/scons_chapel)  | `hg clone https://bitbucket.org/russel/scons_chapel chapel` | 
+[C#](CsharpBuilder)  | Mercurial  | [https://bitbucket.org/russel/scons_csharp](https://bitbucket.org/russel/scons_csharp)  | `hg clone https://bitbucket.org/russel/scons_csharp csharp` | 
+[CPython](CPythonTool)  | Mercurial  | [https://bitbucket.org/dirkbaechle/scons_cpython](https://bitbucket.org/dirkbaechle/scons_cpython)  | `hg clone https://bitbucket.org/dirkbaechle/scons_cpython cpython` |
 D (*)  |   |   |  
-[Docbook](DocbookTool)  | Mercurial  | [https://bitbucket.org/dirkbaechle/scons_docbook](https://bitbucket.org/dirkbaechle/scons_docbook)  | hg clone [https://bitbucket.org/dirkbaechle/scons_docbook](https://bitbucket.org/dirkbaechle/scons_docbook) docbook 
-Doxyfile  | Git  | [https://github.com/ptomulik/scons-tool-doxyfile](https://github.com/ptomulik/scons-tool-doxyfile)  | git clone [https://github.com/ptomulik/scons-tool-doxyfile](https://github.com/ptomulik/scons-tool-doxyfile) 
-[Doxygen](DoxygenBuilder)  | Mercurial  | [https://bitbucket.org/russel/scons_doxygen](https://bitbucket.org/russel/scons_doxygen)  | hg clone [https://bitbucket.org/russel/scons_doxygen](https://bitbucket.org/russel/scons_doxygen) doxygen 
-dvipdfm  | Git  | [https://github.com/ptomulik/scons-tool-dvipdfm](https://github.com/ptomulik/scons-tool-dvipdfm)  | git clone [https://github.com/ptomulik/scons-tool-dvipdfm](https://github.com/ptomulik/scons-tool-dvipdfm) dvipdfm 
-[Eiffel](EiffelStudioTool)  | Bazaar  | [https://launchpad.net/scons-eiffel](https://launchpad.net/scons-eiffel)  | bzr branch lp:scons-eiffel eiffel 
-Erlang  | Mercurial  | [https://bitbucket.org/russel/scons_erlang](https://bitbucket.org/russel/scons_erlang)  | hg clone [https://bitbucket.org/russel/scons_erlang](https://bitbucket.org/russel/scons_erlang) erlang 
-fastcpp  | Mercurial  | [https://bitbucket.org/dirkbaechle/scons_fastcpp](https://bitbucket.org/dirkbaechle/scons_fastcpp)  | hg clone [https://bitbucket.org/dirkbaechle/scons_fastcpp](https://bitbucket.org/dirkbaechle/scons_fastcpp) fastcpp 
-GccCov  | Git  | [https://github.com/ptomulik/scons-tool-gcccov](https://github.com/ptomulik/scons-tool-gcccov)  | git clone [https://github.com/ptomulik/scons-tool-gcccov](https://github.com/ptomulik/scons-tool-gcccov) gcccov 
-Gnuplot  | Git  | [https://github.com/ptomulik/scons-tool-gnuplot](https://github.com/ptomulik/scons-tool-gnuplot)  | git clone [https://github.com/ptomulik/scons-tool-gnuplot](https://github.com/ptomulik/scons-tool-gnuplot) gnuplot 
-Go  | Git  | [http://github.com/alberts/goscons/tree/master/goscons/](http://github.com/alberts/goscons/tree/master/goscons/)  | git clone git://github.com/alberts/goscons.git 
-[GObject (gob2)](Gob2Tool)  | Mercurial  | [https://bitbucket.org/dirkbaechle/scons_gob2](https://bitbucket.org/dirkbaechle/scons_gob2)  | hg clone [https://bitbucket.org/dirkbaechle/scons_gob2](https://bitbucket.org/dirkbaechle/scons_gob2) gob2 
-[Haskell](GhcBuilder)  | Mercurial  | [https://bitbucket.org/russel/scons_haskell](https://bitbucket.org/russel/scons_haskell)  | hg clone [https://bitbucket.org/russel/scons_haskell](https://bitbucket.org/russel/scons_haskell) haskell 
+[Docbook](DocbookTool)  | Mercurial  | [https://bitbucket.org/dirkbaechle/scons_docbook](https://bitbucket.org/dirkbaechle/scons_docbook)  | `hg clone https://bitbucket.org/dirkbaechle/scons_docbook docbook` |
+Doxyfile  | Git  | [https://github.com/ptomulik/scons-tool-doxyfile](https://github.com/ptomulik/scons-tool-doxyfile)  | `git clone https://github.com/ptomulik/scons-tool-doxyfile` |
+[Doxygen](DoxygenBuilder)  | Mercurial  | [https://bitbucket.org/russel/scons_doxygen](https://bitbucket.org/russel/scons_doxygen)  | `hg clone https://bitbucket.org/russel/scons_doxygen doxygen` |
+dvipdfm  | Git  | [https://github.com/ptomulik/scons-tool-dvipdfm](https://github.com/ptomulik/scons-tool-dvipdfm)  | `git clone https://github.com/ptomulik/scons-tool-dvipdfm dvipdfm` | 
+[Eiffel](EiffelStudioTool)  | Bazaar  | [https://launchpad.net/scons-eiffel](https://launchpad.net/scons-eiffel)  | `bzr branch lp:scons-eiffel eiffel` |
+Erlang  | Mercurial  | [https://bitbucket.org/russel/scons_erlang](https://bitbucket.org/russel/scons_erlang)  | `hg clone https://bitbucket.org/russel/scons_erlang erlang` | 
+fastcpp  | Mercurial  | [https://bitbucket.org/dirkbaechle/scons_fastcpp](https://bitbucket.org/dirkbaechle/scons_fastcpp)  | `hg clone https://bitbucket.org/dirkbaechle/scons_fastcpp fastcpp` |
+GccCov  | Git  | [https://github.com/ptomulik/scons-tool-gcccov](https://github.com/ptomulik/scons-tool-gcccov)  | `git clone https://github.com/ptomulik/scons-tool-gcccov gcccov` | 
+Gnuplot  | Git  | [https://github.com/ptomulik/scons-tool-gnuplot](https://github.com/ptomulik/scons-tool-gnuplot)  | `git clone https://github.com/ptomulik/scons-tool-gnuplot gnuplot` |
+Go  | Git  | [http://github.com/alberts/goscons/tree/master/goscons/](http://github.com/alberts/goscons/tree/master/goscons/)  | `git clone git://github.com/alberts/goscons.git` |
+[GObject (gob2)](Gob2Tool)  | Mercurial  | [https://bitbucket.org/dirkbaechle/scons_gob2](https://bitbucket.org/dirkbaechle/scons_gob2)  | `hg clone https://bitbucket.org/dirkbaechle/scons_gob2 gob2` |
+[Haskell](GhcBuilder)  | Mercurial  | [https://bitbucket.org/russel/scons_haskell](https://bitbucket.org/russel/scons_haskell)  | `hg clone https://bitbucket.org/russel/scons_haskell haskell` |
 Jinja2  | Git  | [https://github.com/hgomersall/scons-jinja](https://github.com/hgomersall/scons-jinja)  | git clone [https://github.com/hgomersall/scons-jinja](https://github.com/hgomersall/scons-jinja) jinja 
 Matlab (Mex)  | Git  | [https://github.com/marcecj/scons_matlab](https://github.com/marcecj/scons_matlab)  | git clone [https://github.com/marcecj/scons_matlab](https://github.com/marcecj/scons_matlab) matlab 
 [MFObject](MFObject)  | Bazaar  | [https://code.launchpad.net/~asomers/sconsaddons/mfobject](https://code.launchpad.net/~asomers/sconsaddons/mfobject)  | bzr branch lp:~asomers/sconsaddons/mfobject 
