@@ -1,8 +1,7 @@
 Here is a fragment that illustrates how to make Phony targets that run commands.  The AlwaysBuild line makes sure the command runs even if there happens to be a file named the same as the target. 
 
 
-```
-#!python 
+```python 
 def PhonyTarget(target, action):
         phony = Environment(ENV = os.environ,
                             BUILDERS = { 'phony' : Builder(action = action) })
@@ -13,8 +12,7 @@ PhonyTarget('TAGS', 'tools/mktags.sh -e')
 Here's a better implementation that handles multiple targets and doesn't require generating an Environment every time. 
 
 
-```
-#!python 
+```python 
 def PhonyTargets(env = None, **kw):
     if not env: env = DefaultEnvironment()
     for target,action in kw.items():
@@ -28,7 +26,7 @@ PhonyTargets(env, CFLAGS  = '@echo $CFLAGS',
                   LIBS    = '@echo $LIBS')
 ```
 The output looks like this: 
-```txt
+```console
 $ scons TAGS
 tools/mktags.sh -e
  ...
