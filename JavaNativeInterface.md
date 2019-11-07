@@ -8,9 +8,7 @@ The python code `ConfigureJNI.py` below first searches for a shell environment v
 
 ##### file: ConfigureJNI.py
 
-
-```
-#!python 
+```python 
 import os
 import sys
 
@@ -108,7 +106,7 @@ The code for `displayHelloWorld()` is included in the file `csrc/HelloWorldImp.c
 ##### file: jsrc/HelloWorld.java
 
 
-```txt
+```java
 class HelloWorld {
     public native void displayHelloWorld();
 
@@ -125,7 +123,7 @@ class HelloWorld {
 ##### file: csrc/HelloWorldImp.cpp
 
 
-```txt
+```c++
 #include <stdio.h>
 #include <jni.h>
 #include "HelloWorld.h"
@@ -148,7 +146,6 @@ C++ classes are platform _dependent_ so they are compiled and linked into the su
 
 
 ```python
-#!python 
 import os
 import sys
 from ConfigureJNI import ConfigureJNI
@@ -171,7 +168,6 @@ SConscript('SConscript', exports = 'env')
 
 
 ```python
-#!python 
 import os
 import sys
 Import('env')
@@ -205,7 +201,7 @@ csrc/HelloWorldImp.cpp
 Then run _scons_: 
 
 
-```txt
+```console
 C:\Devel\jni> scons
 ```
 
@@ -214,14 +210,14 @@ C:\Devel\jni> scons
 When testing this example, remember that Java must be able to find the shared library. 
 
 **On windows**, the library must be in the current directory or somewhere in the `PATH`. To test this example on windows, build it with scons, change to the directory containing the DLL and run the java class 
-```txt
+```console
 C:\Devel\jni> cd lib-win32
 
 C:\Devel\jni\lib-win32> java -cp ..\classes HelloWorld
 Hello World!
 ```
 **On linux**, Java searches `LD_LIBRARY_PATH` for shared libraries. However, the `LD_LIBRARY_PATH` rarely contains the current directory, so it must be added. To test this example on linux, first update `LD_LIBRARY_PATH`, then change to the directory containing the shared library and run the java class. 
-```txt
+```console
 [user@localhost ~/jni]$ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.
 
 [user@localhost ~/jni]$ cd lib-linux
@@ -230,7 +226,7 @@ Hello World!
 Hello World!
 ```
 **On OS X**, Java searches the current directory or `/Library/Java/Extension` for shared libraries. Note that shared JNI libraries on OS X need to have the extension `.jnilib`. This is taken care of by `ConfigureJNI()` above. 
-```txt
+```console
 [user@localhost ~/jni]% cd lib-darwin
 
 [user@localhost ~/jni/lib-darwin]% java -cp ../classes HelloWorld
