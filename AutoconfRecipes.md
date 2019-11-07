@@ -1,5 +1,4 @@
 
-
 ## Autoconf recipes
 
 Autoconf/automake macros provide a layer of portability that is currently not fully supported by scons. Here is a few autoconf-like functions that I use. I hope that others can fill more stuff in. 
@@ -7,10 +6,10 @@ Autoconf/automake macros provide a layer of portability that is currently not fu
 
 ### Examples
 
-MKDIR_TAKES_ONE_ARG 
+#### MKDIR_TAKES_ONE_ARG 
 
 
-```txt
+```python
 def checkMkdirOneArg(conf):
   check_mkdir_one_arg_source = """
 #include <sys/stat.h>
@@ -28,10 +27,10 @@ int main()
     conf.Result('two')
   return ret
 ```
-SELECT_TYPE_ARG1 SELECT_TYPE_ARG234 SELECT_TYPE_ARG5 
+#### SELECT_TYPE_ARG1 SELECT_TYPE_ARG234 SELECT_TYPE_ARG5 
 
 
-```txt
+```python
 def checkSelectArgType(conf):
   ''' Adapted from autoconf '''
   conf.Message('Checking for arg types for select... ')
@@ -61,7 +60,7 @@ int main()
 Check for boost libraries 
 
 
-```txt
+```python
 def checkBoostLibraries(conf, lib, pathes):
   ''' look for boost libraries '''
   conf.Message('Checking for boost library %s... ' % lib)
@@ -82,10 +81,10 @@ def checkBoostLibraries(conf, lib, pathes):
   return ('','')
 ```
 
-### To use them, do something like:
+To use them, do something like:
 
 
-```txt
+```python
 conf = Configure(env,
   custom_tests = {
     'CheckIstreambufIterator' : utils.checkIstreambufIterator,
@@ -100,7 +99,7 @@ conf = Configure(env,
 and then maybe 
 
 
-```txt
+```python
   # MKDIR_TAKES_ONE_ARG
   if conf.CheckMkdirOneArg():
     utils.addToConfig('#define MKDIR_TAKES_ONE_ARG 1')
@@ -114,132 +113,149 @@ Note that addToConfig is not part of scons.
 
 Please, if you have implemented one of the following, add your recipe here so that others can use it. (list copied from [http://scons.org/wiki/GregNoel/StandardMacros#preview](http://scons.org/wiki/GregNoel/StandardMacros#preview) ) 
 
-AC_INIT 
+#### AC_INIT 
 
 
 ```txt
 Not needed
 ```
-AC_CONFIG_SRCDIR 
 
+#### AC_CONFIG_SRCDIR 
 
 ```txt
 
 ```
-AM_INIT_AUTOMAKE 
+#### AM_INIT_AUTOMAKE 
 
 
 ```txt
 Not needed
 ```
-AM_ENABLE_MULTILIB 
+
+#### AM_ENABLE_MULTILIB 
+
+```txt
+
+```
+
+#### AC_PREREQ 
 
 
 ```txt
 
 ```
-AC_PREREQ 
+
+#### AC_COPYRIGHT 
 
 
 ```txt
 
 ```
-AC_COPYRIGHT 
 
-
-```txt
-
-```
-AC_REVISION 
+#### AC_REVISION 
 
 
 ```txt
 Not needed
 ```
-AC_PREFIX_DEFAULT 
+
+#### AC_PREFIX_DEFAULT 
 
 
 ```txt
 
 ```
-AC_PREFIX_PROGRAM 
+
+#### AC_PREFIX_PROGRAM 
 
 
 ```txt
 
 ```
-AC_CONFIG_AUX_DIR 
+
+#### AC_CONFIG_AUX_DIR 
 
 
 ```txt
 
 ```
-AC_CONFIG_COMMANDS 
+
+#### AC_CONFIG_COMMANDS 
 
 
 ```txt
 
 ```
-AC_CONFIG_COMMANDS_PRE 
+
+#### AC_CONFIG_COMMANDS_PRE 
 
 
 ```txt
 
 ```
-AC_CONFIG_COMMANDS_POST 
+
+#### AC_CONFIG_COMMANDS_POST 
 
 
 ```txt
 
 ```
-AC_CONFIG_FILES 
+
+#### AC_CONFIG_FILES 
 
 
 ```txt
 
 ```
-AC_CONFIG_HEADERS 
+
+#### AC_CONFIG_HEADERS 
 
 
 ```txt
 
 ```
-AC_CONFIG_LINKS 
+
+#### AC_CONFIG_LINKS 
 
 
 ```txt
 
 ```
-AC_CONFIG_SUBDIRS 
+
+#### AC_CONFIG_SUBDIRS 
 
 
 ```txt
 
 ```
-AC_OUTPUT 
+
+#### AC_OUTPUT 
 
 
 ```txt
 
 ```
-AC_DEFINE 
+
+#### AC_DEFINE 
 
 
 ```txt
 
 ```
-AC_DEFINE_UNQUOTED 
+
+#### AC_DEFINE_UNQUOTED 
 
 
 ```txt
 
 ```
-AC_SUBST 
 
-See [SubstInFileBuilder](SubstInFileBuilder), or try this code which uses @KEY_WORD@, just like Autoconf: 
+#### AC_SUBST 
+
+See [SubstInFileBuilder](SubstInFileBuilder), or try this code which uses `@KEY_WORD@`, just like Autoconf: 
 
 
-```txt
+```python
 ###############################################################################
 #
 # ACGenerateFile.py
@@ -326,7 +342,8 @@ def TOOL_SUBST(env):
     env['BUILDERS']['SubstInFile'] = Builder(action=subst_action, emitter=subst_emitter)
 ```
 To use do: 
-```txt
+
+```python
 # Add the tool for use in the environment
 from ACGenerateFile import *
 
@@ -366,46 +383,53 @@ env = Environment(ENV = os.environ,
 env.SubstInFile('src/Nsound/Nsound.h', 'src/Nsound/Nsound.h.in', SUBST_DICT=dict)
 env.SubstInFile('src/Doxyfile', 'src/Doxyfile.in', SUBST_DICT=dict)
 ```
-AC_SUBST_FILE 
+
+#### AC_SUBST_FILE 
 
 
 ```txt
 
 ```
-AC_ARG_VAR 
+
+#### AC_ARG_VAR 
 
 
 ```txt
 
 ```
-AH_VERBATIM 
+
+#### AH_VERBATIM 
 
 
 ```txt
 
 ```
-AH_TEMPLATE 
+
+#### AH_TEMPLATE 
 
 
 ```txt
 
 ```
-AH_TOP 
+
+#### AH_TOP 
 
 
 ```txt
 
 ```
-AH_BOTTOM 
+
+#### AH_BOTTOM 
 
 
 ```txt
 
 ```
-AC_CHECK_PROG 
+
+#### AC_CHECK_PROG 
 
 
-```txt
+```python
 # note that the full command path or none is returned, which can serve as True or False.
 def CheckCommand(context, cmd):
        context.Message('Checking for %s command... ' % cmd)
@@ -413,442 +437,515 @@ def CheckCommand(context, cmd):
        context.Result(result is not None)
        return result
 ```
-AC_CHECK_PROGS 
+
+#### AC_CHECK_PROGS 
 
 
 ```txt
 Not needed
 ```
-AC_CHECK_TOOL 
 
+#### AC_CHECK_TOOL 
 
+
 ```txt
 
 ```
-AC_CHECK_TOOLS 
+
+#### AC_CHECK_TOOLS 
 
 
 ```txt
 
 ```
-AC_PATH_PROG 
 
+#### AC_PATH_PROG 
 
+
 ```txt
 
 ```
-AC_PATH_PROGS 
+
+#### AC_PATH_PROGS 
 
 
 ```txt
 
 ```
-AC_PATH_TOOL 
 
+#### AC_PATH_TOOL 
 
+
 ```txt
 
 ```
-AC_PROG_AWK 
+
+#### AC_PROG_AWK 
 
 
 ```txt
 
 ```
-AC_PROG_EGREP 
 
+#### AC_PROG_EGREP 
 
+
 ```txt
 
 ```
-AC_PROG_FGREP 
 
+#### AC_PROG_FGREP 
 
+
 ```txt
 
 ```
-AC_PROG_INSTALL 
+
+#### AC_PROG_INSTALL 
 
 
 ```txt
 
 ```
-AC_PROG_LEX 
 
+#### AC_PROG_LEX 
 
+
 ```txt
 
 ```
-AC_PROG_YACC 
+
+#### AC_PROG_YACC 
 
 
 ```txt
 
 ```
-AC_PROG_RANLIB 
 
+#### AC_PROG_RANLIB 
 
+
 ```txt
 
 ```
-AC_PROG_LN_S 
+
+#### AC_PROG_LN_S 
 
 
 ```txt
 
 ```
-AM_GNU_GETTEXT 
 
+#### AM_GNU_GETTEXT 
 
+
 ```txt
 
 ```
-AM_PATH_PYTHON 
+
+#### AM_PATH_PYTHON 
 
 
 ```txt
 
 ```
-AM_PATH_LISPDIR 
 
+#### AM_PATH_LISPDIR 
 
+
 ```txt
 
 ```
-AM_PROG_LISP 
 
+#### AM_PROG_LISP 
 
+
 ```txt
 
 ```
-AM_PROG_AS 
+
+#### AM_PROG_AS 
 
 
 ```txt
 
 ```
-AM_PROG_LEX 
 
+#### AM_PROG_LEX 
 
+
 ```txt
 
 ```
-AM_PROG_GCJ 
+
+#### AM_PROG_GCJ 
 
 
 ```txt
 
 ```
-AC_CHECK_FILE 
 
+#### AC_CHECK_FILE 
 
+
 ```txt
 
 ```
-AC_CHECK_FILES 
+
+#### AC_CHECK_FILES 
 
 
 ```txt
 
 ```
-AC_CHECK_LIB 
 
+#### AC_CHECK_LIB 
 
+
 ```txt
 
 ```
-AC_SEARCH_LIBS 
+
+#### AC_SEARCH_LIBS 
 
 
 ```txt
 
 ```
-AM_WITH_MALLOC 
 
+#### AM_WITH_MALLOC 
 
+
 ```txt
 
 ```
-AM_WITH_REGEX 
 
+#### AM_WITH_REGEX 
 
+
 ```txt
 
 ```
-AC_CHECK_FUNCS 
+
+#### AC_CHECK_FUNCS 
 
 
 ```txt
-implemented as CheckFunc
+implemented as `CheckFunc`
 ```
-AC_LIBOBJ 
 
+#### AC_LIBOBJ 
 
+
 ```txt
 
 ```
-AC_LIBSOURCE 
+
+#### AC_LIBSOURCE 
 
 
 ```txt
 
 ```
-AC_LIBSOURCES 
 
+#### AC_LIBSOURCES 
 
+
 ```txt
 
 ```
-AC_CONFIG_LIBOBJ_DIR 
+
+#### AC_CONFIG_LIBOBJ_DIR 
 
 
 ```txt
 
 ```
-AC_REPLACE_FUNCS 
 
+#### AC_REPLACE_FUNCS 
 
+
 ```txt
 
 ```
-AC_REPLACE_FNMATCH 
+
+#### AC_REPLACE_FNMATCH 
 
 
 ```txt
 
 ```
-AC_FUNC_ALLOCA 
 
+#### AC_FUNC_ALLOCA 
 
+
 ```txt
 
 ```
-AC_FUNC_CHOWN 
 
+#### AC_FUNC_CHOWN 
 
+
 ```txt
 
 ```
-AC_FUNC_CLOSEDIR_VOID 
+
+#### AC_FUNC_CLOSEDIR_VOID 
 
 
 ```txt
 
 ```
-AC_FUNC_ERROR_AT_LINE 
 
+#### AC_FUNC_ERROR_AT_LINE 
 
+
 ```txt
 
 ```
-AC_FUNC_FNMATCH 
+
+#### AC_FUNC_FNMATCH 
 
 
 ```txt
 
 ```
-AC_FUNC_FNMATCH_GNU 
 
+#### AC_FUNC_FNMATCH_GNU 
 
+
 ```txt
 
 ```
-AC_FUNC_FORK 
+
+#### AC_FUNC_FORK 
 
 
 ```txt
 
 ```
-AC_FUNC_FSEEKO 
 
+#### AC_FUNC_FSEEKO 
 
+
 ```txt
 
 ```
-AC_FUNC_GETGROUPS 
+
+#### AC_FUNC_GETGROUPS 
 
 
 ```txt
 
 ```
-AC_FUNC_GETLOADAVG 
 
+#### AC_FUNC_GETLOADAVG 
 
+
 ```txt
 
 ```
-AC_FUNC_GETMNTENT 
 
+#### AC_FUNC_GETMNTENT 
 
+
 ```txt
 
 ```
-AC_FUNC_GETPGRP 
+
+#### AC_FUNC_GETPGRP 
 
 
 ```txt
 
 ```
-AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK 
 
+#### AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK 
 
+
 ```txt
 
 ```
-AC_FUNC_MALLOC 
+
+#### AC_FUNC_MALLOC 
 
 
 ```txt
 
 ```
-AC_FUNC_MEMCMP 
 
+#### AC_FUNC_MEMCMP 
 
+
 ```txt
 
 ```
-AC_FUNC_MBRTOWC 
+
+#### AC_FUNC_MBRTOWC 
 
 
 ```txt
 
 ```
-AC_FUNC_MKTIME 
 
+#### AC_FUNC_MKTIME 
 
+
 ```txt
 
 ```
-AC_FUNC_MMAP 
+
+#### AC_FUNC_MMAP 
 
 
 ```txt
 
 ```
-AC_FUNC_OBSTACK 
 
+#### AC_FUNC_OBSTACK 
 
+
 ```txt
 
 ```
-AC_FUNC_REALLOC 
 
+#### AC_FUNC_REALLOC 
 
+
 ```txt
 
 ```
-AC_FUNC_SELECT_ARGTYPES 
+
+#### AC_FUNC_SELECT_ARGTYPES 
 
 
 ```txt
 
 ```
-AC_FUNC_SETPGRP 
 
+#### AC_FUNC_SETPGRP 
 
+
 ```txt
 
 ```
-AC_FUNC_SETVBUF_REVERSED 
+
+#### AC_FUNC_SETVBUF_REVERSED 
 
 
 ```txt
 
 ```
-AC_FUNC_STAT 
 
+#### AC_FUNC_STAT 
 
+
 ```txt
 
 ```
-AC_FUNC_LSTAT 
+
+#### AC_FUNC_LSTAT 
 
 
 ```txt
 
 ```
-AC_FUNC_STRCOLL 
 
+#### AC_FUNC_STRCOLL 
 
+
 ```txt
 
 ```
-AC_FUNC_STRERROR_R 
+
+#### AC_FUNC_STRERROR_R 
 
 
 ```txt
 
 ```
-AC_FUNC_STRFTIME 
 
+#### AC_FUNC_STRFTIME 
 
+
 ```txt
 
 ```
-AC_FUNC_STRNLEN 
 
+#### AC_FUNC_STRNLEN 
 
+
 ```txt
 
 ```
-AC_FUNC_STRTOD 
+
+#### AC_FUNC_STRTOD 
 
 
 ```txt
 
 ```
-AC_FUNC_UTIME_NULL 
 
+#### AC_FUNC_UTIME_NULL 
 
+
 ```txt
 
 ```
-AC_FUNC_VPRINTF 
+
+#### AC_FUNC_VPRINTF 
 
 
 ```txt
 
 ```
-AC_CHECK_FUNC 
 
+#### AC_CHECK_FUNC 
 
+
 ```txt
 
 ```
-AC_CHECK_HEADERS 
 
+#### AC_CHECK_HEADERS 
 
+
 ```txt
 
 ```
-AC_HEADER_DIRENT 
+
+#### AC_HEADER_DIRENT 
 
 
 ```txt
 
 ```
-AC_HEADER_MAJOR 
 
+#### AC_HEADER_MAJOR 
 
+
 ```txt
 
 ```
-AC_HEADER_STAT 
+
+#### AC_HEADER_STAT 
 
 
 ```txt
 
 ```
-AC_HEADER_STDBOOL 
 
+#### AC_HEADER_STDBOOL 
 
+
 ```txt
 
 ```
-AC_HEADER_STDC 
 
+#### AC_HEADER_STDC 
 
-```txt
+
+```python
 ##############################################################################
 #
 # By Samarjit Adhikari (adhikari_20022002_at_yahoo_com)
@@ -968,172 +1065,200 @@ def CheckStdCHeader(context):
     context.Result(ret)
     return ret
 ```
-AC_HEADER_SYS_WAIT 
+
+#### AC_HEADER_SYS_WAIT 
 
 
 ```txt
 
 ```
-AC_HEADER_TIME 
+
+#### AC_HEADER_TIME 
 
 
 ```txt
 
 ```
-AC_HEADER_TIOCGWINSZ 
+
+#### AC_HEADER_TIOCGWINSZ 
 
 
 ```txt
 
 ```
-AC_CHECK_DECL 
+
+#### AC_CHECK_DECL 
 
 
 ```txt
 
 ```
-AC_CHECK_DECLS 
+
+#### AC_CHECK_DECLS 
 
 
 ```txt
 
 ```
-AC_CHECK_MEMBER 
+
+#### AC_CHECK_MEMBER 
 
 
 ```txt
 
 ```
-AC_CHECK_MEMBERS 
+
+#### AC_CHECK_MEMBERS 
 
 
 ```txt
 
 ```
-AC_STRUCT_ST_BLKSIZE 
+
+#### AC_STRUCT_ST_BLKSIZE 
 
 
 ```txt
 
 ```
-AC_STRUCT_ST_BLOCKS 
+
+#### AC_STRUCT_ST_BLOCKS 
 
 
 ```txt
 
 ```
-AC_STRUCT_ST_RDEV 
+
+#### AC_STRUCT_ST_RDEV 
 
 
 ```txt
 
 ```
-AC_STRUCT_TM 
+
+#### AC_STRUCT_TM 
 
 
 ```txt
 
 ```
-AC_STRUCT_TIMEZONE 
+
+#### AC_STRUCT_TIMEZONE 
 
 
 ```txt
 
 ```
-AC_CHECK_TYPES 
+
+#### AC_CHECK_TYPES 
 
 
 ```txt
 
 ```
-AC_TYPE_GETGROUPS 
+
+#### AC_TYPE_GETGROUPS 
 
 
 ```txt
 
 ```
-AC_TYPE_MBSTATE_T 
+
+#### AC_TYPE_MBSTATE_T 
 
 
 ```txt
 
 ```
-AC_TYPE_MODE_T 
+
+#### AC_TYPE_MODE_T 
 
 
 ```txt
 
 ```
-AC_TYPE_OFF_T 
+
+#### AC_TYPE_OFF_T 
 
 
 ```txt
 
 ```
-AC_TYPE_PID_T 
+
+#### AC_TYPE_PID_T 
 
 
 ```txt
 
 ```
-AC_TYPE_SIGNAL 
+
+#### AC_TYPE_SIGNAL 
 
 
 ```txt
 
 ```
-AC_TYPE_SIZE_T 
+
+#### AC_TYPE_SIZE_T 
 
 
 ```txt
 
 ```
-AC_TYPE_UID_T 
+
+#### AC_TYPE_UID_T 
 
 
 ```txt
 
 ```
-AC_PROG_CPP 
+
+#### AC_PROG_CPP 
 
 
 ```txt
 
 ```
-AC_PROG_CXXCPP 
+
+#### AC_PROG_CXXCPP 
 
 
 ```txt
 
 ```
-AC_PROG_CC 
+
+#### AC_PROG_CC 
 
 
 ```txt
 
 ```
-AC_PROG_CC_C_O 
+
+#### AC_PROG_CC_C_O 
 
 
 ```txt
 
 ```
-AM_PROG_CC_C_O 
+
+#### AM_PROG_CC_C_O 
 
 
 ```txt
 
 ```
-AC_C_BACKSLASH_A 
+
+#### AC_C_BACKSLASH_A 
 
 
 ```txt
 
 ```
-AC_C_BIGENDIAN 
+
+#### AC_C_BIGENDIAN 
 
 
-```txt
+```python
 #############################
 def Check_C_BIGENDIAN(context):
     context.Message("checking for Big Endianness ... ")
@@ -1170,172 +1295,200 @@ def Check_C_BIGENDIAN(context):
     return ret
 ###############################
 ```
-AC_C_CONST 
+
+#### AC_C_CONST 
 
 
 ```txt
 
 ```
-AC_C_VOLATILE 
+
+#### AC_C_VOLATILE 
 
 
 ```txt
 
 ```
-AC_C_INLINE 
+
+#### AC_C_INLINE 
 
 
 ```txt
 
 ```
-AC_C_CHAR_UNSIGNED 
+
+#### AC_C_CHAR_UNSIGNED 
 
 
 ```txt
 
 ```
-AC_C_LONG_DOUBLE 
+
+#### AC_C_LONG_DOUBLE 
 
 
 ```txt
 
 ```
-AC_C_STRINGIZE 
+
+#### AC_C_STRINGIZE 
 
 
 ```txt
 
 ```
-AC_C_PROTOTYPES 
+
+#### AC_C_PROTOTYPES 
 
 
 ```txt
 
 ```
-AM_C_PROTOTYPES 
+
+#### AM_C_PROTOTYPES 
 
 
 ```txt
 
 ```
-AC_PROG_GCC_TRADITIONAL 
+
+#### AC_PROG_GCC_TRADITIONAL 
 
 
 ```txt
 
 ```
-AC_PROG_CXX 
+
+#### AC_PROG_CXX 
 
 
 ```txt
 
 ```
-AC_PROG_F77 
+
+#### AC_PROG_F77 
 
 
 ```txt
 
 ```
-AC_PROG_F77_C_O 
+
+#### AC_PROG_F77_C_O 
 
 
 ```txt
 
 ```
-AC_F77_LIBRARY_LDFLAGS 
+
+#### AC_F77_LIBRARY_LDFLAGS 
 
 
 ```txt
 
 ```
-AC_F77_DUMMY_MAIN 
+
+#### AC_F77_DUMMY_MAIN 
 
 
 ```txt
 
 ```
-AC_F77_MAIN 
+
+#### AC_F77_MAIN 
 
 
 ```txt
 
 ```
-AC_F77_WRAPPERS 
+
+#### AC_F77_WRAPPERS 
 
 
 ```txt
 
 ```
-AC_F77_FUNC 
+
+#### AC_F77_FUNC 
 
 
 ```txt
 
 ```
-AC_LANG 
+
+#### AC_LANG 
 
 
 ```txt
 
 ```
-AC_LANG_PUSH 
+
+#### AC_LANG_PUSH 
 
 
 ```txt
 
 ```
-AC_LANG_POP 
+
+#### AC_LANG_POP 
 
 
 ```txt
 
 ```
-AC_LANG_CONFTEST 
+
+#### AC_LANG_CONFTEST 
 
 
 ```txt
 
 ```
-AC_LANG_SOURCE 
+
+#### AC_LANG_SOURCE 
 
 
 ```txt
 
 ```
-AC_LANG_PROGRAM 
+
+#### AC_LANG_PROGRAM 
 
 
 ```txt
 
 ```
-AC_LANG_CALL 
+
+#### AC_LANG_CALL 
 
 
 ```txt
 
 ```
-AC_LANG_FUNC_LINK_TRY 
+
+#### AC_LANG_FUNC_LINK_TRY 
 
 
 ```txt
 
 ```
-AC_PREPROC_IFELSE 
+
+#### AC_PREPROC_IFELSE 
 
 
 ```txt
 
 ```
-AC_EGREP_HEADERS 
+
+#### AC_EGREP_HEADERS 
 
 
 ```txt
 
 ```
-AC_EGREP_CPP 
+
+#### AC_EGREP_CPP 
 
 
-```txt
+```python
 env=Environment()
 conf=env.Configure()
 import os,os.path,platform
@@ -1368,10 +1521,11 @@ conf.Check_cpp_egrep(test_str)
 env=conf.Finish()
 
 ```
-AC_CHECK_SIZEOF 
+
+#### AC_CHECK_SIZEOF 
 
 
-```txt
+```python
 For example, the following function can be used:
 def checkSizeOf(context, type):
     context.Message( 'getting size of ' + type + '... ' )
@@ -1415,9 +1569,9 @@ conf = Configure(env, custom_tests = {'checkSizeOf' : checkSizeOf})
 print "sizeof(unsigned long int) is: " + conf.checkSizeOf('unsigned long int')
 ```
 
-```txt
 This is another version, which uses a scheme similar to autoconf for testing the size (without requiring any run, thus being quite faster than methods using TryRun), and is a bit more flexible than the above (same API than the CheckType from SCons, with one more argument for expected size).
 
+```python
 # Sensible default for common types on common platforms.
 _DEFAULTS = {
     'short' : [2],
@@ -1523,28 +1677,32 @@ int main()
 For example, to check wether long is 4 bytes on your platform, you can do:
 config.CheckTypeSize('long', size = 4).
 ```
-AC_PATH_X 
+
+#### AC_PATH_X 
 
 
 ```txt
 
 ```
-AC_PATH_XTRA 
+
+#### AC_PATH_XTRA 
 
 
 ```txt
 
 ```
-AC_SYS_INTERPRETER 
+
+#### AC_SYS_INTERPRETER 
 
 
 ```txt
 
 ```
-AC_SYS_LARGEFILE 
+
+#### AC_SYS_LARGEFILE 
 
 
-```txt
+```python
 ################################
 def Check_SYS_LARGEFILE(context):
     LARGEFILE=context.sconf.get_disable("LARGEFILE")
@@ -1584,217 +1742,253 @@ def Check_SYS_LARGEFILE(context):
 ##############################
 
 ```
-AC_SYS_LONG_FILE_NAMES 
+
+#### AC_SYS_LONG_FILE_NAMES 
 
 
 ```txt
 
 ```
-AC_SYS_POSIX_TERMIOS 
+
+#### AC_SYS_POSIX_TERMIOS 
 
 
 ```txt
 
 ```
-AC_AIX 
+
+#### AC_AIX 
 
 
 ```txt
 
 ```
-AC_GNU_SOURCE 
+
+#### AC_GNU_SOURCE 
 
 
 ```txt
 
 ```
-AC_ISC_POSIX 
+
+#### AC_ISC_POSIX 
 
 
 ```txt
 
 ```
-AC_MINIX 
+
+#### AC_MINIX 
 
 
 ```txt
 
 ```
-AC_CANONICAL_BUILD 
+
+#### AC_CANONICAL_BUILD 
 
 
 ```txt
 
 ```
-AC_CANONICAL_HOST 
+
+#### AC_CANONICAL_HOST 
 
 
 ```txt
 
 ```
-AC_CANONICAL_TARGET 
+
+#### AC_CANONICAL_TARGET 
 
 
 ```txt
 
 ```
-AC_ARG_PROGRAM 
+
+#### AC_ARG_PROGRAM 
 
 
 ```txt
 
 ```
-AC_ARG_WITH/AC_WITH 
+
+#### AC_ARG_WITH/AC_WITH 
 
 
 ```txt
 
 ```
-AC_ARG_ENABLE/AC_ENABLE 
+
+#### AC_ARG_ENABLE/AC_ENABLE 
 
 
 ```txt
 
 ```
-AC_HELP_STRING 
+
+#### AC_HELP_STRING 
 
 
 ```txt
 
 ```
-AC_CONFIG_TESTDIR 
+
+#### AC_CONFIG_TESTDIR 
 
 
 ```txt
 
 ```
-AT_INIT 
+
+#### AT_INIT 
 
 
 ```txt
 
 ```
-AT_TESTED 
+
+#### AT_TESTED 
 
 
 ```txt
 
 ```
-AT_SETUP 
+
+#### AT_SETUP 
 
 
 ```txt
 
 ```
-AT_KEYWORDS 
+
+#### AT_KEYWORDS 
 
 
 ```txt
 
 ```
-AT_CLEANUP 
+
+#### AT_CLEANUP 
 
 
 ```txt
 
 ```
-AT_DATA 
+
+#### AT_DATA 
 
 
 ```txt
 
 ```
-AT_CHECK 
+
+#### AT_CHECK 
 
 
 ```txt
 
 ```
-AC_MSG_NOTICE 
+
+#### AC_MSG_NOTICE 
 
 
 ```txt
 
 ```
-AC_MSG_ERROR 
+
+#### AC_MSG_ERROR 
 
 
 ```txt
 
 ```
-AC_MSG_FAILURE 
+
+#### AC_MSG_FAILURE 
 
 
 ```txt
 
 ```
-AC_MSG_WARN 
+
+#### AC_MSG_WARN 
 
 
 ```txt
 
 ```
-AC_DIAGNOSE 
+
+#### AC_DIAGNOSE 
 
 
 ```txt
 
 ```
-AC_WARNING 
+
+#### AC_WARNING 
 
 
 ```txt
 
 ```
-AC_FATAL 
+
+#### AC_FATAL 
 
 
 ```txt
 
 ```
-AC_CACHE_VAL 
+
+#### AC_CACHE_VAL 
 
 
 ```txt
 
 ```
-AC_CACHE_CHECK 
+
+#### AC_CACHE_CHECK 
 
 
 ```txt
 
 ```
-AC_CACHE_LOAD 
+
+#### AC_CACHE_LOAD 
 
 
 ```txt
 
 ```
-AC_CACHE_SAVE 
+
+#### AC_CACHE_SAVE 
 
 
 ```txt
 
 ```
-AC_REQUIRE 
+
+#### AC_REQUIRE 
 
 
 ```txt
 
 ```
-AC_REQUIRE_CPP 
+
+#### AC_REQUIRE_CPP 
 
 
 ```txt
 
 ```
-AC_BEFORE 
+
+#### AC_BEFORE 
 
 
 ```txt
 
 ```
-AM_CONDITIONAL 
+
+#### AM_CONDITIONAL 
 
 
 ```txt
