@@ -2,8 +2,7 @@
 
 SWIG already works out the the box, you just add your `.i` files to the list of source files and it will all turn out fine. Built-in SWIG doesn't track down dependencies though, so try this snippet from Mattias on the mailing list: **Update 19 July 2007:**  Support for tracking SWIG dependencies has been added to the SCons code base and will be available next release (most likely `0.97.1`). The configuration is controlled by a `$SWIGPATH` variable that is searched for `.i` files and which gets translated into `-I` options on the command line (like the `$CPPPATH` variable does for C preprocessing). 
 
-```
-#!python
+```python
 import SCons.Script
 
 #... then, later...
