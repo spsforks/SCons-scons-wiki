@@ -1,5 +1,3 @@
-
-
 # Using a Source Generator to Add Targets Dynamically
 
 Here's what we do to add targets dynamically, from a list which isn't known in advance. 
@@ -10,9 +8,7 @@ Now you want to (say) compile each of those srcX into binX and include those in 
 
 In our SConscript we do this: 
 
-
 ```python
-#!python
 srcgen = env.Program('srcgen', ...)
 srclist = env.Command('src-list.txt', srcgen, 
                       '$SOURCE $SRCGEN_ARGS > $TARGET')
@@ -24,9 +20,7 @@ Now when scons goes to build TopLevelAlias, the dependencies are set so it build
 
 We made our ScanSrcs parameterized so it could be reused.  Note that it's practically all plain python, no SCons calls at all except adding the Builder and checking for construction variables. 
 
-
 ```python
-#!python
     def scansrcs(target, source, env):
         """Scans through the list in the file 'source', calling
         env['SCANSRCS_FUNC'](env,line) on each line of that file.
@@ -62,9 +56,7 @@ We made our ScanSrcs parameterized so it could be reused.  Note that it's practi
 ```
 And finally, here's the function _add_target_, called from ScanSrcs, that does the real work: 
 
-
 ```python
-#!python
     def add_target(env, source):
         """Add scons commands to build a new target from a scanned src generator list file."""
         # Build the new targets in the build dir:
@@ -78,17 +70,11 @@ Note that it adds new Nodes for the program target and the installed version of 
 
 The above has been cut down from our real version, but I hope it shows how it can be done, and that it's not really that hard. 
 
-
-
 ---
-
- 
 
 Here is a version of the code above that you can copy & paste, ready to edit. I added some imports and altered some small stuff that was too related to the code's origins. Now this example works as soon as you change the file names to match those in your project. 
 
-
 ```python
-#!python
 import types
 import os.path
 import re
