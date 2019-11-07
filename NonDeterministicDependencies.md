@@ -1,5 +1,3 @@
-
-
 # Non Deterministic Dependencies
 
 This problem arises when a builder can create more than one target, and the number of targets cannot be known until that builder is executed. Other builders may be required to process each of those targets, and other builders may then be dependent on all of those results. 
@@ -10,9 +8,7 @@ The stand alone example below shows how to make such a dynamic builder so that s
 
 The example behaves correctly when intermediate files are deleted. 
 
-
 ```python
-#!python
 def PartMakerFunc(target, source, env):
 #a builder that makes a result requiring a number of subsequent operations not known when scons is called
         targets = ["%d.out" % i for i in range(3)]
