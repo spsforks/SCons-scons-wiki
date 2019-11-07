@@ -12,7 +12,7 @@ Multiplatform project may have some files which should be installed to different
 Tool is available in the following git repository: [http://repo.or.cz/r/vestnik_site_scons.git](http://repo.or.cz/r/vestnik_site_scons.git) in the file smartinstall.py 
 
 To get the latest version run: 
-```txt
+```console
 git clone http://repo.or.cz/r/vestnik_site_scons.git
 ```
 You can put this file into the site_scons/site_tools directory. 
@@ -42,8 +42,7 @@ You can put this file into the site_scons/site_tools directory.
 ## Example
 
 
-```
-#!python
+```python
 env = Environment()
 env['package'] = 'foo'
 env.Tool('smartinstall')
@@ -55,7 +54,7 @@ env.InstallProgram(prog)
 env.InstallLibrary(lib)
 ```
 Running 
-```
+```console
 scons install
 ```
 will create the following installation: 
@@ -68,8 +67,7 @@ will create the following installation:
 
 `bar.lib` created by [SharedLibrary](SharedLibrary) builder will be ignored since '$install_dev' is set to False by default. If you explicitly set it to True
 
-```
-#!python
+```python
 env = Environment()
 env['package'] = 'foo'
 env['install_dev'] = True
@@ -87,6 +85,5 @@ the following files will be installed:
  **Linux**  |  **Windows**
 :----|:----
  `/usr/local/bin/foo`  |  `C:\Program Files\foo\bin\foo.exe` 
- `/usr/local/lib/libbar.so`  |  `C:\Program Files\foo\bin\bar.dll` 
-  |  `C:\Program Files\foo\lib\bar.lib` 
+ `/usr/local/lib/libbar.so`  |  `C:\Program Files\foo\bin\bar.dll`<br> `C:\Program Files\foo\lib\bar.lib` 
 
