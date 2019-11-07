@@ -4,8 +4,7 @@ ParseDepends allows to parse compiler-generated dependency files and let SCons e
 ## What's that in aid of?
 As a rule of thumb, never use it unless you have to. SCons has scanners to extract implicit dependencies. However, sometimes the built-in scanners choke on pre-processor statements. Consider the following example: hello.c: 
 
-```
-#!C++
+```cpp
 #define FOO_HEADER "foo.h"
 
 #include FOO_HEADER
@@ -16,19 +15,17 @@ int main() {
 ```
 foo.h:
 
-```
-#!C++
+```cpp
 #define FOO 42
 ```
 
 SConstruct: 
 
-```
-#!python
+```python
 Program('hello.c')
 ```
 
-```
+```console
 scons --tree=prune
 ```
 
@@ -38,8 +35,7 @@ As the dependency tree reveals, SCons does not know about foo.h and does not rec
 
 Here is an example of how to let gcc generate a dependency file while compiling the object file:
 
-```
-#!python 
+```python 
 Program('hello.c', CCFLAGS = '-MD -MF hello.d')
 ParseDepends('hello.d')
 SideEffect('hello.d', 'hello.o')
@@ -47,7 +43,7 @@ SideEffect('hello.d', 'hello.o')
 
 GCC generates a dependency file that looks like the following:
 
-```txt
+```console
 hello.o: hello.c foo.h
 ```
 
@@ -56,8 +52,7 @@ There is one problem with this approach: Read the [full story here](http://scons
 ## Generate dependency files in advance
 If you want to extract the dependencies (and call ParseDepends) before building the object files, the only viable solution is to use a multi-stage builder with a source scanner: 
 
-```
-#!python 
+```python 
 def parsedep(node, env, path):
         print "ParseDepends(%s)" % str(node)
         ParseDepends(str(node))
