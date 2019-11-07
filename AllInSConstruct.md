@@ -12,9 +12,9 @@ This is still a work in progress, but already it does a lot of things I find use
 
 Naturally, you want your SConscript files to be as simple as possible and basically have them 'include' all your standard rules for building. I considered doing that via the Python `execfile()` function, and storing the default rules in a separate file at the build root, but in the end it seemed like I might as well just `Export`/`Import` a build object with all the smarts in methods. Then the global build object can just be defined in the main SConstruct. Originally I thought it would be good to put all the source and target data etc into a big dictionary structure in the SConscript files and pass that to my processing methods, but upon consideration it became clear that what I was really accomplishing with all that was decorating, or 'wrapping', the default `Program()` and `Library()` builder methods. The [WrapperFunctions](WrapperFunctions) Wiki page describes exactly how to do this in a much more straightforward way. Part of the benefit of a wrappers approach is that to the SConscript writer, the syntax looks pretty much like the basic SConscript examples in the SCons User's Guide. 
 
-So basically the result is that the SConscript just calls some things that look pretty similar to `Program()` and `Library()` calls (specifically, I've named them `dProgram()` and `dLibrary()`), but all the extra things happen that I described above. For example 
+So basically the result is that the SConscript just calls some things that look pretty similar to `Program()` and `Library()` calls (specifically, I've named them `dProgram()` and `dLibrary()`), but all the extra things happen that I described above. For example:
+
 ```python
-#!python
 Import('env')
 env.dLibrary(target='foo',source='foo.c *.cpp',CPPPATH=['#Include'])
 ```
@@ -60,8 +60,8 @@ Other possible negatives:
 Here are the files. 
 
 An example SConscript for a dir with some libraries: 
+
 ```python
-#!python
 Import('env')
 env.dLibrary(target='viewer',
              libsrc = '''
@@ -77,8 +77,8 @@ env.dHeaders('*.hpp #camera/*.hpp trackball.h')
 There's only one lib there, but you can of course make multiple dLibrary calls. Also note that not all the sources for this lib are located in the directory with this SConscript. That's fine. The `dHeaders` call is used to install the headers listed in the '#Include' directory of the tree. Note that it can take a single string that include a combination of globs, build relative globs, and non-globs. Any non-list argument is automatically `Split()` and anything that looks like a glob is globbed on (and globbed properly, in the source directory, not in the build directory as is the default SCons behavior) 
 
 An example SConscript for a dir with several binaries: 
+
 ```python
-#!python
 Import('env')
  
 for appname in Split('''
@@ -95,15 +95,15 @@ for appname in Split('''
 The above example uses a loop, but you could certainly also just write each one, one-by-one, if you're afraid of Python and find that more intuitive. 
 
 Finally, the top-level Root SConscript just calls subdirs: 
+
 ```python
-#!python
 Import('env')
  
 env.dSubdirs('subdir1 subdir2 librarysrc tests')
 ```
 And now the main SConstruct file: 
+
 ```python
-#!python
 # The goal here is to be able to build libs and programs using just
 # the list of sources.
 # I wish to 'wrap' or 'decorate' the base scons behavior in
