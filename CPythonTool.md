@@ -16,44 +16,43 @@ This builder is developed as an external tool, meaning it is currently not a par
 
 A simple example of an `SConstruct` file: 
 
-
-```txt
+```python
 env = Environment()
 hello = File('hello.py')
 env.InstallPython('/usr/local/bin/', hello)
 env.Alias('install', '/usr/local/bin/')
 ```
+
 `SCons` invoked with the `-Q install` parameter will compile the `hello.py` file into `hello.pyc`, and copy both files into `/usr/local/bin/` directory. 
 
 Sample output: 
 
-
-```txt
+```console
 $ scons -Q install
 Install file: "hello.py" as "/usr/local/bin/hello.py"
 Install file: "hello.pyc" as "/usr/local/bin/hello.pyc"
 ```
+
 `InstallPython` can also compile Python source files into optimized binary files (`.pyo` suffix) instead of ordinary binaries (`.pyc` files). To achieve this, change the call to `Environment()` and set the `CPYTHON_PYC` variable to '`0`' (zero): 
 
-
-```txt
+```python
 env = Environment(CPYTHON_PYC=0)
 hello = File('hello.py')
 env.InstallPython('/usr/local/bin/', hello)
 env.Alias('install', '/usr/local/bin/')
 ```
+
 Sample output: 
 
-
-```txt
+```console
 $ scons -Q install
 Install file: "hello.py" as "/usr/local/bin/hello.py"
 Install file: "hello.pyo" as "/usr/local/bin/hello.pyo"
 ```
+
 The `InstallPython` method accepts both, files and directories, as its source arguments: 
 
-
-```txt
+```python
 env = Environment()
 pyfiles = Dir('pyfiles/')
 env.InstallPython('/usr/local/bin/', pyfiles)
@@ -63,28 +62,27 @@ Running `scons -Q install` will copy all the `.py` files from `pyfiles` director
 
 Sample output: 
 
-
-```txt
+```console
 $ scons -Q install
 Install file: "pyfiles/hello.py" as "/usr/local/bin/pyfiles/hello.py"
 Install file: "pyfiles/hello.pyc" as "/usr/local/bin/pyfiles/hello.pyc"
 Install file: "pyfiles/hello2.py" as "/usr/local/bin/pyfiles/hello2.py"
 Install file: "pyfiles/hello2.pyc" as "/usr/local/bin/pyfiles/hello2.pyc"
 ```
+
 Mixing files and directories is also possible: 
 
-
-```txt
+```python
 env = Environment()
 hello = File('hello.py')
 pyfiles = Dir('pyfiles/')
 env.InstallPython('/usr/local/bin/', [hello, pyfiles])
 env.Alias('install', '/usr/local/bin')
 ```
+
 Sample output: 
 
-
-```txt
+```console
 $ scons -Q install
 Install file: "hello.py" as "/usr/local/bin/hello.py"
 Install file: "hello.pyc" as "/usr/local/bin/hello.pyc"
