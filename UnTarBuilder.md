@@ -7,7 +7,6 @@ Similar to Maven in the Java world, I do as much as possible within Python to pr
 
 
 ```python
-#!python 
 unTarBuilder = Builder(action=SCons.Action.Action(UnTar, UnTarString),
                        src_suffix='.tar.gz',
                        emitter=tarContentsEmitter)
@@ -21,7 +20,6 @@ Let's have a look at the emitter first. I take the first source as the single  t
 
 
 ```python
-#!python 
 def tarContentsEmitter(target, source, env):
     import tarfile
     sourceTar = tarfile.open(source[0].name,'r')
@@ -38,7 +36,6 @@ Now for the Action. Similar to the emitter, the tarfile Python module is used to
 
 
 ```python
-#!python 
 def UnTar(target, source, env):
     # Code to build "target" from "source" here
     import tarfile
