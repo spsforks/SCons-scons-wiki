@@ -1,12 +1,10 @@
-
-
 ## Description of Problem
 
 Many a time it is necessary to create a ZIP file or tarball for distribution of sources, binaries, and documentation.  The ZIP file or tarball also must be properly rooted. 
 
 Unfortunately, SCons does not have a built-in capability to do this easily, but instead exposes an interface which makes this relatively easy. 
 
-One could use standard Python tools (e.g., shutil.copy()) to copy the necessary files and directories and then Zip then using the builders that come with SCons, but not only could you create something that isn't properly rooted but you also lose SCon's dependency tracking, cleaning, etc. 
+One could use standard Python tools (e.g., `shutil.copy`) to copy the necessary files and directories and then the `zipfile` module then using the builders that come with SCons, but not only could you create something that isn't properly rooted but you also lose SCon's dependency tracking, cleaning, etc. 
 
 See also [DistTarBuilder](DistTarBuilder) for another solution to this problem (with ability to handle file extension lists and excluded directory lists, but without the dependency tracking stuff) 
 
@@ -16,12 +14,11 @@ See also [DistTarBuilder](DistTarBuilder) for another solution to this problem (
 The solution is two-step: 
 
 * "Collect" files and directories to a destination. 
-* Use one of SCon's built-in builders to tar/zip (e.g., env.Tar(), env.Zip()) the destination, or use a new Builder to properly "root" the tar/zip file. 
+* Use one of SCon's built-in builders to tar/zip (e.g., `env.Tar`, `env.Zip`) the destination, or use a new Builder to properly "root" the tar/zip file. 
 The builder to collect the files and directories is called "Accumulate", and the code for which is as follows. 
 
 
 ```python
-#!python
 ##
 ## AccumulatorAction.py
 ##
@@ -46,7 +43,6 @@ The above code requires a better copytree() because shutil.copytree() is very li
 
 
 ```python
-#!python
 ##
 ## myShutil.py
 ##
@@ -102,11 +98,10 @@ def copytree(src, dest, symlinks=False):
     copyItems(src, destPath)  
        
 ```
-Using env.Zip() is not very useful for creating properly rooted ZIP files, but the following builder is: 
+Using `env.Zip` is not very useful for creating properly rooted ZIP files, but the following builder is: 
 
 
 ```python
-#!python
 ##
 ## Zipper.py
 ##
@@ -123,7 +118,6 @@ To actually create the builders, use the following example:
 
 
 ```python
-#!python
 ##
 ## SConstruct
 ##
@@ -147,7 +141,6 @@ And you are done!  Quite the hassle, but I think the result is worthwhile (IMHO)
 
 
 ```python
-#!python
 ##
 ## SConstruct
 ##
@@ -161,7 +154,6 @@ env.Zipper('package'   , 'distDir')
 ```
 
 ```python
-#!python
 ##
 ## inner/SConscript
 ##
@@ -172,7 +164,7 @@ env.Accumulate('#/distDir', 'include')
 Scons output will be as follows: 
 
 
-```txt
+```console
 scons: Reading SConscript files ...
 scons: done reading SConscript files.
 scons: Building targets ...
