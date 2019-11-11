@@ -1,13 +1,11 @@
+The default behavior of SCons is to print the raw build commands being executed.  This can cause a lot of text to fly across the screen and make it difficult to see what is going on.
 
-The default behavior of SCons is to print the raw build commands being executed.  This can cause a lot of text to fly across the screen and make it difficult to see what is going on.   
+CMake has nice colored output messages displaying the current source being built or the library/program being linked.
 
-CMake has nice colored output messages displaying the current source being built or the library/program being linked.   
-
-Here is something you can add to your scripts to get some nice colored output. 
+Here is something you can add to your scripts to get some nice colored output.
 
 
 ```python
-#!python 
 import sys
 import os
 
@@ -60,5 +58,4 @@ env = Environment(
 )
 
 Export('env')
-
 ```
