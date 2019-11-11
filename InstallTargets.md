@@ -1,9 +1,8 @@
+It's often useful to be able to run "scons install" to copy the programs and shared libraries to their correct locations. "install" is a familiar phony target in other build systems, where a phony target is one that does not build a file indicated by its name, but instead causes some other work to be done. SCons sets up phony targets using the `Alias` function.
 
-It's often useful to be able to run "scons install" to copy the programs and shared libraries to their correct locations. Here's one way to do that: 
-
+Here's one way to do that: 
 
 ```python
-#!python
 prefix = "/usr/local"
 
 someshlib = env.SharedLibrary('foo', "foo.c")
@@ -13,15 +12,20 @@ someprogram = env.Program("fooprog", "fooprog.c")
 env.Alias("install", env.Install(os.path.join(prefix, "lib"), someshlib))
 env.Alias("install", env.Install(os.path.join(prefix, "bin"), someprogram))
 ```
-Basically we alias 'install' to a couple of Install nodes, returned by the Install() method. That's all. 
 
-NB: There is no need to add something like 'Depends(install, someshlib)', since SCons does find this dependency automatically. 
+Basically we alias 'install' to a couple of Install nodes, returned by the `Install` method. That's all. 
 
-If you need some fine-grained install targets, you may use something like this: 
+NB: There is no need to add something like `Depends(install, someshlib)`, since SCons computes the dependency automatically. 
 
+Now
+```
+$ scons install
+```
 
+will do the work defined by the install target.  The installs won't happen if you just invoke SCons without arguments, since by default, SCons acts only on targets underneath the starting directory, which `/usr/local` is unlikely to be - this is largely the effect you want, only performing installs if they are asked for explicitly.
+
+If you need some finer-grained install targets, you may use something like this: 
 ```python
-#!python
 Alias('install-lib', Install(os.path.join(prefix, "lib"), ...))
 Alias('install-bin', Install(os.path.join(prefix, "bin"), ...))
 Alias('install', ['install-bin', 'install-lib'])
@@ -31,10 +35,9 @@ Alias('install', ['install-bin', 'install-lib'])
 
 Question:  how to set permissions properly (binaries get 755, headers get 644, etc.) after an install? 
 
-* One way to do it is to create a method that acts like Install() but has an additional permission argument. Wrappers with predefined permissions are useful for cleaner markup: 
+* One way to do it is to create a method that acts like `Install` but has an additional permission argument. Wrappers with predefined permissions are useful for cleaner markup: 
 
 ```python
-#!python
 import SCons
 
 # define the custom function
@@ -63,32 +66,29 @@ env.InstallHeader(incdir, ['foo.h', 'bar.h'])
 ```
 Don't forget to set the umask, or created directories might get wrong permissions on Unix and Windows: 
 
-
 ```python
-#!python
 try:
-    umask = os.umask(022)
+    umask = os.umask(0o22)
     print 'setting umask to 022 (was 0%o)' % umask
 except OSError:     # ignore on systems that don't support umask
     pass
 ```
-* Another similar method to install data with correct permissions is to use a Command : 
+
+* Another similar method to install data with correct permissions is to use a `Command` : 
 
 ```python
-#!python
 source="./data/icon.png"
 target="/usr/local/share/X/icon.png"
 
 env.Alias("install", target)
-env.Command( target, source,
-[
-Copy("$TARGET","$SOURCE"),
-Chmod("$TARGET", 0664),
+env.Command(target, source, [
+            Copy("$TARGET","$SOURCE"),
+            Chmod("$TARGET", 0o664),
 ])
 ```
 where target and source could be set in a directory parsing loop for conveniance : 
+
 ```python
-#!python
 # where you need to implement 'RecursiveGlob' yourself 
 for file in RecursiveGlob("./data", "*"):
     # strip 'data/' out to have the filepath relative to data dir
@@ -98,10 +98,9 @@ for file in RecursiveGlob("./data", "*"):
     target = os.path.join(data_dir, filename_relative)
             
     env.Alias("install", target)
-    env.Command( target, source,
-    [
-    Copy("$TARGET","$SOURCE"),
-    Chmod("$TARGET", 0664),
+    env.Command(target, source, [
+                Copy("$TARGET","$SOURCE"),
+                Chmod("$TARGET", 0664),
     ])
 ```
 For best results, also make sure the umask is set like described above. 
@@ -112,8 +111,8 @@ For best results, also make sure the umask is set like described above.
 Installing locale files on UNIX systems can be a little tricky : 
 
 This is an example that will handle installing .mo files for a source layout of **/po/[language code]/app_name.mo**. 
+
 ```python
-#!python
 # install .mo files
 locale_dir = "/usr/local/share/locale"
 
@@ -125,7 +124,7 @@ for mo in mo_files:
     lang_name = mo[index_lo:index_hi]
     # copy file
     install_location = locale_dir + "/" + lang_name + "/LC_MESSAGES/app_name.mo"
-    env.Alias("install", env.InstallAs( install_location, mo ) )
+    env.Alias("install", env.InstallAs(install_location, mo))
 ```
 It should be simple enough to adapt this code to layouts like **/po/[language code].mo** or any other. 
 
@@ -134,36 +133,34 @@ It should be simple enough to adapt this code to layouts like **/po/[language co
 
 Here's a sample uninstall function : 
 
-
 ```python
-#!python
 def create_uninstall_target(env, path, is_glob):
     if is_glob:
         all_files = Glob(path,strings=True)
         for filei in all_files:
-            env.Command( "uninstall-"+filei, filei,
-            [
-            Delete("$SOURCE"),
+            env.Command("uninstall-"+filei, filei, [
+                        Delete("$SOURCE"),
             ])
             env.Alias("uninstall", "uninstall-"+filei)   
     else:
-        env.Command( "uninstall-"+path, path,
-        [
-        Delete("$SOURCE"),
+        env.Command("uninstall-"+path, path, [
+                    Delete("$SOURCE"),
         ])
         env.Alias("uninstall", "uninstall-"+path)  
 ```
+
 You can use it like this : 
+
 ```python
-#!python
 if 'uninstall' in COMMAND_LINE_TARGETS:
     # create uninstall targets
     create_uninstall_target(env, "/usr/local/bin/myapp", False)
     create_uninstall_target(env, "/usr/local/share/myapp/", False)
     create_uninstall_target(env, "/usr/local/share/locale/*/LC_MESSAGES/myapp.mo", True)
 ```
-If you want to uninstall all the files installed using Install or [InstallAs](InstallAs), there is a more expeditive way: 
+
+If you want to uninstall all the files installed using `Install` or `InstallAs`, there is a more expeditive way: 
+
 ```python
-#!python
 env.Command("uninstall", None, Delete(FindInstalledFiles()))
 ```
