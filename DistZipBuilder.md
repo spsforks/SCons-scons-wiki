@@ -1,10 +1,6 @@
-
-
 # DistZip Builder
 
-
 ```python
-#!python
 # DistZipBuilder: tool to generate zip files using SCons
 #
 # Copyright (C) 2005, 2006  Matthew A. Nicholson
@@ -130,11 +126,11 @@ def exists(env):
    else:
       return True
 ```
-Save the above listing as [DistZip](DistZip).py.  [DistZip](DistZip) example usage: 
+
+Save the above listing as `DistZip.py1.  DistZip example usage:
 
 
 ```python
-#!python
 env.Append(tools = ["DistZip"])
 
 env.Append(
@@ -150,5 +146,4 @@ PACKAGE_VERSION = "1.0.0"
 if 'zip' in COMMAND_LINE_TARGETS:
     zip = env.DistZip(PACKAGE_NAME + "-" + PACKAGE_VERSION + ".zip", [env.Dir('.')])
     env.Alias("zip", zip)
-
 ```
