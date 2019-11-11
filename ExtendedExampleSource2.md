@@ -1,6 +1,6 @@
-
 Here's the current Sconstruct: 
-```txt
+
+```python
 import SCons.Script
 import os
 import fnmatch
@@ -61,7 +61,8 @@ DoFrozen('jmirror', mode)
 DoFrozen('classesinc', mode)
 ```
 Here's a typical sconscript (they're all very similar): 
-```txt
+
+```python
 Import('env', 'dev')
 project = 'classesinc'
 
