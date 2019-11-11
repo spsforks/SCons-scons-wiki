@@ -1,6 +1,6 @@
-
 Here's the current Sconstruct: 
-```txt
+
+```python
 import SCons.Script
 import os
 def DoSrc(tgt, mode):
@@ -25,10 +25,11 @@ DoSrc('cppwiki', mode)
 DoSrc('smanager', mode)
 DoFrozen('jmirror', mode)
 ```
-Note: the [DoSrc](DoSrc) and [DoFrozen](DoFrozen) are identical except for the root directory. Should probably be refactored into one function 
+Note: `DoSrc` and `DoFrozen` are identical except for the root directory. Should probably be refactored into one function 
 
 Here's a typical sconscript (they're all very similar): 
-```txt
+
+```python
 import glob
 Import('env')
 project = 'cppwiki'
