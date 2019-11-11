@@ -8,7 +8,6 @@ See also [Dir()](Dir()).
 
 
 ```python
-#!python 
 # Get the current build dir's path, relative to top.
 Dir('.').path
 # Current dir's absolute path
