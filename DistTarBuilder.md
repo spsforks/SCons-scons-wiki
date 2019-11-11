@@ -1,21 +1,18 @@
-
-
 # DistTar Builder
 
-The DistTar builder can build a tarfile with an internal directory structure.  It can build plain tar files or gz or bzip compressed archives. You can specify a list of directories and/or files to be included as **sources** for your Tarfile **target**. The **DISTTAR_EXCLUDEEXTS** environment variable allows you to specify any file extensions which should not be included in the tar file. By default this include .o and .so,.dll and a couple of others. The **DISTTAR_EXCLUDEDIRS** environment variable allows you to specify a list of directories that shouldn't be added, and defaults to 'CVS' and '.svn'. The **DISTTAR_EXCLUDERES** environment variable allows you to specify a list of regular expressions (provided as strings) which, if matched to a relative pathname (via Python's re.search function), will cause that a file to be excluded.  
+The DistTar builder can build a tarfile with an internal directory structure.  It can build plain tar files or gz or bzip compressed archives. You can specify a list of directories and/or files to be included as **sources** for your Tarfile **target**. The **DISTTAR_EXCLUDEEXTS** environment variable allows you to specify any file extensions which should not be included in the tar file. By default this include .o and .so,.dll and a couple of others. The **DISTTAR_EXCLUDEDIRS** environment variable allows you to specify a list of directories that shouldn't be added, and defaults to 'CVS' and '.svn'. The **DISTTAR_EXCLUDERES** environment variable allows you to specify a list of regular expressions (provided as strings) which, if matched to a relative pathname (via Python's re.search function), will cause that a file to be excluded.
 
-Save this file as 'disttar.py' and put it in your 'toolpath' directory (as defined in your 'Environment' statement in your SConstruct file). 
+Save this file as 'disttar.py' and put it in your 'toolpath' directory (as defined in your 'Environment' statement in your SConstruct file).
 
-* Original file by Matthew Nicholson. 
-* Modifications May 02 2006 by John Pye. 
-* Further modifications to add 'emitter' functionality, John Pye, May 03 2006. 
-* Further modifications to change text output during tarfile creation, John Pye, May 04 2006. 
-* Added DISTTAR_EXCLUDERES feature for file exclusion based on regular expressions, John Pye, 24 Jan 2010. 
-See also the [AccumulateBuilder](AccumulateBuilder) for another approach to this problem. 
+* Original file by Matthew Nicholson.
+* Modifications May 02 2006 by John Pye.
+* Further modifications to add 'emitter' functionality, John Pye, May 03 2006.
+* Further modifications to change text output during tarfile creation, John Pye, May 04 2006.
+* Added DISTTAR_EXCLUDERES feature for file exclusion based on regular expressions, John Pye, 24 Jan 2010.
+See also the [AccumulateBuilder](AccumulateBuilder) for another approach to this problem.
 
 
 ```python
-#!python
 # DistTarBuilder: tool to generate tar files using SCons
 # Copyright (C) 2005, 2006  Matthew A. Nicholson
 # Copyright (C) 2006-2010 John Pye
@@ -80,7 +77,7 @@ def disttar_emitter(target,source,env):
 
 def disttar_string(target, source, env):
     """This is what gets printed on the console. We'll strip out the list
-        or source files, since it tends to get very long. If you want to see the 
+        or source files, since it tends to get very long. If you want to see the
         contents, the easiest way is to uncomment the line 'Adding to TAR file'
         below. """
     return 'DistTar(%s,...)' % target[0]
@@ -163,9 +160,7 @@ def exists(env):
 
 # Usage
 
-
 ```python
-#!python
 #scons buildfile
 
 # the disttar.py file needs to be in toolpath
@@ -176,11 +171,10 @@ env.DistTar("dist/archive", ["README", "INSTALL", env.Dir("src")])
 # In this case this will come out to be dist/archive.tar.gz, and all
 # included files will be in the 'archive' directory within the tar archive.
 ```
-Another example: 
+Another example:
 
 
 ```python
-#!python
 env['DISTTAR_FORMAT']='bz2'
 env.Append(
         DISTTAR_EXCLUDEEXTS=['.o','.os','.so','.a','.dll','.cc','.cache','.pyc','.cvsignore','.dblite','.log', '.gz', '.bz2', '.zip']
