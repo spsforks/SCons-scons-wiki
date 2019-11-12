@@ -16,7 +16,7 @@ SCons provides the ARGUMENTS dictionary and the ARGLIST list containing the comm
 
 The simplest way to handle custom arguments is to let SCons do the parsing by creating a `Variables` object and using the `Add()` function:
 
-```txt
+```python
 vars = Variables(None, ARGUMENTS)
 vars.Add(EnumVariable('BUILD_TYPE', 'type of build to use', 'debug',  allowed_values=('debug', 'release', 'optimized')))
 
@@ -32,7 +32,7 @@ if env['BUILD_TYPE'] == 'optimized':
     print '*** optimized build'
 ```
 
-```txt
+```console
 $ scons
 scons: Reading SConscript files ...
 *** debug build
@@ -69,7 +69,7 @@ SCons provides an interface for doing that, mainly through the use of the AddOpt
 
 A typical example is declaring a prefix for targets installation:
 
-```txt
+```python
 AddOption('--prefix',
           dest='prefix',
           type='string',
@@ -92,7 +92,7 @@ Default(installed_foo)
 You can also handle the command-line arguments all by yourself by querying the data from ARGUMENTS (dictionary) or ARGLIST (list).
 
 ### the ARGUMENTS variable
-```txt
+```python
 if ARGUMENTS.get('release', '0') == '1':
     print "*** Release build..."
     buildroot = 'release'
@@ -101,7 +101,7 @@ else:
     buildroot = 'debug'
 ```
 
-```txt
+```console
 $ scons myproject
 [...]
 *** Debug build...
@@ -120,7 +120,7 @@ $ scons myproject release=1
 
 Note however that only the last value provided is stored in ARGUMENTS. For example:
 
-```txt
+```console
 $ scons myproject release=1 release=0
 [...]
 *** Debug build...
@@ -134,7 +134,7 @@ Since the ARGUMENTS dictionary stores only one value for a given keyword, it ca
 
 It is the *ordered* list of (key,value) found on the SCons command line. For example:
 
-```txt
+```python
 build_profiles = []
 for key, value in ARGLIST:
     if key == 'profile':
@@ -143,7 +143,7 @@ for key, value in ARGLIST:
 print '*** selected build profiles: ' + str(build_profiles)
 ```
 
-```txt
+```console
 $ scons myproject profile=debug profile=optimized
 [...]
 *** selected build profiles: ['debug', 'optimized']
