@@ -1,6 +1,6 @@
 # Passing Arguments to SCons from the Command Line
 
-SCons is mainly instructed about build objectives by writing configuration files - SConscripts. However since build circumstances vary, it is often useful to also be able to control the way scons will run from outside, and several ways to do that are provided: through command line options that are provided by scons; through custom command line options that are defined in SConscripts; through command line targets and build variables; and through environment variables.
+SCons is mainly instructed about build objectives by SConstruct and SConscript(s). However since build circumstances vary, it is often useful to also be able to control the way scons will run from outside, and several ways to do that are provided: through command line options that are provided by scons; through custom command line options that are defined in SConscripts; through command line targets and build variables; and through environment variables.
 
 This discussion is intended to augment the official documentation, but always refer back to it for the definitive word: the [SCons User Guide](http://www.scons.org/doc/production/HTML/scons-user.html#chap-command-line) and a more in-depth presentation of the topic in the [SCons manpage](http://www.scons.org/doc/production/HTML/scons-man.html#commandline_construction_variables).
 
@@ -19,7 +19,7 @@ There are three types of arguments that can be given to scons on the command lin
 
 - targets, which represent things SCons should build.
 - build variables, which look like Python keyword arguments.
-- options, which start with a dash: with a single dash they are called short options; with a double dash they are called long options. Short options can be combined togther or given separately (`-abc` means the same as `-a -b -c`). Some options may require a following argument word, and some options may take an optional following argument word, logically this option-argument is considered together with the option.  The options scons out of the box knows to accept are listed in the [manpage](https://scons.org/doc/production/HTML/scons-man.html#options); an scons build system can also be extended by defining custom options.
+- options, which start with a dash: with a single dash they are called short options; with a double dash they are called long options. Short options can be combined together or given separately (`-abc` means the same as `-a -b -c`). Some options may require a following argument word, and some options may take an optional following argument word, logically this option-argument is considered together with the option.  The options scons out of the box knows to accept are listed in the [manpage](https://scons.org/doc/production/HTML/scons-man.html#options); an scons build system can also be extended by defining custom options.
 
 SCons treats each of these pieces of information differently.
 
@@ -165,11 +165,11 @@ The extra flexibility that comes with using `AddOption` can be very appealing bu
 
 To avoid getting into trouble with added options, here are some guidelines:
 
-- Avoid calling scons with command lines that use space rather then `=` as the option/argument separator. Using a space is legal syntax, and is not a problem for the SCons built-in options, but due to the ambiguity exposed when the option is defined in the SConscript, should not be used there. Unfortunately you cannot enforce this in your SConscript, it will have to be in instructions for how to use your project.
+- Avoid calling scons with command lines that use space rather than `=` as the option/argument separator. Using a space is legal syntax, and is not a problem for the SCons built-in options, but due to the ambiguity exposed when the option is defined in the SConscript, should not be used there. Unfortunately you cannot enforce this in your SConscript, it will have to be in instructions for how to use your project.
 - Avoid defining single-character options that take a following argument.
 - Avoid defining added options which take multiple following arguments. Such arguments will by their nature be space-separated, and thus run into the problem.
   - One approach is to allow the option to appear multiple times on the command line, each with a single argument. To make this work, include the `action=append` keyword (instead of `action=store`) in the `AddOption` call.
-  - Another aproach is to use a style similar to that described in the SCons `ListVariable()` function: take a single following argument which may consist of one or more comma-separated values. You will have to write the code to break that up, as unlike for `ListVariable` SCons does not provide a way to do that for `AddOption` arguments, but it is relatively straightforward to do so, as a simple `split()` on the collected argument is most of what you need.  
+  - Another approach is to use a style similar to that described in the SCons `ListVariable()` function: take a single following argument which may consist of one or more comma-separated values. You will have to write the code to break that up, as unlike for `ListVariable` SCons does not provide a way to do that for `AddOption` arguments, but it is relatively straightforward to do so, as a simple `split()` on the collected argument is most of what you need.  
   - Here is an SConscript fragment showing both ways being accepted (the `Flatten` is because `split` will return a list so we'd get a list inside a list in that case):
     ```python
     AddOption('--foo', nargs=1, dest='foo', action='append', type='string')
