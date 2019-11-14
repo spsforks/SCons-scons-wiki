@@ -1,6 +1,6 @@
 # Passing Arguments to SCons from the Command Line
 
-SCons is mainly instructed about build objectives by writing configuration files - SConscripts. However since build circumstances vary, it is often useful to also be able to control the way scons is invoked, and several ways to do that are provided: through command line options that are provided by scons; through custom command line options that are defined in SConscripts; through command line targets and build variables; and through environment variables.
+SCons is mainly instructed about build objectives by writing configuration files - SConscripts. However since build circumstances vary, it is often useful to also be able to control the way scons will run from outside, and several ways to do that are provided: through command line options that are provided by scons; through custom command line options that are defined in SConscripts; through command line targets and build variables; and through environment variables.
 
 This discussion is intended to augment the official documentation, but always refer back to it for the definitive word: the [SCons User Guide](http://www.scons.org/doc/production/HTML/scons-user.html#chap-command-line) and a more in-depth presentation of the topic in the [SCons manpage](http://www.scons.org/doc/production/HTML/scons-man.html#commandline_construction_variables).
 
