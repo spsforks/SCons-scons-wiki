@@ -176,13 +176,7 @@ To avoid getting into trouble with added options, here are some guidelines:
     ```
   - Here is an example showing both ways in effect:
     ```python
-    AddOption('--foo',
-          nargs=1,
-          dest='foo',
-          action='append',
-          type='string',
-          metavar='DIR',
-          help='installation prefix')
+    AddOption('--foo', nargs=1, dest='foo', action='append', type='string')
 
     if GetOption('foo'):
         foos = [f.split(',') if ',' in f else f for f in GetOption('foo')]
@@ -198,6 +192,8 @@ To avoid getting into trouble with added options, here are some guidelines:
     ```console
     $ scons -Q -q
     No foo given
+    $ scons -Q -q --foo=foo
+    foos= ['foo']
     $ scons -Q -q --foo=foo,bar,baz
     foos= ['foo', 'bar', 'baz']
     $ scons -Q -q --foo=foo --foo=bar --foo=baz
