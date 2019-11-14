@@ -169,8 +169,8 @@ To avoid getting into trouble with added options, here are some guidelines:
 - Avoid defining single-character options that take a following argument.
 - Avoid defining added options which take multiple following arguments. Such arguments will by their nature be space-separated, and thus run into the problem.
   - One approach is to allow the option to appear multiple times on the command line, each with a single argument. To make this work, include the `action=append` keyword (instead of `action=store`) in the `AddOption` call.
-  - Another aproach is to use a style similar to that described in the SCons `ListVariable()` function: take a single following argument which may consist of one or more comma-separated values. You will have to write the code to break that up, as unlike for `ListVariable` SCons does not provide a way to do that for `AddOption` arguments, but it is relatively straightforward to do so, as a simple `s.split()` on the collected option is most of what you need.  
-  - Here is an SConscript fragment showing both ways being accepted:(the `Flatten` is because split will return a list so we'd get a list inside a list in that case):
+  - Another aproach is to use a style similar to that described in the SCons `ListVariable()` function: take a single following argument which may consist of one or more comma-separated values. You will have to write the code to break that up, as unlike for `ListVariable` SCons does not provide a way to do that for `AddOption` arguments, but it is relatively straightforward to do so, as a simple `split()` on the collected argument is most of what you need.  
+  - Here is an SConscript fragment showing both ways being accepted (the `Flatten` is because `split` will return a list so we'd get a list inside a list in that case):
     ```python
     AddOption('--foo', nargs=1, dest='foo', action='append', type='string')
 
