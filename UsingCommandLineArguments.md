@@ -168,8 +168,13 @@ To avoid getting into trouble with added options, here are some guidelines:
 - Avoid calling scons with command lines that use space rather then `=` as the option/argument separator. Using a space is legal syntax, and is not a problem for the SCons built-in options, but due to the ambiguity exposed when the option is defined in the SConscript, should not be used there. Unfortunately you cannot enforce this in your SConscript, it will have to be in instructions for how to use your project.
 - Avoid defining single-character options that take a following argument.
 - Avoid defining added options which take multiple following arguments. Such arguments will by their nature be space-separated, and thus run into the problem.
-  - One workaround is to use a style similar to that described in the SCons `ListVariable()` function: take a single following argument which may consist of one or more comma-separated values. You will have to write the code to break that up, as unlike for `ListVariable` SCons does not provide a way to do that for `AddOption` arguments, but it is relatively straightforward to do so.
-  - Another approach is to allow the option to appear multiple times on the command line, each with a single argument. To make this work, include the `action=append` keyword (instead of `action=store`) in the `AddOption` call.
+  - One approach is to allow the option to appear multiple times on the command line, each with a single argument. To make this work, include the `action=append` keyword (instead of `action=store`) in the `AddOption` call.
+  - Another aproach is to use a style similar to that described in the SCons `ListVariable()` function: take a single following argument which may consist of one or more comma-separated values. You will have to write the code to break that up, as unlike for `ListVariable` SCons does not provide a way to do that for `AddOption` arguments, but it is relatively straightforward to do so.  Something like this might be a starting point (the `Flatten` is because split will return a list so we'd get a list inside a list in that case):
+    ```python
+    foos = [f.split(',') if ',' in f else f for f in GetOption('foo')]
+    foos = Flatten(foos)            
+    ```
+
 - Consider whether using `Variables` might be a workable solution instead. 
 
 
