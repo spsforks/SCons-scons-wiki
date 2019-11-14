@@ -19,13 +19,15 @@ There are three types of arguments that can be given to scons on the command lin
 
 - targets, which represent things SCons should build.
 - build variables, which look like Python keyword arguments.
-- options, which start with a dash: with a single dash they are called short options; with a double dash they are called long options. Short options can be combined togther or given separately (`-abc` means the same as `-a -b -c`). Some options may require a following argument word, and some options may take an optional following argument word, logically this option-argument is considered together with the option.  The options scons out of the box knows to accept are listed in the manpage; an scons build system can also be extended by defining custom options.
+- options, which start with a dash: with a single dash they are called short options; with a double dash they are called long options. Short options can be combined togther or given separately (`-abc` means the same as `-a -b -c`). Some options may require a following argument word, and some options may take an optional following argument word, logically this option-argument is considered together with the option.  The options scons out of the box knows to accept are listed in the [manpage](https://scons.org/doc/production/HTML/scons-man.html#options); an scons build system can also be extended by defining custom options.
 
 SCons treats each of these pieces of information differently.
 
 ## Command Line Targets
 
-Any single-word arguments that don't begin with a dash and don't contain an equal sign are collected as targets. SCons will match the command line targets with the the targets it computes after processing the SConscripts, and adjust the build to meet that request; if there are no targets specified it will build the default target.  Targets can be files to build, or directories, or they can be phony targets defined using the `Alias()` function.  Targets collected from the command line are made available in the special variable `COMMAND_LINE_TARGETS`.
+Any single-word arguments that don't begin with a dash and don't contain an equal sign are collected as targets. SCons will match the command line targets with the the targets it computes after processing the SConscripts, and adjust the build to meet that request; if there are no targets specified it will build the default target.  Targets can be files to build, or directories, or they can be phony targets defined using the `Alias()` function.  Of course, a requested target may have dependencies on other, not-specified target; SCons will build what it needs to meet the request.
+
+Targets collected from the command line are made available in the special variable `COMMAND_LINE_TARGETS`.
 
 ## Command Line Build Variables
 
@@ -68,7 +70,7 @@ scons: Reading SConscript files ...
 scons: *** Invalid value for option BUILD_TYPE: no_build.  Valid values are: ('debug', 'release', 'optimized')
 ```
 
-### the ARGUMENTS variable
+### The ARGUMENTS variable
 
 When SCons collects command-line build variables, it makes them available in two special variables, `ARGUMENTS`, which is a dictionary, and `ARGLIST`, which is a list of the key-value pairs. You can handle such arguments by examining these special variables.
 
@@ -109,7 +111,7 @@ $ scons myproject release=1 release=0
 [...]
 ```
 
-### the ARGLIST variable
+### The ARGLIST variable
 
 Since the `ARGUMENTS` dictionary stores only one the last value for a given keyword, it can be useful in some cases to fetch the command line data from the `ARGLIST` variable instead.  `ARGLIST` is the *ordered* list of (key,value) pairs as they were found on the SCons command line. For example:
 
@@ -166,7 +168,7 @@ To avoid getting into trouble with added options, here are some guidelines:
 - Avoid calling scons with command lines that use space rather then `=` as the option/argument separator. Using a space is legal syntax, and is not a problem for the SCons built-in options, but due to the ambiguity exposed when the option is defined in the SConscript, should not be used there.
 - Avoid defining single-character options that take a following argument.
 - Avoid defining added options which take multiple following arguments. Such arguments will by their nature be space-separated, and thus run into the problem.  Instead, use a style similar to that described in the SCons `ListVariable()` function: use a single following argument which may consist of one or more comma-separated values.
-- Consider whether using `VARIABLES` might be a workable solution instead. 
+- Consider whether using `Variables` might be a workable solution instead. 
 
 
 ## Environment Variables
