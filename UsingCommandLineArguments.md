@@ -174,6 +174,35 @@ To avoid getting into trouble with added options, here are some guidelines:
     foos = [f.split(',') if ',' in f else f for f in GetOption('foo')]
     foos = Flatten(foos)            
     ```
+  - Here is an example showing both ways in effect:
+    ```python
+    AddOption('--foo',
+          nargs=1,
+          dest='foo',
+          action='append',
+          type='string',
+          metavar='DIR',
+          help='installation prefix')
+
+    if GetOption('foo'):
+        foos = [f.split(',') if ',' in f else f for f in GetOption('foo')]
+        foos = Flatten(foos)
+        print("foos=", foos)
+    else:
+        print("No foo given")
+
+    ```
+
+    And when run:
+
+    ```console
+    $ scons -Q -q
+    No foo given
+    $ scons -Q -q --foo=foo,bar,baz
+    foos= ['foo', 'bar', 'baz']
+    $ scons -Q -q --foo=foo --foo=bar --foo=baz
+    foos= ['foo', 'bar', 'baz']
+    ```
 
 - Consider whether using `Variables` might be a workable solution instead. 
 
