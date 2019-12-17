@@ -32,7 +32,7 @@ The procedure has been used for all releases since 2.2.0.
 * update RELEASE.txt: this gets its content *replaced* for each release.  New functionality, deprecated functionality, changed functionality, and fixes.  Get this from CHANGES.txt.  Add new contributors to list at end. 
 * edit `debian/changelog`. Be careful of formatting here, it gets machine-parsed. 
 * NOTE: I think Announce and Release are backwards; Release should be complete release notes for all versions (latest at top) and Announce should be a short blurb of just this release.  FIXME! 
-* Commit this to the current branch (normally default branch in hg, unless this release is coming off a branch). 
+* Commit 
 * update `ReleaseConfig` and run `python bin/update-release-info.py release` (this modifies CHANGES, Release and Announce -- that's why you should commit the above first.) 
 * build packages and doc: `python bootstrap.py >& build-XYZ.log` (good idea to save build logfile somewhere) 
 * test them: `python runtest.py -a` (Q: aren't there special tests to test the unpacked installers?) 
