@@ -1,6 +1,4 @@
-It's often useful to be able to run "scons install" to copy the programs and shared libraries to their correct locations. "install" is a familiar phony target in other build systems, where a phony target is one that does not build a file indicated by its name, but instead causes some other work to be done. SCons sets up phony targets using the `Alias` function.
-
-Here's one way to do that: 
+It's often useful to be able to run `scons install` to copy built programs and shared libraries to another location, such as a project common area for testing, or perhaps the their final location in the filesystem. "install" is a familiar phony target in other build systems (a phony target is one that does not build a file indicated by its name, but instead causes some other work to be done). SCons can set up phony targets using the `Alias` function. Here's one way to do that: 
 
 ```python
 prefix = "/usr/local"
@@ -15,14 +13,14 @@ env.Alias("install", env.Install(os.path.join(prefix, "bin"), someprogram))
 
 Basically we alias 'install' to a couple of Install nodes, returned by the `Install` method. That's all. 
 
-NB: There is no need to add something like `Depends(install, someshlib)`, since SCons computes the dependency automatically. 
+NB: There is no need to add something like `Depends(install, someshlib)`, since SCons computes that dependency automatically. 
 
 Now
 ```
 $ scons install
 ```
 
-will do the work defined by the install target.  The installs won't happen if you just invoke SCons without arguments, since by default, SCons acts only on targets underneath the starting directory, which `/usr/local` is unlikely to be - this is largely the effect you want, only performing installs if they are asked for explicitly.
+will do the work defined by the install target.  The installs won't happen if you just invoke SCons without arguments, since by default, SCons acts only on targets underneath the starting directory, which `/usr/local` is unlikely to be. This choice of avoiding out-of-tree actions by default is intentional, as they're normally less common operations, and the default should reflect the most common work.  Of course, scons lets you redefine what the default behavior is if you don't agree, just use the `Default` function.
 
 If you need some finer-grained install targets, you may use something like this: 
 ```python
@@ -43,7 +41,7 @@ import SCons
 # define the custom function
 from SCons.Script.SConscript import SConsEnvironment
 SConsEnvironment.Chmod = SCons.Action.ActionFactory(os.chmod,
-        lambda dest, mode: 'Chmod("%s", 0%o)' % (dest, mode))
+        lambda dest, mode: 'Chmod("%s", 0o%o)' % (dest, mode))
 
 def InstallPerm(env, dest, files, perm):
     obj = env.Install(dest, files)
@@ -55,7 +53,7 @@ def InstallPerm(env, dest, files, perm):
 SConsEnvironment.InstallPerm = InstallPerm
 
 # great, we're ready to use it!
-env.InstallPerm(bindir, ['fooprog', 'barprog'], 0755)
+env.InstallPerm(bindir, ['fooprog', 'barprog'], 0o755)
 
 # but let's say we're not happy yet, we'd prefer nicer names.
 SConsEnvironment.InstallProgram = lambda env, dest, files: InstallPerm(env, dest, files, 0755)
@@ -68,8 +66,8 @@ Don't forget to set the umask, or created directories might get wrong permission
 
 ```python
 try:
-    umask = os.umask(0o22)
-    print 'setting umask to 022 (was 0%o)' % umask
+    umask = os.umask(0o022)
+    print('setting umask to 0o022 (was 0o%o)' % umask)
 except OSError:     # ignore on systems that don't support umask
     pass
 ```
@@ -103,7 +101,7 @@ for file in RecursiveGlob("./data", "*"):
                 Chmod("$TARGET", 0664),
     ])
 ```
-For best results, also make sure the umask is set like described above. 
+For best results, also make sure the umask is set as described above. 
 
 
 ## Locale files
