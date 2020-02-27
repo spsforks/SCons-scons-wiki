@@ -1,13 +1,12 @@
 
 # Analyzing source trees, based on dependency graphs
 
-
 ## Tools
 
 While trying to get a deeper understanding for the source of SCons, I actually wanted to see the classes and their dependencies. Googling around I found these two tools that could produce DOT graph files for class or import dependencies from Python source trees: 
 
-* [http://furius.ca/snakefood](http://furius.ca/snakefood): Creates module import dependency graphs. Use the Mercurial command "hg clone [https://hg.furius.ca/public/snakefood](https://hg.furius.ca/public/snakefood)" for a checkout of the current sources. 
-* [http://www.logilab.org/project/pylint](http://www.logilab.org/project/pylint): As part of pylint it analyzes class dependencies. 
+* [snakefood](http://furius.ca/snakefood): Creates module import dependency graphs. Use the Mercurial command ``hg clone https://hg.furius.ca/public/snakefood` for a checkout of the current sources. Note Python 3 support may be incomplete, the project seems rather inactive.
+* [pylint](https://www.pylint.org/): As part of pylint it analyzes class dependencies. Install using pip or distribution package manager.
 
 ## Commands
 
@@ -53,23 +52,25 @@ The original DOT files:
 
 ### SCons classes
 
-[[!img /home/dirk/programming/python/tohh/structure/dots/classes_scons.png] [[!img /home/dirk/programming/python/tohh/structure/dots/classes_scons_close1.png] 
+![](/home/dirk/programming/python/tohh/structure/dots/classes_scons.png)
 
-[[!img /home/dirk/programming/python/tohh/structure/dots/classes_scons_close2.png] 
+![](/home/dirk/programming/python/tohh/structure/dots/classes_scons_close1.png)
+
+![](/home/dirk/programming/python/tohh/structure/dots/classes_scons_close2.png)
 
 
 ### Waf classes
 
-[[!img /home/dirk/programming/python/tohh/structure/dots/classes_waf.png] 
+![](/home/dirk/programming/python/tohh/structure/dots/classes_waf.png)
 
-[[!img /home/dirk/programming/python/tohh/structure/dots/classes_waf_close1.png] 
+![](/home/dirk/programming/python/tohh/structure/dots/classes_waf_close1.png)
 
 
 ### SCons packages
 
-[[!img /home/dirk/programming/python/tohh/structure/dots/packages_scons.png] 
+![](/home/dirk/programming/python/tohh/structure/dots/packages_scons.png)
 
 
 ### Waf packages
 
-[[!img /home/dirk/programming/python/tohh/structure/dots/packages_waf.png] 
+![](/home/dirk/programming/python/tohh/structure/dots/packages_waf.png)
