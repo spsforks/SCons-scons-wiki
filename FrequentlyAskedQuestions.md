@@ -3,7 +3,7 @@
 *The most frequently-asked frequently asked questions*
 
 1. [Why doesn't SCons find my compiler/linker/etc.? I can execute it just fine from the command line.](#markdown-header-why-doesnt-scons-find-my-compilerlinkeretc-i-can-execute-it-just-fine-from-the-command-line)
-1. [How do I install files? The Install() method doesn't do anything. In general, how do I build anything outside my current directory?](#markdown-header-how-do-i-install-files-the-install-method-doesnt-do-anything-in-general-how-do-i-build-anything-outside-my-current-directory)
+1. [How do I install files? The `Install()` method doesn't do anything. In general, how do I build anything outside my current directory?](#markdown-header-how-do-i-install-files-the-install-method-doesnt-do-anything-in-general-how-do-i-build-anything-outside-my-current-directory)
 
 # General Information
 
@@ -16,10 +16,9 @@ SCons is implemented as a Python script and set of modules, and SCons "configura
 
 ## Where do I get SCons?
 
-The SCons download page is [http://scons.org/download.php](http://scons.org/download.php) 
+The [SCons download page](http://scons.org/download.php) 
 
-If you're interested in the [b]leading edge, you can take a look at what the developers are up to in the latest code checked in to the Mercurial (hg) tree. You can browse the tree on-line at [https://bitbucket.org/scons/scons](https://bitbucket.org/scons/scons) or follow the instructions on that page to download the sources to your own machine.  The default branch is the primary development branch. 
-
+If you're interested in the [b]leading edge, you can take a look at what the developers are up to in the latest code checked in to the git tree. You can browse the tree on-line at [https://github.com/scons/scons](https://github.com/scons/scons) or follow the instructions on that page to download the sources to your own machine.  The default branch (master) is the primary development branch. 
 
 ## What's the difference between the scons, scons-local, and scons-src packages?
 
