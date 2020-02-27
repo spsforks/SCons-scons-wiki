@@ -33,32 +33,34 @@ The `scons-src` package is the complete source tree, including everything we use
 
 ## What version of Python do I need?
 
-SCons is written to work with any Python version >= 2.4 and < 3.0. Versions 3.0 and above are not supported at this time. Extensive tests are used to ensure that SCons works on all supported versions. 
+SCons is written to work with Python version 2.7 or any Python >= 3.5. The 4.x SCons series will no longer run on Python 2 at all. Extensive tests are used to ensure that SCons works on all supported versions. 
 
-In order to install SCons from a source distribution, the Python Distutils package is required. Distutils is part of Python version 1.6 and higher. For Python 2.4, you can obtain the Distutils package from [http://python.org/sigs/distutils-sig/](http://python.org/sigs/distutils-sig/) 
+In order to install SCons from a source distribution, the Python Distutils package is required. Distutils can be obtained via pip if it is not already installed: `python -m pip install --user distutils`.  However, you usually don't need to do this: if you are working on a source tree you can just run directly from that tree, or you can install SCons itself via pip: `python -m pip install --user scons`.  
 
 
 ## Do I need to know how to program in Python to use SCons?
 
 No, you can use SCons very successfully even if you don't know how to program in Python. 
 
-With SCons, you use Python functions to tell a central build engine about your input and output files. You can look at these simply as different commands that you use to specify what software (or other files) you want built. SCons takes care of the rest, including figuring out most of your dependencies. 
+With SCons, you use Python functions to tell a central build engine about your input and output files. You can look at these simply as different commands that you use to specify what software (or other files) you want built. SCons takes care of the rest, including figuring out most of your dependencies. The examples in the User Guide should be enough to get started.
 
 Of course, if you do know Python, you can use its scripting capabilities to do more sophisticated things in your build: construct lists of files, manipulate file names dynamically, handle flow control (loops and conditionals) in your build process, etc. 
 
 
-## Why is SCons written for Python version 2.4?
+## Why is SCons written for Python version 2.7?
 
-Python 2.4 is still in widespread use on many systems, and was the version shipped by Red Hat as late as Red Hat 7.3. By writing the internal code so that it works on these systems, we're making it as easy as possible for more sites to install and work with SCons on as wide a variety of systems as possible. 
+Python 2.7 is still in widespread use on many systems, as it has been on an extended support cycle (10 years!) and still ships in many systems. By writing the internal code so that it works on these systems, we're making it as easy as possible for more sites to install and work with SCons on as wide a variety of systems as possible. 
 
 "Why don't people just upgrade their Python version?" you may ask. Yes, Python's packaging and installation make it easy for people to upgrade versions, but that's not the only barrier. 
 
 In commercial development environments, any new operating system or language version must usually be accompanied by extensive tests to make sure that the upgrade hasn't introduced subtle problems or regressions into the code being produced. Consequently, upgrading is an expensive proposition that many sites can't undertake just because a new tool like SCons might require it. When faced with that sort of choice, it's much less risky and expensive for them to just walk away from trying the new tool. 
 
+However, the ending of support by the Python development team for Python 2 (Jan 1 2020) provides an opportunity for a much-needed freshening of SCons code, which has been restricted by trying to run code that works on both Python 2 and Python 3, so the next SCons version (4.x) will not work on Python 2. SCons 3.x versions will continue to be able run on Python 2.
 
-## Am I restricted to using Python 2.4 code in my SConscript files?
 
-You can use any syntax supported by the version of python you are using to run SCons. SCons can be run with Python versions >= 2.4 and < 3.0. Versions 3.0 and above are not supported at this time. 
+## Am I restricted to using Python 2.7 code in my SConscript files?
+
+You can use any syntax supported by the version of python you are using to run SCons. SCons can be run with Python versions 2.7 and >= 3.5. For your own SConscript files, consider whether you need to support both Python series, and if so take some compatibility steps. The Python `six` module may help with this. 
 
 
 ## Are there any SCons mailing lists or newsgroups? Are they archived anywhere?
