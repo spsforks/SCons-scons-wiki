@@ -40,7 +40,7 @@ This is the SCons Developer Guide.  Start here to [learn how to contribute to SC
 
 Other resources:
 
-* The [man page](http://www.scons.org/doc/HTML/scons-man.html), especially the [Extending SCons](http://www.scons.org/doc/HTML/scons-man.html#lbAO) section.
+* The [man page](http://www.scons.org/doc/HTML/scons-man.html), especially the [Extending SCons](http://www.scons.org/doc/HTML/scons-man.html#extending_scons) section.
 * Be sure to check out the [developer guidelines](http://scons.org/guidelines.html)
 * [JavaSupport](JavaSupport)
 * [LatexSupport](LatexSupport) (and TeX)
