@@ -35,7 +35,7 @@ The `scons-src` package is the complete source tree, including everything we use
 
 SCons is written to work with Python version 2.7 or any Python >= 3.5. The 4.x SCons series will no longer run on Python 2 at all. Extensive tests are used to ensure that SCons works on all supported versions. 
 
-In order to install SCons from a source distribution, the Python Distutils package is required. Distutils can be obtained via pip if it is not already installed: `python -m pip install --user distutils`.  However, you usually don't need to do this: if you are working on a source tree you can just run directly from that tree, or you can install SCons itself via pip: `python -m pip install --user scons`.  
+In order to install SCons from a source distribution, the Python Distutils package is required. Distutils can be obtained via pip if it is not already installed: `python -m pip install --user distutils`.  However, you usually don't need to do this: if you are working on a source tree you can just [run directly from that tree](Running-SCons-from-your-git-sandbox), or you can install SCons itself via pip: `python -m pip install --user scons`.  
 
 
 ## Do I need to know how to program in Python to use SCons?
