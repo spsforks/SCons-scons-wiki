@@ -1,4 +1,4 @@
-Goal: to have a more flexible `LINKCOM`, so that we can put options in any order. Right now, we are force to have `LINKFLAGS` `LIBPATH` `LIBS`. In particular, if we want to put linkflags between libs, this is not possible right now wo rewrwiting link actions.
+Goal: to have a more flexible `LINKCOM`, so that we can put options in any order. Right now, we are forced to split linker-related args between `LINKFLAGS` `LIBPATH` and `LIBS`. In particular, if we want to interleave linkflags and libraries, this is not possible right now without rewriting link actions.
 
 None of below is meant as a prototype: this is just to show the basic concept.
 
@@ -63,8 +63,8 @@ class Bstatic:
         return self._f.subst(env)
 ~
 ```
-Which would be used in :
 
+Which would be used in :
 
 ```python
 from framework import interpolate_lib, interpolate_libpath, Framework, Bstatic
@@ -77,22 +77,23 @@ f1 = Framework()
 f1.append('LIBPATH', ['/opt/bar'])
 f1.append('LIBS', ['bar'])
 
-print f1.subst(env)
+print(f1.subst(env))
 
 # Simple example to wrap a lib to link statically
 f2 = Bstatic(["foo"])
 
-print f2.subst(env)
+print(f2.subst(env))
 
-# Simple example to add two libraries: this way, of foo in present in /opt/bar
-# and /opt/foo, foo in /opt/foo will be picked up first
+# Simple example to add two libraries: this way,
+# if foo is present in /opt/bar and /opt/foo,
+# foo in /opt/foo will be picked up first
 f3 = Framework()
 f3.append('LIBPATH', ['/opt/foo'])
 f3.append('LIBS', ['foo'])
 f3.append('LIBPATH', ['/opt/bar'])
 f3.append('LIBS', ['bar'])
 
-print f3.subst(env)
+print(f3.subst(env))
 
 # More complicated example
 f4 = Framework()
@@ -104,7 +105,7 @@ f4.append('LINKFLAGS', ['-Wl,--rpath-link=/opt/bar'])
 f4.append('LIBS', ['bar'])
 f4.append('LINKFLAGS', ['-xlic_lib=foobar'])
 
-print f4.subst(env)
+print(f4.subst(env))
 ```
 
 Which would print:
