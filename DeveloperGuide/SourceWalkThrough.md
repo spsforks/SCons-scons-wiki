@@ -3,15 +3,12 @@ Here's a quick introduction to the structure of the SCons repository.
 
 When you first check out SCons, the main directories you will see are:
 
-
 |           |                                            |
 |-----------|--------------------------------------------|
 | src       | the sources                                |
 | doc       | the documentation (man pages, guides, etc) |
 | test      | the test suite                             |
-| www       | the old SCons website repository           |
-
-
+| testing   | the testing framework                      |
 
 The ```src``` directory is the one you probably care about. It is organized like this:
 
