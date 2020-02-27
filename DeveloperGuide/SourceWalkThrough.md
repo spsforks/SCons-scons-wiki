@@ -7,7 +7,7 @@ When you first check out SCons, the main directories you will see are:
 |-----------|--------------------------------------------|
 | src       | the sources                                |
 | doc       | the documentation (man pages, guides, etc) |
-| test      | the test suite                             |
+| test      | the test suite (end to end tests)          |
 | testing   | the testing framework                      |
 
 The `src` directory is the one you probably care about. It is organized like this:
@@ -28,3 +28,9 @@ Some key files in `src/SCons`:
 * ```Environment.py```: SCons Environment class: the user way to communicate dependencies and construction information to the SCons engine
 * ```Node/FS.py```: File() and Dir() nodes are defined here
 
+After working with the source tree for a while, there may be two additional directories of interest:
+
+|           |                                                 |
+|-----------|-------------------------------------------------|
+| build     | where the documentation build goes              |
+| bootstrap | localized scons distribution used for packaging |
