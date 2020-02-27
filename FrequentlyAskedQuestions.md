@@ -94,23 +94,21 @@ A common problem for new users is that SCons can't seem to find a compiler, link
 > SCons does not automatically propagate the external environment used to execute '`scons`' to the commands used to build target files. This is so that builds will be guaranteed repeatable regardless of the environment variables set at the time scons is invoked. This also means that if the compiler or other commands that you want to use to build your target files are not in standard system locations, SCons will not find them unless you explicitly set the PATH to include those locations. 
 Fortunately, it's easy to propagate the PATH value from your external environment by initializing the ENV construction variable as follows: 
 
-```
-#!python
+```!python
 import os
 env = Environment(ENV = {'PATH' : os.environ['PATH']})
 ```
 
 Alternatively, you might want to propagate your entire external environment to the build commands as follows: 
 
-```
-#!python
+```!python
 import os
 env = Environment(ENV = os.environ)
 ```
+
 Of course, by propagating external environment variables into your build, you're running the risk that a change in the external environment will affect the build, possibly in unintended ways. The way to guarantee that the build is repeatable is to explicitly initialize the PATH 
 
-```
-#!python
+```!python
 path = ['/bin', '/usr/bin', '/path/to/other/compiler/bin']
 env = Environment(ENV = {'PATH' : path})
 ```
@@ -118,8 +116,7 @@ env = Environment(ENV = {'PATH' : path})
 
 If your program has #include files in various directories, SCons must somehow be told in which directories it should look for the #include files. You do this by setting the CPPPATH variable to the list of directories that contain .h files that you want to search for: 
 
-```
-#!python
+```!python
 env = Environment(CPPPATH='inc')
 env.Program('foo', 'foo.c')
 ```
@@ -128,8 +125,7 @@ SCons will add to the compilation command line(s) the right -I options, or whate
 
 Note specifically that you should not set the include directories directly in the CCFLAGS variable, as you might initially expect: 
 
-```
-#!python
+```!python
 env = Environment(CCFLAGS='-Iinc') # THIS IS INCORRECT!
 env.Program('foo', 'foo.c')
 ```
@@ -155,15 +151,13 @@ Like every other build system, SCons considers a directory used as a target as u
 
 As a workaround, make the dependency on some file within the directory that's always updated: 
 
-```
-#!python
+```!python
 env.Command('html_dir/index.html', Glob('rst/*.rst'), 'rst2html -o $TARGET.dir $SOURCES')
 ```
 
 If there isn't such a file, create one and put something in it that changes every time you build (such as the date): 
 
-```
-#!python
+```!python
 env.Command('html_dir/last_updated', Glob('rst/*.rst'), ['rst2html -o $TARGET.dir $SOURCES','date >$TARGET'])  
 ```
 
@@ -171,8 +165,7 @@ env.Command('html_dir/last_updated', Glob('rst/*.rst'), ['rst2html -o $TARGET.di
 
 SCons provides explicit support for getting information from programs like ldconfig and pkg-config. The relevant method is `ParseConfig()`, which executes a `*-config` command, parses the returned flags, and puts them in the environment through which the [ParseConfig](ParseConfig)() method is called: 
 
-```
-#!python
+```!python
 env.ParseConfig('pkg-config --cflags --libs libxml')
 ```
 
@@ -183,8 +176,7 @@ If you need to provide some special-purpose processing, you can supply a functio
 
 The Microsoft linker requires that the environment variable TMP is set. I do the following in my SConstruct file. 
 
-```
-#!python
+```!python
 env['ENV']['TMP'] = os.environ['TMP']
 ```
 
