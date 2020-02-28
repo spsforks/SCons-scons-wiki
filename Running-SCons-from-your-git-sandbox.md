@@ -34,7 +34,7 @@ If you run the commands by hand, don't include the "exec" in the final line.
 ## To run under debugger:
 
 
-```python
+```bash
 scons --debug=pdb <args...>
 b SCons/Tool/msvc.py:158 # to stop at that file:line, looks for file in `sys.path` e.g. your `SCONS_LIB_DIR`
 ```
