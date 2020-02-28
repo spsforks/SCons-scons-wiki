@@ -43,7 +43,7 @@ b SCons/Tool/msvc.py:158 # to stop at that file:line, looks for file in `sys.pat
 
 Laurent Marchelli: 
 
-I use Eclipse PyDev visual debugger rather than pbd, it works to dig into scons and for debugging my SConscript even on my bitbucket fork PyDev environment : SCONS_LIB_DIR=C:\dev\scons\scons-morpheus\src\engine). 
+I use Eclipse PyDev visual debugger rather than pdb, it works to dig into scons and for debugging my SConscript even on my bitbucket fork PyDev environment : `SCONS_LIB_DIR=C:\dev\scons\scons-morpheus\src\engine`). 
 
 For debugging test scripts (launched by `runtest.py`), this solution has to get extended somewhat: 
 
