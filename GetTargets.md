@@ -1,12 +1,12 @@
 **How to get the list of targets the user entered on command line ?**
 
-SCons provides a convenient variable [COMMAND_LINE_TARGETS](http://www.scons.org/doc/production/HTML/scons-user.html#sect-command-line-targets) containing the list of all targets specified on the command line.
+SCons provides a convenient variable [`COMMAND_LINE_TARGETS`](http://www.scons.org/doc/production/HTML/scons-user.html#sect-command-line-targets) containing the list of all targets specified on the command line.
 
 This example shows how you can prevent a target ('.' in this case) from being used:
 
-```txt
+```python
 if '.' in COMMAND_LINE_TARGETS:
-   print "error: You may not use the '.' target, please use 'all' or name a specific target."
+   print("error: You may not use the '.' target, please use 'all' or name a specific target.")
    Exit(1)
 
 env = Environment()
@@ -28,5 +28,5 @@ scons: 'all' is up to date.
 scons: done building targets.
 ```
 
-See also the ```BUILD_TARGETS``` variable for reading and changing the targets that SCons will try to build.
+See also the `BUILD_TARGETS` variable (same chapter in the User Guide) for reading and changing the targets that SCons will try to build.
 
