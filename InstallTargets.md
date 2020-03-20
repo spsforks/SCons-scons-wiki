@@ -16,7 +16,7 @@ Basically we alias 'install' to a couple of Install nodes, returned by the `Inst
 NB: There is no need to add something like `Depends(install, someshlib)`, since SCons computes that dependency automatically. 
 
 Now
-```
+```bash
 $ scons install
 ```
 
@@ -33,7 +33,7 @@ Alias('install', ['install-bin', 'install-lib'])
 
 Question:  how to set permissions properly (binaries get 755, headers get 644, etc.) after an install? 
 
-* One way to do it is to create a method that acts like `Install` but has an additional permission argument. Wrappers with predefined permissions are useful for cleaner markup: 
+* One way to do it is to monkey-patch  scons to create a method that acts like `Install` but has an additional permission argument. Wrappers with predefined permissions are useful for cleaner markup: 
 
 ```python
 import SCons
@@ -56,8 +56,8 @@ SConsEnvironment.InstallPerm = InstallPerm
 env.InstallPerm(bindir, ['fooprog', 'barprog'], 0o755)
 
 # but let's say we're not happy yet, we'd prefer nicer names.
-SConsEnvironment.InstallProgram = lambda env, dest, files: InstallPerm(env, dest, files, 0755)
-SConsEnvironment.InstallHeader = lambda env, dest, files: InstallPerm(env, dest, files, 0644)
+SConsEnvironment.InstallProgram = lambda env, dest, files: InstallPerm(env, dest, files, 0o755)
+SConsEnvironment.InstallHeader = lambda env, dest, files: InstallPerm(env, dest, files, 0o644)
 
 # great, now you can also install by calling a method named 'InstallHeader' or 'InstallProgram'!
 env.InstallHeader(incdir, ['foo.h', 'bar.h'])
@@ -71,6 +71,8 @@ try:
 except OSError:     # ignore on systems that don't support umask
     pass
 ```
+
+Note that it's considered bad Python form to assign names to lambdas and a code checker like pylint would complain, but it will work nonetheless.
 
 * Another similar method to install data with correct permissions is to use a `Command` : 
 
