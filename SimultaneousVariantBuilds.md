@@ -3,9 +3,9 @@ This page demonstrates how to tell SCons to build multiple variants of your soft
 
 * debug and release versions 
 * host and target versions 
+
 `SConstruct`: 
 ```python
-#!python
 release_env = Environment(CCFLAGS = ['-O2'])
 debug_env = release_env.Copy(CCFLAGS = ['-g'])
 
@@ -14,12 +14,11 @@ SConscript('src/SConscript', build_dir='debug', exports={'env':debug_env})
 ```
 `src/SConscript`: 
 ```python
-#!python
 Import('env')
 env.Program('hello', ['hello.c'])
 ```
 Output: 
-```txt
+```bash
 $ scons
 gcc -g -c -o debug/hello.o debug/hello.c
 gcc -o debug/hello debug/hello.o
@@ -28,7 +27,6 @@ gcc -o release/hello release/hello.o
 ```
 Here's the same sort of thing for windows using the Microsoft C++ compiler.  In the `SConstruct`: 
 ```python
-#!python
 base_env = Environment(tools = ["msvc", "mslink"])
 
 # Build different variants:
@@ -62,7 +60,6 @@ for flavour in ["Debug", "Release"]:
 ```
 And this is the contents of `hello/SConscript`: 
 ```python
-#!python
 # Make sure we don't change the imported environment by mistake:
 Import("env")
 imported_env = env
