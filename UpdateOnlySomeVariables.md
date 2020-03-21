@@ -1,8 +1,8 @@
 
-This version provides a method [UpdateNew](UpdateNew) which will only update variables that have not already been updated into the envirnment. 
+This version provides a method `UpdateNew` which will only update variables that have not already been updated into the envirnment. 
 
 
-```txt
+```python
 # File:         variables.py
 # Author:       Brian Allen Vanderburg II
 # Purpose:      SCons variables wrapper
@@ -90,7 +90,7 @@ class Variables(_Base):
 This is a slightly improved version.  It just remembers the values of the options not updates, and restores them afterward. 
 
 
-```txt
+```python
 # Requirements
 ##############################################################################
 
@@ -130,14 +130,12 @@ class Variables(_Base):
         for key in nonexist:
             if key in env:
                 del env[key]
-
-
-
 ```
+
 The version below is left for history.  It has the following problem I experienced.  If an option is added to variables with a default value of None, then it should not be modified in the environment if it is not found in the arguments.  This is good for values where you only want to modify the value if the user specifies it, but if not, leave it as is.  An example could be CFLAGS/etc:  If it is not in the arguments, don't modify it in the environment.  The problem is, if the internal environment somehow has the value but the external environment does not, then during [UpdateSome](UpdateSome), the internal environment's value will not be modified, but it will be copied to the external environment, modifying it even though the default value for the option was None. 
 
 
-```txt
+```python
 # File:         variables.py
 # Author:       Brian Allen Vanderburg II
 # Copyright:    This file is placed in the public domain
@@ -184,8 +182,9 @@ class Variables(_Base):
 ```
 The [UpdateSome](UpdateSome) method can be used to only update some variables.  Also, since it uses an internal environment, the variables can be updated into a cloned environment instead of the main environment if desired, and when saving the variables out, it will use the internal environment as well.  If another environment is specified during saving, it will use it instead.  This can be used to save out the modified values instead of the originally values. 
 
-SConstruct: 
-```txt
+`SConstruct`:
+ 
+```python
 import os
 import tools.scons # package provides Variables (among other things)
 
@@ -219,10 +218,9 @@ defenv.SConscript('config_${CONFIG}.py')
 ```
 Some later part of the build could then do this: 
 
-src/plugins/morph/SConscript: 
+`src/plugins/morph/SConscript`: 
 
-
-```txt
+```python
 Import('*')
 
 defvars.Add(BoolVariables('ENABLE_MORPH_PLUGIN', 'Enable building the morph plugin', True))
@@ -233,4 +231,4 @@ if not defenv['ENABLE_MORPH_PLUGIN']:
 
 ... Build the morph plugin
 ```
-If BITS is not specified when executing SCons, it will use the default variable value in the environment.  After detecting 32 or 64 bits, the environment will be modified.  A later call to defvars.Update(defenv) would re-apply the variables to the environment, overwriting the changes to BITS.  Using [UpdateSome](UpdateSome) allows updating only the desired variables while leaving others in tact. 
+If BITS is not specified when executing SCons, it will use the default variable value in the environment.  After detecting 32 or 64 bits, the environment will be modified.  A later call to `defvars.Update(defenv)` would re-apply the variables to the environment, overwriting the changes to BITS.  Using `UpdateSome` allows updating only the desired variables while leaving others in tact. 
