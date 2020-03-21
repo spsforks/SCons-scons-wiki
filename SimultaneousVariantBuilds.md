@@ -7,7 +7,7 @@ This page demonstrates how to tell SCons to build multiple variants of your soft
 `SConstruct`: 
 ```python
 release_env = Environment(CCFLAGS = ['-O2'])
-debug_env = release_env.Copy(CCFLAGS = ['-g'])
+debug_env = release_env.Clone(CCFLAGS = ['-g'])
 
 SConscript('src/SConscript', build_dir='release', exports={'env':release_env})
 SConscript('src/SConscript', build_dir='debug', exports={'env':debug_env})
