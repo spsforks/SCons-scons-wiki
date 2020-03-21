@@ -132,7 +132,7 @@ class Variables(_Base):
                 del env[key]
 ```
 
-The version below is left for history.  It has the following problem I experienced.  If an option is added to variables with a default value of None, then it should not be modified in the environment if it is not found in the arguments.  This is good for values where you only want to modify the value if the user specifies it, but if not, leave it as is.  An example could be CFLAGS/etc:  If it is not in the arguments, don't modify it in the environment.  The problem is, if the internal environment somehow has the value but the external environment does not, then during [UpdateSome](UpdateSome), the internal environment's value will not be modified, but it will be copied to the external environment, modifying it even though the default value for the option was None. 
+The version below is left for history.  It has the following problem I experienced.  If an option is added to variables with a default value of None, then it should not be modified in the environment if it is not found in the arguments.  This is good for values where you only want to modify the value if the user specifies it, but if not, leave it as is.  An example could be CFLAGS/etc:  If it is not in the arguments, don't modify it in the environment.  The problem is, if the internal environment somehow has the value but the external environment does not, then during `UpdateSome`, the internal environment's value will not be modified, but it will be copied to the external environment, modifying it even though the default value for the option was None. 
 
 
 ```python
@@ -180,7 +180,7 @@ class Variables(_Base):
     def GenerateHelpText(self, sort=None):
         return _Base.GenerateHelpText(self, self._env, sort)
 ```
-The [UpdateSome](UpdateSome) method can be used to only update some variables.  Also, since it uses an internal environment, the variables can be updated into a cloned environment instead of the main environment if desired, and when saving the variables out, it will use the internal environment as well.  If another environment is specified during saving, it will use it instead.  This can be used to save out the modified values instead of the originally values. 
+The `UpdateSome` method can be used to only update some variables.  Also, since it uses an internal environment, the variables can be updated into a cloned environment instead of the main environment if desired, and when saving the variables out, it will use the internal environment as well.  If another environment is specified during saving, it will use it instead.  This can be used to save out the modified values instead of the originally values. 
 
 `SConstruct`:
  
