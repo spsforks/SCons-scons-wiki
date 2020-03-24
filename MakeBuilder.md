@@ -9,8 +9,6 @@ The Builder accepts several options to control build targets, execution environm
 # Definition
 
 ```python
-#!python 
-
 # Make Builder: Runs make.
 #
 # Parameters:
@@ -174,9 +172,7 @@ otherenv.Tool('Make')
 
 You use this builder by giving it `source` and `target` parameters as usual, but also specifying `MakePath` to tell it in which directory to run `make`. 
 
-
 ```python
-#!python 
 # Define the sources for the make build, so SCons can track dependencies
 # (or just set source=None to have SCons run make all the time and
 # let make track dependencies).
@@ -194,13 +190,8 @@ If your environment has `MAKECOMSTR` defined, the builder uses that string to pr
 ## Parameters
 
 * `MakePath` -- (**Required**) SCons Dir node representing the directory in which to run make. 
-
 * `MakeCmd` -- (Default: `make`) The 'make' executable to run. 
-
 * `MakeEnv` -- (Default: _none_) Dictionary of variables to set in the make execution environment. 
-
 * `MakeOpts` -- (Default: _none_) Options to pass on the make command line. 
-
 * `MakeOneThread` -- (Default: `False`) Don't pass any -j options to make. 
-
 * `MakeTargets` -- (Default: _none_) String of space-separated targets for make to build. 
