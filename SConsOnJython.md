@@ -1,4 +1,9 @@
+---
+**NOTE**
 
+_As of 4.0, SCons works only with Python 3, and Jython is Python 2 only, with no current indication that a 3.x version is in the works.  To attempt the below, use a checkout of SCons that is prior to the 4.0 release._
+
+---
 
 # SCons on Jython
 
