@@ -12,7 +12,7 @@
  - [Qt Creator](#qt-creator)
  - [Geany](#geany) 
  - [PyCharm](#pycharm) - recipe needed!
- - [Visual Studio Code](#visual-studio-code) - recipe needed!
+ - [Visual Studio Code](#visual-studio-code)
  - [Atom](#atom) - recipe needed!
  - [Sublime Text](#sublime-text) - recipe needed!
  - [Eric](#eric) - recipe needed!
@@ -244,9 +244,37 @@ This section is waiting for a contribution!
 [back to contents](#contents)
 
 ## Visual Studio Code
-
-This section is waiting for a contribution!
-
+```
+    {
+        // See https://go.microsoft.com/fwlink/?LinkId=733558
+        // for the documentation about the tasks.json format
+        "version": "2.0.0",
+        "tasks": [
+          {
+             "label": "build",
+             "type": "shell",
+             "command": "scons",
+             "problemMatcher": [
+                "$gcc"
+             ],
+             "args": ["-j4"],
+             "group": {
+                 "kind": "build",
+                 "isDefault": true
+             }
+          },
+          {
+             "label": "clean",
+             "type": "shell",
+             "command": "scons",
+             "problemMatcher": [
+              "$gcc"
+             ],
+             "args": ["-c"],
+         }
+      ]
+   }
+```
 [back to contents](#contents)
 
 ## Atom
