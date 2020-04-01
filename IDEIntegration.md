@@ -244,6 +244,7 @@ This section is waiting for a contribution!
 [back to contents](#contents)
 
 ## Visual Studio Code
+tasks.json: (written by a novice!)
 ```
     {
         // See https://go.microsoft.com/fwlink/?LinkId=733558
