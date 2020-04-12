@@ -2,11 +2,7 @@ Here is a Builder that runs `make`.  It's intended to be used along with [UnTarB
 
 The Builder accepts several options to control build targets, execution environment, and make command-line options.  It will also pass the SCons `-j` parameter to the make command (but there's an option to prevent that). 
 
-**Table of Contents**
-
-[TOC] 
-
-# Definition
+# Code
 
 ```python
 # Make Builder: Runs make.
@@ -117,9 +113,9 @@ def builder(target, source, env):
 
     # Make sure there's a directory to run make in
     if len(make_path) == 0:
-        print 'No path specified'
+        print('No path specified'))
     if not os.path.exists(make_path):
-        print 'Path %s not found' % make_path
+        print('Path %s not found' % make_path)
 
     # Build up the command and its arguments in a list
     fullcmd = [make_cmd,]
@@ -135,7 +131,7 @@ def builder(target, source, env):
 
     # Capture the make command's output, unless we're verbose
     real_stdout = subprocess.PIPE
-    if 'MAKECOMSTR' not in env.Dictionary().keys():
+    if 'MAKECOMSTR' not in env:
         real_stdout = None
 
     # Make!
