@@ -32,22 +32,22 @@ from SCons.Script import *
 def parms(target, source, env):
     """Assemble various Make parameters."""
 
-    if 'MakePath' in env.Dictionary().keys():
+    if 'MakePath' in env:
         make_path = env.subst(str(env['MakePath']))
     else:
         print "Make builder requires MakePath variable"
         Exit(1)
 
     make_cmd = 'make'
-    if 'MakeCmd' in env.Dictionary().keys():
+    if 'MakeCmd' in env:
         make_cmd = env.subst(env['MakeCmd'])
-    elif 'MAKE' in env.Dictionary().keys():
+    elif 'MAKE' in env:
         make_cmd = env.subst(env['MAKE'])
 
     make_env = None
     if env['CROSS_BUILD']:
         make_env = env['CROSS_ENV']
-    if 'MakeEnv' in env.Dictionary().keys():
+    if 'MakeEnv' in env:
         if make_env == None:
             make_env = {}
         else:
@@ -58,15 +58,15 @@ def parms(target, source, env):
             make_env[k] = v
 
     make_opts = None
-    if 'MakeOpts' in env.Dictionary().keys():
+    if 'MakeOpts' in env:
         make_opts = env.subst(env['MakeOpts'])
 
     make_jobs = GetOption('num_jobs')
-    if 'MakeOneThread' in env.Dictionary().keys() and env['MakeOneThread']:
+    if env.get('MakeOneThread'):
         make_jobs = 1
 
     make_targets = None
-    if 'MakeTargets' in env.Dictionary().keys():
+    if 'MakeTargets' in env:
         make_targets = env.subst(env['MakeTargets'])
 
     return (make_path, make_env, make_targets, make_cmd, make_jobs, make_opts)
@@ -83,18 +83,18 @@ def message(target, source, env):
 
     myenv = env.Clone()
     # Want to use MakeTargets in the MAKECOMSTR, but make it pretty first.
-    if 'MakeTargets' in myenv.Dictionary().keys():
+    if 'MakeTargets' in myenv:
         myenv['MakeTargets'] += ' '
     else:
         myenv['MakeTargets'] = ''
 
-    if 'MAKECOMSTR' in myenv.Dictionary().keys():
+    if 'MAKECOMSTR' in myenv:
         return myenv.subst(myenv['MAKECOMSTR'],
-                            target = target, source = source, raw = 1)
+                           target = target, source = source, raw = 1)
 
     msg = 'cd ' + make_path + ' &&'
     if make_env != None:
-        for k, v in make_env.iteritems():
+        for k, v in make_env.items():
             msg += ' ' + k + '=' + v
     msg += ' ' + make_cmd
     if make_jobs > 1:
@@ -122,10 +122,10 @@ def builder(target, source, env):
         print 'Path %s not found' % make_path
 
     # Build up the command and its arguments in a list
-    fullcmd = [ make_cmd ]
+    fullcmd = [make_cmd,]
 
     if make_jobs > 1:
-        fullcmd += [ '-j', str(make_jobs) ]
+        fullcmd += ['-j', str(make_jobs)]
 
     if make_opts:
         fullcmd += make_opts
@@ -139,14 +139,8 @@ def builder(target, source, env):
         real_stdout = None
 
     # Make!
-    make = subprocess.Popen(fullcmd,
-                            cwd = make_path,
-                            stdout = real_stdout,
-                            env = make_env)
-
-    # Some subprocesses don't terminate unless we communicate with them
-    output = make.communicate()[0]
-    return make.returncode
+    cp = subprocess.run(fullcmd, cwd=make_path, stdout=real_stdout, env=make_env)
+    return cp.returncode
 
 def generate(env, **kwargs):
     env['BUILDERS']['Make'] = env.Builder(
@@ -162,8 +156,7 @@ def exists(env):
 
 To load this Builder into your environment, save the above as `Make.py` in your `site_scons/site_tools/` directory, then add it as a tool to your environment: 
 ```python
-#!python 
-env = Environment(tools = ['default', 'Make'])
+env = Environment(tools=['default', 'Make'])
 # or
 otherenv.Tool('Make')
 ```
@@ -179,10 +172,10 @@ You use this builder by giving it `source` and `target` parameters as usual, but
 src = Glob('foo-1.2.3/*.c')
 
 # Run make inside the foo-1.2.3/ directory
-foolib = env.Make(source = src,
-                  target = [ 'foo-1.2.3/.libs/libfoo.a',
-                             'foo-1.2.3/.libs/libfoo.so' ],
-                  MakePath = Dir('foo-1.2.3'))
+foolib = env.Make(source=src,
+                  target=['foo-1.2.3/.libs/libfoo.a',
+                          'foo-1.2.3/.libs/libfoo.so'],
+                  MakePath=Dir('foo-1.2.3'))
 ```
 If your environment has `MAKECOMSTR` defined, the builder uses that string to print its command message and also hides the command's output.  Without `MAKECOMSTR` the builder prints the full make command as well as the command's output. 
 
