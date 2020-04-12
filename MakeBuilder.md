@@ -35,7 +35,7 @@ def parms(target, source, env):
     if 'MakePath' in env:
         make_path = env.subst(str(env['MakePath']))
     else:
-        print "Make builder requires MakePath variable"
+        print("Make builder requires MakePath variable", file=sys.stderr)
         Exit(1)
 
     make_cmd = 'make'
