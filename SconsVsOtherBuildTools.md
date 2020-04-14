@@ -1,4 +1,4 @@
-_Note: this page may contain flammable opinions. This is a wiki, many have contributed to it. Please be considerate and balanced._ 
+_Note: this page may contain flammable opinions. This is a wiki, many have contributed to it. It is also fairly out of date: newer tools such as Ninja, Bazel and Ronin could stand a writeup, to aid people trying to learn about build systems. Please be considerate and balanced._ 
 
 # SCons
 
