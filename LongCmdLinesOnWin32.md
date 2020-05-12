@@ -27,7 +27,7 @@ Here is the final section of code to acheive what we wanted.
 ### Python Code
 
 
-```txt
+```python
 if env['PLATFORM'] == 'win32':
     import win32file
     import win32event
@@ -102,7 +102,7 @@ by [Amit Chakradeo](http://amit.chakradeo.net/)
 ### Another way
 
 You can also use the subprocess module (since Python 2.4). 
-```txt
+```python
 class ourSpawn:
     def ourspawn(self, sh, escape, cmd, args, env):
         newargs = ' '.join(args[1:])
