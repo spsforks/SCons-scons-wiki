@@ -11,9 +11,7 @@ env.Alias("install", env.Install(os.path.join(prefix, "lib"), someshlib))
 env.Alias("install", env.Install(os.path.join(prefix, "bin"), someprogram))
 ```
 
-Basically we alias 'install' to a couple of Install nodes, returned by the `Install` method. That's all. 
-
-NB: There is no need to add something like `Depends(install, someshlib)`, since SCons computes that dependency automatically. 
+Basically we alias 'install' to a couple of Install nodes, returned by the `Install` method. That's all. `Alias` is additive, so this works fine. There is no need to add something like `Depends(install, someshlib)`, since SCons computes that dependency automatically. 
 
 Now
 ```bash
@@ -22,7 +20,7 @@ $ scons install
 
 will do the work defined by the install target.  The installs won't happen if you just invoke SCons without arguments, since by default, SCons acts only on targets underneath the starting directory, which `/usr/local` is unlikely to be. This choice of avoiding out-of-tree actions by default is intentional, as they're normally less common operations, and the default should reflect the most common work.  Of course, scons lets you redefine what the default behavior is if you don't agree, just use the `Default` function.
 
-If you need some finer-grained install targets, you may use something like this: 
+If you need some finer-grained install targets, you could use something like this: 
 ```python
 Alias('install-lib', Install(os.path.join(prefix, "lib"), ...))
 Alias('install-bin', Install(os.path.join(prefix, "bin"), ...))
@@ -33,7 +31,7 @@ Alias('install', ['install-bin', 'install-lib'])
 
 Question:  how to set permissions properly (binaries get 755, headers get 644, etc.) after an install? 
 
-* One way to do it is to monkey-patch  scons to create a method that acts like `Install` but has an additional permission argument. Wrappers with predefined permissions are useful for cleaner markup: 
+* One way to do it is to monkey-patch  scons to create a method that acts like `Install` but takes an additional permission argument. Wrappers with predefined permissions are useful for cleaner markup: 
 
 ```python
 import SCons
