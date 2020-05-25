@@ -2,9 +2,10 @@ EXAMPLES
 ========
 
 To help you get started using ``scons``, this section contains a brief
-overview of some common tasks.
+overview of some common tasks. See the SCons User Guide for many more
+examples.
 
-.. contents:: Table of Contents
+.. contents:: Contents
 
 
 Basic Compilation From a Single Source File
@@ -13,10 +14,11 @@ Basic Compilation From a Single Source File
 .. code:: python
 
    env = Environment()
-   env.Program(target = 'foo', source = 'foo.c')
+   env.Program(target='foo', source='foo.c')
 
-Note: Build the file by specifying the target as an argument ("scons
-foo" or "scons foo.exe"). or by specifying a dot ("scons .").
+Note: Build the file by specifying the target as an argument
+(``scons foo`` or ``scons foo.exe``). or by specifying a dot
+(``scons .``).
 
 
 Basic Compilation From Multiple Source Files
@@ -25,7 +27,7 @@ Basic Compilation From Multiple Source Files
 .. code:: python
 
    env = Environment()
-   env.Program(target = 'foo', source = Split('f1.c f2.c f3.c'))
+   env.Program(target='foo', source=Split('f1.c f2.c f3.c'))
 
 
 Setting a Compilation Flag
@@ -33,15 +35,16 @@ Setting a Compilation Flag
 
 .. code:: python
 
-   env = Environment(CCFLAGS = '-g')
-   env.Program(target = 'foo', source = 'foo.c')
+   env = Environment(CCFLAGS='-g')
+   env.Program(target='foo', source='foo.c')
 
 
 Search The Local Directory For .h Files
 ---------------------------------------
 
-Note: You do *not* need to set CCFLAGS to specify -I options by hand.
-``scons`` will construct the right ``-I`` options from CPPPATH.
+Note: You do *not* need to set CCFLAGS to specify ``-I`` options by
+hand. ``scons`` will construct the right ``-I`` options from the
+contents of CPPPATH.
 
 .. code:: python
 
@@ -54,8 +57,8 @@ Search Multiple Directories For .h Files
 
 .. code:: python
 
-   env = Environment(CPPPATH = ['include1', 'include2'])
-   env.Program(target = 'foo', source = 'foo.c')
+   env = Environment(CPPPATH=['include1', 'include2'])
+   env.Program(target='foo', source='foo.c')
 
 
 Building a Static Library
@@ -64,8 +67,8 @@ Building a Static Library
 .. code:: python
 
    env = Environment()
-   env.StaticLibrary(target = 'foo', source = Split('l1.c l2.c'))
-   env.StaticLibrary(target = 'bar', source = ['l3.c', 'l4.c'])
+   env.StaticLibrary(target='foo', source=Split('l1.c l2.c'))
+   env.StaticLibrary(target='bar', source=['l3.c', 'l4.c'])
 
 
 Building a Shared Library
@@ -74,8 +77,8 @@ Building a Shared Library
 .. code:: python
 
    env = Environment()
-   env.SharedLibrary(target = 'foo', source = ['l5.c', 'l6.c'])
-   env.SharedLibrary(target = 'bar', source = Split('l7.c l8.c'))
+   env.SharedLibrary(target='foo', source=['l5.c', 'l6.c'])
+   env.SharedLibrary(target='bar', source=Split('l7.c l8.c'))
 
 
 Linking a Local Library Into a Program
@@ -83,9 +86,9 @@ Linking a Local Library Into a Program
 
 .. code:: python
 
-   env = Environment(LIBS = 'mylib', LIBPATH = ['.'])
-   env.Library(target = 'mylib', source = Split('l1.c l2.c'))
-   env.Program(target = 'prog', source = ['p1.c', 'p2.c'])
+   env = Environment(LIBS='mylib', LIBPATH=['.'])
+   env.Library(target='mylib', source=Split('l1.c l2.c'))
+   env.Program(target='prog', source=['p1.c', 'p2.c'])
 
 
 Defining Your Own Builder Object
@@ -96,18 +99,21 @@ file suffix, and ``scons`` will add it automatically.
 
 .. code:: python
 
-   bld = Builder(action = 'pdftex < $SOURCES > $TARGET'
-                 suffix = '.pdf',
-                 src_suffix = '.tex')
-   env = Environment(BUILDERS = {'PDFBuilder' : bld})
-   env.PDFBuilder(target = 'foo.pdf', source = 'foo.tex')
+   bld = Builder(
+       action='pdftex < $SOURCES > $TARGET',
+       suffix='.pdf',
+       src_suffix='.tex'
+   )
+   env = Environment(BUILDERS={'PDFBuilder': bld})
+   env.PDFBuilder(target='foo.pdf', source='foo.tex')
 
    # The following creates "bar.pdf" from "bar.tex"
-   env.PDFBuilder(target = 'bar', source = 'bar')
+   env.PDFBuilder(target='bar', source='bar')
 
-Note also that the above initialization overwrites the default Builder
-objects, so the Environment created above can not be used call Builders
-like env.Program, env.Object, env.StaticLibrary etc.
+Note that the above initialization replaces the default dictionary of
+Builders, so this construction environment can not be used call Builders
+like ``Program``, ``Object``, ``StaticLibrary`` etc. See the next example for
+an alternative.
 
 
 Adding Your Own Builder Object to an Environment
@@ -115,13 +121,15 @@ Adding Your Own Builder Object to an Environment
 
 .. code:: python
 
-   bld = Builder(action = 'pdftex < $SOURCES > $TARGET'
-                 suffix = '.pdf',
-                 src_suffix = '.tex')
+   bld = Builder(
+       action='pdftex < $SOURCES > $TARGET'
+       suffix='.pdf',
+       src_suffix='.tex'
+   )
    env = Environment()
-   env.Append(BUILDERS = {'PDFBuilder' : bld})
-   env.PDFBuilder(target = 'foo.pdf', source = 'foo.tex')
-   env.Program(target = 'bar', source = 'bar.c')
+   env.Append(BUILDERS={'PDFBuilder': bld})
+   env.PDFBuilder(target='foo.pdf', source='foo.tex')
+   env.Program(target='bar', source='bar.c')
 
 You also can use other Pythonic techniques to add to the BUILDERS
 construction variable, such as:
@@ -135,11 +143,11 @@ construction variable, such as:
 Defining Your Own Scanner Object
 --------------------------------
 
-The following example shows adding an extremely simple scanner (the
-**kfile_scan**\ () function) that doesn't use a search path at all and
-simply returns the file names present on any **include** lines in the
-scanned file. This would implicitly assume that all included files live
-in the top-level directory:
+The following example shows adding an extremely simple scanner
+(``kfile_scan``) that doesn't use a search path at all and simply
+returns the file names present on any ``include`` lines in the scanned
+file. This would implicitly assume that all included files live in the
+top-level directory:
 
 .. code:: python
 
@@ -152,10 +160,12 @@ in the top-level directory:
        includes = include_re.findall(contents)
        return env.File(includes)
 
-   kscan = Scanner(name = 'kfile',
-                   function = kfile_scan,
-                   argument = None,
-                   skeys = ['.k'])
+   kscan = Scanner(
+       name='kfile',
+       function=kfile_scan,
+       argument=None,
+       skeys=['.k'],
+   )
 
    scanners = DefaultEnvironment()['SCANNERS']
    scanners.append(kscan)
@@ -169,24 +179,25 @@ in the top-level directory:
 
 It is important to note that you have to return a list of File nodes
 from the scan function, simple strings for the file names won't do. As
-in the examples we are showing here, you can use the **File()** function
-of your current Environment in order to create nodes on the fly from a
-sequence of file names with relative paths.
+in the examples shown here, you can use the ``env.File``
+function of your current construction environment in order to create
+nodes on the fly from a sequence of file names with relative paths.
 
 Here is a similar but more complete example that adds a scanner which
-searches a path of directories (specified as the **MYPATH** construction
+searches a path of directories (specified as the MYPATH construction
 variable) for files that actually exist:
 
 .. code:: python
 
    import re
    import os
+
    include_re = re.compile(r'^include\s+(\S+)$', re.M)
 
    def my_scan(node, env, path, arg):
        contents = node.get_text_contents()
        includes = include_re.findall(contents)
-       if includes == []:
+       if not includes:
            return []
        results = []
        for inc in includes:
@@ -197,12 +208,13 @@ variable) for files that actually exist:
                    break
        return env.File(results)
 
-   scanner = Scanner(name='myscanner',
-                     function=my_scan,
-                     argument=None,
-                     skeys=['.x'],
-                     path_function=FindPathDirs('MYPATH')
-                    )
+   scanner = Scanner(
+       name='myscanner',
+       function=my_scan,
+       argument=None,
+       skeys=['.x'],
+       path_function=FindPathDirs('MYPATH'),
+   )
 
    scanners = DefaultEnvironment()['SCANNERS']
    scanners.append(scanner)
@@ -210,13 +222,13 @@ variable) for files that actually exist:
 
    env.Command('foo', 'foo.x', 'xprocess < $SOURCES > $TARGET')
 
-The **FindPathDirs**\ () function used in the previous example returns a
-function (actually a callable Python object) that will return a list of
-directories specified in the **$MYPATH** construction variable. It lets
-``scons`` detect the file ``incs/foo.inc``, even if ``foo.x`` contains
-the line ``include foo.inc`` only. If you need to customize how the
-search path is derived, you would provide your own **path_function**
-argument when creating the Scanner object, as follows:
+The ``FindPathDirs`` function used in the previous
+example returns a function (actually a callable Python object) that will
+return a list of directories specified in the MYPATH construction
+variable. It lets ``scons`` detect the file ``incs/foo.inc``, even if
+``foo.x`` contains the line ``include foo.inc`` only. If you need to
+customize how the search path is derived, you would provide your own
+``path_function`` argument when creating the Scanner object, as follows:
 
 .. code:: python
 
@@ -229,12 +241,14 @@ argument when creating the Scanner object, as follows:
                results.append(top_dir + os.sep + p)
        return results
 
-   scanner = Scanner(name='myscanner',
-                     function=my_scan,
-                     argument=None,
-                     skeys=['.x'],
-                     path_function=pf
-                    )
+
+   scanner = Scanner(
+       name='myscanner',
+       function=my_scan,
+       argument=None,
+       skeys=['.x'],
+       path_function=pf
+   )
 
 
 Creating a Hierarchical Build
@@ -248,7 +262,7 @@ are relative to that subdirectory.
 .. code:: python
 
    env = Environment()
-   env.Program(target = 'foo', source = 'foo.c')
+   env.Program(target='foo', source='foo.c')
 
    SConscript('sub/SConscript')
 
@@ -258,7 +272,7 @@ are relative to that subdirectory.
 
    env = Environment()
    # Builds sub/foo from sub/foo.c
-   env.Program(target = 'foo', source = 'foo.c')
+   env.Program(target='foo', source='foo.c')
 
    SConscript('dir/SConscript')
 
@@ -268,21 +282,22 @@ are relative to that subdirectory.
 
    env = Environment()
    # Builds sub/dir/foo from sub/dir/foo.c
-   env.Program(target = 'foo', source = 'foo.c')
+   env.Program(target='foo', source='foo.c')
 
 
 Sharing Variables Between SConscript Files
 ------------------------------------------
 
-You must explicitly call ``Export`` and ``Import`` for variables that
-you want to share between SConscript files.
+You must explicitly call ``Export`` and
+``Import`` for variables that you want to share between
+SConscript files.
 
 ``SConstruct``:
 
 .. code:: python
 
    env = Environment()
-   env.Program(target = 'foo', source = 'foo.c')
+   env.Program(target='foo', source='foo.c')
 
    Export("env")
    SConscript('subdirectory/SConscript')
@@ -292,15 +307,15 @@ you want to share between SConscript files.
 .. code:: python
 
    Import("env")
-   env.Program(target = 'foo', source = 'foo.c')
+   env.Program(target='foo', source='foo.c')
 
 
 Building Multiple Variants From the Same Source
 -----------------------------------------------
 
-Use the variant_dir keyword argument to the ``SConscript`` function to
-establish one or more separate variant build directory trees for a given
-source directory:
+Use the ``variant_dir`` keyword argument to the
+``SConscript`` function to establish one or more
+separate variant build directory trees for a given source directory:
 
 ``SConstruct``:
 
@@ -319,11 +334,12 @@ source directory:
 .. code:: python
 
    Import("cppdefines")
-   env = Environment(CPPDEFINES = cppdefines)
-   env.Program(target = 'src', source = 'src.c')
+   env = Environment(CPPDEFINES=cppdefines)
+   env.Program(target='src', source='src.c')
 
-Note the use of the ``Export`` method to set the "cppdefines" variable
-to a different value each time we call the ``SConscript`` function.
+Note the use of the ``Export`` method to set the
+``cppdefines`` variable to a different value each time we call the
+``SConscript`` function.
 
 
 Hierarchical Build of Two Libraries Linked With a Program
@@ -366,9 +382,9 @@ the top-level directory, so they don't turn into ``Main/libA`` when
 they're used in ``Main/SConscript``
 
 Specifying only 'a' and 'b' for the library names allows ``scons`` to
-append the appropriate library prefix and suffix for the current
-platform (for example, ``liba.a`` on POSIX systems, ``a.lib`` on
-Windows).
+attach the appropriate library prefix and suffix for the current
+platform in creating the library filename (for example, ``liba.a`` on
+POSIX systems, ``a.lib`` on Windows).
 
 
 Customizing construction variables from the command line.
@@ -380,7 +396,7 @@ line or in the file ``custom.py``.
 .. code:: python
 
    vars = Variables('custom.py')
-   vars.Add('CC', help='The C compiler.')
+   vars.Add('CC', 'The C compiler.')
    env = Environment(variables=vars)
    Help(vars.GenerateHelpText(env))
 
@@ -410,15 +426,16 @@ or get documentation on the options:
 Using Microsoft Visual C++ precompiled headers
 ----------------------------------------------
 
-Since windows.h includes everything and the kitchen sink, it can take
-quite some time to compile it over and over again for a bunch of object
-files, so Microsoft provides a mechanism to compile a set of headers
-once and then include the previously compiled headers in any object
-file. This technology is called precompiled headers. The general recipe
-is to create a file named "StdAfx.cpp" that includes a single header
-named "StdAfx.h", and then include every header you want to precompile
-in "StdAfx.h", and finally include "StdAfx.h" as the first header in all
-the source files you are compiling to object files. For example:
+Since ``windows.h`` includes everything and the kitchen sink, it can
+take quite some time to compile it over and over again for a bunch of
+object files, so Microsoft provides a mechanism to compile a set of
+headers once and then include the previously compiled headers in any
+object file. This technology is called precompiled headers (PCH). The
+general recipe is to create a file named ``StdAfx.cpp`` that includes a
+single header named ``StdAfx.h``, and then include every header you want
+to precompile in ``StdAfx.h``, and finally include ``"StdAfx.h`` as the
+first header in all the source files you are compiling to object files.
+For example:
 
 ``StdAfx.h``:
 
@@ -458,10 +475,11 @@ the source files you are compiling to object files. For example:
    env['PCH'] = env.PCH('StdAfx.cpp')[0]
    env.Program('MyApp', ['Foo.cpp', 'Bar.cpp'])
 
-For more information see the document for the PCH builder, and the PCH
-and PCHSTOP construction variables. To learn about the details of
-precompiled headers consult the MSDN documentation for /Yc, /Yu, and
-/Yp.
+For more information see the documentation for the ``PCH``
+builder, and the ``$PCH`` and ``$PCHSTOP``
+construction variables. To learn about the details of precompiled
+headers consult the MSDN documentation for ``/Yc``, ``/Yu``, and
+``/Yp``.
 
 
 Using Microsoft Visual C++ external debugging information
@@ -470,7 +488,7 @@ Using Microsoft Visual C++ external debugging information
 Since including debugging information in programs and shared libraries
 can cause their size to increase significantly, Microsoft provides a
 mechanism for including the debugging information in an external file
-called a PDB file. ``scons`` supports PDB files through the PDB
+called a PDB file. ``scons`` supports PDB files through the $PDB
 construction variable.
 
 ``SConstruct``:
