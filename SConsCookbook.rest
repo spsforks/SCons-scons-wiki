@@ -17,8 +17,8 @@ Basic Compilation From a Single Source File
    env.Program(target='foo', source='foo.c')
 
 Note: Build the file by specifying the target as an argument
-(``scons foo`` or ``scons foo.exe``). or by specifying a dot
-(``scons .``).
+(``scons foo`` or ``scons foo.exe``) or by specifying the
+current directory as the target (``scons .``).
 
 
 Basic Compilation From Multiple Source Files
@@ -48,8 +48,8 @@ contents of CPPPATH.
 
 .. code:: python
 
-   env = Environment(CPPPATH = ['.'])
-   env.Program(target = 'foo', source = 'foo.c')
+   env = Environment(CPPPATH=['.'])
+   env.Program(target='foo', source='foo.c')
 
 
 Search Multiple Directories For .h Files
