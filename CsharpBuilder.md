@@ -4,7 +4,8 @@
 
 It would be great to roll this into a generic CLI builder that can take sources from any supported CLI language and compile them to EXE or DLL. 
 
-Russel Winder has started a Mercurial repository of a SCons C# tool based on the code from this page.  See [https://bitbucket.org/russel/scons_csharp](https://bitbucket.org/russel/scons_csharp) 
+Russel Winder has contributed a SCons C# tool based on the code from this page to the sconscontrib repo.  See  
+[https://github.com/SCons/scons-contrib/tree/master/sconscontrib/SCons/Tool/csharp](https://github.com/SCons/scons-contrib/tree/master/sconscontrib/SCons/Tool/csharp)
 
 
 ## Mono
