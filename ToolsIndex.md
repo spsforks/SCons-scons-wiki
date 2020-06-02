@@ -44,7 +44,7 @@ The index of Tools maintained outside of SCons repository. If the Name column is
 **Name**  | **DVCS**  | **Location**  | **Branch/Clone command** |
 ---------:|:----------|--------------:|:-------------------------|
 Chapel  | Mercurial  | <https://bitbucket.org/russel/scons_chapel>  | `hg clone https://bitbucket.org/russel/scons_chapel chapel`
-[C#](CsharpBuilder)  | Mercurial  | <https://bitbucket.org/russel/scons_csharp>  | `hg clone https://bitbucket.org/russel/scons_csharp csharp`
+[C#](CsharpBuilder)  | Git  | <https://github.com/SCons/scons-contrib/tree/master/sconscontrib/SCons/Tool/csharp>  | `git clone https://github.com/SCons/scons-contrib`
 [CPython](CPythonTool)  | Mercurial  | <https://bitbucket.org/dirkbaechle/scons_cpython>  | `hg clone https://bitbucket.org/dirkbaechle/scons_cpython cpython`
 D [1]  |   |   |  
 [Docbook](DocbookTool)  | Mercurial  | <https://bitbucket.org/dirkbaechle/scons_docbook>  | `hg clone https://bitbucket.org/dirkbaechle/scons_docbook docbook`
