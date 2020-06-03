@@ -5,12 +5,22 @@
 
 # Introduction
 
-The Heapmonitor is a facility delivering insight into the memory distribution of SCons. It provides facilities to size individual objects and can track all objects of certain classes. The Heapmonitor is developed in a dedicated SCons Subversion branch as part of a [Google Summer of Code project](GSoC2008/LudwigHaehne).  
-[[!table header="no" class="mointable" data="""
- **The Heapmonitor and the associated facilities described herein are not part of the official SCons distribution.** 
-"""]]
+The Heapmonitor is a facility delivering insight into the memory distribution of SCons. It provides facilities to size individual objects and can track all objects of certain classes. The Heapmonitor is developed in a dedicated SCons Subversion branch as part of a [Google Summer of Code project](LudwigHaehne).  
 
-[[!toc 2]] 
+ **The Heapmonitor and the associated facilities described herein are not part of the official SCons distribution.** 
+
+<!-- TOC -->
+<a name="contents">
+
+ - [Heapmonitor Documentation](#heapmonitor_documentation)
+ - [Introduction](#introduction)
+ - [Usage](#usage)
+ - [Basic Functionality](#basic_functionality)
+ - [Advanced Functionality](#advanced_functionality)
+ - [Limitations and Corner Cases](#limitations_and_corner_cases)
+ - [Download SCons/Heapmonitor Edition](#download_scons_heapmonitor_edition)
+ - [Tutorials](#tutorials)
+<!-- /TOC -->
 
 
 # Usage
@@ -18,13 +28,13 @@ The Heapmonitor is a facility delivering insight into the memory distribution of
 The Heapmonitor can be activated by passing the associated debug flag. The gathered data will be shown after the build is complete: 
 
 
-```txt
+```bash
 scons-hm --debug=heapmonitor
 ```
 In this operation mode, Heapmonitor will track a set of pre-configured SCons classes. Per-instance statistics will be printed to the standard output after SCons has finished building the targets. 
 
 
-```txt
+```bash
 scons-hm --debug=heapmonitor --debug=memory
 ```
 When used in conjunction with `--debug=memory`, snapshots of all tracked objects will be taken at four pre-defined instants. 
@@ -40,9 +50,9 @@ The purpose of instance tracking is to observe the size and lifetime of an objec
 To track the size of an individual object: 
 
 
-```python
-#!python 
+```bash
 import SCons.Heapmonitor
+
 env = Environment()
 SCons.Heapmonitor.track_object(env)
 ```
@@ -53,7 +63,6 @@ Most of the time, it's cumbersome to manually track individual instances. All in
 
 
 ```python
-#!python 
 SCons.Heapmonitor.track_class(SCons.Action.CommandAction)
 ```
 All instances of `CommandAction` (or a class that inherits from `CommandAction`) created hereafter are tracked.  
@@ -65,7 +74,6 @@ Tracking alone will not reveal the size of an object. The idea of the Heapmonito
 
 
 ```python
-#!python 
 SCons.Heapmonitor.create_snapshot('Before juggling with tracked objects')
 ...
 SCons.Heapmonitor.create_snapshot('Juggling aftermath')
@@ -84,25 +92,22 @@ It may not be enough to know the total memory consumption of an object. Detailed
 
 
 ```python
-#!python 
 SCons.Heapmonitor.track_object(obj, resolution_level=2)
 ```
 The resolution level can be changed if the object is already tracked: 
 
 
 ```python
-#!python 
 SCons.Heapmonitor.track_change(env, resolution_level=2)
 ```
 The new setting will become effective for the next snapshot. This can help to raise the level of detail for a specific instance of a tracked class without logging all the class' instances with a high verbosity level. Nevertheless, the resolution level can also be set for all instances of a class: 
 
 
 ```python
-#!python 
 SCons.Heapmonitor.track_class(SCons.Node.FS.Base, resolution_level=1)
-```[[!table header="no" class="mointable" data="""
- Please note the per-referent sizing is very memory and computationally intensive. The recorded meta-data must be stored for each referent of a tracked object which might easily quadruplicate the memory footprint of the build. Handle with care and don't use too high resolution levels, especially if set via `track_class`. 
-"""]]
+```
+
+Please note the per-referent sizing is very memory and computationally intensive. The recorded meta-data must be stored for each referent of a tracked object which might easily quadruplicate the memory footprint of the build. Handle with care and don't use too high resolution levels, especially if set via `track_class`. 
 
 
 ## Instantiation traces
@@ -111,7 +116,6 @@ Sometimes it is not trivial to observe where an object was instantiated. The Hea
 
 
 ```python
-#!python 
 SCons.Heapmonitor.track_class(SCons.Node.FS.Base, trace=1)
 ```
 This only works with tracked classes, and **not** with individual objects. 
@@ -123,11 +127,9 @@ The Heapmonitor can be configured to take periodic snapshots automatically. The 
 
 
 ```python
-#!python 
 SCons.Heapmonitor.start_periodic_snapshots(interval=0.1)
-```[[!table header="no" class="mointable" data="""
- Take care if you use automatic snapshots with `--debug=heapmonitor`. The sizing of individual objects might be inconsistent when memory is allocated or freed while the snapshot is being taken. It's safe to use `--debug=memory` alone, though. 
-"""]]
+```
+Take care if you use automatic snapshots with `--debug=heapmonitor`. The sizing of individual objects might be inconsistent when memory is allocated or freed while the snapshot is being taken. It's safe to use `--debug=memory` alone, though. 
 
 
 ## Off-line Analysis
@@ -135,7 +137,7 @@ SCons.Heapmonitor.start_periodic_snapshots(interval=0.1)
 The more data is gathered by the Heapmonitor the more noise is produced on the console. The acquired Heapmonitor log data can also be saved to a file for off-line analysis: 
 
 
-```txt
+```bash
 scons-hm --debug=heapmonitor --debug=memory --heapprofile=heap.dat
 ```
 The MemStats class of the Heapmonitor provides means to evaluate the collected data. The API is inspired by the [Stats class](http://docs.python.org/lib/profile-stats.html) of the Python profiler. It is possible to sort the data based on user preferences, filter by class and limit the output noise to a manageable magnitude.  
@@ -144,7 +146,6 @@ The following example reads the dumped data and prints the ten largest Node obje
 
 
 ```python
-#!python 
 from SCons.Heapmonitor import MemStats
 
 stats = MemStats()
@@ -157,14 +158,13 @@ stats.sort_stats('size').print_stats(limit=10, filter='Node')
 The Heapmonitor data can also be emitted in HTML format together with a number of charts (needs python-matplotlib). HTML statistics can be emitted directly, by specifying a file with the extension _.html_ file as the profiling output: 
 
 
-```txt
+```bash
 scons-hm --debug=heapmonitor --debug=memory --heapprofile=heap.html
 ```
 However, you can also read in the file generated with `--heapprofile`: 
 
 
 ```python
-#!python 
 from SCons.Heapmonitor import HtmlStats
 
 stats = HtmlStats('heap.dat')
@@ -178,19 +178,19 @@ Garbage occurs if objects refer too each other in a circular fashion. Such refer
 The Heapmonitor provides special flags to analyze reference cycles. If `--debug=garbage` is passed to SCons, the garbage collector is turned off and the garbage objects are printed: 
 
 
-```txt
+```bash
 scons-hm --debug=garbage
 ```
 Reference cycles can be visualized with [graphviz](http://www.graphviz.org). A graphviz input file is generated when the `--garbage=`_file_ flag is passed: 
 
 
-```txt
+```bash
 scons-hm --debug=garbage --garbage=leakgraph.txt
 ```
 The graph file can be turned into a PDF with the following commands (Linux): 
 
 
-```txt
+```bash
 dot -o leakgraph.dot leakgraph.txt
 dot leakgraph.dot -Tps -o leakgraph.eps
 epstopdf leakgraph.eps
@@ -209,7 +209,7 @@ Class tracking allows to observe multiple classes that might have an inheritance
 SCons instates the pattern of changing an instance' class at runtime, for example to morph abstract Node objects into File or Directory nodes. The pattern looks like the following in the code: 
 
 
-```txt
+```bash
 obj.__class__ = OtherClass
 ```
 If the instance which is morphed is already tracked, the instance will continue to be tracked by the Heapmonitor. If the target class is tracked but the instance is not, the instance will only be tracked if the constructor of the target class is called as part of the morphing process. The object will not be re-registered to the new class in the tracked object index. However, the new class is stored in the representation of the object as soon as the object is sized. 
@@ -221,7 +221,6 @@ Data shared between multiple tracked object won't lead to overestimations. Share
 
 
 ```python
-#!python 
 class A():
   pass
 
@@ -263,7 +262,7 @@ An installation package is available for your convenience. Choose one of the pac
 Once it has been downloaded, it can be installed with the following commands (Linux): 
 
 
-```txt
+```bash
 $ tar xzf scons-hm-08-0.98.5.tar.gz
 $ cd scons-hm-08-0.98.5
 $ python setup.py install --prefix=/usr/local --record=install.log
@@ -271,13 +270,13 @@ $ python setup.py install --prefix=/usr/local --record=install.log
 This configuration can be safely used without interfering with any already installed SCons version. If you would like to invoke the newly installed branch version, run: 
 
 
-```txt
+```bash
 $ scons-hm
 ```
 To uninstall, use the record-file created on installation: 
 
 
-```txt
+```bash
 $ xargs -a install.log rm -f
 ```
 
@@ -286,14 +285,14 @@ $ xargs -a install.log rm -f
 Check out the development branch with Subversion: 
 
 
-```txt
+```bash
 svn co http://scons.tigris.org/svn/scons/branches/heapmonitor --username guest
 cd heapmonitor
 ```
 Set up runtime environment (Unix): 
 
 
-```txt
+```bash
 export SCONS_DIR=$PWD/src
 export SCONS_LIB_DIR=$SCONS_DIR/engine
 export SCONS="python $SCONS_DIR/script/scons.py"
@@ -301,7 +300,7 @@ export SCONS="python $SCONS_DIR/script/scons.py"
 Use the development version to build SCons projects: 
 
 
-```txt
+```bash
 cd /home/user/myproject
 $SCONS
 ```
@@ -309,7 +308,6 @@ To get access to the SCons modules outside of SConscripts, for example to import
 
 
 ```python
-#!python 
 if 'SCONS_LIB_DIR' in os.environ:
     sys.path.insert(1, os.environ['SCONS_LIB_DIR'])
 ```
