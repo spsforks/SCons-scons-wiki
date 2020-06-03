@@ -41,7 +41,7 @@ env.MK_VDS("foo.txt")
 
 If you look at the resulting dependency tree you can see it works:
 
-```txt
+```bash
 $ scons --debug=tree foo.vds
 +-foo.vds
  +-foo.txt
