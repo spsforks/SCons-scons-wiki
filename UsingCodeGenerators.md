@@ -10,30 +10,33 @@ In our case we want to declare an emitter that will declare that the files gener
 As an example, lets use a mk_vds program that can build a .vds file from a .txt input. This tool has to be built from the source file mk_vds.c.
 
 ```python
-#!python
 # SConstruct file
 
 env = Environment()
 
 # create the mk_vds generator tool
-mk_vds_tool = env.Program(target= 'mk_vds', source = 'mk_vds.c')
+mk_vds_tool = env.Program(target="mk_vds", source="mk_vds.c")
 
 # create emitter that says that any target (.vds) depends on our mk_vds program
 def mk_vds_emitter(target, source, env):
     env.Depends(target, mk_vds_tool)
     return (target, source)
 
+
 # create a builder (that uses the emitter) to build .vds files from .txt files
 # The use of abspath is so that mk_vds's directory doesn't have to be added to the shell path.
-bld = Builder(action = mk_vds[0].abspath + ' < $SOURCE > $TARGET',
-              emitter = mk_vds_emitter,
-              suffix = '.vds', src_suffix = '.txt')
+bld = Builder(
+    action=mk_vds_tool[0].abspath + " < $SOURCE > $TARGET",
+    emitter=mk_vds_emitter,
+    suffix=".vds",
+    src_suffix=".txt",
+)
 
 # add the new Builder to the list of builders
-env['BUILDERS']['MK_VDS'] = bld
+env["BUILDERS"]["MK_VDS"] = bld
 
 # generate foo.vds from foo.txt using mk_vds
-env.MK_VDS('foo.txt')
+env.MK_VDS("foo.txt")
 ```
 
 If you look at the resulting dependency tree you can see it works:
