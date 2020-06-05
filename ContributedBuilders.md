@@ -4,47 +4,47 @@ Here is a list of community-contributed Builders:
 
 # Builders
 
-* [AccumulateBuilder](AccumulateBuilder): builder which "collects" files and/or directories for easy tarring/zipping for distribution 
-* [AntlrBuilder](AntlrBuilder): Builder for antlr to create targets that Scons can use 
-* [ArchiveBuilder](ArchiveBuilder): Builder to make archive (tar.gz, tar.bz2 or zip) in a simple way 
-* [BuildNumberProcessing](BuildNumberProcessing): you have a build number or version number that needs to be included in the link 
-* [CheetahBuilder](CheetahBuilder): compiles and fills Cheetah templates 
-* [CombineBuilder](CombineBuilder): Small Builder to include several c/c++ source files into one file 
-* [CorbaBuilder](CorbaBuilder): Builder for orbix corba idl generated C++ files. 
-* [CorbaTaoBuilder](CorbaTaoBuilder): Builder for tao corba idl generated C++ files. 
-* [CsharpBuilder](CsharpBuilder): a builder to support C# using Mono, mcs, etc. 
-* [CxxTestBuilder](CxxTestBuilder): Integrate [CxxTest](CxxTest) unit testing framework into scons, together with a 'scons check' target. (make check clone from autotools) 
-* [DistTarBuilder](DistTarBuilder): builds a tar file with an internal directory structure 
-* [Download- & UnpackBuilder](DownloadUnpack) - two correspondent builders, that can download and unpack a file (eg tar.gz / tar.bz2), usefull for installing libraries to a project 
-* [DoxygenBuilder](DoxygenBuilder): generates doxygen docs automatically scanning for dependencies 
-* [EiffelStudioTool](EiffelStudioTool): Builder tool for the Eiffel programming language ([EiffelStudio](http://dev.eiffel.com)). 
-* [EnvValue](EnvValue): A value node which substitutes variables from the environment 
-* [GchBuilder](GchBuilder): Builder for gcc's precompiled headers 
-* [GhcBuilder](GhcBuilder): Builder for the [Haskell](http://www.haskell.org/) programming language. 
-* [InstallFiles](InstallFiles) - Recursively scan the source for files to install according to glob and exclude patterns 
-* [LyxBuilder](LyxBuilder): Convert .lyx files to .tex. And teach PDF to understand .lyx files. 
-* [MsvcIncrementalLinking](MsvcIncrementalLinking) - Replaces the Program and [SharedLibrary](SharedLibrary) builders to support Microsoft Visual C++ incremental linking. 
-* [NasmBuilder](NasmBuilder): how to compile nasm source files 
-* [NsisBuilder](NsisBuilder): see [NsisSconsTool](NsisSconsTool) 
-* [ProtocBuilder](ProtocBuilder) - Generates Protocol Buffers target files from .proto source. 
-* [PyrexPythonExtensions](PyrexPythonExtensions): how to build pyrex python extension modules using SCons 
-* [PythonExtensions](PythonExtensions): how to build python extension modules using SCons Swig & Boost 
-* [PyuicBuilder](PyuicBuilder) - Generates [PyQt](PyQt) Python files from [QtDesigner](QtDesigner) .ui source. 
-* [ReplacementBuilder](ReplacementBuilder): for when you need to take a *.in file and replace some variables in it, such as pkg-config .pc files or DBus .service files 
-* [ReStructuredTextBuilder](ReStructuredTextBuilder): produces HTML or LaTeX output from reStructuredText input 
-* [RpcBuilder](RpcBuilder): how to compile RPC protocol sources 
-* [RunningConfigureAndMake](RunningConfigureAndMake): how to use SCons to run configure and make, as part of migrating from Makefiles 
-* [SconsDotNet](SconsDotNet) - using SCons to build [CoctaThorpe](CoctaThorpe) and [VbDotNet](VbDotNet) 
-* [StaticPicLibrary](StaticPicLibrary) - a builder like [StaticLibrary](StaticLibrary) but aiming to place position independant code (pic) in the library built 
-* [SwigBuilder](SwigBuilder): extra stuff about building SWIG beyond what's currently built-in. 
-* [UicImageEmbedder](UicImageEmbedder): builder which generates an image collection by embedding image files into a c++ sourcefile 
-* [UsingCodeGenerators](UsingCodeGenerators): how to build an application and then use that application to generate other files 
-* [UsingCompilerBuilt](UsingCompilerBuilt) asks about building a compiler/tool which is then used to build the application. 
-* [SubstInFileBuilder](SubstInFileBuilder): provides TOOL_SUBST, which substitutes values from a dictionary into a file.  Can be used for autotools-like configure substitution or other purposes. 
-* [SubstInFileBuilder2](SubstInFileBuilder2): provides a slightly different implementation of [SubstInFile](SubstInFile) that substitutes values from the environment into a file. 
-* [GenericSubstBuilder](GenericSubstBuilder): Provides a powerful generic substitution mechanism and two helpers for regular files and headers. 
+* [AccumulateBuilder](AccumulateBuilder) - Collect files and/or directories for easy tarring/zipping for distribution
+* [AntlrBuilder](AntlrBuilder) - Use [ANTLR](https://www.antlr.org/) to create targets that SCons can use
+* [ArchiveBuilder](ArchiveBuilder) - Create archives (`.tar.gz`, `.tar.bz2`, `.zip`) in a simple way
+* [BuildNumberProcessing](BuildNumberProcessing) - Add a build number or version number to the linked output
+* [CheetahBuilder](CheetahBuilder) - Compile and fill [Cheetah templates](https://cheetahtemplate.org/)
+* [CombineBuilder](CombineBuilder) - Combine several C / C++ source files into one file
+* [CorbaBuilder](CorbaBuilder) - Generate C++ from [Orbix CORBA](https://www.microfocus.com/en-us/products/orbix/overview) IDL files
+* [CorbaTaoBuilder](CorbaTaoBuilder) - Generate C++ from [Tao CORBA](https://objectcomputing.com/products/tao) IDL files
+* [CsharpBuilder](CsharpBuilder) - Build C# using Mono, mcs, etc.
+* [CxxTestBuilder](CxxTestBuilder) - Integrate [CxxTest](CxxTest) unit testing framework into SCons, together with a 'scons check' target. (make check clone from autotools)
+* [DistTarBuilder](DistTarBuilder) - Build a `.tar` file with an internal directory structure
+* [DownloadUnpackBuilder](DownloadUnpack) - Two related Builders, that can download and unpack a file (`.tar.gz` / `.tar.bz2`), useful for installing libraries to a project
+* [DoxygenBuilder](DoxygenBuilder) - Generate [Doxygen](https://www.doxygen.nl/index.html) documentation automatically
+* [EiffelStudioTool](EiffelStudioTool) - Build and use the Eiffel programming language, see: [EiffelStudio](http://dev.eiffel.com).
+* [EnvValue](EnvValue) - A value Node which substitutes variables from the Environment
+* [GchBuilder](GchBuilder) - Build and use `gcc` precompiled headers
+* [GhcBuilder](GhcBuilder) - Build and use the [Haskell](http://www.haskell.org/) programming language.
+* [InstallFiles](InstallFiles) - Recursively scan the source for files to install according to glob and exclude patterns
+* [LyxBuilder](LyxBuilder) - Convert `.lyx` files to `.tex` and teach [PDF()](https://scons.org/doc/production/HTML/scons-user.html#b-PDF) to understand `.lyx` files
+* [MsvcIncrementalLinking](MsvcIncrementalLinking) - Replaces the [Program](https://scons.org/doc/production/HTML/scons-user.html#b-Program) and [SharedLibrary](SharedLibrary) builders to support Microsoft Visual C++ incremental linking.
+* [NasmBuilder](NasmBuilder) - Compile [NASM](https://nasm.us/) assembly source files
+* [NsisBuilder](NsisBuilder) - See: [NsisSconsTool](NsisSconsTool)
+* [ProtocBuilder](ProtocBuilder) - Compile Protocol Buffers `.proto` source files
+* [PyrexPythonExtensions](PyrexPythonExtensions) - Build [Pyrex](https://wiki.python.org/moin/Pyrex) Python extensions
+* [PythonExtensions](PythonExtensions) - Build Python extensions using [SWIG](http://swig.org/) and [Boost](https://www.boost.org/)
+* [PyuicBuilder](PyuicBuilder) - Generate [PyQt](PyQt) Python files from [QtDesigner](QtDesigner) `.ui` sources
+* [ReplacementBuilder](ReplacementBuilder) - Interpolate variables into `*.in` files, e.g. `pkg-config .pc` files or DBus `.service` files
+* [ReStructuredTextBuilder](ReStructuredTextBuilder) - Use reStructuredText to produce HTML or LaTeX output
+* [RpcBuilder](RpcBuilder) - Compile RPC protocol source files
+* [RunningConfigureAndMake](RunningConfigureAndMake) - Run `configure` and `make`, as part of migrating from `Makefiles`
+* [SconsDotNet](SconsDotNet) - Build [CoctaThorpe](CoctaThorpe) and [VbDotNet](VbDotNet) projects
+* [StaticPicLibrary](StaticPicLibrary) - Build static libraries using Position-Independant Code (PIC), instead of [StaticLibrary](StaticLibrary)'s method
+* [SwigBuilder](SwigBuilder) - Build SWIG wrappers with extra options
+* [UicImageEmbedder](UicImageEmbedder) - Embed image file collection into a C++ source file
+* [UsingCodeGenerators](UsingCodeGenerators) - Build an application and then use that application to generate other files
+* [UsingCompilerBuilt](UsingCompilerBuilt) - Build a compiler / tool which is then used to build the application
+* [SubstInFileBuilder](SubstInFileBuilder) - Provide `TOOL_SUBST`, which substitutes values from a dictionary into a file.  Can be used for autotools-like configure substitution or other purposes
+* [SubstInFileBuilder2](SubstInFileBuilder2) - Provide a slightly different implementation of [SubstInFile](SubstInFile) that substitutes values from the environment into a file
+* [GenericSubstBuilder](GenericSubstBuilder) - Provide a powerful generic substitution mechanism and two helpers for regular files and headers
 
-# Tools for specific libraries
+# Tools For Specific Libraries
 
-* [CheckBoostVersion](CheckBoostVersion): Boost does not provide pkg-config file so we need to check its version by other means 
-* [Qt4Tool](Qt4Tool): David García Garzón has been working on a Qt4 tool with much success 
+* [CheckBoostVersion](CheckBoostVersion) - [Boost](https://www.boost.org/) does not provide a `pkg-config` file, so we need to check its version by other means
+* [Qt4Tool](Qt4Tool) - David García Garzón has been working on a Qt4 tool with much success
