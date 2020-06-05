@@ -36,13 +36,13 @@ Here is a list of community-contributed Builders:
 * [RunningConfigureAndMake](RunningConfigureAndMake) - Run `configure` and `make`, as part of migrating from `Makefiles`
 * [SconsDotNet](SconsDotNet) - Build [CoctaThorpe](CoctaThorpe) and [VbDotNet](VbDotNet) projects
 * [StaticPicLibrary](StaticPicLibrary) - Build static libraries using Position-Independant Code (PIC), instead of [StaticLibrary](StaticLibrary)'s method
+* [SubstInFileBuilder](SubstInFileBuilder) - Provide `TOOL_SUBST`, which substitutes values from a dictionary into a file.  Can be used for autotools-like configure substitution or other purposes
+* [SubstInFileBuilder2](SubstInFileBuilder2) - Provide a slightly different implementation of [SubstInFile](SubstInFile) that substitutes values from the environment into a file
+* [GenericSubstBuilder](GenericSubstBuilder) - Provide a powerful generic substitution mechanism and two helpers for regular files and headers
 * [SwigBuilder](SwigBuilder) - Build SWIG wrappers with extra options
 * [UicImageEmbedder](UicImageEmbedder) - Embed image file collection into a C++ source file
 * [UsingCodeGenerators](UsingCodeGenerators) - Build an application and then use that application to generate other files
 * [UsingCompilerBuilt](UsingCompilerBuilt) - Build a compiler / tool which is then used to build the application
-* [SubstInFileBuilder](SubstInFileBuilder) - Provide `TOOL_SUBST`, which substitutes values from a dictionary into a file.  Can be used for autotools-like configure substitution or other purposes
-* [SubstInFileBuilder2](SubstInFileBuilder2) - Provide a slightly different implementation of [SubstInFile](SubstInFile) that substitutes values from the environment into a file
-* [GenericSubstBuilder](GenericSubstBuilder) - Provide a powerful generic substitution mechanism and two helpers for regular files and headers
 
 # Tools For Specific Libraries
 
