@@ -26,6 +26,7 @@ The procedure has been used for all releases since 2.2.0.
 ```
 * then check all diffs for the files in `docs/generated/*`.
 
+* Update copyright dates in `doc/user/main.xml`
 * Commit the auto-generated doc changes to current branch ("Regenerated docs for X.Y.Z release.") 
 * update CHANGES.txt (should already be up to date) 
 * update Announce.txt (not for checkpoints): add section for this release, important user-visible changes only.  This is really long since it also has old releases.  Is it useful? 
@@ -34,7 +35,7 @@ The procedure has been used for all releases since 2.2.0.
 * NOTE: I think Announce and Release are backwards; Release should be complete release notes for all versions (latest at top) and Announce should be a short blurb of just this release.  FIXME! 
 * Commit 
 * update `ReleaseConfig` and run `python bin/update-release-info.py release` (this modifies CHANGES, Release and Announce -- that's why you should commit the above first.) 
-* build packages and doc: `python bootstrap.py >& build-XYZ.log` (good idea to save build logfile somewhere) 
+* build packages and doc: `python scripts/scons.py >& build-XYZ.log` (good idea to save build logfile somewhere) 
 * test them: `python runtest.py -a` (Q: aren't there special tests to test the unpacked installers?) 
 
 ```txt
