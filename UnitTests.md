@@ -15,40 +15,42 @@ To have the process of adding unit test nicely encapsulated into an scons Tool, 
 
 
 ```python
-#!python
 # Build one or more test runners.
 program = env.Program('test', 'TestMain.cpp')
+
 # Depend on the runner to ensure that it's built before running it.
 test_alias = Alias('test', [program], program[0].path)
+
 # Simply required.  Without it, 'test' is never considered out of date.
 AlwaysBuild(test_alias)
 ```
 Check out [PhonyTargets](PhonyTargets) for another way of defining a 'test' target. 
 
-Note that program[0].path might give issues when running on OS'es that do not explicitly search for executables in the current directory (Unix-like OS'es where you explicitly need to add '.' as a search path). In that case, you can use the following: 
+Note that `program[0].path` might give issues when running on OS'es that do not explicitly search for executables in the current directory (Unix-like OS'es where you explicitly need to add '.' as a search path). In that case, you can use the following: 
 
 ```python
-#!python
 # Build one or more test runners.
 program = env.Program('test', 'TestMain.cpp')
+
 # Depend on the runner to ensure that it's built before running it - Note: using abspath.
 test_alias = Alias('test', [program], program[0].abspath)
+
 # Simply required.  Without it, 'test' is never considered out of date.
 AlwaysBuild(test_alias)
 ```
-<span style="display:none">This doesn't work if your unit test program depends on a certain shared library that resides on the same folder as the unit test program since the environment variable LD_LIBRARY_PATH needs to be edited.</span> 
+This doesn't work if your unit test program depends on a certain shared library that resides on the same folder as the unit test program since the environment variable LD_LIBRARY_PATH needs to be edited.
 
 # Alias with Command
-If you want your unit test being invoked only on demand, the following work for me (java unit test)
+If you want your unit test being invoked only on demand, the following works for me (java unit test)
 
 ```
 #!python
 
 # Launches ant -q when typing "scons"
-env.Command(target = 'compiled.txt',
-            source = mySources,
-            action = ['ant jar-types  -f build.xml',
-                      'type NUL > ' + 'compiled.txt'])
+env.Command(target='compiled.txt',
+            source=mySources,
+            action=['ant jar-types  -f build.xml',
+                    'type NUL > ' + 'compiled.txt'])
 
 # Launches ant junit-tests when typing "scons runtest"
 testAlias = env.Alias('runtest', '', 'ant run -f ' + os.path.join(javaTestRoot, 'build.xml'))
@@ -61,46 +63,43 @@ Another idea is inspired on the boost build V2 system, that will create a file s
 
 
 ```python
-#!python
 def runUnitTest(env,target,source):
    import subprocess
    app = str(source[0].abspath)
    if not subprocess.call(app):
-      open(str(target[0]),'w').write("PASSED\n")
+      with open(str(target[0]),'w') as f:
+          f.write("PASSED\n")
+
 program = env.Program('test', 'TestMain.cpp')
-Command("test.passed",'test',runUnitTest)
+Command("test.passed",'test', runUnitTest)
 ```
 
 # Note by Dov Grobgeld 2005-12-18
 
-I modified the method mentioned above in order to be able to use it in a SConscript file without needing to defining runUnitTest in each SConscript file. Here is what I did: 
+I modified the method mentioned above in order to be able to use it in an SConscript file without needing to define `runUnitTest` in each SConscript file. Here is what I did: 
 
 In the SConstruct file: 
 
-
 ```python
-#!python
 def builder_unit_test(target, source, env):
     app = str(source[0].abspath)
     if os.spawnl(os.P_WAIT, app, app)==0:
         open(str(target[0]),'w').write("PASSED\n")
     else:
         return 1
+
 # Create a builder for tests
-bld = Builder(action = builder_unit_test)
-env.Append(BUILDERS = {'Test' :  bld})
+bld = Builder(action=builder_unit_test)
+env.Append(BUILDERS={'Test':  bld})
 ```
 The test may then be declared in each of the library SConscript files by doing: 
 
-
 ```python
-#!python
 Import('env')
 # Build the library
-:
+...
 # Test the library
-test_lib = env.Program('test_library',
-                                         ['test_library.cpp'])
+test_lib = env.Program('test_library', ['test_library.cpp'])
 env.Test("test.passed", test_lib)
 env.Alias("test", "test.passed")
 ```
@@ -113,19 +112,17 @@ I modified Dov's work to support comparing the results of running a test to a fi
 
 In the SConstruct file, first add the boilerplate for the new regenerate option: 
 
-
 ```python
-#!python
 # Add some command line options to SCons to support different build types.
 # Example of using an option: scons regenerate=1 ...
 command_line_options = Options()
 command_line_options.AddOptions(
     ('regenerate', 'Set to 1 to regenerate the expected results of unit tests', 0),
-    )
+)
 # The default build environment, used for all programs
 env = Environment(
     options = command_line_options,
-    )
+)
 # Generate the "scons --help" text for the options
 Help(command_line_options.GenerateHelpText(env))
 # Used in UnitTest
@@ -135,9 +132,7 @@ if str(ARGUMENTS.get('regenerate', 0)) == '1':
 ```
 Now add the [UnitTest](UnitTest) builder to the environment: 
 
-
 ```python
-#!python
 import os
 def run(cmd, env):
     """Run a Unix command and return the exit code."""
@@ -147,10 +142,12 @@ def run(cmd, env):
         return code
     # Assumes that if a process doesn't call exit, it was successful
     return 0
+
 def unit_test_emitter(target, source, env):
     base, ext = os.path.splitext(source[1].abspath)
     source.append(base + '.expected')
     return (target, source)
+
 def UnitTest(target, source, env):
     '''Run some app with an inputfile and compare the output with a .expected file
     containing the expected results.'''
@@ -168,9 +165,11 @@ def UnitTest(target, source, env):
     if res == 0:
         open(str(target[0]),'w').write("PASSED\n")
     return res
+
 # Create a builder for running unit tests
 bld = Builder(action = Action(UnitTest, varlist = ['REGENERATE']), emitter = unit_test_emitter)
-env.Append(BUILDERS = {'UnitTest' :  bld})
+env.Append(BUILDERS={'UnitTest':  bld})
+
 # NOTE: Only apply changes to env above here
 Export('env')
 ```
@@ -178,7 +177,6 @@ Using the new Builder in an SConscript file:
 
 
 ```python
-#!python
 Import('env')
 # removed the code to build myapp ...
 # Note: this test will look for a file named inputfile1.expected so you may have
@@ -199,7 +197,6 @@ The nice thing about this is that you can very cleanly create add a test environ
 
 
 ```python
-#!python
 # make an initial construction environment
 env = Environment()
 Export('env')
@@ -209,11 +206,12 @@ Export('env')
 #
 # Here we use boost.test as the unit testing framework.
 testEnv = env.Copy()
-testEnv.Tool('unittest',
-                toolpath=['build_tools'],
-                UTEST_MAIN_SRC=File('build_tools/boostautotestmain.cpp'),
-                LIBS=['boost_unit_test_framework']
-        )
+testEnv.Tool(
+    'unittest',
+    toolpath=['build_tools'],
+    UTEST_MAIN_SRC=File('build_tools/boostautotestmain.cpp'),
+    LIBS=['boost_unit_test_framework']
+)
 Export('testEnv')
 # grab stuff from sub-directories.
 env.SConscript(dirs = ['onelib'])
@@ -222,8 +220,6 @@ In some sub-directory, onelib, you can then add tests quite easily, as follows:
 
 
 ```python
-#!python
-#-------------------------------------------------------------------------------
 # Unit tests
 Import('testEnv')
 testEnv = testEnv.Copy()
@@ -255,11 +251,10 @@ Here's the code for the tool:
 
 
 ```python
-#!python
 import os
 def unitTestAction(target, source, env):
-        '''
-        Action for a 'UnitTest' builder object.
+        '''Action for a 'UnitTest' builder object.
+
         Runs the supplied executable, reporting failure to scons via the test exit
         status.
         When the test succeeds, the file target.passed is created to indicate that
@@ -268,24 +263,29 @@ def unitTestAction(target, source, env):
         '''
         app = str(source[0].abspath)
         if os.spawnle(os.P_WAIT, app, env['ENV'])==0:
-                open(str(target[0]),'w').write("PASSED\n")
+            with open(str(target[0]),'w') as f:
+                f.write("PASSED\n")
         else:
-                return 1
+            return 1
+
 def unitTestActionString(target, source, env):
         '''
         Return output string which will be seen when running unit tests.
         '''
         return 'Running tests in ' + str(source[0])
+
 def addUnitTest(env, target=None, source=None, *args, **kwargs):
-        '''
-        Add a unit test
-        Parameters:
-                target - If the target parameter is present, it is the name of the test
-                                executable
-                source - list of source files to create the test executable.
+        '''Add a unit test
+
+        Args:
+            target - If the target parameter is present, it is the name of the test
+                executable
+            source - list of source files to create the test executable.
                 any additional parameters are passed along directly to env.Program().
+        
         Returns:
-                The scons node for the unit test.
+            The scons node for the unit test.
+
         Any additional files listed in the env['UTEST_MAIN_SRC'] build variable are
         also included in the source list.
         All tests added with addUnitTest can be run with the test alias:
@@ -295,8 +295,8 @@ def addUnitTest(env, target=None, source=None, *args, **kwargs):
                 "scons target"
         '''
         if source is None:
-                source = target
-                target = None
+            source = target
+            target = None
         source = [source, env['UTEST_MAIN_SRC']]
         program = env.Program(target, source, *args, **kwargs)
         utest = env.UnitTest(program)
@@ -305,7 +305,7 @@ def addUnitTest(env, target=None, source=None, *args, **kwargs):
         # make an alias to run the test in isolation from the rest of the tests.
         env.Alias(str(program[0]), utest)
         return utest
-#-------------------------------------------------------------------------------
+
 # Functions used to initialize the unit test tool.
 def generate(env, UTEST_MAIN_SRC=[], LIBS=[]):
         env['BUILDERS']['UnitTest'] = env.Builder(
@@ -317,6 +317,7 @@ def generate(env, UTEST_MAIN_SRC=[], LIBS=[]):
         # UnitTest builder, see http://www.scons.org/wiki/WrapperFunctions
         from SCons.Script.SConscript import SConsEnvironment
         SConsEnvironment.addUnitTest = addUnitTest
+
 def exists(env):
         return 1
 ```
@@ -337,7 +338,6 @@ Without further ado, here is the code from my SConstruct:
 
 
 ```python
-#!python
 from SCons.Script.SConscript import SConsEnvironment
 env = Environment()
 # required for the cxxbuilder.
@@ -350,29 +350,35 @@ CxxTestCpp_bld = Builder(
     action = "./cxxtestgen.py --error-printer -o $TARGET $SOURCE",
     suffix = ".cpp",
     src_suffix = '$TEST_SUFFIX'
-    )
+)
 env['BUILDERS']['CxxTestCpp'] = CxxTestCpp_bld
-# ----------------------------------
-# UnitTest function - a wrapper around
-# the Program call that adds the result
-# of the build to the tests-to-run target.
-# ----------------------------------
+
+
+
 def UnitTest(environ, target, source = [], **kwargs):
-    test = environ.Program(target, source = source, **kwargs)
+    """UnitTest wrapper function
+
+    a wrapper around the Program call that adds the result
+    of the build to the tests-to-run target.
+    """
+    test = environ.Program(target, source=source, **kwargs)
     environ.AlwaysBuild('check')
     environ.Alias('check', test, test[0].abspath)
     return test
+
 SConsEnvironment.UnitTest = UnitTest
-# ----------------------------------
-# A wrapper that supplies the multipart
-# build functionality CxxTest requires.
-# ----------------------------------
-def CxxTest(environ, target, source = [], **kwargs):
-    if (source == []):
+
+
+def CxxTest(environ, target, source=None, **kwargs):
+    """ A wrapper that supplies the multipart build functionality
+    that CxxTest requires.
+    """
+    if source is None:
         source = Split(target + environ['TEST_SUFFIX'])
     sources = Split(source)
     sources[0] = environ.CxxTestCpp(sources[0])
     return environ.UnitTest(target, source = sources, **kwargs)
+
 SConsEnvironment.CxxTest = CxxTest
 ```
 
@@ -380,11 +386,11 @@ SConsEnvironment.CxxTest = CxxTest
 
 The function is modelled to be called as the Program() call is: 
 
-env.[CxxTest](CxxTest)('target_name') will build the test from the source target_name + env['TEST_SUFFIX'], 
+`env.[CxxTest](CxxTest)('target_name')` will build the test from the source `target_name` + `env['TEST_SUFFIX']`, 
 
-env.[CxxTest](CxxTest)('target_name', source = 'test_src.t.h') will build the test from test_src.t.h source, 
+`env.[CxxTest](CxxTest)('target_name', source = 'test_src.t.h')` will build the test from `test_src.t.h` source, 
 
-env.[CxxTest](CxxTest)('target_name, source = ['test_src.t.h', other_srcs] builds the test .cpp from source[0] and passes other sources to the Program call verbatim. 
+`env.[CxxTest](CxxTest)('target_name, source = ['test_src.t.h', other_srcs])` builds the test `.cpp` from `source[0]` and passes other sources to the Program call verbatim. 
 
 You may also add additional arguments to the function. In that case, they will be passed to the actual Program builder call unmodified. Convenient for passing different CPPPATHs and the sort. 
 
@@ -392,14 +398,13 @@ Anyway, this is the way I call it:
 
 
 ```python
-#!python
 # #/src/test/SConscript
 Import('env')
 env['CPPPATH'] = '#' # CxxTest headers are in #/cxxtest/
 env.CxxTest('test_quaternion', source = 'Quaternion.t.h')
 env.CxxTest('test_utility', ['utility.t.h', '../utility.cpp'])
 ```
-I run the tests by typing 'scons check'. 
+I run the tests by typing `scons check`. 
 
 The tests do not compile by scons . (which is identical to the behaviour of make check) 
 
@@ -414,14 +419,14 @@ Cheers, [GasperAzman](GasperAzman)
 Just what I wanted, and nicely done, thank you. However, I think that the last line in the [CxxTest](CxxTest) function should be 
 
 
-```txt
-return environ.UnitTest(target, source = sources, **kwargs)
+```python
+return environ.UnitTest(target, source=sources, **kwargs)
 ```
 instead of 
 
 
 ```txt
-return env.UnitTest(target, source = sources, **kwargs)
+return env.UnitTest(target, source=sources, **kwargs)
 ```
 to make sure that the correct env is propagated to the Program. 
 
