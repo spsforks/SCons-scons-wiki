@@ -43,17 +43,18 @@ This doesn't work if your unit test program depends on a certain shared library 
 # Alias with Command
 If you want your unit test being invoked only on demand, the following works for me (java unit test)
 
-```
-#!python
-
+```python
 # Launches ant -q when typing "scons"
-env.Command(target='compiled.txt',
-            source=mySources,
-            action=['ant jar-types  -f build.xml',
-                    'type NUL > ' + 'compiled.txt'])
+env.Command(
+    target="compiled.txt",
+    source=mySources,
+    action=["ant jar-types  -f build.xml", "type NUL > " + "compiled.txt"],
+)
 
 # Launches ant junit-tests when typing "scons runtest"
-testAlias = env.Alias('runtest', '', 'ant run -f ' + os.path.join(javaTestRoot, 'build.xml'))
+testAlias = env.Alias(
+    "runtest", "", "ant run -f " + os.path.join(javaTestRoot, "build.xml")
+)
 env.AlwaysBuild(testAlias)
 ```
 
@@ -167,8 +168,10 @@ def UnitTest(target, source, env):
     return res
 
 # Create a builder for running unit tests
-bld = Builder(action = Action(UnitTest, varlist = ['REGENERATE']), emitter = unit_test_emitter)
-env.Append(BUILDERS={'UnitTest':  bld})
+bld = Builder(
+    action=Action(UnitTest, varlist=["REGENERATE"]), emitter=unit_test_emitter
+)
+env.Append(BUILDERS={"UnitTest": bld})
 
 # NOTE: Only apply changes to env above here
 Export('env')
@@ -214,7 +217,7 @@ testEnv.Tool(
 )
 Export('testEnv')
 # grab stuff from sub-directories.
-env.SConscript(dirs = ['onelib'])
+env.SConscript(dirs=['onelib'])
 ```
 In some sub-directory, onelib, you can then add tests quite easily, as follows: 
 
@@ -228,23 +231,20 @@ testEnv.PrependENVPath('LD_LIBRARY_PATH', env.Dir('.').abspath)
 # We can add single file unit tests very easily.
 testEnv.addUnitTest('two_test.cpp')
 # also, multiple files can be compiled into a single test suite.
-libone_test_sources = Split('''
-        one_test.cpp
-        two_test.cpp
-        ''')
+libone_test_sources = Split("one_test.cpp two_test.cpp")
 testEnv.addUnitTest('libone_test_all', libone_test_sources)
 # all the tests added above are automatically added to the 'test' alias.
 ```
 Because the tool automatically adds Aliases, it's easy to run a particular test, 
 
 
-```txt
+```bash
 $ scons two_test
 ```
 or the whole set of tests: 
 
 
-```txt
+```bash
 $ scons test
 ```
 Here's the code for the tool: 
@@ -308,18 +308,20 @@ def addUnitTest(env, target=None, source=None, *args, **kwargs):
 
 # Functions used to initialize the unit test tool.
 def generate(env, UTEST_MAIN_SRC=[], LIBS=[]):
-        env['BUILDERS']['UnitTest'] = env.Builder(
-                        action = env.Action(unitTestAction, unitTestActionString),
-                        suffix='.passed')
-        env['UTEST_MAIN_SRC'] = UTEST_MAIN_SRC
-        env.AppendUnique(LIBS=LIBS)
-        # The following is a bit of a nasty hack to add a wrapper function for the
-        # UnitTest builder, see http://www.scons.org/wiki/WrapperFunctions
-        from SCons.Script.SConscript import SConsEnvironment
-        SConsEnvironment.addUnitTest = addUnitTest
+    env["BUILDERS"]["UnitTest"] = env.Builder(
+        action=env.Action(unitTestAction, unitTestActionString), suffix=".passed"
+    )
+    env["UTEST_MAIN_SRC"] = UTEST_MAIN_SRC
+    env.AppendUnique(LIBS=LIBS)
+    # The following is a bit of a nasty hack to add a wrapper function for the
+    # UnitTest builder, see http://www.scons.org/wiki/WrapperFunctions
+    from SCons.Script.SConscript import SConsEnvironment
+
+    SConsEnvironment.addUnitTest = addUnitTest
+
 
 def exists(env):
-        return 1
+    return 1
 ```
 
 # scons check with CxxTest
@@ -347,37 +349,35 @@ env['TEST_SUFFIX'] = '.t.h'
 # cxx test builder
 # ----------------------------------
 CxxTestCpp_bld = Builder(
-    action = "./cxxtestgen.py --error-printer -o $TARGET $SOURCE",
-    suffix = ".cpp",
-    src_suffix = '$TEST_SUFFIX'
+    action="./cxxtestgen.py --error-printer -o $TARGET $SOURCE",
+    suffix=".cpp",
+    src_suffix="$TEST_SUFFIX",
 )
-env['BUILDERS']['CxxTestCpp'] = CxxTestCpp_bld
+env["BUILDERS"]["CxxTestCpp"] = CxxTestCpp_bld
 
 
-
-def UnitTest(environ, target, source = [], **kwargs):
+def UnitTest(environ, target, source=[], **kwargs):
     """UnitTest wrapper function
 
     a wrapper around the Program call that adds the result
     of the build to the tests-to-run target.
     """
     test = environ.Program(target, source=source, **kwargs)
-    environ.AlwaysBuild('check')
-    environ.Alias('check', test, test[0].abspath)
+    environ.AlwaysBuild("check")
+    environ.Alias("check", test, test[0].abspath)
     return test
 
 SConsEnvironment.UnitTest = UnitTest
-
 
 def CxxTest(environ, target, source=None, **kwargs):
     """ A wrapper that supplies the multipart build functionality
     that CxxTest requires.
     """
     if source is None:
-        source = Split(target + environ['TEST_SUFFIX'])
+        source = Split(target + environ["TEST_SUFFIX"])
     sources = Split(source)
     sources[0] = environ.CxxTestCpp(sources[0])
-    return environ.UnitTest(target, source = sources, **kwargs)
+    return environ.UnitTest(target, source=sources, **kwargs)
 
 SConsEnvironment.CxxTest = CxxTest
 ```
@@ -388,9 +388,9 @@ The function is modelled to be called as the Program() call is:
 
 `env.[CxxTest](CxxTest)('target_name')` will build the test from the source `target_name` + `env['TEST_SUFFIX']`, 
 
-`env.[CxxTest](CxxTest)('target_name', source = 'test_src.t.h')` will build the test from `test_src.t.h` source, 
+`env.[CxxTest](CxxTest)('target_name', source='test_src.t.h')` will build the test from `test_src.t.h` source, 
 
-`env.[CxxTest](CxxTest)('target_name, source = ['test_src.t.h', other_srcs])` builds the test `.cpp` from `source[0]` and passes other sources to the Program call verbatim. 
+`env.[CxxTest](CxxTest)('target_name, source=['test_src.t.h', other_srcs])` builds the test `.cpp` from `source[0]` and passes other sources to the Program call verbatim. 
 
 You may also add additional arguments to the function. In that case, they will be passed to the actual Program builder call unmodified. Convenient for passing different CPPPATHs and the sort. 
 
@@ -401,7 +401,7 @@ Anyway, this is the way I call it:
 # #/src/test/SConscript
 Import('env')
 env['CPPPATH'] = '#' # CxxTest headers are in #/cxxtest/
-env.CxxTest('test_quaternion', source = 'Quaternion.t.h')
+env.CxxTest('test_quaternion', source='Quaternion.t.h')
 env.CxxTest('test_utility', ['utility.t.h', '../utility.cpp'])
 ```
 I run the tests by typing `scons check`. 
@@ -425,7 +425,7 @@ return environ.UnitTest(target, source=sources, **kwargs)
 instead of 
 
 
-```txt
+```python
 return env.UnitTest(target, source=sources, **kwargs)
 ```
 to make sure that the correct env is propagated to the Program. 
