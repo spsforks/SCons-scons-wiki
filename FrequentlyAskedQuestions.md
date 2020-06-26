@@ -47,18 +47,15 @@ With SCons, you use Python functions to tell a central build engine about your i
 Of course, if you do know Python, you can use its scripting capabilities to do more sophisticated things in your build: construct lists of files, manipulate file names dynamically, handle flow control (loops and conditionals) in your build process, etc. 
 
 
-## Why is SCons written for Python version 2.7?
+## Why is SCons written for Python version 3?
 
-Python 2.7 is still in widespread use on many systems, as it has been on an extended support cycle (10 years!) and still ships in many systems. By writing the internal code so that it works on these systems, we're making it as easy as possible for more sites to install and work with SCons on as wide a variety of systems as possible. 
+While Python 2 is still in widespread use on many systems, it has reached end-of-life status (after >10 years!) as far as the Python developers and many developers of add-on products. 
 
-"Why don't people just upgrade their Python version?" you may ask. Yes, Python's packaging and installation make it easy for people to upgrade versions, but that's not the only barrier. 
+SCons is developed by volunteers, and the burden of carrying code that tried to work equivalently on two major Python versions while at the same time restricting SCons from using powerful new techniques that have been introduced in the Python 3 series was becoming substantial.
 
-In commercial development environments, any new operating system or language version must usually be accompanied by extensive tests to make sure that the upgrade hasn't introduced subtle problems or regressions into the code being produced. Consequently, upgrading is an expensive proposition that many sites can't undertake just because a new tool like SCons might require it. When faced with that sort of choice, it's much less risky and expensive for them to just walk away from trying the new tool. 
+SCons 3.x versions will continue to be able run on Python 2.
 
-However, the ending of support by the Python development team for Python 2 (Jan 1 2020) provides an opportunity for a much-needed freshening of SCons code, which has been restricted by trying to run code that works on both Python 2 and Python 3, so the next SCons version (4.x) will not work on Python 2. SCons 3.x versions will continue to be able run on Python 2.
-
-
-## Am I restricted to using Python 2.7 code in my SConscript files?
+## Am I restricted to using Python 3 code in my SConscript files?
 
 You can use any syntax supported by the version of python you are using to run SCons. SCons can be run with Python versions 2.7 and >= 3.5. For your own SConscript files, consider whether you need to support both Python series, and if so take some compatibility steps. The Python `six` module may help with this. 
 
@@ -89,48 +86,49 @@ If you have time and/or resources to contribute, contact scons-dev AT scons DOT 
 
 ## Why doesn't SCons find my compiler/linker/etc.? I can execute it just fine from the command line.
 
-A common problem for new users is that SCons can't seem to find a compiler, linker, or other utility that they can run just fine from the command line. This is almost always because, by default, SCons does not use the same PATH environment variable that you use from the command line, so it can't find a program that has been installed in a "non-standard" location unless you tell it how. Here is the explanation from the SCons man page: 
+A common problem for new users is that SCons can't seem to find a compiler, linker, or other utility that they can run just fine from the command line. This is almost always because, by default, SCons does not use the same `PATH` environment variable that you use from the command line, so it can't find a program that has been installed in a "non-standard" location unless you tell it how. Here is the explanation from the SCons man page: 
 
-> SCons does not automatically propagate the external environment used to execute '`scons`' to the commands used to build target files. This is so that builds will be guaranteed repeatable regardless of the environment variables set at the time scons is invoked. This also means that if the compiler or other commands that you want to use to build your target files are not in standard system locations, SCons will not find them unless you explicitly set the PATH to include those locations. 
-Fortunately, it's easy to propagate the PATH value from your external environment by initializing the ENV construction variable as follows: 
+> SCons does not automatically propagate the external environment used to execute '`scons`' to the commands used to build target files. This is so that builds will be guaranteed repeatable regardless of the environment variables set at the time scons is invoked. This also means that if the compiler or other commands that you want to use to build your target files are not in standard system locations, SCons will not find them unless you explicitly include the locations into the value of `PATH` in the `ENV` variable in the internal construction environment.
 
-```!python
+Fortunately, it's easy to propagate the `PATH` value from your external environment by initializing the `ENV` construction variable as follows: 
+
+```python
 import os
-env = Environment(ENV = {'PATH' : os.environ['PATH']})
+env = Environment(ENV={'PATH': os.environ['PATH']})
 ```
 
 Alternatively, you might want to propagate your entire external environment to the build commands as follows: 
 
-```!python
+```python
 import os
-env = Environment(ENV = os.environ)
+env = Environment(ENV=os.environ)
 ```
 
-Of course, by propagating external environment variables into your build, you're running the risk that a change in the external environment will affect the build, possibly in unintended ways. The way to guarantee that the build is repeatable is to explicitly initialize the PATH 
+Of course, by propagating external environment variables into your build, you're running the risk that a change in the external environment will affect the build, possibly in unintended ways. The way to guarantee that the build is repeatable is to explicitly initialize the `PATH` 
 
-```!python
+```python
 path = ['/bin', '/usr/bin', '/path/to/other/compiler/bin']
-env = Environment(ENV = {'PATH' : path})
+env = Environment(ENV={'PATH': path})
 ```
 ### How do I get SCons to find my #include files?
 
-If your program has #include files in various directories, SCons must somehow be told in which directories it should look for the #include files. You do this by setting the CPPPATH variable to the list of directories that contain .h files that you want to search for: 
+If your program has #include files in various directories, SCons must somehow be told in which directories it should look for the #include files. You do this by setting the `CPPPATH` variable to the list of directories that contain .h files that you want to search for: 
 
-```!python
+```python
 env = Environment(CPPPATH='inc')
 env.Program('foo', 'foo.c')
 ```
 
 SCons will add to the compilation command line(s) the right -I options, or whatever similar options are appropriate for the C or C++ compiler you're using. This makes your SCons-based build configuration portable. 
 
-Note specifically that you should not set the include directories directly in the CCFLAGS variable, as you might initially expect: 
+Note specifically that you should not set the include directories directly in the `CCFLAGS` variable, as you might initially expect: 
 
-```!python
+```python
 env = Environment(CCFLAGS='-Iinc') # THIS IS INCORRECT!
 env.Program('foo', 'foo.c')
 ```
 
-This will make the program compile correctly, but SCons will not find the dependencies in the "inc" subdirectory and the program will not be rebuilt if any of those #include files change.
+This will make the program compile correctly, but SCons will not find the dependencies in the "inc" subdirectory and the program will not be rebuilt if any of those `#include`'d files change.
 
 ## How do I install files? The Install() method doesn't do anything. In general, how do I build anything outside my current directory?
 
@@ -151,21 +149,21 @@ Like every other build system, SCons considers a directory used as a target as u
 
 As a workaround, make the dependency on some file within the directory that's always updated: 
 
-```!python
+```python
 env.Command('html_dir/index.html', Glob('rst/*.rst'), 'rst2html -o $TARGET.dir $SOURCES')
 ```
 
 If there isn't such a file, create one and put something in it that changes every time you build (such as the date): 
 
-```!python
+```python
 env.Command('html_dir/last_updated', Glob('rst/*.rst'), ['rst2html -o $TARGET.dir $SOURCES','date >$TARGET'])  
 ```
 
 ## I'm already using ldconfig, pkg-config, gtk-config, etc. Do I have to rewrite their logic to use SCons?
 
-SCons provides explicit support for getting information from programs like ldconfig and pkg-config. The relevant method is `ParseConfig()`, which executes a `*-config` command, parses the returned flags, and puts them in the environment through which the [ParseConfig](ParseConfig)() method is called: 
+SCons provides explicit support for getting information from programs like `ldconfig` and `pkg-config`. The relevant method is `ParseConfig()`, which executes a `*-config` command, parses the returned flags, and puts them in the environment through which the [ParseConfig](ParseConfig)() method is called: 
 
-```!python
+```python
 env.ParseConfig('pkg-config --cflags --libs libxml')
 ```
 
@@ -176,7 +174,7 @@ If you need to provide some special-purpose processing, you can supply a functio
 
 The Microsoft linker requires that the environment variable TMP is set. I do the following in my SConstruct file. 
 
-```!python
+```python
 env['ENV']['TMP'] = os.environ['TMP']
 ```
 
@@ -210,9 +208,9 @@ Note that a proof-of-concept for parsing Makefiles in a scripting language exist
 Yes, SCons is designed from the ground up to support a `-j` option for parallel builds. 
 
 
-## Does SCons support something like VPATH in make?
+## Does SCons support something like `VPATH` in make?
 
-Yes. SCons supports a [Repository() method](SConsMethod/Repository) and a `-Y` command-line option that provide very similar functionality to VPATH, although without some inconsistencies that make VPATH somewhat difficult to use. These features are directly modeled on (read: stolen from) the corresponding features in the Cons tool. 
+Yes. SCons supports a [Repository() method](SConsMethod/Repository) and a `-Y` command-line option that provide very similar functionality to `VPATH`, although without some inconsistencies that make `VPATH` somewhat difficult to use. These features are directly modeled on (read: stolen from) the corresponding features in the Cons tool. 
 
 
 # SCons History and Background
