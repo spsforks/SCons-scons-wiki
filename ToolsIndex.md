@@ -66,8 +66,8 @@ Matlab (Mex)  | Git  | <https://github.com/marcecj/scons_matlab>  | `git clone h
 Perl | Mercurial  | <https://bitbucket.org/carandraug/scons-perl5>  | `hg clone https://bitbucket.org/carandraug/scons-perl5 scons-perl5`
 pkg-config | Git  | <https://github.com/manuelnaranjo/scons-pkg-config>  | `git clone https://github.com/manuelnaranjo/scons-pkg-config pkg-config`
 [Protocol Buffers](ProtocBuilder)  | Mercurial  | <https://bitbucket.org/russel/scons_protobuf>  | `hg clone https://bitbucket.org/russel/scons_protobuf protoc`
-[Qt4](Qt4Tool)  | Mercurial  | <https://bitbucket.org/dirkbaechle/scons_qt4>  | `hg clone https://bitbucket.org/dirkbaechle/scons_qt4 qt4`
-[Qt5](Qt5Tool)  | Mercurial  | <https://bitbucket.org/dirkbaechle/scons_qt5>  | `hg clone https://bitbucket.org/dirkbaechle/scons_qt5 qt5`
+[Qt4](Qt4Tool)  | Git  | <https://github.com/dirkbaechle/scons_qt4>  | `git clone git@github.com:dirkbaechle/scons_qt4.git qt4`
+[Qt5](Qt5Tool)  | Git  | <https://github.com/dirkbaechle/scons_qt5>  | `git clone git@github.com:dirkbaechle/scons_qt5.git qt5`
 [reST (docutils)](ReStructuredTextBuilder)  | Mercurial  | <https://bitbucket.org/dirkbaechle/scons_rest>  | `hg clone https://bitbucket.org/dirkbaechle/scons_rest rest`
 [RightNow](RightNow)  | Bazaar  | <https://code.launchpad.net/~asomers/sconsaddons/rightnow>  | `bzr branch lp:~asomers/sconsaddons/rightnow`
 SIP  | Mercurial  | <https://bitbucket.org/dirkbaechle/scons_sip>  | `hg clone https://bitbucket.org/dirkbaechle/scons_sip sip`
