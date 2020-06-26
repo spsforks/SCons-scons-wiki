@@ -10,6 +10,11 @@ tool.**
    anything. In general, how do I build anything outside my current
    directory? <#markdown-header-how-do-i-install-files-the-install-method-doesnt-do-anything-in-general-how-do-i-build-anything-outside-my-current-directory>`__
 
+
+.. contents::
+   :local:
+
+
 General Information
 ===================
 
