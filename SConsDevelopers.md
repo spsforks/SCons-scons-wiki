@@ -33,7 +33,7 @@ Release Manager | [William Deegan](@bdbaddog) | Identifies patches to go into ne
 Webmaster | [William Deegan](@bdbaddog) | Manages the [WebSite](WebSite); point of contact for web provider 
 Tigris Tamer | [William Deegan](@bdbaddog) | Deals with administrivia for archive access and issue tracker
 SF Tamer | [William Deegan](@bdbaddog) | Deals with residual issues from SourceForge
-FAQ Maintainer  | [William Deegan](@bdbaddog)  |  Monitors mailing lists for FAQ worthy material and updates [FrequentlyAskedQuestions](FrequentlyAskedQuestions) 
+FAQ Maintainer  | [William Deegan](@bdbaddog)  |  Monitors mailing lists for FAQ worthy material and updates [Frequently Asked Questions](FAQ) 
 
 
 ## Component View of SCons Responsibilities
