@@ -1,5 +1,14 @@
 **This FAQ contains information about the SCons software construction
 tool.**
+=======
+*The most frequently-asked frequently asked questions*
+
+1. `Why doesn’t SCons find my compiler/linker/etc.? I can execute it
+   just fine from the command
+   line. <#markdown-header-why-doesnt-scons-find-my-compilerlinkeretc-i-can-execute-it-just-fine-from-the-command-line>`__
+2. `How do I install files? The Install() method doesn’t do
+   anything. In general, how do I build anything outside my current
+   directory?`__ 
 
 .. contents::
    :local:
@@ -22,7 +31,7 @@ tools.
 Where do I get SCons?
 ---------------------
 
-The `SCons download page <http://scons.org/download.php>`__
+The `SCons download page <https://scons.org/pages/download.html>`__
 
 If you’re interested in the [b]leading edge, you can take a look at what
 the developers are up to in the latest code checked in to the git tree.
@@ -112,12 +121,12 @@ Are there any SCons mailing lists or newsgroups? Are they archived anywhere?
 
 There are several SCons mailing lists, and they are archived.
 Information about the lists and archives is available at
-http://scons.org/lists.php .
+https://scons.org/lists.html .
 
 There is no SCons newsgroup, but we also have an IRC channel at
 `FreeNode <FreeNode>`__ ( irc://irc.freenode.net/#scons ). For a
 complete overview of how to best contact us, visit
-http://scons.org/contact.php .
+https://scons.org/contact.html .
 
 Is SCons released under an Open Source license?
 -----------------------------------------------
@@ -220,6 +229,7 @@ directly in the ``CCFLAGS`` variable, as you might initially expect:
 This will make the program compile correctly, but SCons will not find
 the dependencies in the “inc” subdirectory and the program will not be
 rebuilt if any of those ``#include``\ ’d files change.
+
 
 How do I install files? The Install() method doesn’t do anything. In general, how do I build anything outside my current directory?
 -----------------------------------------------------------------------------------------------------------------------------------
