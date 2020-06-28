@@ -27,7 +27,7 @@ Welcome to the wiki of the [SCons](http://www.scons.org) project!  This is an op
 
 # Further documentation ![](http://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Gnome-system-help.svg/48px-Gnome-system-help.svg.png)
 
- * [Frequently Asked Questions](FrequentlyAskedQuestions)
+ * [Frequently Asked Questions](FAQ)
  * the official SCons User Guide ([HTML](http://www.scons.org/doc/production/HTML/scons-user.html) or [PDF](http://scons.org/doc/production/PDF/scons-user.pdf))
  * the official SCons Manual page ([HTML](http://www.scons.org/doc/HTML/scons-man.html) or [PDF](http://scons.org/doc/production/PDF/scons-man.pdf)) - very detailed information about SCons features.
  * the [SCons Recipes](SconsRecipes) page - a gold mine of information, code snippets and various examples
