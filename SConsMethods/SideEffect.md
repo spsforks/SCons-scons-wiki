@@ -1,5 +1,5 @@
 `SideEffect(side_effect, target)`:
-  A _side effect_ is a target that is created as a side effect of building other targets. (For example, a Windows PDB file is created as a side effect of building the `.obj` files for a static library.) This method declares **side_effect** as a side effect of building **target**. Both **side_effect** and **target** can be a list, a file name, or a node. If a target is a side effect of multiple build commands, SCons will ensure that only one set of commands is executed at a time. Consequently, you only need to use this method for side-effect targets that are built as a result of multiple build commands. 
+  A _side effect_ is an indirect target that is a side effect of building other targets. For example, a Windows PDB file is created as a side effect of building the `.obj` files for a static library. Calling declares `side_effect` as a side effect of building `target`. Both `side_effect` and `target` can be a list, a file name, or a node. If a target is a side effect of multiple build commands, SCons will ensure that only one set of commands is executed at a time. Consequently, you only need to use this method for side-effect targets that are built as a result of multiple build commands. 
 
 It should be noted that side effects are not automatically cleaned by `scons -c`. To do that, please see `Clean`. 
 
