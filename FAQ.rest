@@ -327,7 +327,8 @@ explicitly.
 How do I prevent commands from being executed in parallel?
 ----------------------------------------------------------
 
-Use the `SideEffect() method <SConsMethods/SideEffect>`__ and specify
+Use the `SideEffect <https://github.com/SCons/scons/wiki/SideEffect>`_
+method and specify
 the same dummy file for each target that shouldn’t be built in parallel.
 Even if the file doesn’t exist, SCons will prevent the simultaneous
 execution of commands that affect the dummy file. See the linked method
