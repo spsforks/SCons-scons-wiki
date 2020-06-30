@@ -2,12 +2,8 @@
 The most frequently-asked frequently asked questions
 ====================================================
 
-1. `Why doesn’t SCons find my compiler/linker/etc.? I can execute it
-   just fine from the command
-   line. <#markdown-header-why-doesnt-scons-find-my-compilerlinkeretc-i-can-execute-it-just-fine-from-the-command-line>`__
-2. `How do I install files? The Install() method doesn’t do
-   anything. In general, how do I build anything outside my current
-   directory?`__ 
+1. `Why doesn’t SCons find my compiler/linker/etc.? I can execute it just fine from the command line.`_
+2. `How do I install files? The Install() method doesn’t do anything. In general, how do I build anything outside my current directory?`_
 
 ======================
 Full Table of Contents
@@ -34,7 +30,7 @@ tools.
 Where do I get SCons?
 ---------------------
 
-The `SCons download page <https://scons.org/pages/download.html>`__
+The `SCons download page <https://scons.org/pages/download.html>`_
 
 If you’re interested in the [b]leading edge, you can take a look at what
 the developers are up to in the latest code checked in to the git tree.
