@@ -1,6 +1,6 @@
-====================================================
-The most frequently-asked frequently asked questions
-====================================================
+=============================================================
+Quick links: Very frequently-asked frequently asked questions
+=============================================================
 
 1. `Why doesn’t SCons find my compiler/linker/etc.? I can execute it just fine from the command line.`_
 2. `How do I install files? The Install() method doesn’t do anything. In general, how do I build anything outside my current directory?`_
