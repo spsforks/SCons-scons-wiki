@@ -36,7 +36,7 @@ Some parameters require specific lists, such as the source list. Reading the [Co
 
 ## Specifying A Default Target
 
-An important note is the **Default** command. It tells scons what to build by default. Scons always builds the targets it is given on the command line, and any targets that are prerequisites to building the specifid targets. Default sets up the list to build if no targets are supplied on the command line.  If Default is not used, scons selects all the targets for building, which may be undesirable in a larger project.
+An important note is the **Default** command. It tells scons what to build by default. Scons always builds the targets it is given on the command line, and any targets that are prerequisites to building the specific targets. Default sets up the list to build if no targets are supplied on the command line.  If Default is not used, scons selects all the targets for building, which may be undesirable in a larger project.
 
 ```python
 t = env.Program(target='bar', source=['foo.c'])
