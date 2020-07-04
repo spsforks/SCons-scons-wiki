@@ -85,6 +85,9 @@ git push --tags
 #!bash
 python setup.py bdist_wheel
 python setup.py sdist --format=gztar
+# If you have a ~/.pypirc
+twine upload -r pypitest build/dist/SCons-*.{tar.gz,whl}
+# else this will prompt you for your pypi or test pypi username/password
 twine upload --repository-url https://test.pypi.org/legacy/ build/dist/SCons-*.{tar.gz,whl}
 ```
 
