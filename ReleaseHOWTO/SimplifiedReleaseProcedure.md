@@ -85,7 +85,7 @@ git push --tags
 #!bash
 python setup.py bdist_wheel
 python setup.py sdist --format=gztar
-twine upload --repository-url https://test.pypi.org/legacy/ dist/scons-*.tar.gz dist/*.whl
+twine upload --repository-url https://test.pypi.org/legacy/ build/dist/SCons-*.{tar.gz,whl}
 ```
 
 - [ ] Test package:
