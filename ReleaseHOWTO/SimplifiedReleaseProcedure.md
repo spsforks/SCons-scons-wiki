@@ -105,7 +105,7 @@ scons --version
 ```
 #!bash
 
-twine upload  dist/scons-*.tar.gz dist/*.whl
+twine upload  build/dist/SCons-*.tar.gz build/dist/SCons*.whl
 ```
 
 ## After Release
