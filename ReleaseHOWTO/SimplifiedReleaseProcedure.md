@@ -38,13 +38,13 @@ The procedure has been used for all releases since 4.0.0.
 ```txt
 You should now have the following in build/dist: 
 
-  scons-$VERSION.tar.gz
-  scons-$VERSION.zip
-  scons-doc-$VERSION.tar.gz
-  scons-local-$VERSION.tar.gz
-  scons-local-$VERSION.zip
-  scons-src-$VERSION.tar.gz
-  scons-src-$VERSION.zip
+SCons-$VERSION-py3-none-any.whl
+SCons-$VERSION.tar.gz
+SCons-$VERSION.zip
+scons-doc-$VERSION.tar.gz
+scons-local-$VERSION.tar.gz
+scons-local-$VERSION.zip
+
 ```
 
 
