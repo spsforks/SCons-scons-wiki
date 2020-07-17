@@ -32,6 +32,7 @@ The procedure has been used for all releases since 4.0.0.
 - [ ] Edit `debian/changelog`. Be careful of formatting here, it gets machine-parsed. 
 - [ ] Commit 
 - [ ] Update `ReleaseConfig` and run `python bin/update-release-info.py release` (this modifies CHANGES, Release and Announce -- that's why you should commit the above first.) 
+- [ ] Update `default_version` in SConstruct
 - [ ] Build packages and doc: `python scripts/scons.py >& build-XYZ.log` (good idea to save build logfile somewhere) 
 
 ```txt
