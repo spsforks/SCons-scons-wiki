@@ -40,7 +40,7 @@ SConstruct:
 mymode = ARGUMENTS.get("mode", "release")  # holds current mode
 
 # check if the user has been naughty: only 'debug' or 'release' allowed
-if not (mymode in ["debug", "release"]):
+if not mymode in ["debug", "release"]:
     print("Error: expected 'debug' or 'release', found: " + mymode)
     Exit(1)
 
