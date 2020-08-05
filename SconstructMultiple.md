@@ -35,67 +35,73 @@ SConstruct:
 
 
 ```python
-#!python
-#get the mode flag from the command line
-#default to 'release' if the user didn't specify
-mymode = ARGUMENTS.get('mode', 'release')   #holds current mode
+# get the mode flag from the command line
+# default to 'release' if the user didn't specify
+mymode = ARGUMENTS.get("mode", "release")  # holds current mode
 
-#check if the user has been naughty: only 'debug' or 'release' allowed
-if not (mymode in ['debug', 'release']):
-   print "Error: expected 'debug' or 'release', found: " + mymode
-   Exit(1)
+# check if the user has been naughty: only 'debug' or 'release' allowed
+if not (mymode in ["debug", "release"]):
+    print("Error: expected 'debug' or 'release', found: " + mymode)
+    Exit(1)
 
-#tell the user what we're doing
-print '**** Compiling in ' + mymode + ' mode...'
+# tell the user what we're doing
+print("**** Compiling in " + mymode + " mode...")
 
-debugcflags = ['-W1', '-GX', '-EHsc', '-D_DEBUG', '/MDd']   #extra compile flags for debug
-releasecflags = ['-O2', '-EHsc', '-DNDEBUG', '/MD']         #extra compile flags for release
+debugcflags = [
+    "-W1",
+    "-GX",
+    "-EHsc",
+    "-D_DEBUG",
+    "/MDd",
+]  # extra compile flags for debug
+releasecflags = ["-O2", "-EHsc", "-DNDEBUG", "/MD"]  # extra compile flags for release
 
 env = Environment()
 
-#make sure the sconscripts can get to the variables
-Export('env', 'mymode', 'debugcflags', 'releasecflags')
+# make sure the sconscripts can get to the variables
+Export("env", "mymode", "debugcflags", "releasecflags")
 
-#put all .sconsign files in one place
+# put all .sconsign files in one place
 env.SConsignFile()
 
-#specify the sconscript for myprogram
-project = 'myprogram'
-SConscript(project + '/sconscript', exports=['project'])
+# specify the sconscript for myprogram
+project = "myprogram"
+SConscript(project + "/sconscript", exports=["project"])
 
-#specify the sconscript for hisprogram
-project = 'hisprogram'
-SConscript(project + '/sconscript', exports=['project'])
+# specify the sconscript for hisprogram
+project = "hisprogram"
+SConscript(project + "/sconscript", exports=["project"])
 
-#specify the sconscript for herprogram
-project = 'herprogram'
-SConscript(project + '/sconscript', exports=['project'])
+# specify the sconscript for herprogram
+project = "herprogram"
+SConscript(project + "/sconscript", exports=["project"])
 ```
+
 SConscript: 
 
-
 ```python
-#!python
 import glob
 
-#get all the build variables we need
-Import('env', 'project', 'mymode', 'debugcflags', 'releasecflags')
+# get all the build variables we need
+Import("env", "project", "mymode", "debugcflags", "releasecflags")
 localenv = env.Copy()
 
-buildroot = '../' + mymode  #holds the root of the build directory tree
-builddir = buildroot + '/' + project   #holds the build directory for this project
-targetpath = builddir + '/' + project  #holds the path to the executable in the build directory
+buildroot = "../" + mymode  # holds the root of the build directory tree
+builddir = buildroot + "/" + project  # holds the build directory for this project
+targetpath = (
+    builddir + "/" + project
+)  # holds the path to the executable in the build directory
 
-#append the user's additional compile flags
-#assume debugcflags and releasecflags are defined
-if mymode == 'debug':
-   localenv.Append(CCFLAGS=debugcflags)
+# append the user's additional compile flags
+# assume debugcflags and releasecflags are defined
+if mymode == "debug":
+    localenv.Append(CCFLAGS=debugcflags)
 else:
-   localenv.Append(CCFLAGS=releasecflags)
+    localenv.Append(CCFLAGS=releasecflags)
 
-#specify the build directory
+# specify the build directory
 localenv.BuildDir(builddir, ".", duplicate=0)
 
-srclst = map(lambda x: builddir + '/' + x, glob.glob('*.cpp'))
+srclst = map(lambda x: builddir + "/" + x, glob.glob("*.cpp"))
 localenv.Program(targetpath, source=srclst)
 ```
