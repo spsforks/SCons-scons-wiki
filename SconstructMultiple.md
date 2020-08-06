@@ -88,9 +88,7 @@ localenv = env.Copy()
 
 buildroot = "../" + mymode  # holds the root of the build directory tree
 builddir = buildroot + "/" + project  # holds the build directory for this project
-targetpath = (
-    builddir + "/" + project
-)  # holds the path to the executable in the build directory
+targetpath = builddir + "/" + project  # holds the path to the executable in the build directory
 
 # append the user's additional compile flags
 # assume debugcflags and releasecflags are defined
@@ -102,6 +100,6 @@ else:
 # specify the build directory
 localenv.BuildDir(builddir, ".", duplicate=0)
 
-srclst = map(lambda x: builddir + "/" + x, glob.glob("*.cpp"))
-localenv.Program(targetpath, source=srclst)
+srclist = [builddir + "/" + x for x in glob.glob("*.cpp")]
+localenv.Program(targetpath, source=srclist)
 ```
