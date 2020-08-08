@@ -7,11 +7,9 @@ The procedure has been used for all releases since 4.0.0.
 * Move work to a release branch. It's currently necessary to do this first as the build will use the branch name when building the REVISION string it substitutes into many of the files.
 
 
-```
-#!bash
-
-   git fetch 
-   git checkout -b rel_<NAME> master
+```bash
+git fetch 
+git checkout -b rel_<NAME> master
 ```
 
 
@@ -19,10 +17,10 @@ The procedure has been used for all releases since 4.0.0.
 
 - [ ] Validate and update all documentation files by calling: 
 
-```txt
-   python bin/docs-update-generated.py
-   python bin/docs-validate.py
-   python bin/docs-create-example-outputs.py
+```bash
+python bin/docs-update-generated.py
+python bin/docs-validate.py
+python bin/docs-create-example-outputs.py
 ```
 
 - [ ] Update copyright dates in `doc/user/main.xml`
@@ -50,6 +48,7 @@ scons-local-$VERSION.zip
 
 ## Upload Software and Doc
 - [ ] Run `bin/upload-release-files.sh X.Y.Z mysfusername`
+
 * There is now a shell script to do this: `bin/upload-release-files.sh X.Y.Z mysfusername` as long as [SourceForge](SourceForge) and scons.org have your ssh pub key and you're using SSH Agent Forwarding. 
 * It uploads all the packages to SF, uploads the doc to scons.org, unpacks it, and updates the doc symlinks.
 ** You will be prompted for your password numerous times. 
@@ -82,8 +81,7 @@ git push --tags
 
 - [ ] Upload to testpypi #
 
-```
-#!bash
+```bash
 python setup.py bdist_wheel
 python setup.py sdist --format=gztar
 # If you have a ~/.pypirc
@@ -94,9 +92,7 @@ twine upload --repository-url https://test.pypi.org/legacy/ build/dist/SCons-*.{
 
 - [ ] Test package:
 
-```
-#!bash
-
+```bash
 # Be sure to do this on both windows and non-windows systems
 virtualenv venv
 . venv/bin/activate
@@ -106,9 +102,7 @@ scons --version
 
 - [ ] Upload to Pypi #
 
-```
-#!bash
-
+```bash
 twine upload  build/dist/SCons-*.tar.gz build/dist/SCons*.whl
 ```
 
