@@ -7,8 +7,8 @@
 
 ### The simplest way is to just run as follows:
 
-```
-python <path to your sandbox>/src/scripts/scons.py
+```bash
+python path-to-your-sandbox/scripts/scons.py
 ```
 
 ### Less simple way
@@ -17,15 +17,15 @@ Put these lines in a shell script and run the script.  If you want to run it reg
 
 ```bash
 #!/usr/bin/env bash 
-SCONS_LIB_DIR=/path_to_scons/src/engine
+SCONS_LIB_DIR=/path_to_scons/SCons
 export SCONS_LIB_DIR
-exec python /path_to_scons/src/script/scons.py "$@"
+exec python /path_to_scons/SCons/scons.py "$@"
 ```
 
 ### The old fashioned way (almost no reason to do this way)
 
 You can also run from a checked-out SCons source dir using `bootstrap.py`, which takes the same args as SCons.  That should always use the SCons engine from where `bootstrap.py` is found. 
-```python
+```bash
 python /path_to_scons_src/bootstrap.py .
 ```
 If you run the commands by hand, don't include the "exec" in the final line. 
@@ -36,7 +36,7 @@ If you run the commands by hand, don't include the "exec" in the final line.
 
 ```bash
 scons --debug=pdb <args...>
-b SCons/Tool/msvc.py:158 # to stop at that file:line, looks for file in `sys.path` e.g. your `SCONS_LIB_DIR`
+b SCons/Tool/msvc.py:158  # to stop at that file:line, looks for file in sys.path e.g. your SCONS_LIB_DIR
 ```
 
 ## Debugging in Eclipse/PyDev
