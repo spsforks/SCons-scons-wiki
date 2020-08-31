@@ -1,7 +1,3 @@
-
-
-# Versioned Shared Library and Loadable modules requirements
-
 The following env variables can affect the command line and created files for these
 
 * `SHLIBVERSION`
