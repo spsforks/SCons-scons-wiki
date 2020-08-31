@@ -9,12 +9,12 @@ The following env variables can affect the command line and created files for th
 
 In most cases the linker will create a file named as
 
-`${SHLIBPREFIX}lib_name${SHLIBVERSION}${SHLIBSUFFIX}`
+`${SHLIBPREFIX}lib_name${SHLIBSUFFIX}.${SHLIBVERSION}`
 
 Which will have a soname baked into it as one of the
 
 * `${SONAME}`
-* `${SHLIBPREFIX}lib_name${SOVERSION}${SHLIBSUFFIX}`
+* `${SHLIBPREFIX}lib_name${SHLIBSUFFIX}.${SOVERSION}`
 * (for applelink only)
    * `${SHLIBPREFIX}lib_name${major version only from SHLIBVERSION}${SHLIBSUFFIX}`
    * `-Wl,-compatibility_version,%s`
