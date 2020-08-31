@@ -30,8 +30,8 @@ For **applelink** the version has to follow these rules to verify that the versi
 
    
 For most platforms this will lead to a series of symlinks eventually pointing to the actual shared library (or loadable module file).
-1. `${SHLIBPREFIX}lib_name${SHLIBSUFFIX} -> ${SHLIBPREFIX}lib_name${SHLIBVERSION}${SHLIBSUFFIX}`
-1. `${SHLIBPREFIX}lib_name${SOVERSION}${SHLIBSUFFIX} -> ${SHLIBPREFIX}lib_name${SHLIBVERSION}${SHLIBSUFFIX}`
+1. `${SHLIBPREFIX}lib_name${SHLIBSUFFIX} -> ${SHLIBPREFIX}lib_name${SHLIBSUFFIX}.${SHLIBVERSION}`
+1. `${SHLIBPREFIX}lib_name${SHLIBSUFFIX}.${SOVERSION} -> ${SHLIBPREFIX}lib_name${SHLIBSUFFIX}.${SHLIBVERSION}`
 
 For **openbsd** the following rules for symlinks apply
 
