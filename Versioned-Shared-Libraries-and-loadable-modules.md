@@ -31,7 +31,7 @@ For **applelink** the version has to follow these rules to verify that the versi
    
 For most platforms this will lead to a series of symlinks eventually pointing to the actual shared library (or loadable module file).
 
-(This info it stored in a list of tuples stored in `target[0].attributes.shliblinks`)
+(This info it stored in a list of tuples stored in `target[0].attributes.shliblinks` this is currently done in the emitter)
 1. `${SHLIBPREFIX}lib_name${SHLIBSUFFIX} -> ${SHLIBPREFIX}lib_name${SHLIBSUFFIX}.${SHLIBVERSION}`
 1. `${SHLIBPREFIX}lib_name${SHLIBSUFFIX}.${SOVERSION} -> ${SHLIBPREFIX}lib_name${SHLIBSUFFIX}.${SHLIBVERSION}`
 
