@@ -52,3 +52,10 @@ The current code provides the following hooks a compiler can use to customize:
         'VersionedShLibSoname': _versioned_shlib_soname,
         'VersionedLdModSoname': _versioned_ldmod_soname,
 ```
+
+
+# Thoughts on new implementation
+
+so if I define 
+env['SONAME']='$GenSONAME'
+ And then if the user sets SONAME directly that works. GenSONAME is a function which uses any values of  SHLIBVERSION, SOVERSION, (or if user implemented any values it wants) fairly straightforward t generated shared library name from variables as well. and get rid of all the levels of indirection.
