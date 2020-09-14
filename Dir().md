@@ -1,7 +1,7 @@
 
 The `File` and `Dir` functions return File and Dir Nodes, respectively. Nodes are Python objects which have several user-visible attributes and methods that are often useful: 
 
-* `path` - The build path of the given file or directory. This path is relative to the top-level directory (where the SConstruct file is found). The build path is the same as the source path if build_dir is not being used. 
+* `path` - The build path of the given file or directory. This path is relative to the top-level directory (where the SConstruct file is found). The build path is the same as the source path if `variant_dir` is not being used. 
 * `abspath` - The absolute build path of the given file or directory. 
 * `srcnode()` - returns another File or Dir object representing the source path of the given File or Dir. 
 See also [File()](File()). 
