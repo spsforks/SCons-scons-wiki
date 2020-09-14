@@ -15,7 +15,7 @@ Dir(".").abspath
 Dir("#.").path
 File("foo.c").srcnode().path  # source path of the given source file.
 
-# Builders also return a list of File objects (a NodeList)
+# Builders return a list of File objects (a NodeList)
 foo = env.Program("foo.c")
 print("foo will be built in %s" % foo[0].path)
 ```
