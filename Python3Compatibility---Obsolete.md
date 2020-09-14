@@ -1,3 +1,5 @@
+# Python3 compatibility was added with SCons 3.0.0.
+## Keeping below for historical reference.
 
 Discussion of our transition from Python 2.x towards 3.x (via 2.7 preferrably). 
 
