@@ -4,7 +4,7 @@ The content below is quite old at this point and is being kept for historical re
 The project is aware that there are many faster options than SCons.  We are working on performance and have been for several years.
 That said, if you have a complicated build SCons may still be the best option for you if you care about correctness.
 
-# Historical part of this page
+# Historical part of this page (most of this content is from 2013 or before)
 Looking around on the Internet, a lot of places can be found where people complain about SCons being horrendously slow, up to the point that it's unusable (for them). One of the most prominent ones seems to be a series of blog articles by Eric Melski: 
 * [http://blog.melski.net/2011/05/23/why-is-scons-so-slow/](http://blog.melski.net/2011/05/23/why-is-scons-so-slow/) 
 * [http://www.electric-cloud.com/blog/2010/03/08/how-scalable-is-scons/](http://www.electric-cloud.com/blog/2010/03/08/how-scalable-is-scons/) 
