@@ -1,5 +1,5 @@
-# The current state
-The content below is quite old at this point (09/20/2020) and is being kept for historical reasons as well as providing performance testing information going forward. 
+# The current state as of September 20, 2020
+The content below is quite old at this point and is being kept for historical reasons as well as providing performance testing information going forward. 
 
 The project is aware that there are many faster options than SCons.  We are working on performance and have been for several years.
 That said, if you have a complicated build SCons may still be the best option for you if you care about correctness.
