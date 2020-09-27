@@ -36,9 +36,9 @@ In this first part of my investigations, I concentrated on busting the myth that
 
 ## Repositories
 
-All the results of the following discussion can be downloaded as `hg` (Mercurial) repo from [https://github.com/SCons/performance/scons_testresults](https://github.com/SCons/performance/scons_testresults). In separate folders you can find the raw result data and the scripts that were used to run the examples. Look out for `README.rst` or `overview.rst` files, they contain some additional info about how things work and what the single subdirectories contain. 
+All the results of the following discussion can be downloaded as `hg` (Mercurial) repo from [https://github.com/SCons/scons-performance/tree/master/testresults](https://github.com/SCons/scons-performance/tree/master/testresults). In separate folders you can find the raw result data and the scripts that were used to run the examples. Look out for `README.rst` or `overview.rst` files, they contain some additional info about how things work and what the single subdirectories contain. 
 
-Additionally, I created a separate SCons testsuite which is available at [https://github.com/SCons/performance/scons_testsuite](https://github.com/SCons/performance/scons_testsuite). It comprises several real-life projects, control scripts, and the supporting `sconstest` package for running all the timings and profilings. 
+Additionally, I created a separate SCons testsuite which is available at [https://github.com/SCons/scons-performance/tree/master/testsuite](https://github.com/SCons/scons-performance/tree/master/testsuite). It comprises several real-life projects, control scripts, and the supporting `sconstest` package for running all the timings and profilings. 
 
 A warning: Both repos are rather large, so be prepared for some download time! 
 
