@@ -280,7 +280,7 @@ I searched the Internet and collected some [OpenSource](OpenSource) projects tha
 
 You can find the resulting little test framework at 
 
-* [http://www.bitbucket.org/dirkbaechle/scons_testsuite](http://www.bitbucket.org/dirkbaechle/scons_testsuite) 
+* [https://github.com/SCons/scons-performance/tree/master/testsuite](https://github.com/SCons/scons-performance/tree/master/testsuite) 
 If you're interested enough to give it a go, please consult its `README.rst` file in the top-level folder to understand how things work.  
 
 Disclaimer: It's currently not in a state of "running everywhere", but especially crafted for my very own Ubuntu Linux machine. So, if you try to start the examples on your own, be prepared to run into some pitfalls. You might have to adapt the controlling scripts, or even need to patch the software packages themselves...including the installation of special packages as prerequisites.  
