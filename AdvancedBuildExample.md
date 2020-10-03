@@ -1,4 +1,4 @@
-**NOTE:  This page was edited by hand into its current format by cutting-and-pasting a copy of the page that was saved at archive.org.  It is entirely possible that some formatting or other errors crept in during the editing process.  If you notice any errors, please correct them.** 
+**NOTE:  This page was edited by hand into its current format by cutting-and-pasting a copy of the page that was saved at archive.org.  It is entirely possible that some formatting or other errors crept in during the editing process.  If you notice any errors, please correct them.  The document is annotated with reference to line numbers, but GitHub's wiki does not display line number for code blocks.** 
 
 This document describes the build used on the [Bombyx Project](http://bombyx.sourceforge.net/) in a way that is a tutorial of SCons. It covers various advanced topics in a bit of detail, and gives pointers to other documents that describe the technique in more detail. Some of the things shown here are "voodoo" and probably not standard. If you find a better way to do something, then please contact [me](mailto:zedshaw@zedshaw.com) with your suggestion.  
 
@@ -300,17 +300,18 @@ You should be careful of line #23 since it contains the `duplicate=0` argument t
 This file imports the stuff it needs, sets up the basics of the Environment variable, exports the necessary variables to the platform SConscript file, and then switches to that file. It also has some stuff specific to the Unit Testing framework I'm developing for SCons which we'll ignore. 
 
 I'll cover this file line by line as it is the general culmination of what we've covered so far: 
-[[!table header="no" class="mointable" data="""
-1 to 4 | Imports some Python libraries and the `build_support.py` and `build_config.py` files to get the required configuration variables and support functions. Notice it uses a from statement to to the imports for `build_support.py` and `build_config.py` so that they can be refered to directly (it's inconvenient to have to say `build_config.build_dir`).
-9 | Sets up the Environment object env that we'll use to configure the build.
-12 to 14 | Appends some additional information that all targets need (targets that don't need it can remove them in the platform SConscript file).
-17 | Exports the variables that each platform SConscript file will need to complete the build configuration. These are later Imported by the platform SConscript file.
-21 | This runs the `SelectBuildDir` function defined in the `build_support.py` file to figure out what the platform build directory should be.
-22 | Tells SCons to use continue processing with the SConscript file in the platform build directory.
-23 | Tells SCons to use the build directory that `SelectBuildDir` returns. The duplicate=0 says not to copy the files from source to the build dir when it builds. This has some consequences, but gives you better error messages.
-24 | Sets up the default target to whatever we described in the `build_config.py` file. This is only a convenience so that people can type "scons" without having to say "scons build/darwin/bombyx".
-28 | This is for the future Unit Test running setup. It creates an alias from "test" to the testrunner program. This lets users do "scons test" and have the testrunner build. This currently works, but I need to add running the test program and also building reports.
-"""]]
+
+| | |
+| --- | --- |
+| 1 to 4 | Imports some Python libraries and the `build_support.py` and `build_config.py` files to get the required configuration variables and support functions. Notice it uses a from statement to to the imports for `build_support.py` and `build_config.py` so that they can be refered to directly (it's inconvenient to have to say `build_config.build_dir`). |
+| 9 | Sets up the Environment object env that we'll use to configure the build. |
+| 12 to 14 | Appends some additional information that all targets need (targets that don't need it can remove them in the platform SConscript file). |
+| 17 | Exports the variables that each platform SConscript file will need to complete the build configuration. These are later Imported by the platform SConscript file. |
+| 21 | This runs the `SelectBuildDir` function defined in the `build_support.py` file to figure out what the platform build directory should be. |
+| 22 | Tells SCons to use continue processing with the SConscript file in the platform build directory. |
+| 23 | Tells SCons to use the build directory that `SelectBuildDir` returns. The duplicate=0 says not to copy the files from source to the build dir when it builds. This has some consequences, but gives you better error messages. |
+| 24 | Sets up the default target to whatever we described in the `build_config.py` file. This is only a convenience so that people can type "scons" without having to say "scons build/darwin/bombyx". |
+| 28 | This is for the future Unit Test running setup. It creates an alias from "test" to the testrunner program. This lets users do "scons test" and have the testrunner build. This currently works, but I need to add running the test program and also building reports. |
 
 This is pretty straight forward and demonstrate some of the features of SCons. You could move things from `build_config.py` as you see fit. For example, if I wanted to have multiple targets, I would probably want to move them to this file where I have more flexibility (`build_config.py` usually just has variable assignments, where SConstruct files can use all of SCons). 
 
@@ -339,12 +340,13 @@ env.Program(target='bombyx', source=sources + static_libs)
 env.Program(target='testrunner', source=test_sources + static_libs)
 ```
 We'll cover this file line by line also so that you can understand each thing going on. It's pretty simple, and I'll demonstrate a regular build for the Linux platform later. 
-[[!table header="no" class="mointable" data="""
+
+| | |
+| --- | --- |
 2 | Imports the variables the the root SConstruct file Exported previously (go look, this is really, really important in this build setup). Make sure you understand this concept. You can call Export() from one SConstruct, switch to another SConscript and then Import those same (or less) variables.
 7 to 12 | We just replace some variables that Mac OS X needs configured differently. This is an example of modifying what the root SConstruct file thinks is correct. Usually you won't have to do this, but Mac OS X is just weird. You could also add extra libraries and other options here.
 16 | This adds a Program target for the 'bombyx' program and sets the sources to the sources and static_libs variables. The sources and static_libs variables were variables we set in the `build_config.py` file, which were exported by the root SConstruct file (and then imported by us). I decided not to use the target I configured in the `build_config.py` to demonstrate that you can change it.
 19 | This file sets up a Program target for `testrunner` that is used to run the Unit Tests. it works the same as what we did in lin 16.
-"""]]
 
 Pretty simple huh? Now, the nice thing is that, when you hit another platform that is similar to Mac OS X (NeXT?), you just make a new directory, copy this SConscript file into it, and make any changes you need. You shouldn't have to edit anything else. 
 
