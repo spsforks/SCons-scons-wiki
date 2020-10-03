@@ -63,8 +63,8 @@ Based on this, here's an example of what happens when you run SCons from the _RO
 
 1. SCons reads the SConstruct file 
 1. SConstruct imports the contents of build_support.py and build_config.py 
-1. SConstruct uses a function ([SelectBuildDir](SelectBuildDir)) from build_support.py to figure out what the target build directory should be. 
-1. The [SelectBuildDir](SelectBuildDir) function does some magic (explained later) to figure out that the darwin target should be built in _ROOT/build/darwin_. 
+1. SConstruct uses a function `SelectBuildDir` from `build_support.py` to figure out what the target build directory should be. 
+1. The `SelectBuildDir` function does some magic (explained later) to figure out that the darwin target should be built in _ROOT/build/darwin_. 
 1. SConstruct switched to _ROOT/build/darwin_ and loads the SConscript file there 
 1. This final SConscript file makes any last minute changes necessary to build on the target system and then starts the build like normal. 
 
@@ -288,31 +288,31 @@ Export("env", "sources", "static_libs", "test_sources")
 # start the build
 target_dir = "#" + SelectBuildDir(build_base_dir)
 SConscript(target_dir + os.sep + "SConscript")
-BuildDir(target_dir, source_base_dir, duplicate=0)
+VariantDir(target_dir, source_base_dir, duplicate=0)
 Default(target_dir + os.sep + target_name)
 
 # this sets up an alias for test that will compile the unit tests
 # into the resulting testrunner program.
 env.Alias("test", target_dir + os.sep + "testrunner")
 ```
-You should be careful of line #23 since it contains the "duplicat=0" argument to ?[BuildDir](BuildDir). This tells SCons to not copy files to the platform build dir (like .h and .cpp stuffs) when it does the build. This is important because the **scons -c** command does not properly clean these files out, and when there are errors you'll get the line numbers from the copied files and not the actual files. This makes it really difficult to find the errors automatically in things like Emacs or Vim. 
+You should be careful of line #23 since it contains the `duplicate=0` argument to [VariantDir](VariantDir()). This tells SCons to not copy files to the platform build dir (like .h and .cpp stuffs) when it does the build. This is important because the **scons -c** command does not properly clean these files out, and when there are errors you'll get the line numbers from the copied files and not the actual files. This makes it really difficult to find the errors automatically in things like Emacs or Vim. 
 
 This file imports the stuff it needs, sets up the basics of the Environment variable, exports the necessary variables to the platform SConscript file, and then switches to that file. It also has some stuff specific to the Unit Testing framework I'm developing for SCons which we'll ignore. 
 
 I'll cover this file line by line as it is the general culmination of what we've covered so far: 
 [[!table header="no" class="mointable" data="""
-1 to 4 | Imports some Python libraries and the build_support.py and build_config.py files to get the required configuration variables and support functions. Notice it uses a from statement to to the imports for build_support.py and build_config.py so that they can be refered to directly (it's inconvenient to have to say build_config.build_dir).
+1 to 4 | Imports some Python libraries and the `build_support.py` and `build_config.py` files to get the required configuration variables and support functions. Notice it uses a from statement to to the imports for `build_support.py` and `build_config.py` so that they can be refered to directly (it's inconvenient to have to say `build_config.build_dir`).
 9 | Sets up the Environment object env that we'll use to configure the build.
 12 to 14 | Appends some additional information that all targets need (targets that don't need it can remove them in the platform SConscript file).
 17 | Exports the variables that each platform SConscript file will need to complete the build configuration. These are later Imported by the platform SConscript file.
-21 | This runs the ?[SelectBuildDir](SelectBuildDir) function defined in the build_support.py file to figure out what the platform build directory should be.
+21 | This runs the `SelectBuildDir` function defined in the `build_support.py` file to figure out what the platform build directory should be.
 22 | Tells SCons to use continue processing with the SConscript file in the platform build directory.
-23 | Tells SCons to use the build directory that [SelectBuildDir](SelectBuildDir) returns. The duplicate=0 says not to copy the files from source to the build dir when it builds. This has some consequences, but gives you better error messages.
-24 | Sets up the default target to whatever we described in the build_config.py file. This is only a convenience so that people can type "scons" without having to say "scons build/darwin/bombyx".
+23 | Tells SCons to use the build directory that `SelectBuildDir` returns. The duplicate=0 says not to copy the files from source to the build dir when it builds. This has some consequences, but gives you better error messages.
+24 | Sets up the default target to whatever we described in the `build_config.py` file. This is only a convenience so that people can type "scons" without having to say "scons build/darwin/bombyx".
 28 | This is for the future Unit Test running setup. It creates an alias from "test" to the testrunner program. This lets users do "scons test" and have the testrunner build. This currently works, but I need to add running the test program and also building reports.
 """]]
 
-This is pretty straight forward and demonstrate some of the features of SCons. You could move things from build_config.py as you see fit. For example, if I wanted to have multiple targets, I would probably want to move them to this file where I have more flexibility (build_config.py usually just has variable assignments, where SConstruct files can use all of SCons). 
+This is pretty straight forward and demonstrate some of the features of SCons. You could move things from `build_config.py` as you see fit. For example, if I wanted to have multiple targets, I would probably want to move them to this file where I have more flexibility (`build_config.py` usually just has variable assignments, where SConstruct files can use all of SCons). 
 
 
 # Platform SConscript Files
@@ -342,7 +342,7 @@ We'll cover this file line by line also so that you can understand each thing go
 [[!table header="no" class="mointable" data="""
 2 | Imports the variables the the root SConstruct file Exported previously (go look, this is really, really important in this build setup). Make sure you understand this concept. You can call Export() from one SConstruct, switch to another SConscript and then Import those same (or less) variables.
 7 to 12 | We just replace some variables that Mac OS X needs configured differently. This is an example of modifying what the root SConstruct file thinks is correct. Usually you won't have to do this, but Mac OS X is just weird. You could also add extra libraries and other options here.
-16 | This adds a Program target for the 'bombyx' program and sets the sources to the sources and static_libs variables. The sources and static_libs variables were variables we set in the `build_config.py` file, which were exported by the root SConstruct file (and then imported by us). I decided not to use the target I configured in the build_config.py to demonstrate that you can change it.
+16 | This adds a Program target for the 'bombyx' program and sets the sources to the sources and static_libs variables. The sources and static_libs variables were variables we set in the `build_config.py` file, which were exported by the root SConstruct file (and then imported by us). I decided not to use the target I configured in the `build_config.py` to demonstrate that you can change it.
 19 | This file sets up a Program target for `testrunner` that is used to run the Unit Tests. it works the same as what we did in lin 16.
 """]]
 
@@ -352,7 +352,7 @@ When you run SCons with this command:
 
 scons 
 
-Then SCons will read the build_config.py, build_support.py, _ROOT/Sconstruct_, and then the _ROOT/build/darwin/SConscript_ file to figure out how to build your program. After that, it just builds it as specified and puts the results in the _ROOT/build/darwin_ directory. 
+Then SCons will read the `build_config.py`, `build_support.py`, _ROOT/Sconstruct_, and then the _ROOT/build/darwin/SConscript_ file to figure out how to build your program. After that, it just builds it as specified and puts the results in the _ROOT/build/darwin_ directory. 
 
 Just for completeness, here's the build file for Linux: 
 ```python
