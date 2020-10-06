@@ -39,7 +39,7 @@ def accumulatorFunction(target, source, env):
       else:
           shutil.copy2(s, destDir) 
 ```
-The above code requires a better copytree() because shutil.copytree() is very limiting.  What is needed is the equivalent of 'cp -R', which the following module provides. 
+The above code requires a better `copytree()` because `shutil.copytree()` is very limiting.  What is needed is the equivalent of `cp -R`, which the following module provides. 
 
 
 ```python
@@ -49,7 +49,7 @@ The above code requires a better copytree() because shutil.copytree() is very li
 
 import os.path
 import shutil
-    
+
 def copytree(src, dest, symlinks=False):
     """My own copyTree which does not fail if the directory exists.
     
@@ -62,6 +62,7 @@ def copytree(src, dest, symlinks=False):
     
     Behavior is meant to be identical to GNU 'cp -R'.    
     """
+
     def copyItems(src, dest, symlinks=False):
         """Function that does all the work.
         
@@ -72,31 +73,30 @@ def copytree(src, dest, symlinks=False):
         See 'cp -R' documentation for more details
         """
         for item in os.listdir(src):
-           srcPath = os.path.join(src, item)
-           if os.path.isdir(srcPath):
-               srcBasename = os.path.basename(srcPath)
-               destDirPath = os.path.join(dest, srcBasename)
-               if not os.path.exists(destDirPath):
-                   os.makedirs(destDirPath)
-               copyItems(srcPath, destDirPath)
-           elif os.path.islink(item) and symlinks:
-               linkto = os.readlink(item)
-               os.symlink(linkto, dest)
-           else:
-               shutil.copy2(srcPath, dest)
-               
+            srcPath = os.path.join(src, item)
+            if os.path.isdir(srcPath):
+                srcBasename = os.path.basename(srcPath)
+                destDirPath = os.path.join(dest, srcBasename)
+                if not os.path.exists(destDirPath):
+                    os.makedirs(destDirPath)
+                copyItems(srcPath, destDirPath)
+            elif os.path.islink(item) and symlinks:
+                linkto = os.readlink(item)
+                os.symlink(linkto, dest)
+            else:
+                shutil.copy2(srcPath, dest)
+
     # case 'cp -R src/ dest/' where dest/ already exists
     if os.path.exists(dest):
-       destPath = os.path.join(dest, os.path.basename(src))
-       if not os.path.exists(destPath):
-           os.makedirs(destPath)
+        destPath = os.path.join(dest, os.path.basename(src))
+        if not os.path.exists(destPath):
+            os.makedirs(destPath)
     # case 'cp -R src/ dest/' where dest/ does not exist
     else:
-       os.makedirs(dest)
-       destPath = dest
+        os.makedirs(dest)
+        destPath = dest
     # actually copy the files
-    copyItems(src, destPath)  
-       
+    copyItems(src, destPath)
 ```
 Using `env.Zip` is not very useful for creating properly rooted ZIP files, but the following builder is: 
 
@@ -105,14 +105,13 @@ Using `env.Zip` is not very useful for creating properly rooted ZIP files, but t
 ##
 ## Zipper.py
 ##
-import distutils.archive_util 
+import distutils.archive_util
 
 def zipperFunction(target, source, env):
-        """Function to use as an action which creates a ZIP file from the arguments"""
-        targetName = str(target[0])
-        sourceDir = str(source[0])
-        distutils.archive_util.make_archive(targetName, 'zip', sourceDir)
-
+    """Function to use as an action which creates a ZIP file from the arguments"""
+    targetName = str(target[0])
+    sourceDir = str(source[0])
+    distutils.archive_util.make_archive(targetName, "zip", sourceDir)
 ```
 To actually create the builders, use the following example: 
 
@@ -124,18 +123,22 @@ To actually create the builders, use the following example:
 env = Environment()
 
 # add builder to accumulate files
-accuBuilder = env.Builder(action=AccumulatorAction.accumulatorFunction,
+accuBuilder = env.Builder(
+    action=AccumulatorAction.accumulatorFunction,
     source_factory=SCons.Node.FS.default_fs.Entry,
     target_factory=SCons.Node.FS.default_fs.Entry,
-    multi=1)
-env['BUILDERS']['Accumulate'] = accuBuilder
+    multi=1,
+)
+env["BUILDERS"]["Accumulate"] = accuBuilder
 
 # add builder to zip files
-zipBuilder = env.Builder(action=Zipper.zipperFunction,
-   source_factory=SCons.Node.FS.default_fs.Entry,
-   target_factory=SCons.Node.FS.default_fs.Entry,
-   multi=0)
-env['BUILDERS']['Zipper'] = zipBuilder
+zipBuilder = env.Builder(
+    action=Zipper.zipperFunction,
+    source_factory=SCons.Node.FS.default_fs.Entry,
+    target_factory=SCons.Node.FS.default_fs.Entry,
+    multi=0,
+)
+env["BUILDERS"]["Zipper"] = zipBuilder
 ```
 And you are done!  Quite the hassle, but I think the result is worthwhile (IMHO).  See the following code example for yourself: 
 
@@ -144,13 +147,13 @@ And you are done!  Quite the hassle, but I think the result is worthwhile (IMHO)
 ##
 ## SConstruct
 ##
-env.Accumulate('distDir/src', 'main.cpp')
-env.Accumulate('distDir/images', 'something.png')
+env.Accumulate("distDir/src", "main.cpp")
+env.Accumulate("distDir/images", "something.png")
 
-Export('env')
-SConscript('inner/SConscript')
+Export("env")
+SConscript("inner/SConscript")
 
-env.Zipper('package'   , 'distDir')
+env.Zipper("package", "distDir")
 ```
 
 ```python
