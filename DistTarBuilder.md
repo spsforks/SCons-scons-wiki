@@ -135,9 +135,7 @@ def disttar_suffix(env, sources):
 
 
 def generate(env):
-    """
-        Add builders and construction variables for the DistTar builder.
-        """
+    """Add builders and construction variables for the DistTar builder."""
 
     disttar_action = SCons.Action.Action(disttar, disttar_string)
     env["BUILDERS"]["DistTar"] = Builder(
@@ -151,9 +149,7 @@ def generate(env):
 
 
 def exists(env):
-    """
-        Make sure this tool exists.
-        """
+    """Make sure this tool exists."""
     try:
         import os
         import tarfile
