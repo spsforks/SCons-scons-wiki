@@ -1,4 +1,4 @@
-
+Note: this page has undergone some conversion since publication, to reflect that Python 3 is current, since this is a topic that continues to come up with projects using SCons and including "external" libraries.  In its current form it is untested - please let us know and/or supply corrections if issues are discovered.__
 
 # Download- & Unpack-Builder
 
@@ -579,7 +579,6 @@ The builder can be used with
 
 
 ```python
-#!python 
 # use without injection
 env.Unpack( "<target-name>", "<archive file>" )
 
@@ -589,7 +588,7 @@ env.Unpack( "<target-name>", "<archive file>", UNPACKLIST=[<list of files in the
 
 ## Conclusion
 
-In the example the working process is shown. The example builds [LUA](https://www.lua.org/) by downloading the source package, extracting and building. LUA has got a Makefile in the source directory, but on MSVC or MinGW the build file must be created manually. With this solution the library can be build with SCons only. 
+In this example the working process is shown. The example builds [LUA](https://www.lua.org/) by downloading the source package, extracting and building. LUA has got a Makefile in the source directory, but on MSVC or MinGW the build file must be created manually. With this solution the library can be build with SCons only. 
 
 
 ```python
