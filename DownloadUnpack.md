@@ -4,7 +4,7 @@
 
 The idea for these builders is created by the requirement that a project uses different libraries and some libraries must be installed with different compiler- and linker options. The libraries must be also updated during the project lifetime. The task of the builders should be: 
 
-1. download the source code of a library (eg tar.gz / tar.bz2) 
+1. download a source code release of a library (e.g. tar.gz / tar.bz2) 
 1. unpack this file 
 1. build the source code with SCons to a shared / static library 
 1. install the header files and library
@@ -13,7 +13,7 @@ The idea for these builders is created by the requirement that a project uses di
 ![process diagram](DownloadUnpack/process.png)
 
 
-The picture shows the build process of a shared library, so the latest version of a library should be read from the project webpage, the download URL should be pushed to the builder, that gets the file, this file is pushed to a builder, which extracts the file and pushs the file content, which is needed by the shared library builder, to SCons [SharedLibrary](SharedLibrary) call, which is build finally the library. The update process is worked in an equal way, because only the URL changes.  
+The picture shows the build process of a shared library, so the latest version of a library should be read from the project webpage, the download URL should be pushed to the builder that gets the file, this file is pushed to a builder, which extracts the file and pushes the file content, which is needed by the shared library builder, to SCons `SharedLibrary()` call, which finally builds the library. The update process is worked in an equal way, because only the URL changes.  
 
 
 ## Download Builder
@@ -133,7 +133,6 @@ The builder can be used with (the URL can be any URL type which is supported by 
 
 
 ```python
-#!python 
 env.URLDownload( "<filename>", "<download url>" )
 ```
 
@@ -143,18 +142,15 @@ The next step is an Unpack-Builder, that can unpack a tar.gz or tar.bz2 file. Un
 
 
 ```python
-#!python 
 import subprocess, os
 import SCons.Errors, SCons.Warnings, SCons.Util
 
-
-
 # enables Scons warning for this builder
-class UnpackWarning(SCons.Warnings.Warning) :
+class UnpackWarning(SCons.Warnings.Warning):
     pass
 
-SCons.Warnings.enableWarningClass(UnpackWarning)
 
+SCons.Warnings.enableWarningClass(UnpackWarning)
 
 
 # extractor function for Tar output
@@ -162,8 +158,9 @@ SCons.Warnings.enableWarningClass(UnpackWarning)
 # @param count number of returning lines
 # @param no number of the output line
 # @param i line content
-def __fileextractor_nix_tar( env, count, no, i ) :
+def __fileextractor_nix_tar(env, count, no, i):
     return i.split()[-1]
+
 
 # extractor function for GZip output,
 # ignore the first line
@@ -171,10 +168,11 @@ def __fileextractor_nix_tar( env, count, no, i ) :
 # @param count number of returning lines
 # @param no number of the output line
 # @param i line content
-def __fileextractor_nix_gzip( env, count, no, i ) :
-    if no == 0 :
+def __fileextractor_nix_gzip(env, count, no, i):
+    if no == 0:
         return None
     return i.split()[-1]
+
 
 # extractor function for Unzip output,
 # ignore the first & last two lines
@@ -182,57 +180,77 @@ def __fileextractor_nix_gzip( env, count, no, i ) :
 # @param count number of returning lines
 # @param no number of the output line
 # @param i line content
-def __fileextractor_nix_unzip( env, count, no, i ) :
-    if no < 3 or no >= count - 2 :
+def __fileextractor_nix_unzip(env, count, no, i):
+    if no < 3 or no >= count - 2:
         return None
     return i.split()[-1]
+
 
 # extractor function for 7-Zip
 # @param env environment object
 # @param count number of returning lines
 # @param no number of the output line
 # @param i line content
-def __fileextractor_win_7zip( env, count, no, i ) :
+def __fileextractor_win_7zip(env, count, no, i):
     item = i.split()
-    if no > 8 and no < count - 2 :
+    if no > 8 and no < count - 2:
         return item[-1]
     return None
-
-
 
 
 # returns the extractor item for handling the source file
 # @param source input source file
 # @param env environment object
 # @return extractor entry or None on non existing
-def __getExtractor( source, env ) :
+def __getExtractor(source, env):
     # we check each unpacker and get the correct list command first, run the command and
     # replace the target filelist with the list values, we sorte the extractors by their priority
-    for unpackername, extractor in sorted(env["UNPACK"]["EXTRACTOR"].iteritems(), key = lambda (k,v) : (v["PRIORITY"],k)):
+    for unpackername, extractor in sorted(
+        iter(env["UNPACK"]["EXTRACTOR"].tems()), key=lambda (k, v): (v["PRIORITY"], k)
+    ):
 
-        if not SCons.Util.is_String(extractor["RUN"]) :
-            raise SCons.Errors.StopError("list command of the unpack builder for [%s] archives is not a string" % (unpackername))
-        if not len(extractor["RUN"]) :
-            raise SCons.Errors.StopError("run command of the unpack builder for [%s] archives is not set - can not extract files" % (unpackername))
+        if not SCons.Util.is_String(extractor["RUN"]):
+            raise SCons.Errors.StopError(
+                "list command of the unpack builder for [%s] archives is not a string"
+                % (unpackername)
+            )
+        if not len(extractor["RUN"]):
+            raise SCons.Errors.StopError(
+                "run command of the unpack builder for [%s] archives is not set - can not extract files"
+                % (unpackername)
+            )
 
+        if not SCons.Util.is_String(extractor["LISTFLAGS"]):
+            raise SCons.Errors.StopError(
+                "list flags of the unpack builder for [%s] archives is not a string"
+                % (unpackername)
+            )
+        if not SCons.Util.is_String(extractor["LISTCMD"]):
+            raise SCons.Errors.StopError(
+                "list command of the unpack builder for [%s] archives is not a string"
+                % (unpackername)
+            )
 
-        if not SCons.Util.is_String(extractor["LISTFLAGS"]) :
-            raise SCons.Errors.StopError("list flags of the unpack builder for [%s] archives is not a string" % (unpackername))
-        if not SCons.Util.is_String(extractor["LISTCMD"]) :
-            raise SCons.Errors.StopError("list command of the unpack builder for [%s] archives is not a string" % (unpackername))
-
-        if not SCons.Util.is_String(extractor["EXTRACTFLAGS"]) :
-            raise SCons.Errors.StopError("extract flags of the unpack builder for [%s] archives is not a string" % (unpackername))
-        if not SCons.Util.is_String(extractor["EXTRACTCMD"]) :
-            raise SCons.Errors.StopError("extract command of the unpack builder for [%s] archives is not a string" % (unpackername))
-
+        if not SCons.Util.is_String(extractor["EXTRACTFLAGS"]):
+            raise SCons.Errors.StopError(
+                "extract flags of the unpack builder for [%s] archives is not a string"
+                % (unpackername)
+            )
+        if not SCons.Util.is_String(extractor["EXTRACTCMD"]):
+            raise SCons.Errors.StopError(
+                "extract command of the unpack builder for [%s] archives is not a string"
+                % (unpackername)
+            )
 
         # check the source file suffix and if the first is found, run the list command
-        if not SCons.Util.is_List(extractor["SUFFIX"]) :
-            raise SCons.Errors.StopError("suffix list of the unpack builder for [%s] archives is not a list" % (unpackername))
+        if not SCons.Util.is_List(extractor["SUFFIX"]):
+            raise SCons.Errors.StopError(
+                "suffix list of the unpack builder for [%s] archives is not a list"
+                % (unpackername)
+            )
 
-        for suffix in extractor["SUFFIX"] :
-            if str(source[0]).lower()[-len(suffix):] == suffix.lower() :
+        for suffix in extractor["SUFFIX"]:
+            if str(source[0]).lower()[-len(suffix) :] == suffix.lower():
                 return extractor
 
     return None
@@ -243,36 +261,41 @@ def __getExtractor( source, env ) :
 # @param target target name
 # @param source source name
 # @param env environment object
-def __message( s, target, source, env ) :
-    print "extract [%s] ..." % (source[0])
+def __message(s, target, source, env):
+    print("extract [%s] ..." % (source[0]))
 
 
 # action function for extracting of the data
 # @param target target packed file
 # @param source extracted files
 # @param env environment object
-def __action( target, source, env ) :
+def __action(target, source, env):
     extractor = __getExtractor(source, env)
-    if not extractor :
-        raise SCons.Errors.StopError( "can not find any extractor value for the source file [%s]" % (source[0]) )
-
+    if not extractor:
+        raise SCons.Errors.StopError(
+            "can not find any extractor value for the source file [%s]" % (source[0])
+        )
 
     # if the extract command is empty, we create an error
-    if len(extractor["EXTRACTCMD"]) == 0 :
-        raise SCons.Errors.StopError( "the extractor command for the source file [%s] is empty" % (source[0]) )
+    if len(extractor["EXTRACTCMD"]) == 0:
+        raise SCons.Errors.StopError(
+            "the extractor command for the source file [%s] is empty" % (source[0])
+        )
 
     # build it now (we need the shell, because some programs need it)
     handle = None
-    cmd    = env.subst(extractor["EXTRACTCMD"], source=source, target=target)
+    cmd = env.subst(extractor["EXTRACTCMD"], source=source, target=target)
 
-    if env["UNPACK"]["VIWEXTRACTOUTPUT"] :
-        handle  = subprocess.Popen( cmd, shell=True )
-    else :
+    if env["UNPACK"]["VIWEXTRACTOUTPUT"]:
+        handle = subprocess.Popen(cmd, shell=True)
+    else:
         devnull = open(os.devnull, "wb")
-        handle  = subprocess.Popen( cmd, shell=True, stdout=devnull )
+        handle = subprocess.Popen(cmd, shell=True, stdout=devnull)
 
-    if handle.wait() <> 0 :
-        raise SCons.Errors.BuildError( "error running extractor [%s] on the source [%s]" % (cmd, source[0])  )
+    if handle.wait() != 0:
+        raise SCons.Errors.BuildError(
+            "error running extractor [%s] on the source [%s]" % (cmd, source[0])
+        )
 
 
 # emitter function for getting the files
@@ -280,58 +303,80 @@ def __action( target, source, env ) :
 # @param target target packed file
 # @param source extracted files
 # @param env environment object
-def __emitter( target, source, env ) :
+def __emitter(target, source, env):
     extractor = __getExtractor(source, env)
-    if not extractor :
-        raise SCons.Errors.StopError( "can not find any extractor value for the source file [%s]" % (source[0]) )
+    if not extractor:
+        raise SCons.Errors.StopError(
+            "can not find any extractor value for the source file [%s]" % (source[0])
+        )
 
     # we do a little trick, because in some cases we do not have got a physical
     # file (eg we download a packed archive), so we don't get a list or knows
     # the targets. On physical files we can do this with the LISTCMD, but on
     # non-physical files we hope the user knows the target files, so we inject
     # this knowledge into the return target.
-    if env.has_key("UNPACKLIST") :
-        if not SCons.Util.is_List(env["UNPACKLIST"]) and not SCons.Util.is_String(env["UNPACKLIST"]) :
-            raise SCons.Errors.StopError( "manual target list of [%s] must be a string or list" % (source[0]) )
-        if not env["UNPACKLIST"] :
-            raise SCons.Errors.StopError( "manual target list of [%s] need not be empty" % (source[0]) )
+    if "UNPACKLIST" in env:
+        if not SCons.Util.is_List(env["UNPACKLIST"]) and not SCons.Util.is_String(
+            env["UNPACKLIST"]
+        ):
+            raise SCons.Errors.StopError(
+                "manual target list of [%s] must be a string or list" % (source[0])
+            )
+        if not env["UNPACKLIST"]:
+            raise SCons.Errors.StopError(
+                "manual target list of [%s] need not be empty" % (source[0])
+            )
         return env["UNPACKLIST"], source
 
-
     # we check if the source file exists, because we would like to read the data
-    if not source[0].exists() :
-        raise SCons.Errors.StopError( "source file [%s] must be exist" % (source[0]) )
+    if not source[0].exists():
+        raise SCons.Errors.StopError("source file [%s] must be exist" % (source[0]))
 
     # create the list command and run it in a subprocess and pipes the output to a variable,
     # we need the shell for reading data from the stdout
-    cmd    = env.subst(extractor["LISTCMD"], source=source, target=target)
-    handle = subprocess.Popen( cmd, shell=True, stdout=subprocess.PIPE )
+    cmd = env.subst(extractor["LISTCMD"], source=source, target=target)
+    handle = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
     target = handle.stdout.readlines()
     handle.communicate()
-    if handle.returncode <> 0 :
-        raise SCons.Errors.StopError("error on running list command [%s] of the source file [%s]" % (cmd, source[0]) )
+    if handle.returncode != 0:
+        raise SCons.Errors.StopError(
+            "error on running list command [%s] of the source file [%s]"
+            % (cmd, source[0])
+        )
 
     # if the returning output exists and the listseperator is a callable structure
     # we run it for each line of the output and if the return of the callable is
     # a string we push it back to the target list
-    try :
-        if callable(extractor["LISTEXTRACTOR"]) :
-            target = filter( lambda s : SCons.Util.is_String(s), [ extractor["LISTEXTRACTOR"]( env, len(target), no, i) for no, i in enumerate(target) ] )
-    except Exception, e :
-        raise SCons.Errors.StopError( "%s" % (e) )
+    try:
+        if callable(extractor["LISTEXTRACTOR"]):
+            target = list(filter()
+                lambda s: SCons.Util.is_String(s),
+                [
+                    extractor["LISTEXTRACTOR"](env, len(target), no, i)
+                    for no, i in enumerate(target)
+                ],
+            ))
+    except Exception as e:
+        raise SCons.Errors.StopError("%s" % (e))
 
     # the line removes duplicated names - we need this line, otherwise a cyclic dependency error will occured,
     # because the list process can create redundant data (an archive file can not store redundant content in a filepath)
     target = [i.strip() for i in list(set(target))]
-    if not target :
-        SCons.Warnings.warn(UnpackWarning, "emitter file list on target [%s] is empty, please check your extractor list function [%s]" % (source[0], cmd) )
+    if not target:
+        SCons.Warnings.warn(
+            UnpackWarning,
+            "emitter file list on target [%s] is empty, please check your extractor list function [%s]"
+            % (source[0], cmd),
+        )
 
     # we append the extractdir to each target if is not absolut
-    if env["UNPACK"]["EXTRACTDIR"] <> "." :
-        target = [i if os.path.isabs(i) else os.path.join(env["UNPACK"]["EXTRACTDIR"], i) for i in target]
+    if env["UNPACK"]["EXTRACTDIR"] != ".":
+        target = [
+            i if os.path.isabs(i) else os.path.join(env["UNPACK"]["EXTRACTDIR"], i)
+            for i in target
+        ]
 
     return target, source
-
 
 
 # generate function, that adds the builder to the environment
@@ -424,7 +469,7 @@ def generate( env ) :
     }
 
     # read tools for Windows system
-    if env["PLATFORM"] <> "darwin" and "win" in env["PLATFORM"] :
+    if env["PLATFORM"] != "darwin" and "win" in env["PLATFORM"] :
 
         if env.WhereIs("7z") :
             toolset["EXTRACTOR"]["TARGZ"]["RUN"]           = "7z"
@@ -472,8 +517,6 @@ def generate( env ) :
         # here can add some other Windows tools, that can handle the archive files
         # but I don't know which ones can handle all file types
 
-
-
     # read the tools on *nix systems and sets the default parameters
     elif env["PLATFORM"] in ["darwin", "linux", "posix"] :
 
@@ -502,11 +545,11 @@ def generate( env ) :
             toolset["EXTRACTOR"]["TARBZ"]["LISTFLAGS"]     = "tvfj"
             toolset["EXTRACTOR"]["TARBZ"]["EXTRACTSUFFIX"] = "-C ${UNPACK['EXTRACTDIR']}"
 
-        if env.WhereIs("bzip2") :
+        if env.WhereIs("bzip2"):
             toolset["EXTRACTOR"]["BZIP"]["RUN"]            = "bzip2"
             toolset["EXTRACTOR"]["BZIP"]["EXTRACTFLAGS"]   = "-df"
 
-        if env.WhereIs("gzip") :
+        if env.WhereIs("gzip"):
             toolset["EXTRACTOR"]["GZIP"]["RUN"]            = "gzip"
             toolset["EXTRACTOR"]["GZIP"]["LISTEXTRACTOR"]  = __fileextractor_nix_gzip
             toolset["EXTRACTOR"]["GZIP"]["LISTFLAGS"]      = "-l"
@@ -515,7 +558,7 @@ def generate( env ) :
     else :
         raise SCons.Errors.StopError("Unpack tool detection on this platform [%s] unkown" % (env["PLATFORM"]))
 
-    # the target_factory must be a "Entry", because the target list can be files and dirs, so we can not specified the targetfactory explicite
+    # the target_factory must be an "Entry", because the target list can be files and dirs, so we can not specify the targetfactory explicitly
     env.Replace(UNPACK = toolset)
     env["BUILDERS"]["Unpack"] = SCons.Builder.Builder( action = __action,  emitter = __emitter,  target_factory = SCons.Node.FS.Entry,  source_factory = SCons.Node.FS.File,  single_source = True,  PRINT_CMD_LINE_FUNC = __message )
 
@@ -643,8 +686,8 @@ elif env["PLATFORM"] == "win32":
 
 env.SharedLibrary(target="lua", source=extract)
 ```
-For each library a "download URL" function is used, which extracts with regular expressions the download URL from the project homepage. This function is called by the Download builder. The Download builder returns a filename, which is also used for the directoryname of the extracted data. The injection list of the Unpack builder can be created by the filenames and Python defaults path-join calls. After that the normale SCons C build process with [SharedLibrary](SharedLibrary) is started. 
+For each library a "download URL" function is used, which extracts with regular expressions the download URL from the project homepage. This function is called by the Download builder. The Download builder returns a filename, which is also used for the directoryname of the extracted data. The injection list of the Unpack builder can be created by the filenames and Python defaults path-join calls. After that the normale SCons C build process with `SharedLibrary()` is started. 
 
-In my build processes I use a target / alias `library` which downloads, extracts and compiles all libraries that are needed by the project. The compiled libraries and their headers are stored in a subdirectory of the project `library/<name of the library>/<version of the library>`. With this process the update to a new library version is very easy, because it is full automated. For large libraries eg [Qt](https://qt-project.org/) or [Boost](https://www.boost.org) this automation is very helpfull. The Boost installation process uses by default the bJam / b2 compiler, which can be build by a bootstrap process, so for my Boost building process I call `env.Command` after the unpack call, so the bJam / b2 is build first and after that, the command runs the build process of the library. For other libraries (eg [LaPack](https://www.netlib.org/lapack/) or [HDF](https://www.hdfgroup.org/HDF5/)) I call [CMake](https://www.cmake.org/) from the command call, so SCons wraps only the library default build process. During the linking process of my project the SConstruct scripts scans the library installation directory and gets always the library with the latest / newest version (see [Distutils Version](https://docs.python.org/2/distutils/apiref.html#module-distutils.version)), so the project upgrade to a new library version is very fast. 
+In my build processes I use a target / alias `library` which downloads, extracts and compiles all libraries that are needed by the project. The compiled libraries and their headers are stored in a subdirectory of the project `library/<name of the library>/<version of the library>`. With this process the update to a new library version is very easy, because it is full automated. For large libraries eg [Qt](https://qt-project.org/) or [Boost](https://www.boost.org) this automation is very helpfull. The Boost installation process uses by default the bJam / b2 compiler, which can be build by a bootstrap process, so for my Boost building process I call `env.Command` after the unpack call, so the bJam / b2 is build first and after that, the command runs the build process of the library. For other libraries (eg [LaPack](https://www.netlib.org/lapack/) or [HDF](https://www.hdfgroup.org/HDF5/)) I call [CMake](https://www.cmake.org/) from the command call, so SCons wraps only the library default build process. During the linking process of my project the SConstruct scripts scans the library installation directory and gets always the library with the latest / newest version (see [Distutils Version](https://docs.python.org/3/distutils/apiref.html#module-distutils.version)), so the project upgrade to a new library version is very fast. 
 
-The source code of both builder can be downloaded here: [Unpack-Builder](https://github.com/flashpixx/Storage/blob/master/Scons/site_scons/site_tools/Unpack.py) / [Download-Builder](https://github.com/flashpixx/Storage/blob/master/Scons/site_scons/site_tools/URLDownload.py) 
+The source code of both builder can be downloaded here: [Unpack-Builder](https://github.com/flashpixx/Storage/blob/master/Scons/site_scons/site_tools/Unpack.py) / [Download-Builder](https://github.com/flashpixx/Storage/blob/master/Scons/site_scons/site_tools/URLDownload.py) **NOTE: stale links**
