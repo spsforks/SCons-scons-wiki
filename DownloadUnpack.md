@@ -1,4 +1,4 @@
-Note: this page has undergone some conversion since publication, to reflect that Python 3 is current, since this is a topic that continues to come up with projects using SCons and including "external" libraries.  In its current form it is untested - please let us know and/or supply corrections if issues are discovered.__
+_Note: this page has undergone some conversion since publication, to reflect that Python 3 is current, since this is a topic that continues to come up with projects using SCons and including "external" libraries.  In its current form it is untested - please let us know and/or supply corrections if issues are discovered._
 
 # Download- & Unpack-Builder
 
