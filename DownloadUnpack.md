@@ -18,45 +18,44 @@ The picture shows the build process of a shared library, so the latest version o
 
 ## Download Builder
 
-The Download-Builder should only download a file from an URL input. Python supports the [URLLib2 extension](http://docs.python.org/2/library/urllib2.html). The filename of the downloaded file can be created by the users target name or should be created by the server, that sends the file. This information can be handle by Python's [URLParse extension](http://docs.python.org/2/library/urlparse.html). 
+The Download-Builder should only download a file from a URL input. Python supports the [`urllib` package](https://docs.python.org/3/library/urllib.html). The filename of the downloaded file can be created by the users target name or should be created by the server, that sends the file. This information can be handle by Python's [`urllib.parse` module](https://docs.python.org/3/library/urllib.parse.html#module-urllib.parse).
 
 
 ```python
-#!python 
-import urllib2, urlparse
+import urllib.request, urllib.error, urllib.parse
 import SCons.Builder, SCons.Node, SCons.Errors
 
 
 # define an own node, for checking the data behind the URL,
 # we must download only than, if the data is changed, the
 # node derivates from the Python.Value node
-class URLNode(SCons.Node.Python.Value) :
+class URLNode(SCons.Node.Python.Value):
 
     # overload the get_csig (copy the source from the
     # Python.Value node and append the data of the URL header
-    def get_csig(self, calc=None): 
-        try: 
-            return self.ninfo.csig 
-        except AttributeError: 
-            pass 
-        
+    def get_csig(self, calc=None):
+        try:
+            return self.ninfo.csig
+        except AttributeError:
+            pass
+
         # read URL header information
-        try :
-            response = urllib2.urlopen( str(self.value) ).info()
-        except Exception, e :
-            raise SCons.Errors.StopError( e )
-            
+        try:
+            response = urllib.request.urlopen(str(self.value)).info()
+        except Exception as e:
+            raise SCons.Errors.StopError(e)
+
         contents = ""
         # append the data from the URL header if exists
         # otherwise the returning data is equal to the Python.Value node
-        if "Last-Modified" in response :
+        if "Last-Modified" in response:
             contents = contents + response["Last-Modified"]
-        if "Content-Length" in response :
+        if "Content-Length" in response:
             contents = contents + response["Content-Length"]
-        if not contents :
-            contents = self.get_contents() 
-        self.get_ninfo().csig = contents 
-        return contents 
+        if not contents:
+            contents = self.get_contents()
+        self.get_ninfo().csig = contents
+        return contents
 
 
 # creates the downloading output message
@@ -64,9 +63,8 @@ class URLNode(SCons.Node.Python.Value) :
 # @param target target name
 # @param source source name
 # @param env environment object
-def __message( s, target, source, env ) :
-    print "downloading [%s] to [%s] ..." % (source[0], target[0])
-
+def __message(s, target, source, env):
+    print("downloading [%s] to [%s] ..." % (source[0], target[0]))
 
 
 # the download function, which reads the data from the URL
@@ -74,58 +72,64 @@ def __message( s, target, source, env ) :
 # @param target target file on the local drive
 # @param source URL
 # @param env environment object
-def __action( target, source, env ) :
-    try :
-        stream = urllib2.urlopen( str(source[0]) )
-        file   = open( str(target[0]), "wb" )
+def __action(target, source, env):
+    try:
+        stream = urllib.request.urlopen(str(source[0]))
+        file = open(str(target[0]), "wb")
         file.write(stream.read())
         file.close()
         stream.close()
-    except Exception, e :
-        raise SCons.Errors.StopError( e )
+    except Exception as e:
+        raise SCons.Errors.StopError(e)
 
 
 # defines the emitter of the builder
 # @param target target file on the local drive
 # @param source URL
 # @param env environment object
-def __emitter( target, source, env ) :
+def __emitter(target, source, env):
     # we need a temporary file, because the dependency graph
     # of Scons need a physical existing file - so we prepare it
     target[0].prepare()
 
-    if not env.get("URLDOWNLOAD_USEURLFILENAME", False) :
+    if not env.get("URLDOWNLOAD_USEURLFILENAME", False):
         return target, source
 
-    try :
-        url = urlparse.urlparse( str(source[0]) )
-    except Exception, e :
-        raise SCons.Errors.StopError( e )
+    try:
+        url = urllib.parse.urlparse(str(source[0]))
+    except Exception as e:
+        raise SCons.Errors.StopError(e)
 
     return url.path.split("/")[-1], source
-
 
 
 # generate function, that adds the builder to the environment,
 # the value "DOWNLOAD_USEFILENAME" replaces the target name with
 # the filename of the URL
 # @param env environment object
-def generate( env ) :
-    env["BUILDERS"]["URLDownload"] = SCons.Builder.Builder( action = __action,  emitter = __emitter,  target_factory = SCons.Node.FS.File,  source_factory = URLNode,  single_source = True,  PRINT_CMD_LINE_FUNC = __message )
-    env.Replace(URLDOWNLOAD_USEURLFILENAME =  True )
+def generate(env):
+    env["BUILDERS"]["URLDownload"] = SCons.Builder.Builder(
+        action=__action,
+        emitter=__emitter,
+        target_factory=SCons.Node.FS.File,
+        source_factory=URLNode,
+        single_source=True,
+        PRINT_CMD_LINE_FUNC=__message,
+    )
+    env.Replace(URLDOWNLOAD_USEURLFILENAME=True)
 
 
 # existing function of the builder
 # @param env environment object
 # @return true
-def exists(env) :
+def exists(env):
     return 1
 ```
-The `__action` is the builder function, that downloads the file. The function uses the URLLib2 object and writes the data to a file stream with the target name. The emitter function `__emitter` defines the emitter function, so this function translates the URL filename into the target filename. Within the builder this option can be enabled / disabled by setting the flag `URLDOWNLOAD_USEURLFILENAME` with a boolean value. The URLParse extension can read the file information and returns it. The emitter is run before the builder creates the file (downloads the data to a file), so the emitter must be "prepare" the target first. 
+The `__action` is the builder function, that downloads the file. The function uses the urllib object and writes the data to a file stream with the target name. The emitter function `__emitter` defines the emitter function, so this function translates the URL filename into the target filename. Within the builder this option can be enabled / disabled by setting the flag `URLDOWNLOAD_USEURLFILENAME` with a boolean value. The URLParse extension can read the file information and returns it. The emitter is run before the builder creates the file (downloads the data to a file), so the emitter must be "prepare" the target first. 
 
 The `generate` function initializes the builder, so the emitter and action function are set. The `single_source` option is set to true, because the builder creates only one file. Important options are the `target_factory` and the `source_factory`, because this builder should create a file, so the `target_factory` must be set to a file, but the `source_factory` gets an URL input, so a normal string (Python) value must be used. The target should be build only if the data behind the source is changed, an URL is a static value, so we need a check on the server. In this case we need to define our own node (`URLNode`). This node derivate all data from the `SCons.Node.Python.Value`, be we need to overload the `get_csig`, because with this method SCons creates the information if a target is up-to-date. I have copied the content from the `SCons.Node.Python.Value` and append only the URL header information. 
 
-The builder can be used with (the URL can be any URL type which is supported by Pythons URLLIB2) 
+The builder can be used with (the URL can be any URL type which is supported by Pythons urllib) 
 
 
 ```python
@@ -135,7 +139,7 @@ env.URLDownload( "<filename>", "<download url>" )
 
 ## Unpack Builder
 
-The next step is an Unpack-Builder, that can unpack a tar.gz or tar.bz2 file. Unix derivatives uses GZip, BZip2 and Tar for extracting these filetypes, which are often part of the distribution. On MS Windows [7-Zip](http://www.7-zip.org/) can handle these files, so the builder uses depend on the system the correct toolset. Each tool can return another format of the archive file & directory list, so the builder must understand the format for create the correct target list, in this case the builder supports a callable Python structure that splits the text output of the tool into a target file list. Because of this circumstances the call of the extracting tool must catch the output. The emitter of the builder should create a file list with individual split of the output and the builder should run the extract command. 
+The next step is an Unpack-Builder, that can unpack a tar.gz or tar.bz2 file. Unix derivatives uses GZip, BZip2 and Tar for extracting these filetypes, which are often part of the distribution. On MS Windows [7-Zip](https://www.7-zip.org/) can handle these files, so the builder uses depend on the system the correct toolset. Each tool can return another format of the archive file & directory list, so the builder must understand the format for create the correct target list, in this case the builder supports a callable Python structure that splits the text output of the tool into a target file list. Because of this circumstances the call of the extracting tool must catch the output. The emitter of the builder should create a file list with individual split of the output and the builder should run the extract command. 
 
 
 ```python
@@ -542,62 +546,105 @@ env.Unpack( "<target-name>", "<archive file>", UNPACKLIST=[<list of files in the
 
 ## Conclusion
 
-In the example the working process is shown. The example builds [LUA](http://www.lua.org/) by downloading the source package, extracting and building. LUA has got a Makefile in the source directory, but on MSVC or MinGW the build file must be created manually. With this solution the library can be build with SCons only. 
+In the example the working process is shown. The example builds [LUA](https://www.lua.org/) by downloading the source package, extracting and building. LUA has got a Makefile in the source directory, but on MSVC or MinGW the build file must be created manually. With this solution the library can be build with SCons only. 
 
 
 ```python
-#!python 
-import urllib2, re, os
+import urllib.request, urllib.error, urllib.parse, re, os
 import SCons.Errors
 
 
 # function that extract the URL from LUA's webpage
-def LUA_DownloadURL() :
+def LUA_DownloadURL():
     # read download path of the LUA library (latest version)
-    f = urllib2.urlopen("http://www.lua.org/download.html")
+    f = urllib.request.urlopen("https://www.lua.org/download.html")
     html = f.read()
     f.close()
 
     found = re.search("<a href=\"ftp/lua-(.*)\.tar\.gz\">", html, re.IGNORECASE)
-    if found == None :
+    if found == None:
         raise SCons.Errors.StopError("LUA Download URL not found")
 
     downloadurl = found.group(0).replace("\"", "").replace("<", "").replace(">", "")
     downloadurl = re.sub(r'(?i)a href=', "", downloadurl)
 
-    return "http://www.lua.org/" + downloadurl
+    return "https://www.lua.org/" + downloadurl
 
 
 # create environment
-env        = Environment( tools = ["default", "URLDownload", "Unpack"], ENV = os.environ )
+env = Environment(tools=["default", "URLDownload", "Unpack"], ENV=os.environ)
 
 # downloads the LUA source package
-dw         = env.URLDownload( "lua-download", LUA_DownloadURL() )
+dw = env.URLDownload("lua-download", LUA_DownloadURL())
 
 # create the extract directory and call the unpack builder with an injection list
-extractdir = str(dw).replace("'", "").replace("[", "").replace("]", "").replace(".tar.gz", "")
-extract    = env.Unpack("lua-extract",  dw, UNPACKLIST=[os.path.join(extractdir, "src", i) for i in [ "lapi.c", "lcode.c", "lctype.c", "ldebug.c", "ldo.c", "ldump.c", "lfunc.c", "lgc.c", "llex.c", "lmem.c", "lobject.c", "lopcodes.c", "lparser.c", "lstate.c", "lstring.c", "ltable.c", "ltm.c", "lundump.c", "lvm.c", "lzio.c", "lauxlib.c", "lbaselib.c", "lbitlib.c", "lcorolib.c", "ldblib.c", "liolib.c", "lmathlib.c", "loslib.c", "lstrlib.c", "ltablib.c", "loadlib.c", "linit.c"]])
+extractdir = (
+    str(dw).replace("'", "").replace("[", "").replace("]", "").replace(".tar.gz", "")
+)
+extract = env.Unpack(
+    "lua-extract",
+    dw,
+    UNPACKLIST=[
+        os.path.join(extractdir, "src", i)
+        for i in [
+            "lapi.c",
+            "lcode.c",
+            "lctype.c",
+            "ldebug.c",
+            "ldo.c",
+            "ldump.c",
+            "lfunc.c",
+            "lgc.c",
+            "llex.c",
+            "lmem.c",
+            "lobject.c",
+            "lopcodes.c",
+            "lparser.c",
+            "lstate.c",
+            "lstring.c",
+            "ltable.c",
+            "ltm.c",
+            "lundump.c",
+            "lvm.c",
+            "lzio.c",
+            "lauxlib.c",
+            "lbaselib.c",
+            "lbitlib.c",
+            "lcorolib.c",
+            "ldblib.c",
+            "liolib.c",
+            "lmathlib.c",
+            "loslib.c",
+            "lstrlib.c",
+            "ltablib.c",
+            "loadlib.c",
+            "linit.c",
+        ]
+    ],
+)
 
 # define compiler and linker options depend on the toolkit (here Linux, MSVC (Win32) and OSX),
 # but the platform detection should be better (eg with a script parameter)
-env.AppendUnique(CPPDEFINES  = ["LUA_COMPAT_ALL", "NDEBUG"])
+env.AppendUnique(CPPDEFINES=["LUA_COMPAT_ALL", "NDEBUG"])
 
-if env["PLATFORM"] == "darwin" :
-    env.AppendUnique(CDEFINES    = ["LUA_USE_MACOSX"])
-    env.AppendUnique(CFLAGS      = ["-O2"])
+if env["PLATFORM"] == "darwin":
+    env.AppendUnique(CDEFINES=["LUA_USE_MACOSX"])
+    env.AppendUnique(CFLAGS=["-O2"])
 
-elif env["PLATFORM"] == "posix" :
-    env.AppendUnique(CPPDEFINES = ["LUA_USE_POSIX"])
-    env.AppendUnique(CPPFLAGS   = ["-O2"])
+elif env["PLATFORM"] == "posix":
+    env.AppendUnique(CPPDEFINES=["LUA_USE_POSIX"])
+    env.AppendUnique(CPPFLAGS=["-O2"])
 
-elif env["PLATFORM"] == "win32" :
-    env.AppendUnique(CPPDEFINES = ["LUA_BUILD_AS_DLL"])
-    env.AppendUnique(CPPFLAGS   = ["/O2", "/GR", "/EHsc", "/nologo", "/OPT:REF", "/OPT:ICF", "/LTCG"])
+elif env["PLATFORM"] == "win32":
+    env.AppendUnique(CPPDEFINES=["LUA_BUILD_AS_DLL"])
+    env.AppendUnique(
+        CPPFLAGS=["/O2", "/GR", "/EHsc", "/nologo", "/OPT:REF", "/OPT:ICF", "/LTCG"]
+    )
 
 env.SharedLibrary(target="lua", source=extract)
 ```
 For each library a "download URL" function is used, which extracts with regular expressions the download URL from the project homepage. This function is called by the Download builder. The Download builder returns a filename, which is also used for the directoryname of the extracted data. The injection list of the Unpack builder can be created by the filenames and Python defaults path-join calls. After that the normale SCons C build process with [SharedLibrary](SharedLibrary) is started. 
 
-In my build processes I use a target / alias `library` which downloads, extracts and compiles all libraries that are needed by the project. The compiled libraries and their headers are stored in a subdirectory of the project `library/<name of the library>/<version of the library>`. With this process the update to a new library version is very easy, because it is full automated. For large libraries eg [Qt](http://qt-project.org/) or [Boost](http://www.boost.org) this automation is very helpfull. The Boost installation process uses by default the bJam / b2 compiler, which can be build by a bootstrap process, so for my Boost building process I call `env.Command` after the unpack call, so the bJam / b2 is build first and after that, the command runs the build process of the library. For other libraries (eg [LaPack](http://www.netlib.org/lapack/) or [HDF](http://www.hdfgroup.org/HDF5/)) I call [CMake](http://www.cmake.org/) from the command call, so SCons wraps only the library default build process. During the linking process of my project the SConstruct scripts scans the library installation directory and gets always the library with the latest / newest version (see [Distutils Version](http://docs.python.org/2/distutils/apiref.html#module-distutils.version)), so the project upgrade to a new library version is very fast. 
+In my build processes I use a target / alias `library` which downloads, extracts and compiles all libraries that are needed by the project. The compiled libraries and their headers are stored in a subdirectory of the project `library/<name of the library>/<version of the library>`. With this process the update to a new library version is very easy, because it is full automated. For large libraries eg [Qt](https://qt-project.org/) or [Boost](https://www.boost.org) this automation is very helpfull. The Boost installation process uses by default the bJam / b2 compiler, which can be build by a bootstrap process, so for my Boost building process I call `env.Command` after the unpack call, so the bJam / b2 is build first and after that, the command runs the build process of the library. For other libraries (eg [LaPack](https://www.netlib.org/lapack/) or [HDF](https://www.hdfgroup.org/HDF5/)) I call [CMake](https://www.cmake.org/) from the command call, so SCons wraps only the library default build process. During the linking process of my project the SConstruct scripts scans the library installation directory and gets always the library with the latest / newest version (see [Distutils Version](https://docs.python.org/2/distutils/apiref.html#module-distutils.version)), so the project upgrade to a new library version is very fast. 
 
 The source code of both builder can be downloaded here: [Unpack-Builder](https://github.com/flashpixx/Storage/blob/master/Scons/site_scons/site_tools/Unpack.py) / [Download-Builder](https://github.com/flashpixx/Storage/blob/master/Scons/site_scons/site_tools/URLDownload.py) 
