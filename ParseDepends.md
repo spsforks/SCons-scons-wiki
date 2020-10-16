@@ -26,7 +26,22 @@ Program('hello.c')
 ```
 
 ```console
-scons --tree=prune
+$ scons --tree=prune
+scons: Reading SConscript files ...
+scons: done reading SConscript files.
+scons: Building targets ...
+gcc -o hello.o -c hello.c
+gcc -o hello hello.o
++-.
+  +-SConstruct
+  +-hello
+  | +-hello.o
+  | | +-hello.c
+  | | +-/bin/gcc
+  | +-/bin/gcc
+  +-hello.c
+  +-[hello.o]
+scons: done building targets.
 ```
 
 As the dependency tree reveals, SCons does not know about `foo.h` and does not rebuild `hello.o` when `foo.h` changes.  If the compiler is able to extract implicit dependencies and output those as Make rules, SCons can parse these files and properly set up the dependencies. 
