@@ -29,16 +29,16 @@ Program('hello.c')
 scons --tree=prune
 ```
 
-As the dependency tree reveals, SCons does not know about foo.h and does not recompile hello.o when foo.h changes.  If the compiler is able to extract implicit dependencies and output those as Make rules, SCons can parse these files and properly set up the dependencies. 
+As the dependency tree reveals, SCons does not know about `foo.h` and does not rebuild `hello.o` when `foo.h` changes.  If the compiler is able to extract implicit dependencies and output those as Make rules, SCons can parse these files and properly set up the dependencies. 
 
 ## Generate dependency files as a side effect
 
 Here is an example of how to let gcc generate a dependency file while compiling the object file:
 
 ```python 
-Program('hello.c', CCFLAGS = '-MD -MF hello.d')
-ParseDepends('hello.d')
-SideEffect('hello.d', 'hello.o')
+Program("hello.c", CCFLAGS="-MD -MF hello.d")
+ParseDepends("hello.d")
+SideEffect("hello.d", "hello.o")
 ```
 
 GCC generates a dependency file that looks like the following:
@@ -47,35 +47,40 @@ GCC generates a dependency file that looks like the following:
 hello.o: hello.c foo.h
 ```
 
-There is one problem with this approach: Read the [full story here](http://scons.tigris.org/servlets/ReadMsg?listName=dev&msgNo=709). To wrap it up, ParseDepends does not read the file in the first pass, leading to unnecessary rebuilds in the second pass. The reason is, that the signature changes as new dependencies are added (foo.h in the example above). 
+There is one problem with this approach: Read the [full story here DEAD LINK](http://scons.tigris.org/servlets/ReadMsg?listName=dev&msgNo=709). TL;DR `ParseDepends` does not read the file in the first pass, leading to unnecessary rebuilds in the second pass. The reason is, that the signature changes as new dependencies are added (`foo.h` in the example above). 
 
 ## Generate dependency files in advance
-If you want to extract the dependencies (and call ParseDepends) before building the object files, the only viable solution is to use a multi-stage builder with a source scanner: 
+If you want to extract the dependencies (and call `ParseDepends`) before building the object files, the only viable solution is to use a multi-stage builder with a source scanner: 
 
 ```python 
 def parsedep(node, env, path):
-        print "ParseDepends(%s)" % str(node)
-        ParseDepends(str(node))
-        return []
+    print "ParseDepends(%s)" % str(node)
+    ParseDepends(str(node))
+    return []
+
 
 def parsecheck(node, env):
-        return node.exists()
+    return node.exists()
 
-depscan = Scanner(function = parsedep, skeys = ['.d'], scan_check=parsecheck)
 
-depbuild = Builder(action = '$CC -M -MF $TARGET $CCFLAGS -c $SOURCE', 
-                   suffix='.d', src_suffix='.c')
+depscan = Scanner(function=parsedep, skeys=[".d"], scan_check=parsecheck)
 
-depparse = Builder(action = Copy('$TARGET', '$SOURCE'), 
-                   suffix='.dep', 
-                   src_builder=depbuild, 
-                   source_scanner=depscan)
+depbuild = Builder(
+    action="$CC -M -MF $TARGET $CCFLAGS -c $SOURCE", suffix=".d", src_suffix=".c"
+)
 
-env = Environment(BUILDERS = {'ExtractDependencies': depparse})
+depparse = Builder(
+    action=Copy("$TARGET", "$SOURCE"),
+    suffix=".dep",
+    src_builder=depbuild,
+    source_scanner=depscan,
+)
 
-dep = env.ExtractDependencies('hello.c')
+env = Environment(BUILDERS={"ExtractDependencies": depparse})
 
-obj = env.Object('hello.c')
+dep = env.ExtractDependencies("hello.c")
+
+obj = env.Object("hello.c")
 env.Requires(obj, dep)
 env.Program(obj)
 ```
@@ -84,12 +89,12 @@ Some notes:
 
 * The scanner needs to be called when the file exists 
     * **scan_check** ensures the node exists before calling the scanner 
-    * A **target_scanner** in depbuild does not work (it's called _before_ the .d file exists) 
+    * A **target_scanner** in depbuild does not work (it's called _before_ the `.d` file exists) 
 * The Copy action is useless, the depparse builder exists only to execute a **source_scanner** 
 * The dependency file must be generated before the object, therefore the order-only prerequisite 
 
 ## Links
 
-* Mailing List: [compiler-generated .d files and MD5 signatures](http://scons.tigris.org/servlets/ReadMsg?listName=dev&msgNo=709) 
-* Mailing List: [ParseDepends questions](http://scons.tigris.org/servlets/ReadMsg?listName=dev&msgNo=5359) 
-* Documentation Issue [[!bug 1984]] 
+* Mailing List: [compiler-generated `.d` files and MD5 signatures](http://scons.tigris.org/servlets/ReadMsg?listName=dev&msgNo=709) 
+* Mailing List: [`ParseDepends` questions DEAD LINK](http://scons.tigris.org/servlets/ReadMsg?listName=dev&msgNo=5359)
+* Documentation Issue [1984](https://github.com/SCons/scons/issues/1984)
