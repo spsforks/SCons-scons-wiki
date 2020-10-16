@@ -1,8 +1,8 @@
 # ParseDepends
-ParseDepends allows to parse compiler-generated dependency files and let SCons establish the listed dependencies.  
+`ParseDepends` allows parsing dependency files, primarily intended for compiler-generated ones, and lets SCons establish the listed dependencies.  
 
-## What's that in aid of?
-As a rule of thumb, never use it unless you have to. SCons has scanners to extract implicit dependencies. However, sometimes the built-in scanners choke on pre-processor statements. Consider the following example: hello.c: 
+## Why would I do that?
+As a rule of thumb, never use it unless you have to. SCons has scanners to extract implicit dependencies, and usually that's all you need. However, sometimes the built-in scanners cannot work out some dependencies - such as when they can't be established until the preprocessor runs. SCons does not run the preprocessor as part of its scanning. Consider the following example: `hello.c`: 
 
 ```cpp
 #define FOO_HEADER "foo.h"
