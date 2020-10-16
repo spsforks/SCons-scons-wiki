@@ -46,6 +46,44 @@ scons: done building targets.
 
 As the dependency tree reveals, SCons does not know about `foo.h` and does not rebuild `hello.o` when `foo.h` changes.  If the compiler is able to extract implicit dependencies and output those as Make rules, SCons can parse these files and properly set up the dependencies. 
 
+However, if we had a record of this dependency in a file, we could feed this to SCons:
+
+```python
+ParseDepends("hello.d")
+Program("hello.c")
+```
+
+Where `hello.d` looks like this:
+```make
+hello: hello.c /usr/include/stdc-predef.h foo.h
+```
+
+Then things would look better:
+
+```console
+$ scons --tree=prune
+scons: Reading SConscript files ...
+scons: done reading SConscript files.
+scons: Building targets ...
+gcc -o hello hello.o
++-.
+  +-SConstruct
+  +-foo.h
+  +-hello
+  | +-hello.o
+  | | +-hello.c
+  | | +-/bin/gcc
+  | +-hello.c
+  | +-/usr/include/stdc-predef.h
+  | +-foo.h
+  | +-/bin/gcc
+  +-hello.c
+  +-[hello.o]
+scons: done building targets.
+```
+
+But how do we get these dependencies set up?
+
 ## Generate dependency files as a side effect
 
 Here is an example of how to let gcc generate a dependency file while compiling the object file:
