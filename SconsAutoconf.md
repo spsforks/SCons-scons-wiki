@@ -32,19 +32,19 @@ Now we can run some checks for headers.
 #!python
 # check for stdio.h
 if not config.CheckHeader('stdio.h'):
-   print "You need 'stdio.h' to compile this program"
+   print("You need 'stdio.h' to compile this program")
    Exit(1)
 
 # check for math.h
 if not config.CheckHeader('math.h'):
-   print "You need 'math.h' to compile this program"
+   print("You need 'math.h' to compile this program")
    Exit(1)
 else:
   config.env.Append('-DHAS_MATH')
 
 # check for stdlib.h
 if not config.CheckCHeader('stdlib.h'):
-   print "You need 'stdlib.h' to compile this program"
+   print("You need 'stdlib.h' to compile this program")
    Exit(1)
 ```
 We can also check for libraries. 
@@ -52,7 +52,7 @@ We can also check for libraries.
 #!python
 # check for libSDL.so
 if not config.CheckLib('libSDL'):
-   print "You need libSDL to compile this program"
+   print("You need libSDL to compile this program")
    Exit(1)
 ```
 You can store the results of checks as variables in the environment : 
@@ -93,9 +93,9 @@ You may want to check if you are cleaning before you start configuring.
 #!python
 # are we configuring?
 if env.GetOption('clean'):
-   print "We are cleaning, skip the config"
+   print("We are cleaning, skip the config")
 else:
-   print "We are staying dirty, let's go!"
+   print("We are staying dirty, let's go!")
 ```
 How can you skip the config step if which targets should be built (and therefore also cleaned) is determined during the configure step? 
 
@@ -103,7 +103,7 @@ If you want to do the configure only once you can check for the conf.log file wh
 ```python
 #!python
 if not os.path.exists("config.log"):
-        print 'Configuring... '
+        print('Configuring... ')
         conf = Configure(env)
         #do your checks...
         env = conf.Finish()
