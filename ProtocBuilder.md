@@ -12,7 +12,6 @@ Put this builder/tool file somewhere (next to the SConstruct file or in the Envi
 
 
 ```python
-#!python 
 """
 protoc.py: Protoc Builder for SCons
 
@@ -100,7 +99,6 @@ Here is a sample SConstruct I used (some MSVC/Windows-specific stuff, but the Pr
 
 
 ```python
-#!python 
 import os
 
 env = Environment(
