@@ -75,7 +75,7 @@ Sphinx  | Mercurial  | <http://bitbucket.org/zondo/sphinx-scons/overview>  | `hg
 [sphinx4scons](sphinx4scons)  | Mercurial  | <https://bitbucket.org/wingbrant/sphinx4scons/>  | `hg clone https://bitbucket.org/wingbrant/sphinx4scons`
 [Vala](ValaBuilder)  | Mercurial  | <https://bitbucket.org/russel/scons_vala>  | `hg clone https://bitbucket.org/russel/scons_vala vala`
 [Watcom](Watcom)  | Git  | <https://bitbucket.org/cr1901/scons-wat>  | `git clone https://bitbucket.org/cr1901/scons-wat watcom`
-Xcode | Mercurial | <https://bitbucket.org/al45tair/scons-xcode> | `hg clone https://bitbucket.org/al45tair/scons-xcode xcode`
+Xcode | Mercurial | <https://github.com/al45tair/scons-xcode> | `git clone https://github.com/al45tair/scons-xcode.git xcode`
 X10  | Mercurial  | <https://bitbucket.org/russel/scons_x10>  | `hg clone https://bitbucket.org/russel/scons_x10 x10`
 Wayland | git | <https://git.sr.ht/~sircmpwn/scons-wayland-scanner> | `git clone https://git.sr.ht/~sircmpwn/scons-wayland-scanner wayland-scanner`
 
