@@ -8,6 +8,7 @@ For those who don't want to read the entire page, here is a quick summary:
 * Fork scons repo from GitHub UI
 * **NOTE** for Windows developers: git will do the right thing in terms of preserving line endings in the git repository for your work. However, to run the SCons test suite against your local branch, which you should do to verify your changes don't break anything, you should run: 
   * `git config --global core.eol lf`. 
+  * `git config --global core.autocrlf false`
   * This forces files to checkout with lf rather than the Windows standard crlf line endings and is necessary to ensure that all the tests pass.  Some will fail if their test files are checked out with crlf line endings.
 * `git clone <your_repo_URL>`
 * `git remote add upstream git@github.com:SCons/scons.git`
