@@ -31,6 +31,7 @@ python bin/docs-create-example-outputs.py
 - [ ] Commit 
 - [ ] Update `ReleaseConfig` and run `python bin/update-release-info.py release` (this modifies CHANGES, Release and Announce -- that's why you should commit the above first.) 
 - [ ] Update `default_version` in SConstruct
+- [ ] Update `version` and `release` in `doc/sphinx/conf.py`
 - [ ] Build packages and doc: `python scripts/scons.py >& build-XYZ.log` (good idea to save build logfile somewhere) 
 
 ```txt
