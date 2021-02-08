@@ -36,7 +36,7 @@ Active open source projects which use SCons as their build system:
 * [The Battle for Wesnoth](http://www.wesnoth.org/) - free turn-based tactical strategy game ([SConstruct](https://github.com/wesnoth/wesnoth/blob/master/SConstruct))
 * [Ubitrack](http://ubitrack.org) Tracking for Mixed-/Augmented Reality applications, Chair for Computer Aided Medical Procedures and Augmented Reality, Technical University Munich 
 * [UFO2000](http://ufo2000.sourceforge.net/) (turn based tactical multiplayer game) See [SConstruct](http://ufo2000.svn.sourceforge.net/viewvc/ufo2000/trunk/SConstruct?view=markup) 
-
+* [XMIPP](https://github.com/I2PC/xmipp) Xmipp is a suite of image processing programs, primarily aimed at single-particle 3D electron microscopy, CNB, CSIC
 
 Less active projects, which use SCons as their build system:
 
