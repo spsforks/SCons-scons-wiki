@@ -43,16 +43,15 @@ def parms(target, source, env):
 
 def message(target, source, env):
     """Return a pretty AutoConfig message."""
-    (dirname,
-     params,
-     targetfile,
-     sourcefile) = parms(target, source, env)
-    if 'AUTOCONFIGCOMSTR' in env.Dictionary().keys():
-        return env.subst(env['AUTOCONFIGCOMSTR'],
-                         target = target, source = source, raw = 1)
-    msg = 'cd ' + dirname + ' && ./configure'
+    dirname, params, targetfile, sourcefile = parms(target, source, env)
+    if "AUTOCONFIGCOMSTR" in env:
+        return env.subst(
+            env["AUTOCONFIGCOMSTR"], target=target, source=source, raw=True
+        )
+    # Not set in env, so build the default:
+    msg = "cd " + dirname + " && ./configure"
     if params is not None:
-        msg += ' ' + ' '.join(params)
+        msg += " " + " ".join(params)
     return msg
 
 def emitter(target, source, env):
