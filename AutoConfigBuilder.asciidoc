@@ -158,6 +158,7 @@ def parms(target, source, env):
     workdir = os.path.dirname(str(source[0]))
     params = env.get("AutoConfigParams")
     if params and not isinstance(params, list):
+        # TODO: change this to raise a suitable SCons exception
         print("AutoConfigParams must be a sequence")
         Exit(1)
     targetfile = env.get("AutoConfigTarget", "config.h")
