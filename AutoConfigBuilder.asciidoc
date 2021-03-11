@@ -137,3 +137,5 @@ If your environment has `AUTOCONFIGCOMSTR` defined, the builder uses that string
 * `AutoConfigSource` -- (Default: `Makefile.in`) The file inside the source directory that SCons should use to decide if the directory needs to be reconfigured. 
 
 * `AutoConfigTarget` -- (Default: `config.h`) The file that the configure process should create.  If this file doesn't get created, SCons will always configure the directory. 
+
+* `AUTOCONFIGCOMSTR` -- Specify alternative output when command is run by SCons. (similar to SCons' normal `*COMSTR` variables)
