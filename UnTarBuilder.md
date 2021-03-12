@@ -7,14 +7,16 @@ Similar to Maven in the Java world, I do as much as possible within Python to pr
 
 
 ```python
-unTarBuilder = Builder(action=SCons.Action.Action(UnTar, UnTarString),
-                       src_suffix='.tar.gz',
-                       emitter=tarContentsEmitter)
+unTarBuilder = Builder(
+    action=SCons.Action.Action(UnTar, UnTarString),
+    src_suffix=".tar.gz",
+    emitter=tarContentsEmitter,
+)
 
 thirdPartyEnvironment = Environment()
-thirdPartyEnvironment.Append(BUILDERS = {'UnTar' : unTarBuilder})
+thirdPartyEnvironment.Append(BUILDERS={"UnTar": unTarBuilder})
 
-thirdPartyEnvironment.UnTar(source = 'apr-1.3.3')
+thirdPartyEnvironment.UnTar(source="apr-1.3.3")
 ```
 Let's have a look at the emitter first. I take the first source as the single  tar.gz file. Using the tarfile module, I read the entries in the tar file,  filter out the directories and convert the [TarInfo](TarInfo) objects to File nodes.  I filter out the directories since a Directory seems to have direct  dependencies on their contents. 
 
@@ -22,7 +24,8 @@ Let's have a look at the emitter first. I take the first source as the single  t
 ```python
 def tarContentsEmitter(target, source, env):
     import tarfile
-    sourceTar = tarfile.open(source[0].name,'r')
+
+    sourceTar = tarfile.open(source[0].name, "r")
     tarContents = sourceTar.getmembers()
     tarFileContents = filter(lambda tarEntry: tarEntry.isfile(), tarContents)
     newTargets = map(tarInfoToNode, tarFileContents)
@@ -39,14 +42,16 @@ Now for the Action. Similar to the emitter, the tarfile Python module is used to
 def UnTar(target, source, env):
     # Code to build "target" from "source" here
     import tarfile
-    sourceTar = tarfile.open(source[0].name,'r')
+
+    sourceTar = tarfile.open(source[0].name, "r")
     sourceTar.extractall()
     sourceTar.close()
     return None
-    
+
+
 def UnTarString(target, source, env):
     """ Information string for UnTar """
-    return 'Extracting %s' % os.path.basename (str (source[0]))
+    return "Extracting %s" % os.path.basename(str(source[0]))
 ```
 Open issues: 
 
