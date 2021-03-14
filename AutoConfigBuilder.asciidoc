@@ -107,7 +107,6 @@ def exists(env):
 
 To load this Builder into your environment, save the above as `AutoConfig.py` in your `site_scons/site_tools/` directory, then add it as a tool to your environment: 
 ```python
-#!python 
 env = Environment(tools = ['default', 'AutoConfig'])
 # or
 otherenv.Tool('AutoConfig')
