@@ -100,7 +100,7 @@ It becomes even clearer that the memory consumption rises exactly 900MB at some 
 
 ## Patches
 
-A patch was proposed by Tasci ([#1646](/SCons/scons/issue/1646)) solving that issue by using a generator to read the file chunk-by-chunk. As this would not be backwards compatible, I tried to change the patch to conform to the current requirements. 
+A patch was proposed by Tasci ([#1646](/SCons/scons/issues/1646)) solving that issue by using a generator to read the file chunk-by-chunk. As this would not be backwards compatible, I tried to change the patch to conform to the current requirements. 
 
 The idea is to not use `get_contents` of Node.FS.File for signature generation of large files, but a function returning an open file object. A specialized MD5 signature function receives the file object and computes the signature for the file block-by-block. The block-size is configurable with the `--md5-chunksize=N` flag. 
 
