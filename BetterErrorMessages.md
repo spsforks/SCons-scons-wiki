@@ -4,7 +4,7 @@
 
 This is a draft.  Feel free to edit.  If you have questions, please pose them on the mailing list. 
 
-It is believed [#863](../../issues/863), [#1437](../../issues/1437), [#1442](../../issues/1442), [#1871](../../issues/1871) and [#1895](../../issues/1895) are exemplars of this problem. 
+It is believed [#863](/SCons/scons/issues/863), [#1437](/SCons/scons/issues/1437), [#1442](/SCons/scons/issues/1442), [#1871](/SCons/scons/issues/1871) and [#1895](/SCons/scons/issues/1895) are exemplars of this problem. 
 
 
 ### The Problem(s)
@@ -13,6 +13,7 @@ There are two ways that a missing Builder can be observed by a user:
 
 * Attempting to use the Builder by name (_e.g._, `env.BuilderName( ... )`) 
 * Refering to a Builder's source suffix (_e.g._, `Program('file.xyz')`) 
+
 Currently, both cases generate opaque error messages (or worse, no error message and appear to work).  The objective is that both cases should generate descriptive error messages. 
 
 Another related difficulty with the current scheme is that full toolchains are not deduced.  That is, if a user adds a Builder that converts `.xyz` to `.c` then it requires extra steps so that SCons will be able to turn this into a `.o`.  And if it's not set up correctly, the error message is opaque about what went wrong. 
