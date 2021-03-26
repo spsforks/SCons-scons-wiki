@@ -4,7 +4,7 @@
 
 This is a draft.  Feel free to edit.  If you have questions, please pose them on the mailing list. 
 
-It is believed [[!bug 863]], [[!bug 1437]], [[!bug 1442]], [[!bug 1871]], and [[!bug 1895]] are exemplars of this problem. 
+It is believed [#863](../../issues/863), [#1437](../../issues/1437), [#1442](../../issues/1442), [#1871](../../issues/1871) and [#1895](../../issues/1895) are exemplars of this problem. 
 
 
 ### The Problem(s)
