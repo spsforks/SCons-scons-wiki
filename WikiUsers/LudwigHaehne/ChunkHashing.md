@@ -5,7 +5,7 @@
 
 ## Episode 3: Block-wise MD5 hashing
 
-The MD5 signature generation as it is now reads the whole file into memory and performs the computation on the whole memory block. This is sane for the average source file but not an option for very large files as was pointed out in a number of mailing list posts and bug reports (e.g. [[!bug 1646]], [[!bug 1459]]). 
+The MD5 signature generation as it is now reads the whole file into memory and performs the computation on the whole memory block. This is sane for the average source file but not an option for very large files as was pointed out in a number of mailing list posts and bug reports (e.g. [#1646](/SCons/scons/issues/1646), [#1459](/SCons/scons/issues/1646)). 
 
 The memory allocation for signature computation is transient and therefore hard to detect without taking further measures. One has to create a snapshot between fetching the file contents and computing the hash to even notice the memory consumption.  
 
@@ -13,7 +13,6 @@ With some crafted examples like the one below, the memory consumption is observa
 
 
 ```python
-#!python 
 import os
 
 def get_stat(target, source, env):
@@ -77,7 +76,6 @@ The same can be achieved by letting the Heapmonitor create periodic snapshots in
 
 
 ```python
-#!python 
 import SCons.Heapmonitor
 SCons.Heapmonitor.start_periodic_snapshots(interval=0.5)
 ```
@@ -102,7 +100,7 @@ It becomes even clearer that the memory consumption rises exactly 900MB at some 
 
 ## Patches
 
-A patch was proposed by Tasci ([[!bug 1646]]) solving that issue by using a generator to read the file chunk-by-chunk. As this would not be backwards compatible, I tried to change the patch to conform to the current requirements. 
+A patch was proposed by Tasci ([#1646](/SCons/scons/issue/1646)) solving that issue by using a generator to read the file chunk-by-chunk. As this would not be backwards compatible, I tried to change the patch to conform to the current requirements. 
 
 The idea is to not use `get_contents` of Node.FS.File for signature generation of large files, but a function returning an open file object. A specialized MD5 signature function receives the file object and computes the signature for the file block-by-block. The block-size is configurable with the `--md5-chunksize=N` flag. 
 
