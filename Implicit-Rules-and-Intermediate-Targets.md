@@ -26,4 +26,4 @@ An additional issue is that implicit intermediate targets can easily violate the
 ```
 scons: *** Two environments with different actions were specified for the same target: foo.o
 ```
-Because of the above-mentioned characteristics - basically that implied intermediate targets are still first-class targets - SCons cannot disambiguate `foo.o` or env1 from `foo.o` of env2, and it just gives up with a fatal error.  While variant directories a solution to this, as this provides a form of namespace isolation, it's still surprising to users when they run into it, and arguably forces more complexity where it might not be necessary.
+Because of the above-mentioned characteristics - basically that implied intermediate targets are still first-class targets - SCons cannot disambiguate `foo.o` of env1 from `foo.o` of env2, and it just gives up with a fatal error.  While variant directories can be a solution to this, as they provides a form of namespace isolation, it's still surprising to users when they run into it, and arguably forces more complexity where it might not be necessary.
