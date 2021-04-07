@@ -38,7 +38,7 @@ _After_ your proposal has been discussed on the mailing lists, then this is the 
 | ------| ------ |
 |[SCons Enhancement Proposals (SEPs)](SEPs) | A proposal for how to write enhancement proposals for SCons|
 |[Aggregates Extension](Containers) | A proposal to extend SCons so it understands what containers (e.g., ELF, tar, directories, OS X bundles, and OS X Frameworks) are |
-|[MoreSiteSconsDirs](MoreSiteSconsDirs?action=fullsearch&context=180&value=linkto:"MoreSiteSconsDirs")  | A proposal to add more site_scons dirs, with default locations for various OSes. |
+|[MoreSiteSconsDirs](MoreSiteSconsDirs) | A proposal to add more site_scons dirs, with default locations for various OSes. |
 
 ## Accepted
 
