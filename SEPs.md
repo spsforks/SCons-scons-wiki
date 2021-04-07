@@ -1,17 +1,15 @@
-[[!table header="no" class="mointable" data="""
-SEP  | 0000 
-Title  | SCons Enhancement Proposals(SEPs) 
-Author  | Cem Karan 
-Status  | Draft 
-Post History  | [http://scons.tigris.org/ds/viewMessage.do?dsForumId=1268&dsMessageId=2381941](http://scons.tigris.org/ds/viewMessage.do?dsForumId=1268&dsMessageId=2381941) 
-"""]]
 
-[[!toc 3]] 
-
+| | |
+| == | == |
+| SEP | 0000  |
+| Title | SCons Enhancement Proposals(SEPs) |
+| Author | Cem Karan |
+| Status | Draft |
+| Type | Process |
+| Post History | [http://scons.tigris.org/ds/viewMessage.do?dsForumId=1268&dsMessageId=2381941](http://scons.tigris.org/ds/viewMessage.do?dsForumId=1268&dsMessageId=2381941) |
 
 # SCons Enhancement Proposals
 
-<a name="Guide"></a> 
 
 
 ## Author's guide
@@ -29,47 +27,34 @@ Here is a diagram that may help you understand the process:
 
 [[!img SEP Process steps.png] 
 
-<a name="Index"></a> 
-
 
 # SEP index
 
-<a name="Draft"></a> 
-
-
 ## Draft
 
-<ins>_After_</ins> your proposal has been discussed on the mailing lists, then this is the place where you want to link to it. 
-[[!table header="no" class="mointable" data="""
-[SCons Enhancement Proposals(SEPs)](SEPs)  | A proposal for how to write enhancement proposals for SCons 
-[Aggregates Extension](Containers)  | A proposal to extend SCons so it understands what containers (e.g., ELF, tar, directories, OS X bundles, and OS X Frameworks) are 
-[MoreSiteSconsDirs](MoreSiteSconsDirs?action=fullsearch&context=180&value=linkto:"MoreSiteSconsDirs")  | A proposal to add more site_scons dirs, with default locations for various OSes. 
-"""]]
+_After_ your proposal has been discussed on the mailing lists, then this is the place where you want to link to it. 
 
-<a name="Accepted"></a> 
-
+| SEP   | Description |
+| ------| ------ |
+|[SCons Enhancement Proposals (SEPs)](SEPs) | A proposal for how to write enhancement proposals for SCons|
+|[Aggregates Extension](Containers) | A proposal to extend SCons so it understands what containers (e.g., ELF, tar, directories, OS X bundles, and OS X Frameworks) are |
+|[MoreSiteSconsDirs](MoreSiteSconsDirs?action=fullsearch&context=180&value=linkto:"MoreSiteSconsDirs")  | A proposal to add more site_scons dirs, with default locations for various OSes. |
 
 ## Accepted
 
 After your draft has stabilized, and one of the developers/leaders decides they like it enough, you might find your proposal moved down to here.  If it has, congratulations!  Now you need to do any final polishing to ensure that the developers have all the information they need.  **NOTE** you may **not** make semantic changes to your SEP at this point!  That means that if you proposed a new type of Builder for DocBook, you can't decide that it should also handle LaTeX as well.  SEPs that have been accepted are supposed to be feature complete, requiring only a little bit more polish, not whole new feature enhancements. 
-
-<a name="Deferred"></a> 
 
 
 ## Deferred
 
 Proposals that are here have been accepted, but no work is being done on them at the moment.  This can for any number of reasons, including lack of time, energy, manpower, etc.  If your SEP has made it here, try to find out why; one good reason is that your proposal is important, but too big.  See if you can _reasonably_ break it up into smaller SEPs.  Note that not all SEPs can be broken up into smaller parts reasonably; discuss the idea of breaking it up on the mailing lists, and see if others agree that that is a good idea. 
 
-<a name="Rejected"></a> 
-
 
 ## Rejected
 
 Proposals that are here may have been rejected for any number of reasons.  The reasons for rejection will be explained on the SEPs own page.  As the diagram indicates, although a SEP is rejected, it may not be a permanent rejection.  It may have been rejected because the SEP was written poorly, incomplete, etc.  In those circumstances, it is a good idea to keep working on your SEP until it is sufficiently well written that it becomes accepted. 
 
-<a name="Final"></a> 
-
 
 ## Final
 
-Proposals that are here should not be modified.  At most you can correct spelling or grammar mistakes, but should avoid making other changes.  Once a proposal has reached this stage, it means that everyone more or less agrees on what the feature needs to be, that the documentation is sufficient, etc.  SEPs that are at this stage are also referenced in the [issue database](http://scons.tigris.org/project_issues.html).  Note that the issues database is the official way to get an enhancement in; everything you see here is a way for the SCons community to discuss a SEP, but if the SEP isn't put into the database, then it doesn't really exist.  If your SEP makes it down to here, it will be up to you to write up the issue properly and get it into the database. 
+Proposals that are here should not be modified.  At most you can correct spelling or grammar mistakes, but should avoid making other changes.  Once a proposal has reached this stage, it means that everyone more or less agrees on what the feature needs to be, that the documentation is sufficient, etc.  SEPs that are at this stage are also referenced in the [issue database](https://github.com/scons/scons/issues).  Note that the issues database is the official way to get an enhancement in; everything you see here is a way for the SCons community to discuss a SEP, but if the SEP isn't put into the database, then it doesn't really exist.  If your SEP makes it down to here, it will be up to you to write up the issue properly and get it into the database. 
