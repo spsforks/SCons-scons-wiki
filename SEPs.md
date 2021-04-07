@@ -25,7 +25,7 @@ The following steps should serve as a guide as to how to write up a SEP:
 1. Once your SEP is coming together, add it to the list of draft SEPS below.  Announce that you've added it on the user mailing list.  Developers and other old hands that are interested have already subscribed to this page and will know when changes occur to it. 
 Here is a diagram that may help you understand the process: 
 
-![SEP Process](SEP_Process_steps.png)
+![SEP Process](https://github.com/scons/scons/wiki/SEPs/SEP_Process_steps.png)
 
 
 # SEP index
