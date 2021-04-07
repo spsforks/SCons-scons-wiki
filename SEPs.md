@@ -1,12 +1,12 @@
 
-| | |
-| == | == |
-| SEP | 0000  |
-| Title | SCons Enhancement Proposals(SEPs) |
-| Author | Cem Karan |
-| Status | Draft |
-| Type | Process |
-| Post History | [http://scons.tigris.org/ds/viewMessage.do?dsForumId=1268&dsMessageId=2381941](http://scons.tigris.org/ds/viewMessage.do?dsForumId=1268&dsMessageId=2381941) |
+ _ | _ 
+:--|:--
+SEP | 0000
+Title | SCons Enhancement Proposals(SEPs)
+Author | Cem Karan
+Status | Draft
+Type | Process
+Post History | [http://scons.tigris.org/ds/viewMessage.do?dsForumId=1268&dsMessageId=2381941](http://scons.tigris.org/ds/viewMessage.do?dsForumId=1268&dsMessageId=2381941)
 
 # SCons Enhancement Proposals
 
