@@ -6,22 +6,22 @@ That said, if you have a complicated build SCons may still be the best option fo
 
 # Historical part of this page (most of this content is from 2013 or before)
 Looking around on the Internet, a lot of places can be found where people complain about SCons being horrendously slow, up to the point that it's unusable (for them). One of the most prominent ones seems to be a series of blog articles by Eric Melski: 
-* [http://blog.melski.net/2011/05/23/why-is-scons-so-slow/](http://blog.melski.net/2011/05/23/why-is-scons-so-slow/) 
-* [http://www.electric-cloud.com/blog/2010/03/08/how-scalable-is-scons/](http://www.electric-cloud.com/blog/2010/03/08/how-scalable-is-scons/) 
-* [http://www.electric-cloud.com/blog/2010/07/21/a-second-look-at-scons-performance/](http://www.electric-cloud.com/blog/2010/07/21/a-second-look-at-scons-performance/) 
-* [http://www.electric-cloud.com/blog/2010/08/11/the-last-word-on-scons-performance/](http://www.electric-cloud.com/blog/2010/08/11/the-last-word-on-scons-performance/) 
-* [http://blog.melski.net/2013/12/11/update-scons-is-still-really-slow/](http://blog.melski.net/2013/12/11/update-scons-is-still-really-slow/) 
+* [https://blog.melski.net/2011/05/23/why-is-scons-so-slow/](https://blog.melski.net/2011/05/23/why-is-scons-so-slow/) 
+* [https://www.electric-cloud.com/blog/2010/03/08/how-scalable-is-scons/](https://www.electric-cloud.com/blog/2010/03/08/how-scalable-is-scons/) 
+* [https://www.electric-cloud.com/blog/2010/07/21/a-second-look-at-scons-performance/](https://www.electric-cloud.com/blog/2010/07/21/a-second-look-at-scons-performance/) 
+* [https://www.electric-cloud.com/blog/2010/08/11/the-last-word-on-scons-performance/](https://www.electric-cloud.com/blog/2010/08/11/the-last-word-on-scons-performance/) 
+* [https://blog.melski.net/2013/12/11/update-scons-is-still-really-slow/](https://blog.melski.net/2013/12/11/update-scons-is-still-really-slow/) 
 Another, often linked and cited, comparison that makes SCons look extremely bad is: 
 
-* [http://gamesfromwithin.com/the-quest-for-the-perfect-build-system](http://gamesfromwithin.com/the-quest-for-the-perfect-build-system) 
-* [http://gamesfromwithin.com/the-quest-for-the-perfect-build-system-part-2](http://gamesfromwithin.com/the-quest-for-the-perfect-build-system-part-2) 
-* [http://gamesfromwithin.com/bad-news-for-scons-fans](http://gamesfromwithin.com/bad-news-for-scons-fans) 
+* [https://gamesfromwithin.com/the-quest-for-the-perfect-build-system](https://gamesfromwithin.com/the-quest-for-the-perfect-build-system) 
+* [https://gamesfromwithin.com/the-quest-for-the-perfect-build-system-part-2](https://gamesfromwithin.com/the-quest-for-the-perfect-build-system-part-2) 
+* [https://gamesfromwithin.com/bad-news-for-scons-fans](https://gamesfromwithin.com/bad-news-for-scons-fans) 
 Several users jump on the same train, e.g.: 
 
-* [http://softwareswirl.blogspot.de/2009/08/benchmarking-build-systems.html](http://softwareswirl.blogspot.de/2009/08/benchmarking-build-systems.html) 
+* [https://softwareswirl.blogspot.de/2009/08/benchmarking-build-systems.html](https://softwareswirl.blogspot.de/2009/08/benchmarking-build-systems.html) 
 Finally, there is the very detailed wonderbuild benchmark at: 
 
-* [http://www.retropaganda.info/~bohan/work/psycle/branches/bohan/wonderbuild/benchmarks/time.xml](http://www.retropaganda.info/~bohan/work/psycle/branches/bohan/wonderbuild/benchmarks/time.xml) 
+* [https://www.retropaganda.info/~bohan/work/psycle/branches/bohan/wonderbuild/benchmarks/time.xml](https://www.retropaganda.info/~bohan/work/psycle/branches/bohan/wonderbuild/benchmarks/time.xml) 
 On the other hand, in our mailing lists we don't very often hear from desperate users that need help speeding up their builds. 
 
 So what's true? Does SCons get slow on large builds? And exactly when does this happen and why? 
@@ -36,7 +36,7 @@ In this first part of my investigations, I concentrated on busting the myth that
 
 ## Repositories
 
-All the results of the following discussion can be downloaded as `hg` (Mercurial) repo from [https://github.com/SCons/scons-performance/tree/master/testresults](https://github.com/SCons/scons-performance/tree/master/testresults). In separate folders you can find the raw result data and the scripts that were used to run the examples. Look out for `README.rst` or `overview.rst` files, they contain some additional info about how things work and what the single subdirectories contain. 
+All the results of the following discussion can be downloaded as a git repo from [https://github.com/SCons/scons-performance/tree/master/testresults](https://github.com/SCons/scons-performance/tree/master/testresults). In separate folders you can find the raw result data and the scripts that were used to run the examples. Look out for `README.rst` or `overview.rst` files, they contain some additional info about how things work and what the single subdirectories contain. 
 
 Additionally, I created a separate SCons testsuite which is available at [https://github.com/SCons/scons-performance/tree/master/testsuite](https://github.com/SCons/scons-performance/tree/master/testsuite). It comprises several real-life projects, control scripts, and the supporting `sconstest` package for running all the timings and profilings. 
 
@@ -67,11 +67,11 @@ The full set of results can be found in the `scons120_vs_make` folder of the `sc
 
 For a better comparison, here is the original result data by Eric Melski first (as published via `pastebin`). 
 
-![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/melski.png) 
+![](https://github.com/SCons/scons/wiki/WhySconsIsNotSlow/melski.png) 
 
 I ran my own series of builds as "clean build" (from scratch), "update" and as "implicit-deps-unchanged update" (for SCons only, with the command-line options `--max-drift=1 --implicit-deps-unchanged`). While doing so, the project sizes ranged from 2500 up to 16500 C files. 
 
-![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/scons120.png) 
+![](https://github.com/SCons/scons/wiki/WhySconsIsNotSlow/scons120.png) 
 
 The measured times don't show a dramatic quadratic increase as claimed. You'll certainly notice that the X axis is scaled differently. That's because I couldn't reach any higher number of C files without my machine starting to swap memory. At the maximum of 16500 C files, SCons required about 1GB of RAM for a clean build, and the update runs as well. The rest of my total 2GB was taken by the OS, which makes me wonder how Eric Melski was able to reach those high numbers of files. By letting the machine swap freely? This would explain the increase of build times, starting at about 20000 C files in his data. 
 
@@ -99,7 +99,7 @@ I picked revision 0c9c8aff8f46 of the SCons trunk. This means we talk about the 
 
 This is the script that was used by Noel Llopis in his "Quest for Performance" series. I downloaded it from the website, and disabled all other competitors except SCons and make. 
 
-![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/scons230_qperf.png) 
+![](https://github.com/SCons/scons/wiki/WhySconsIsNotSlow/scons230_qperf.png) 
 
 The project sizes were 5000, 10000, 12500 and 15000 CPP files. All the results can be found in the `scons230_vs_make/questfperf/run_original` folder. 
 
@@ -108,7 +108,7 @@ The project sizes were 5000, 10000, 12500 and 15000 CPP files. All the results c
 
 Then I ran the example script from the wonderbuild benchmark with the same numbers of source files. 
 
-![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/scons230_wbuild.png) 
+![](https://github.com/SCons/scons/wiki/WhySconsIsNotSlow/scons230_wbuild.png) 
 
 Find the full set of results in the `scons230_vs_make/wonderbuild/run_original` folder. 
 
@@ -222,11 +222,11 @@ With these patched classes I ran another series for the "Quest for performance" 
 
 Here are the results of the "Quest for performance" script:   
 
-![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/scons230_qperfp.png) 
+![](https://github.com/SCons/scons/wiki/WhySconsIsNotSlow/scons230_qperfp.png) 
 
 and the "wonderbuild" setup: 
 
-![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/scons230_wbuildp.png) 
+![](https://github.com/SCons/scons/wiki/WhySconsIsNotSlow/scons230_wbuildp.png) 
 
 . The full set of results can be found in the `run_patched` folder of `scons230_vs_make/questfperf` and `scons230_vs_make/wonderbuild`, respectively. 
 
@@ -259,15 +259,15 @@ You can find all results and speedup graphs in the `scons230_vs_make/parallel` f
 
 In general the results show that the parallel speedups for SCons and make are on par, following are two example graphs. The first was run on the quad core machine and shows the "Quest for performance" results to the left, and the "wonderbuild" speedup to the right: 
 
-![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/speedup_quad.png) 
+![](https://github.com/SCons/scons/wiki/WhySconsIsNotSlow/speedup_quad.png) 
 
 I repeated the same experiment on the octa core machine, but let the number of threads range between 1 and 12 (again the "wonderbuild" graph is to the right): 
 
-![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/speedup_octa.png) 
+![](https://github.com/SCons/scons/wiki/WhySconsIsNotSlow/speedup_octa.png) 
 
 As an example of what's actually behind these graphs, here's the full array of single runs from `-j1` to `-j12` for the wonderbuild benchmark on the octa core system: 
 
-![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/parallel_wbuild_1_12.png) 
+![](https://github.com/SCons/scons/wiki/WhySconsIsNotSlow/parallel_wbuild_1_12.png) 
 
 
 # Testsuite and `fastcpp` Tool
@@ -321,11 +321,11 @@ But mind the warning: It's still in a very experimental state and probably not r
 
 The following picture shows the update times of SCons with the `fastcpp` tool, against make: 
 
-![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/fastcpp_update.png) 
+![](https://github.com/SCons/scons/wiki/WhySconsIsNotSlow/fastcpp_update.png) 
 
 and a comparison of SCons updates with/without the new builder: 
 
-![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/fastcpp_compare_update.png) 
+![](https://github.com/SCons/scons/wiki/WhySconsIsNotSlow/fastcpp_compare_update.png) 
 
 All the results and scripts for the `fastcpp` builder can be found in the folder  `scons_testresults/scons230_trace/fastcpp`. 
 
@@ -339,7 +339,7 @@ Led by Eric Melski's remarks in his latest article
 
 Here are the result graphs for my machine, using CPython (left) and [PyPy](PyPy) (right): 
 
-![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/cpython_pypy.png) 
+![](https://github.com/SCons/scons/wiki/WhySconsIsNotSlow/cpython_pypy.png) 
 
 I checked both Python interpreters because I found some notices on the Internet that [PyPy](PyPy) wouldn't suffer from the same memory `realloc` problems as CPython. This turned out to be partly true, and [PyPy](PyPy) obviously has a somewhat lesser runtime increase...but it's still there. 
 
@@ -352,7 +352,7 @@ As Eric found out during his profilings, SCons would spend a lot of time in syst
 
 The following image displays the difference in accumulated time for two single compile commands (first, second) over the number of required syscalls. While the "first" graph was captured at the start of the build (within the first ten targets), the "second" evaluation is close to the end:  
 
-![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/strace_cpython.png) 
+![](https://github.com/SCons/scons/wiki/WhySconsIsNotSlow/strace_cpython.png) 
 
 It shows how the time needed for a single compile increases, throughout the build of the full project. So I patched the SCons sources, such that no shell/process would be spawned but only the target files got created by `touch`ing them in Python directly. 
 
@@ -399,7 +399,7 @@ diff -r d53323337b3a -r 1fc40f790145 src/engine/SCons/Action.py
 ```
 Then I ran the full benchmark again, with the following results (again CPython to the left, and [PyPy](PyPy) on the right side): 
 
-![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/cpython_pypy_touch.png) 
+![](https://github.com/SCons/scons/wiki/WhySconsIsNotSlow/cpython_pypy_touch.png) 
 
 In comparison to the results above, these curves clearly show how a large overhead gets introduced by spawning shells and waiting for the processes to finish. SCons itself (finding/processing tasks, keeping track of build signatures, scanning of implicit dependencies) appears to scale just fine. 
 
@@ -533,15 +533,15 @@ They wrote a wrapper module (big thanks to its author Eugene Leskinen!) that is 
 
 This extension provides a significant speedup, because the slow `fork` is out of the way. Here are the runtimes (see also folder `scons230_trace/stubprocess` in the `scons_testresults` repo) for a clean build, compared to make: 
 
-![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/compare_clean_make.png) 
+![](https://github.com/SCons/scons/wiki/WhySconsIsNotSlow/compare_clean_make.png) 
 
 and compared to the default spawn method: 
 
-![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/compare_clean.png) 
+![](https://github.com/SCons/scons/wiki/WhySconsIsNotSlow/compare_clean.png) 
 
 We also compared the runtimes between SCons and make, for the patched sources (using STL to make up for more realistic CPP files) of the "Quest for performance" example from above (see the folder `scons230_trace/stubprocess_patched` in the `scons_testresults` repo): 
 
-![](https://bytebucket.org/scons/scons/wiki/WhySconsIsNotSlow/stubprocess_patched.png) 
+![](https://github.com/SCons/scons/wiki/WhySconsIsNotSlow/stubprocess_patched.png) 
 
 One can see how build times are only about 20% higher than for make, and if your CPP sources happen to be a "little more complicated" (driving the compile time for each source further up) you should be on the safe side...  
 
