@@ -21,7 +21,7 @@ Only after this step will you be able to insert and use the newly added entities
 
 ## Configurations for visual editing
 
-Configuration sets for two visual XML editors have been prepared. These are _**[XmlMind](XmlMind)_** and _**Syntext Serna**_, both offering good WYSIWYG like editing. Other, more text-oriented solutions like Editix or Quanta may be used with success too (check [the list of DocBook Authoring tools](http://wiki.docbook.org/topic/DocBookAuthoringTools) for an exhaustive list). 
+Configuration sets for two visual XML editors have been prepared. These are _**XmlMind_** and _**Syntext Serna**_, both offering good WYSIWYG like editing. Other, more text-oriented solutions like Editix or Quanta may be used with success too (check [the list of DocBook Authoring tools](http://wiki.docbook.org/topic/DocBookAuthoringTools) for an exhaustive list). 
 
 Finally, I also found [Howto create a visual Docbook Editor in 10 Minutes](http://relation.to/Bloggers/HowToCreateAVisualDocBookEditorIn10Minutes), a short description about how to use the VPE/JBOSS plugin of Eclipse to preview XML documents. But I did not follow this route any further...any volunteers out there? 
 
