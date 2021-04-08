@@ -3,7 +3,7 @@
 
 ## Editing single chapters
 
-The [DocBook](DocBook) source files for the User Guide have been set up in a way, such that you can either load the whole document ("`main.xml`"), or a single chapter file like "`libraries.xml`" for example. 
+The DocBook source files for the User Guide have been set up in a way, such that you can either load the whole document ("`main.xml`"), or a single chapter file like "`libraries.xml`" for example. 
 
 The latter option is to be preferred, since it doesn't require as much CPU and memory for rendering the documents live. 
 
