@@ -29,14 +29,16 @@ Finally, I also found [Howto create a visual Docbook Editor in 10 Minutes](http:
 ### XMLMind editor
 Homepage
 : 
-[http://www.xmlmind.com/xmleditor](http://www.xmlmind.com/xmleditor) 
+[https://www.xmlmind.com/xmleditor](https://www.xmlmind.com/xmleditor) 
 
 
 Tested versions
 : Professional Edition 5.8.1 
 
+(current release is 9.5.0, it might be useful if someone tested a more recent version)
 
-This editor comes also in a free version, containing all the basic features that you'll need for editing [DocBook](DocBook) documents. Unfortunately, this Personal Edition doesn't support user-defined target namespaces. So you'll have to invest a few bucks, but it's definitely worth the money in my opinion. 
+
+This editor comes also in a free version, containing all the basic features that you'll need for editing DocBook documents. Unfortunately, the Personal Edition doesn't support user-defined target namespaces. So you'll have to invest a few bucks, but it's definitely worth the money in my opinion. 
 
 Copy the contents of the "`xmlmind`" folder in the archive to your user's XXE config directory. This is located at 
 
@@ -51,13 +53,12 @@ for the versions of XXE with a major version number of 4. Later versions with a 
 After a restart of the program, the SCons DTD is picked up automatically, and you can even select it when inserting new Books, Articles,... whatever. 
 
 
-![xmlmind Screenshot](./WysiwygDocumentation/colortest.png)
+![xmlmind Screenshot](https://github.com/SCons/scons/wiki/DeveloperGuide/WysiwygDocumentation/colortest.png)
 
 ### Syntext Serna Free
 Homepage
 : 
-[http://sourceforge.net/projects/sernafree.mirror](http://sourceforge.net/projects/sernafree.mirror) 
-
+[https://github.com/pantonov/serna-free](https://github.com/pantonov/serna-free)
 
 Tested version
 : 4.4.0 
@@ -68,4 +69,4 @@ This is a good alternative to the [XmlMind](XmlMind) editor, however its "Insert
 Copy the prepared "`scons`" addon folder to the "`plugins`" directory of your _**Serna**_ installation. Depending on where and how you installed the program, you might need root access for this step. 
 
 
-![Serna Screenshot](./WysiwygDocumentation/serna3.png)
+![Serna Screenshot](https://github.com/SCons/scons/wiki/DeveloperGuide/WysiwygDocumentation/serna3.png)
