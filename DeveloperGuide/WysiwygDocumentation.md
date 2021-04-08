@@ -28,15 +28,13 @@ Finally, I also found [Howto create a visual Docbook Editor in 10 Minutes](http:
 
 ### XMLMind editor
 Homepage
-: 
-[https://www.xmlmind.com/xmleditor](https://www.xmlmind.com/xmleditor) 
+: [https://www.xmlmind.com/xmleditor](https://www.xmlmind.com/xmleditor) 
 
 
 Tested versions
 : Professional Edition 5.8.1 
 
 (current release is 9.5.0, it might be useful if someone tested a more recent version)
-
 
 This editor comes also in a free version, containing all the basic features that you'll need for editing DocBook documents. Unfortunately, the Personal Edition doesn't support user-defined target namespaces. So you'll have to invest a few bucks, but it's definitely worth the money in my opinion. 
 
@@ -45,26 +43,26 @@ Copy the contents of the "`xmlmind`" folder in the archive to your user's XXE co
 * "`$HOME/.xxe4/`" on Linux. 
 * "`$HOME/Library/Application Support/XMLmind/XMLEditor4/`" on the Mac. 
 * `%APPDATA%\XMLmind\XMLEditor4\` on Windows 2000, XP, Vista. 
-for the versions of XXE with a major version number of 4. Later versions with a 5.x are using 
 
-* "`$HOME/.xxe5/`" on Linux, 
-* "`$HOME/Library/Application Support/XMLmind/XMLEditor5/`" on the Mac and 
-* `%APPDATA%\XMLmind\XMLEditor5\` on Windows 2000, XP, Vista. 
+for the versions of XXE with a major version number of 4. Later versions with a different major number use the same pattern, so for 9.x:
+
+* "`$HOME/.xxe9/`" on Linux, 
+* "`$HOME/Library/Application Support/XMLmind/XMLEditor9/`" on the Mac and 
+* `%APPDATA%\XMLmind\XMLEditor9\` on Windows 2000, XP, Vista. 
+
 After a restart of the program, the SCons DTD is picked up automatically, and you can even select it when inserting new Books, Articles,... whatever. 
-
 
 ![xmlmind Screenshot](https://github.com/SCons/scons/wiki/DeveloperGuide/WysiwygDocumentation/colortest.png)
 
 ### Syntext Serna Free
 Homepage
-: 
-[https://github.com/pantonov/serna-free](https://github.com/pantonov/serna-free)
+: [https://github.com/pantonov/serna-free](https://github.com/pantonov/serna-free)
 
 Tested version
 : 4.4.0 
 
 
-This is a good alternative to the [XmlMind](XmlMind) editor, however its "Insert tag" philosophy didn't convince me that much. But your mileage may vary... After Serna was bought by another company, the free version won't get developed any further unfortunately. But it's still okay for basic writing stuff as in the SCons docs, so give it a spin. 
+This is a good alternative to the [XmlMind](XmlMind) editor, however its "Insert tag" philosophy didn't convince me that much. But your mileage may vary... After Serna was bought by another company, the free version won't get developed any further unfortunately (and the free version doesn't really indicate a version any longer). But it's still okay for basic writing stuff as in the SCons docs, so give it a spin. 
 
 Copy the prepared "`scons`" addon folder to the "`plugins`" directory of your _**Serna**_ installation. Depending on where and how you installed the program, you might need root access for this step. 
 
