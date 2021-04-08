@@ -6,7 +6,7 @@ This article describes the SCons documentation toolchain in versions 2.3.x and h
 
 This article gives an overview of the SCons documentation toolchain. Interested users should better understand where and how the text he writes is processed. It also provides a reference for core developers and the release team.
 
-![](Documentation/overview.png)
+![](https://github.com/SCons/scons/wiki/DeveloperGuide/Documentation/overview.png) 
 
 The diagram above describes steps that required for creating all the MAN pages, User manuals and reference documents. You may be wondering, "Why doesn't SCons simply convert XML files to PDF with Docbook or use REST?" Please continue reading, and things will become clearer. 
 
@@ -143,4 +143,4 @@ Not strictly doc-related, but if you're doing release builds, you also need rpm 
 
 The following image depicts the single steps of a full build for the documentation. The first (and zeroth) column shows the required tools (= dependencies) for each section (= second column). 
 
-![](Documentation/doc_single_run.png) 
+![](https://github.com/SCons/scons/wiki/DeveloperGuide/Documentation/doc_single_run.png) 
