@@ -6,10 +6,6 @@ For those who don't want to read the entire page, here is a quick summary:
 
 * Visit the main GitHub SCons Page [https://github.com/SCons/scons.git](https://github.com/SCons/scons.git)
 * Fork scons repo from GitHub UI
-* **NOTE** for Windows developers: git will do the right thing in terms of preserving line endings in the git repository for your work. However, to run the SCons test suite against your local branch, which you should do to verify your changes don't break anything, you should run: 
-  * `git config --global core.eol lf`. 
-  * `git config --global core.autocrlf false`
-  * This forces files to checkout with lf rather than the Windows standard crlf line endings and is necessary to ensure that all the tests pass.  Some will fail if their test files are checked out with crlf line endings.
 * `git clone <your_repo_URL>`
 * `git remote add upstream git@github.com:SCons/scons.git`
 * `git fetch upstream`
@@ -17,6 +13,7 @@ For those who don't want to read the entire page, here is a quick summary:
 * `git config branch.<your_working_branchname>.remote origin`
   * Without the above, git push would try to push your change to the upstream repo
 * Do your work 
+* Add a blurb on your proposed change to `CHANGES.txt`.
 * `git push`
 * Go to the web interface of your fork and push `Create pull request` button.
 * Fill in the template and submit.
@@ -40,6 +37,11 @@ git clone git@github.com:SCons/scons.git
 ```
 Now you should have a copy of the sources in the "`scons`" folder.
 
+**NOTE** for Windows developers: git will do the right thing in terms of preserving line endings in the git repository for your work. However, to run the SCons test suite against your local branch, which you should do to verify your changes don't break anything, you should run: 
+  * `git config --global core.eol lf`. 
+  * `git config --global core.autocrlf false`
+  * This forces files to checkout with lf rather than the Windows standard crlf line endings and is necessary to ensure that all the tests pass.  Some will fail if their test files are checked out with crlf line endings.
+
 
 ## Fork repository on GitHub side for creating pull requests
 
@@ -48,16 +50,22 @@ Login to [GitHub](https://github.com/), go to [https://github.com/SCons/scons](h
 
 ## Making changes
 
+Create a new branch to work in.  When you push this branch to your fork on GitHub, after the first PR you have done, the interface will offer to construct a PR based on the changes present in the branch vs the main branch. This can be changed by fiddling the drop-downs of what to compare, but usually once it gets set, you leave it alone (see the section on Feature Branches).  Use git as needed to track your evolving changes - there's nothing like trying "just one more thing" and then breaking your evolving branch - and you don't remember how to get back!  Later, you can squash your commits together if you wish (the SCons workflow does not require squashing, but the option exists).  
+
+Github will propose the commit message as the message of the PR.  You should usually change this, especially if several commits went into making up the change in which case Github proposes the first message. You want people able to grasp the totality of the change proposal when referring to, or reviewing, a PR.  The convention is that the subject line should be the completion of the sentence "When applied, this change will...", and it's expected to be short; go into more detail in the body.
+
 ## Rebasing changes
 
 Feel free to use the Rebase feature to place your commits on top of fresh changes from the main repository, as long as your changes are local only and haven't been pushed to your public repo yet. Otherwise you may confuse the Github interface, which means that Github won't be able to update your pull requests automatically anymore. For a git-centered discussion of why "rebase" should only be used in a local context, see also [the drm-next thread](http://lwn.net/Articles/328438/).
 
 ```txt
-# if there is, pull it - this doesn't move your code to pulled revision
+# grab any changes from upstream - this doesn't change the branch you're working in
 git fetch upstream
 # rebase and look at graph once more
 git rebase upstream/master
 ```
+
+You also use rebase for commit squashing, if that is your preference (`git rebase --interactive baserevision`).
 
 ## Working on several branches at once
 
