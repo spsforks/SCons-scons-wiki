@@ -8,13 +8,13 @@ The example project has a simple directory layout:
    * subdir1/ 
    * subdir2/ 
    * build/ 
+
 The source is kept in the directories subdir1 and subdir2. The build directory is used to store object and module files. 
 
 The SConstruct file creates variables for the list of source directories, and then builds up a module search path for the compiler: 
 
 
 ```python
-#!python
 #
 # Paths
 #
@@ -27,7 +27,6 @@ The module path is passed to the scons environment as follows:
 
 
 ```python
-#!python
 #
 # Environment
 #
@@ -50,7 +49,6 @@ Calling the SConscript files in the source subdirectories is pretty much the sam
 
 
 ```python
-#!python
 #
 # Build dependency tree
 #
@@ -65,7 +63,6 @@ There is one important discrepency between Fortran 90 and other languages: the S
 
 
 ```python
-#!python
 #
 # Remove any mod files. These should not be passed to the linker.
 #
@@ -84,7 +81,6 @@ One way to do this is to add a post action for each object file target returned 
 
 
 ```python
-#!python
 #
 # Add an action to move any module files
 #
@@ -103,8 +99,6 @@ Below is the full SConstruct file for the example. Note that this variant does n
 
 
 ```python
-#!python
-#!/usr/bin/env python
 import os, os.path, sys, fnmatch
 
 #
@@ -188,11 +182,7 @@ env.Program('test.x', ['main.f90'] + objs )
 
 The SConscript file for this example is very simple. Here it is: 
 
-
 ```python
-#!python
-#!/usr/bin/env python
-
 Import('env','Glob')
 
 sources = Glob('*.f90') + Glob('*.f')
@@ -213,7 +203,6 @@ You can do this with a post action that copies the module file created by the co
 
 
 ```python
-#!python
 def MoveModFiles(target=None, source=None, env=None):
     """
     Moves mod files to build directory. Also creates upper/lower-case versions.
@@ -240,7 +229,6 @@ As you can see, it is simply a question of duplicating the uppercase file, and u
 * -- [DrewMcCormack](DrewMcCormack) 
 Options specific to Intel FORTRAN compiler: 
 
-```
-#!python
+```python
 FORTRANMODDIRPREFIX = '-module ', 
 ```
