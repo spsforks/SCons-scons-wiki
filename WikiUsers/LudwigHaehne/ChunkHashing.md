@@ -5,7 +5,7 @@
 
 ## Episode 3: Block-wise MD5 hashing
 
-The MD5 signature generation as it is now reads the whole file into memory and performs the computation on the whole memory block. This is sane for the average source file but not an option for very large files as was pointed out in a number of mailing list posts and bug reports (e.g. [#1646](/SCons/scons/issues/1646), [#1459](/SCons/scons/issues/1646)). 
+The MD5 signature generation as it is now reads the whole file into memory and performs the computation on the whole memory block. This is sane for the average source file but not an option for very large files as was pointed out in a number of mailing list posts and bug reports (e.g. [#1646](/SCons/scons/issues/1646), [#1459](/SCons/scons/issues/1459)). 
 
 The memory allocation for signature computation is transient and therefore hard to detect without taking further measures. One has to create a snapshot between fetching the file contents and computing the hash to even notice the memory consumption.  
 
