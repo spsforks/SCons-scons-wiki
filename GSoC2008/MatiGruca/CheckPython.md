@@ -40,7 +40,6 @@ Sample `SConstruct` file:
 
 
 ```python
-#!python 
 env = Environment()
 conf = Configure(env)
 # We need python 2.2.2 or higher
