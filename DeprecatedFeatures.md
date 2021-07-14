@@ -19,25 +19,25 @@ Removed |  Check removed, may cause Python error
 
  **Feature**  |  **Description / Notes**  |  **Repl**  |  **Annuc**  |  **Hidden**  |  **Suppr**  |  **Mand**  |  **Fatal**  |  **Removed**
 :-----|:------|:---|:---|:----|:----|:----|:----|:----|
- Python 3.5  |  Drop support for Python 3.5  |  N/A  |  2.4  |  N/A  |  N/A  |  N/A  |  N/A  |  never 
+ Python 3.5  |  Drop support for Python 3.5  |  N/A  |  4.2  |  N/A  |  N/A  |  N/A  |  N/A  |  never 
  `--cache-<option>`  |  Convert to `--cache=<option>`  |  2.1??  |  2.1??  |  2.1??  |  ??  |  ??  |  3.0??  |  3.2?? 
  `${,UN}CHANGED_SOURCES` `${,UN}CHANGED_TARGETS` reserved variables  |  Deprecate the user's ability to set them  |  N/A  |  1.2  |  Warning message (and assignment suppressed) as one of the reserved construction variable names |||||
  `Options/*.py` modules  |  Stub modules, restored when 0.98.1 removed them and broke released configurations  |  0.98.3  |  TODO  |   |  1.2  |  2.0  |  2.1??  |  3.0?? 
  `*Option` names  |  Replaced by `*Variable` names  |  0.98.1  |  TODO  |   |  1.2  |  2.0  |  2.1??  |  3.0?? 
- `env.BuildDir()`  |  Replaced by `env.VariantDir()`  |  0.98.0  |  TODO  |   |  2.0  |  2.1??  |  3.0??  |  ?? 
- `build_dir` option  |  Replaced by `variant_dir`  |  0.98.0  |  TODO  |   |  2.0  |  2.1??  |  3.0??  |  ?? 
- `env.Copy()`  |  Replaced by `env.Clone()`  |  0.98.0  |  TODO  |   |  0.98.0  |  2.0  |  2.1??  |  ?? 
- `env.SourceSignatures()` and `env.TargetSignature()`  |  Replaced by `env.Decider()`; eliminating these would speed up a critical code path!  |  0.98.0  |  TODO  |   |  0.98.0  |  2.0  |  2.1??  |  ?? 
- `--debug=dtree` option  |  Replaced by `--tree=derived`  |  0.98.0  |  TODO  |   |  0.98.0  |  2.0  |  2.1??  |  ?? 
- `--debug=stree` option  |  Replaced by `--tree=all,status`  |  0.98.0  |  TODO  |   |  0.98.0  |  2.0  |  2.1??  |  ?? 
- `--debug=tree` option  |  Replaced by `--tree=all`  |  0.98.0  |  TODO  |   |  0.98.0  |  2.0  |  2.1??  |  ?? 
+ `env.BuildDir()`  |  Replaced by `env.VariantDir()`  |  0.98.0  |  TODO  |   |  2.0  |  2.1??  |  3.0??  |  3.1.2
+ `build_dir` option  |  Replaced by `variant_dir`  |  0.98.0  |  TODO  |   |  2.0  |  2.1??  |  3.0??  |  3.1.2
+ `env.Copy()`  |  Replaced by `env.Clone()`  |  0.98.0  |  TODO  |   |  0.98.0  |  2.0  |  2.1??  |  3.1.2
+ `env.SourceSignatures()` and `env.TargetSignature()`  |  Replaced by `env.Decider()`; eliminating these would speed up a critical code path!  |  0.98.0  |  TODO  |   |  0.98.0  |  2.0  |  2.1??  |  3.1.2
+ `--debug=dtree` option  |  Replaced by `--tree=derived`  |  0.98.0  |  TODO  |   |  0.98.0  |  2.0  |  2.1??  |  3.1.2
+ `--debug=stree` option  |  Replaced by `--tree=all,status`  |  0.98.0  |  TODO  |   |  0.98.0  |  2.0  |  2.1??  |  3.1.2
+ `--debug=tree` option  |  Replaced by `--tree=all`  |  0.98.0  |  TODO  |   |  0.98.0  |  2.0  |  2.1??  |  3.1.2
  `Sig` module  |  Stub module to maintain backwards compatibility from before the Signature Refactoring  |  0.97.x  |  TODO  |   |  0.98.0  |  2.0  |  2.1??  |  ?? 
- `scanner` Builder keyword  |  Replaced by separate `target_scanner` and `source_scanner` keywords  |  0.96.90  |  TODO  |   |  0.96.90  |  2.0  |  2.1??  |  ?? 
- `overrides` Builder keyword  |  Replaced by use of keyword arguments in Builder creation  |  0.95  |  TODO  |   |  0.95  |  2.0  |  2.1??  |  ?? 
- `--debug=nomemoizer` option  |  No longer has any effect  |  0.96.94  |  TODO  |   |  0.96.94  |  2.0  |  2.1??  |  ?? 
+ `scanner` Builder keyword  |  Replaced by separate `target_scanner` and `source_scanner` keywords  |  0.96.90  |  TODO  |   |  0.96.90  |  2.0  |  2.1??  |  3.1.2
+ `overrides` Builder keyword  |  Replaced by use of keyword arguments in Builder creation  |  0.95  |  TODO  |   |  0.95  |  2.0  |  2.1??  |  3.1.2
+ `--debug=nomemoizer` option  |  No longer has any effect  |  0.96.94  |  TODO  |   |  0.96.94  |  2.0  |  2.1??  | 3.1.2
  `File.win32` attribute  |  Replaced by `.windows`  |  0.96.92  |  TODO  |  none  |  2.1??  |  ??  |  ??  |  ?? 
- `$WIN32*` construction variables  |  Replaced by `$WINDOWS*` construction variables  |  0.96.92  |  TODO  |  none  |  2.1??  |  ??  |  ??  |  ?? 
- `$PDFCOM` construction variable  |  Replaced by `$DVIPDFCOM`  |  0.14  |  TODO  |  none  |  2.1??  |  ??  |  ??  |  ?? 
- `Taskmaster.Task.` `needs_execute()`  |  TBD:  internal method; may be used by user-defined subclasses  |  should always be overridden || |  ?  |  2.0  |  2.1??  |  ??  |  ?? 
- `Scanner.Scanner` class  |  TBD:  unused internal class; may be used by user code  |  ?  |  ?  |  ?  |  ?  |  ?  |  ?  |  gone 
- `Scanner.Selector` class  |  TBD:  unused internal class; may be used by user code  |  ?  |  ?  |  ?  |  ?  |  ?  |  ?  |  gone 
+ `$WIN32*` construction variables  |  Replaced by `$WINDOWS*` construction variables  |  0.96.92  |  TODO  |  none  |  2.1??  |  ??  |  ??  |  4.2
+ `$PDFCOM` construction variable  |  Replaced by `$DVIPDFCOM`  |  0.14  |  TODO  |  none  |  2.1??  |  ??  |  ??  |  4.2
+ `Taskmaster.Task.` `needs_execute()`  |  internal method; may be used by user-defined subclasses - now an abstract method |  should always be overridden || |  ?  |  2.0  |  2.1??  |  ??  |  4.0
+ `Scanner.Scanner` class  |  TBD:  unused internal class; may be used by user code  |  ?  |  ?  |  ?  |  ?  |  ?  |  ?  |  ?
+ `Scanner.Selector` class  |  TBD:  unused internal class; may be used by user code  |  ?  |  ?  |  ?  |  ?  |  ?  |  ?  |  ?
