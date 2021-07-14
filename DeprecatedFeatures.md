@@ -38,6 +38,6 @@ Removed |  Check removed, may cause Python error
  `File.win32` attribute  |  Replaced by `.windows`  |  0.96.92  |  TODO  |  none  |  2.1??  |  ??  |  ??  |  ?? 
  `$WIN32*` construction variables  |  Replaced by `$WINDOWS*` construction variables  |  0.96.92  |  TODO  |  none  |  2.1??  |  ??  |  ??  |  4.2
  `$PDFCOM` construction variable  |  Replaced by `$DVIPDFCOM`  |  0.14  |  TODO  |  none  |  2.1??  |  ??  |  ??  |  4.2
- `Taskmaster.Task.` `needs_execute()`  |  internal method; may be used by user-defined subclasses - now an abstract method |  should always be overridden || |  ?  |  2.0  |  2.1??  |  ??  |  4.0
+ `Taskmaster.Task.` `needs_execute()`  |  internal method; may be used by user-defined subclasses |  should always be overridden - now an abstract method || |  ?  |  2.0  |  2.1??  |  ??  |  4.0
  `Scanner.Scanner` class  |  TBD:  unused internal class; may be used by user code  |  ?  |  ?  |  ?  |  ?  |  ?  |  ?  |  ?
  `Scanner.Selector` class  |  TBD:  unused internal class; may be used by user code  |  ?  |  ?  |  ?  |  ?  |  ?  |  ?  |  ?
