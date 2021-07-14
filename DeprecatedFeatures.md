@@ -2,6 +2,8 @@ This page is intended to track the various features that are, or will be, deprec
 
 In the table below, a '?' indicates an estimated or unknown value and a '??' indicates a projected future time.  The most recently announced are at the top. 
 
+Note that Python version support is handled a bit differently.  While there is a small component that is an "active" SCons feature - bytecode strings for certain scenarios - mostly the Python version isn't really part of SCons.  Since old versions restrict the syntax that can be used, SCons is now tracking more closely to the versions of cPython supported by upstream and is not using the long deprecation sequence for this.
+
 TODO:  Go through old release notes and/or mailing list archives to nail down "Announced." 
 
 Stage       | Description
@@ -17,15 +19,9 @@ Removed |  Check removed, may cause Python error
 
  **Feature**  |  **Description / Notes**  |  **Repl**  |  **Annuc**  |  **Hidden**  |  **Suppr**  |  **Mand**  |  **Fatal**  |  **Removed**
 :-----|:------|:---|:---|:----|:----|:----|:----|:----|
- Python 2.7  |  Drop support for Python 2.7  |  N/A  |  ??  |  ??  |  ??  |  ??  |  ??  |  never 
- Python 2.6  |  Drop support for Python 2.6  |  N/A  |  ??  |  ??  |  ??  |  ??  |  ??  |  never 
- Python 2.5  |  Drop support for Python 2.5  |  N/A  |  ??  |  ??  |  ??  |  ???  |  ??  |  never 
- Python 2.4  |  Drop support for Python 2.4  |  N/A  |  3.0??  |  ??  |  ??  |  ??  |  4.0??  |  never 
+ Python 3.5  |  Drop support for Python 3.5  |  N/A  |  2.4  |  N/A  |  N/A  |  N/A  |  N/A  |  never 
  `--cache-<option>`  |  Convert to `--cache=<option>`  |  2.1??  |  2.1??  |  2.1??  |  ??  |  ??  |  3.0??  |  3.2?? 
- Python 2.3  |  Drop support for Python 2.3  |  N/A  |  1.3  |  1.3  |  1.3  |  2.0  |  2.x??  |  never 
- Python 2.2  |  Drop support for Python 2.2  |  N/A  |  1.3  |  1.3  |  1.3  |  1.3.1  |  2.0  |  never 
  `${,UN}CHANGED_SOURCES` `${,UN}CHANGED_TARGETS` reserved variables  |  Deprecate the user's ability to set them  |  N/A  |  1.2  |  Warning message (and assignment suppressed) as one of the reserved construction variable names |||||
- Python 1.5 - 2.1  |  Drop support for Python versions up to 2.1  |  N/A  |  TODO  |   |  0.98.0  |  1.3  |  2.0  |  never 
  `Options/*.py` modules  |  Stub modules, restored when 0.98.1 removed them and broke released configurations  |  0.98.3  |  TODO  |   |  1.2  |  2.0  |  2.1??  |  3.0?? 
  `*Option` names  |  Replaced by `*Variable` names  |  0.98.1  |  TODO  |   |  1.2  |  2.0  |  2.1??  |  3.0?? 
  `env.BuildDir()`  |  Replaced by `env.VariantDir()`  |  0.98.0  |  TODO  |   |  2.0  |  2.1??  |  3.0??  |  ?? 
