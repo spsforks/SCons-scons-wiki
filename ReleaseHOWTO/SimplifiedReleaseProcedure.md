@@ -29,9 +29,7 @@ python bin/docs-create-example-outputs.py
 - [ ] Update RELEASE.txt: this gets its content *replaced* for each release.  New functionality, deprecated functionality, changed functionality, and fixes.  Get this from CHANGES.txt.  Add new contributors to list at end. 
 - [ ] Edit `debian/changelog`. Be careful of formatting here, it gets machine-parsed. 
 - [ ] Commit 
-- [ ] Update `ReleaseConfig` and run `python bin/update-release-info.py release` (this modifies CHANGES, Release and Announce -- that's why you should commit the above first.) 
 - [ ] Update `default_version` in SConstruct
-- [ ] Update `version` and `release` in `doc/sphinx/conf.py`
 - [ ] Build packages and doc: `python scripts/scons.py >& build-XYZ.log` (good idea to save build logfile somewhere) 
 
 ```txt
