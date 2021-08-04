@@ -1,19 +1,18 @@
 
-
 # Description
 
-The builder for running unit tests created with the [CxxTest](http://cxxtest.com) framework. This is the official builder for [CxxTest](CxxTest) (see below). 
+The builder for running unit tests created with the [CxxTest](http://cxxtest.com) framework. This is the official builder for CxxTest (see below). 
 
-I'm pleased to say that this builder has now been included in the new and improved version of [CxxTest](CxxTest) that is currently in svn. The source code here is not updated every time I fix a bug, mainly because I forget. So, the most up-to-date version can always be found here: [https://cxxtest.svn.sourceforge.net/svnroot/cxxtest/trunk/build_tools/SCons/](https://cxxtest.svn.sourceforge.net/svnroot/cxxtest/trunk/build_tools/SCons/). 
+I'm pleased to say that this builder has now been included in the new and improved version of CxxTest that is currently in git. The source code here is not updated every time I fix a bug, mainly because I forget. So, the most up-to-date version can always be found here: [https://github.com/CxxTest/cxxtest/tree/master/build_tools/SCons](https://github.com/CxxTest/cxxtest/tree/master/build_tools/SCons).
 
 Get it there while it's hot. 
 
 
 # Installation
 
-Get the code [from CxxTest svn](https://cxxtest.svn.sourceforge.net/svnroot/cxxtest/trunk/build_tools/SCons/), or find it under build_tools/SCons in your [CxxTest](CxxTest) distribution. 
+Get the code from `build_tools/SCons` in your CxxTest distribution. 
 
-Copy this code into a cxxtest.py somewhere in your toolpath (usually to #/site_scons/site_tools/cxxtest.py). 
+Copy this code into a `cxxtest.py` somewhere in your toolpath (usually to `#/site_scons/site_tools/cxxtest.py`). 
 
 
 # Documentation
@@ -23,15 +22,13 @@ An expanded (and maintained) version of the documentation for this builder is lo
 
 # Usage
 
-In short, it can be used in the same way the Program() builder can be used. You can even specify other flags on call etc. 
+In short, it can be used in the same way the `Program()` builder can be used. You can even specify other flags on call etc. 
 
 
 ## Example
 
 
 ```python
-#!python
-
 # vanilla include (the 'cxxtest' would be 'CxxTest' if the file was called CxxTest.py!)
 env = Environment(tools = ['default', 'cxxtest'])
 
@@ -73,4 +70,5 @@ All problems reported have their own unit-test that fails if run by a builder wi
 
 # The code
 
-Get it here: [https://cxxtest.svn.sourceforge.net/svnroot/cxxtest/trunk/build_tools/SCons/](https://cxxtest.svn.sourceforge.net/svnroot/cxxtest/trunk/build_tools/SCons/) However, if you are using [CxxTest](CxxTest), it should already be in the build_tools/SCons directory. Use that one, the latest one might not be backwards-compatible with your local version. 
+Get it here: [https://github.com/CxxTest/cxxtest/tree/master/build_tools/SCons](https://github.com/CxxTest/cxxtest/tree/master/build_tools/SCons).
+if you are using CxxTest, it should already be in the `build_tools/SCons directory`. Use that one, the latest one might not be backwards-compatible with your local version. 
