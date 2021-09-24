@@ -1,8 +1,6 @@
-
 Here's the SConstruct: 
-```txt
+```python
 from SCons.Script.SConscript import SConsEnvironment 
-#import SCons.Script 
 import os 
 import fnmatch 
 import copy 
@@ -614,7 +612,7 @@ class Dev(Environment):
     #-- set up a VC6 project to be built 
     #-- assumes: 
     #--      - .dsp is in the source dir 
-    #--      - build_dir is not used 
+    #--      - variant_dir is not used 
     #--      - exetype is one of exe, dll, lib 
     def VC6(self, e, project, dspname=None, exename=None, exetype=None): 
       self.compile_VC6('.dsp', e, project, dspname, exename, exetype) 
@@ -622,7 +620,7 @@ class Dev(Environment):
     #-- set up a VC6 project to be built 
     #-- assumes: 
     #--      - .dsw is in the source dir 
-    #--      - build_dir is not used 
+    #--      - variant_dir is not used 
     #--      - exetype is one of exe, dll, lib 
     def VC6_dsw(self, e, project, dspname=None, exename=None, exetype=None): 
       self.compile_VC6('.dsw', e, project, dspname, exename, exetype) 
@@ -1194,39 +1192,44 @@ env.jGenHelp()
  
 #todo: finish wrapping all Aliases. Use jAlias(). so it does not conflict with existing Alias() in env. 
 #todo: move 'dev' into environment env 
+```
 
 Here's a typical sconscript:
 
+```python
 Import('env', 'dev', 'project') 
-localenv = env.Copy() 
+localenv = env.Clone() 
  
 tgt = dev.VC6(localenv, project, exetype='lib') 
 localenv.Depends(tgt, dev.GetSourceFiles(['*.cpp', '*.h'])) 
 dev.SetAliases(env, project, tgt) 
  
 #--- set up html page 
-dev.dh.Reset() 
-dev.dh.project = 'jcomheap' 
-dev.dh.status = 'complete' 
-dev.dh.title = 'jComHeap' 
-dev.dh.desc = 'checks the COM heap for leaks using IMallocSpy' 
-dev.dh.keywords = 'COM heap, memory leaks, IMallocSpy' 
-dev.dh.dest_root = dev.cfg.arrizza_local_downloads + '/' + dev.dh.project 
-dev.dh.htmlpage = 'jcomheap.html' 
-dev.dh.src_root = dev.cfg.frozen_root + '/' + dev.dh.project 
-dev.dh.src_htmlpage = dev.dh.src_root + '/' + dev.dh.htmlpage 
-dev.dh.changes = ['Initial version'] 
-dev.dh.installation = [] 
-dev.dh.showfiles=[dev.dh.src_root + '/../jComHeap_test/testjcomheap.cpp', 
-                  dev.dh.src_root + '/debug.reg', 
-                  dev.dh.src_root + '/AllocationMap.cpp', 
-                  dev.dh.src_root + '/AllocationMap.h', 
-                  dev.dh.src_root + '/Stats.h'] 
-dev.dh.zipfiles=[dev.GetBuildDir(dev.dh.project) + '/jcomheap.lib', 
-                 dev.dh.src_root + '/jcomheap.sln', 
-                 dev.dh.src_root + '/jcomheap.vcproj'] 
-dev.dh.zipfiles.extend(dev.dh.showfiles) 
-dev.dh.Gen(env) 
-dev.dh.Alias(env) 
-
+dev.dh.Reset()
+dev.dh.project = "jcomheap"
+dev.dh.status = "complete"
+dev.dh.title = "jComHeap"
+dev.dh.desc = "checks the COM heap for leaks using IMallocSpy"
+dev.dh.keywords = "COM heap, memory leaks, IMallocSpy"
+dev.dh.dest_root = dev.cfg.arrizza_local_downloads + "/" + dev.dh.project
+dev.dh.htmlpage = "jcomheap.html"
+dev.dh.src_root = dev.cfg.frozen_root + "/" + dev.dh.project
+dev.dh.src_htmlpage = dev.dh.src_root + "/" + dev.dh.htmlpage
+dev.dh.changes = ["Initial version"]
+dev.dh.installation = []
+dev.dh.showfiles = [
+    dev.dh.src_root + "/../jComHeap_test/testjcomheap.cpp",
+    dev.dh.src_root + "/debug.reg",
+    dev.dh.src_root + "/AllocationMap.cpp",
+    dev.dh.src_root + "/AllocationMap.h",
+    dev.dh.src_root + "/Stats.h",
+]
+dev.dh.zipfiles = [
+    dev.GetBuildDir(dev.dh.project) + "/jcomheap.lib",
+    dev.dh.src_root + "/jcomheap.sln",
+    dev.dh.src_root + "/jcomheap.vcproj",
+]
+dev.dh.zipfiles.extend(dev.dh.showfiles)
+dev.dh.Gen(env)
+dev.dh.Alias(env)
 ```
