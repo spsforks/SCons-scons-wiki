@@ -1,11 +1,9 @@
-
 See also [SconsProjects](SconsProjects) for lots more real-life SCons examples. 
 
-SConstruct: 
+`SConstruct`: 
 
 
 ```txt
-import SCons.Script
 import os
 import fnmatch
 
@@ -60,7 +58,7 @@ def DoSrcVC6(project, mode, group = gOtherProjects):
 def DoFrozen(project, mode, group = gOtherProjects):
     gFrozenDirProjects.append(project)
     group.append(project)
-    SConscript(GetConscriptPath('frozen', project), build_dir= dev.GetBuildDir(project, mode), exports='project')
+    SConscript(GetConscriptPath('frozen', project), variant_dir=dev.GetBuildDir(project, mode), exports='project')
 
 def DoFrozenVC7(project, mode, group = gOtherProjects):
     gFrozenDirProjects.append(project)
@@ -484,7 +482,7 @@ env.Alias('send_all', ['send_html', 'send_cgi', 'send_xpsdorg'])
 sconscripts haven't changed from the last time. Here's a typical one: 
 ```txt
 Import('env', 'dev', 'project')
-localenv = env.Copy()
+localenv = env.Clone()
 tgt = dev.VC7(localenv, project)
 localenv.Depends(tgt, dev.GetSourceFiles(['*.cpp', '*.h']))
 dev.SetAliases(env, project, tgt)
