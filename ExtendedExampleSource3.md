@@ -1,9 +1,6 @@
+The `SConstruct` looks like this: 
 
-The conscruct looks like this: 
-
-
-```txt
-import SCons.Script
+```python
 import os
 import fnmatch
 
@@ -58,7 +55,7 @@ def DoSrcVC6(project, mode, group = gOtherProjects):
 def DoFrozen(project, mode, group = gOtherProjects):
     gFrozenDirProjects.append(project)
     group.append(project)
-    SConscript(GetConscriptPath('frozen', project), build_dir= dev.GetBuildDir(project, mode), exports='project')
+    SConscript(GetConscriptPath('frozen', project), variant_dir=dev.GetBuildDir(project, mode), exports='project')
 
 def DoFrozenVC7(project, mode, group = gOtherProjects):
     gFrozenDirProjects.append(project)
@@ -263,9 +260,9 @@ env.Alias('send_cgi', ['send_cgimain', 'send_jwikipub', 'send_jwikipriv', 'send_
 env.Alias('send_all', ['send_html', 'send_cgi', 'send_xpsdorg'])
 ```
 The sconscripts look like this: 
-```txt
+```python
 Import('env', 'dev', 'project')
-localenv = env.Copy()
+localenv = env.Clone()
 tgt = dev.VC7(localenv, project)
 localenv.Depends(tgt, dev.GetSourceFiles(['*.cpp', '*.h']))
 dev.SetAliases(env, project, tgt)
