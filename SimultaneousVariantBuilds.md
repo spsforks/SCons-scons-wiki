@@ -6,11 +6,11 @@ This page demonstrates how to tell SCons to build multiple variants of your soft
 
 `SConstruct`: 
 ```python
-release_env = Environment(CCFLAGS = ['-O2'])
-debug_env = release_env.Clone(CCFLAGS = ['-g'])
+release_env = Environment(CCFLAGS=["-O2"])
+debug_env = release_env.Clone(CCFLAGS=["-g"])
 
-SConscript('src/SConscript', variant_dir='release', exports={'env':release_env})
-SConscript('src/SConscript', variant_dir='debug', exports={'env':debug_env})
+SConscript("src/SConscript", variant_dir="release", exports={"env": release_env})
+SConscript("src/SConscript", variant_dir="debug", exports={"env": debug_env})
 ```
 `src/SConscript`: 
 ```python
@@ -27,51 +27,51 @@ gcc -o release/hello release/hello.o
 ```
 Here's the same sort of thing for windows using the Microsoft C++ compiler.  In the `SConstruct`: 
 ```python
-base_env = Environment(tools = ["msvc", "mslink"])
+base_env = Environment(tools=["msvc", "mslink"])
 
 # Build different variants:
 for flavour in ["Debug", "Release"]:
-    env = base_env.Copy()
-    
+    env = base_env.Clone()
+
     # Set up compiler and linker flags:
     if flavour == "Debug":
         # Use debug multithreaded DLL runtime, and no optimization
-        env.Append(CCFLAGS = ["/MDd", "/Od"])
+        env.Append(CCFLAGS=["/MDd", "/Od"])
         # Each object has its own pdb, so -jN works
-        env.Append(CCFLAGS = ["/Zi", "/Fd${TARGET}.pdb"])
-        env.Append(LINKFLAGS = ["/DEBUG"])
+        env.Append(CCFLAGS=["/Zi", "/Fd${TARGET}.pdb"])
+        env.Append(LINKFLAGS=["/DEBUG"])
     else:
         # Use multithreaded DLL runtime, and some sensible amount of optimization
-        env.Append(CCFLAGS = ["/MD", "/Ox"])
+        env.Append(CCFLAGS=["/MD", "/Ox"])
 
     # Call the SConstruct for each subproject.
     SConscript(
-            "hello/SConscript",
-            exports = ["env"],
-            build_dir = flavour + "/hello",
-            duplicate = 0,
-            )
+        "hello/SConscript",
+        exports=["env"],
+        build_dir=flavour + "/hello",
+        duplicate=0,
+    )
     SConscript(
-            "world/SConscript",
-            exports = ["env"],
-            build_dir = flavour + "/world",
-            duplicate = 0,
-            )
+        "world/SConscript",
+        exports=["env"],
+        build_dir=flavour + "/world",
+        duplicate=0,
+    )
 ```
 And this is the contents of `hello/SConscript`: 
 ```python
 # Make sure we don't change the imported environment by mistake:
 Import("env")
 imported_env = env
-env = env.Copy()
+env = env.Clone()
 
 # Set up things for this project
-env.AppendUnique(CPPPATH = ["."])
+env.AppendUnique(CPPPATH=["."])
 
 hello_t = env.Program(
-        target = "hello",
-        source = ["hello.c"],
-        )
+    target="hello",
+    source=["hello.c"],
+)
 ```
 And the output: 
 ```txt
