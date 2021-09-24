@@ -5,7 +5,7 @@ John Arrizza
 
 ---
 
- I am (still) new to scons. I've tried it on a couple of small projects and it seems to work well. 
+I am (still) new to scons. I've tried it on a couple of small projects and it seems to work well. 
 
 However, I'd like to roll it out in a bigger way and I'm stuck. I'd like to get some feedback from you all on how you'd proceed. I'd like to use it for my home setup which has some interesting twists and turns and so may pose a nice challenge for the scons gurus. 
 
@@ -24,9 +24,9 @@ The directory structure looks like:
    \projects\web\arrizza\html\  (etc.)
    \projects\web\arrizza\cgi-bin\ (etc.)
 ```
-* The \projects\web\arrizza is a staging area where I collect all of the information prior to FTP'ing (via an Ant taskdef) to my web site. I've been working on a python based ftpmirror that will only send new/changed files. 
-* All of the projects under \projects\frozen are compiled and put in the staging area. 
-* Some -- not all -- of the projecs in \projects\src are compiled and put in the staging area. 
+* The `\projects\web\arrizza` is a staging area where I collect all of the information prior to FTP'ing (via an Ant taskdef) to my web site. I've been working on a python based ftpmirror that will only send new/changed files. 
+* All of the projects under `\projects\frozen` are compiled and put in the staging area. 
+* Some -- not all -- of the projecs in `\projects\src` are compiled and put in the staging area. 
 * some projects don't have a compile step, there are just some files that get put in the staging area. 
 * there are some dependencies between the projects (e.g. unit testers are used by many projects) but generally they are isolated. 
 * I have projects written in in C# or C++ (VC7 or VC6 or gcc) or Java (jikes). Most projects are compiled in one and only one language but there are some (e.g. a cross-platform unit tester) that I compile in multiple languages. 
@@ -36,7 +36,7 @@ The public interface to this build system (i.e. what I can call from or do from 
 * compile (release mode) any given project 
 * compile various groups of projects (see for example [http://www.arrizza.com/downloads/downloads.html](http://www.arrizza.com/downloads/downloads.html) as one of these groups) 
 * compile all 
-* prepare a particular part of the staging area (e.g. put my resume in the html\resume directory) 
+* prepare a particular part of the staging area (e.g. put my resume in the `html\resume` directory) 
 * prepare all of the staging area 
 * send a particular part of the staging area (e.g. send an updated resume to my website) 
 * send all of the staging area to the website 
@@ -55,12 +55,12 @@ I want the target directory to be either debug or release (siblings of the sourc
    projects\debug\project
    projects\release\project
 ```
-* 1 Should I have one conscript file at the root (i.e. \projects\conscript) and then one in each project, or is it better to put it all into one file at the root? 1 I would like to name projectx on the command line and have scons "know" where projectx resides. That way I can move projectx from one source root directory to another without having to change the command line to build projectx. How do I do this? 
+* 1 Should I have one sconscript file at the root (i.e. `\projects\sconscript`) and then one in each project, or is it better to put it all into one file at the root? 1 I would like to name projectx on the command line and have scons "know" where projectx resides. That way I can move projectx from one source root directory to another without having to change the command line to build projectx. How do I do this? 
 
 
 ---
 
- _1) Should I have one conscript file at the root (i.e. \projects\conscript) and then one in each project, or is it better to put it all into one file at the root?_ 
+ _1) Should I have one sconscript file at the root (i.e. `\projects\sconscript`) and then one in each project, or is it better to put it all into one file at the root?_ 
 
 I'd go with separate SConscripts in each project.  Modularity is your friend. 
 
@@ -83,7 +83,7 @@ In make these are psuedo targets, in scons the right way to do this is to use ??
  _In make these are psuedo targets, in scons the right way to do this is to use ??_ 
 
 Aliases again.  Aliases can "contain" other aliases. 
-```txt
+```python
 a = Alias('A')
 b = Alias('B')
 all = Alias([a, b])
@@ -93,31 +93,31 @@ all = Alias([a, b])
 ---
 
  As Gary mentioned, use Aliases. You can also use the Alias call on the same alias multiple times... so your SConstruct could look like: 
-```txt
-    ...
-    Alias('neuralnet1','neurelnet1.exe')
-    Alias('neuralnet','neuralnet1')
-    ...
-    Alias('neuralnet1','neurelnet2.exe')
-    Alias('neuralnet','neuralnet2')
-    ...
-    Alias('neuralnet1','neurelnet3.exe')
-    Alias('neuralnet','neuralnet3')
-    ...
-    Alias('neuralnet1','neurelnet4.exe')
-    Alias('neuralnet','neuralnet4')
+```python
+...
+Alias('neuralnet1','neurelnet1.exe')
+Alias('neuralnet','neuralnet1')
+...
+Alias('neuralnet1','neurelnet2.exe')
+Alias('neuralnet','neuralnet2')
+...
+Alias('neuralnet1','neurelnet3.exe')
+Alias('neuralnet','neuralnet3')
+...
+Alias('neuralnet1','neurelnet4.exe')
+Alias('neuralnet','neuralnet4')
 ```
 Is equivalent to, 
-```txt
-    ...
-    Alias('neuralnet1','neurelnet1.exe')
-    ...
-    Alias('neuralnet1','neurelnet2.exe')
-    ...
-    Alias('neuralnet1','neurelnet3.exe')
-    ...
-    Alias('neuralnet1','neurelnet4.exe')
-    Alias('neuralnet',['neurelnet1','neurelnet2','neurelnet3','neuralnet4'])
+```python
+...
+Alias('neuralnet1','neurelnet1.exe')
+...
+Alias('neuralnet1','neurelnet2.exe')
+...
+Alias('neuralnet1','neurelnet3.exe')
+...
+Alias('neuralnet1','neurelnet4.exe')
+Alias('neuralnet',['neurelnet1','neurelnet2','neurelnet3','neuralnet4'])
 ```
 The order you add tasks into the Alias is the order they will be executed. 
 
@@ -128,26 +128,25 @@ The order you add tasks into the Alias is the order they will be executed.
  In response to the emails, I tried the following. It did not work. 
 
 Sconscruct 
-```txt
-import SCons.Script
+```python
 env = Environment()
 env.Alias('cppwiki', 'src/cppwiki')
 env.Alias('pso', 'src/pso/sconscript')
 ```
 Sconscript 
-```txt
+```python
 import sys
 
-print "In pso\sconscript"
+print("In pso\sconscript")
 env = Environment(tools=['mingw'])
 project = 'pso'
 builddir = buildroot + '/' + project
 targetpath = builddir + '/' + project
-BuildDir('#' + builddir, "#.", duplicate=0)
+VariantDir('#' + builddir, "#.", duplicate=0)
 env.Program(targetpath, source=Split(map(lambda x: '#' + builddir + '/' + x, glob.glob('*.cpp'))))
 ```
 Calling 'scons pso' just says that the target is up to date 
-```txt
+```cmd
 D:\projects>scons  pso
 scons: Reading SConscript files ...
 scons: done reading SConscript files.
@@ -157,7 +156,7 @@ scons: done building targets.
 D:\projects>
 ```
 Made things simpler: 
-```txt
+```python
 env = Environment()
 
 Export('env')
@@ -165,14 +164,14 @@ env.Alias('cppwiki', 'src/cppwiki/sconscript')
 env.Alias('pso', 'src/pso/sconscript')
 ```
 pso/sconscript 
-```txt
+```python
 import sys
 Import('env')
-print "In pso/sconscript"
+print("In pso/sconscript")
 project = 'pso'
 ```
 Still no joy. Using SConscript works: 
-```txt
+```python
 env = Environment()
 
 Export('env')
@@ -185,23 +184,23 @@ but now builds both projects, no matter what I put on the command line.
 
 ---
 
- Well it didn't really "build" both projects. It just read the sconscript files, which caused the 'print' statements to execute, which made it look like a compile was happening. 
+ Well it didn't really "build" both projects. It just read the sconscript files, which caused the 'print' function to execute, which made it look like a compile was happening. 
 
 ---
 
  Here's a response to an email I sent out. 
-```txt
-  env = Environment()
-  Export('env')
-  env.Alias('cppwiki', 'src/cppwiki/sconscript')
-  env.Alias('pso', 'src/pso/sconscript')
+```python
+env = Environment()
+Export('env')
+env.Alias('cppwiki', 'src/cppwiki/sconscript')
+env.Alias('pso', 'src/pso/sconscript')
 ```
 The Alias calls should not list the SConscript files, they should list whatever *targets* (files and/or subdirectories) you want built for the alias.  So if you want the aliases to build all of the targets underneath the subdirectories in which those SConscript files live, you should list those subdirectories: 
-```txt
-        env.Alias('cppwiki', 'src/cppwiki')
-        env.Alias('pso', 'src/pso')
-        SConscript('src/cppwiki/sconscript')
-        SConscript('src/pso')
+```python
+env.Alias('cppwiki', 'src/cppwiki')
+env.Alias('pso', 'src/pso')
+SConscript('src/cppwiki/sconscript')
+SConscript('src/pso')
 ```
 You still need the SConscript() calls to tell SCons to read up and execute the SConscript files. 
 
@@ -224,8 +223,7 @@ That's what you specify on the command line.  They can be files, or directories 
 ---
 
  Based on the above email and more reading of the manual, here is the latest sconstruct: 
-```txt
-import SCons.Script
+```python
 env = Environment()
 Export('env')
 env.Alias('cppwiki', 'src/cppwiki')
@@ -234,9 +232,9 @@ SConscript('src/pso/sconscript')
 SConscript('src/cppwiki/sconscript')
 ```
 and sconscripts (only one, the other is similar): 
-```txt
+```python
 Import('env')
-print "In pso/sconscript"
+print("In pso/sconscript")
 project = 'pso'
 
 env.Program(target = 'pso', source = ['acs-tsp2003.cpp', 'solution.cpp', 'utilities.cpp'])
@@ -251,51 +249,56 @@ It currently builds one or the other target based on the command line, and 'scon
 * the Program() causes the build to occur but only if the command line target (through an Alias() if it exists) matches the "target=" parameter to the Program() call. 
 **Questions (more or less priority order)** 
 
-* the Program() is defaulting to VC7 (i.e. 2003 .Net), I need to force a different compiler in each case (gcc for pso, VC6 for cppwiki). How do I do that? _Create different construction environments, possibly from a common ancestor using env.Copy(), and then call env.Tool(tool) on each environment with different values of tool_ 
-* how do I specify an alternate build directory? e.g. \projects\debug\pso _Read about env.[BuildDir](BuildDir)_ 
-* how do I specify debug vs release? _Leanid: I use the same env.[BuildDir](BuildDir) and add Release or Debug into path, I set it by using ARGUMENTS.get('mode', 'Release') and invoking "scons mode=Debug", also I put this value in env[MODE](MODE) and alter compiler flags based on this setting._ 
+* the Program() is defaulting to VC7 (i.e. 2003 .Net), I need to force a different compiler in each case (gcc for pso, VC6 for cppwiki). How do I do that? _Create different construction environments, possibly from a common ancestor using env.Clone(), and then call env.Tool(tool) on each environment with different values of tool_ 
+* how do I specify an alternate build directory? e.g. `\projects\debug\pso` Read about env.VariantDir
+* how do I specify debug vs release? _Leanid: I use the same env.VariantDir and add Release or Debug into path, I set it by using ARGUMENTS.get('mode', 'Release') and invoking "scons mode=Debug", also I put this value in env[MODE](MODE) and alter compiler flags based on this setting._ 
 * there is a .dsp available for cppwiki. I believe I can use that. How do I do it? 
-_Leanid: I have written wrapers for Program,[SharedLibrary](SharedLibrary),[StaticLibrary](StaticLibrary) and use something like this inside. Now "scons dsp=yes" build dsp files _ 
-```txt
+
+_Leanid: I have written wrappers for `Program, `SharedLibrary` ,`StaticLibrary` and use something like this inside. Now "scons dsp=yes" build dsp files_
+```python
 class Dev(Environment):
-   def _devBuildDsp(self, buildtype, target, source, duplicate=0):
-# Split source in group
-   ...
-    buildtarget = self.Program(target, src['Source'],duplicate=duplicate)
-    self.MSVSProject(target = target + self['MSVSPROJECTSUFFIX'],
-                        srcs = src['Source'],
-                        incs = src['Header'],
-                        localincs = src['Local Headers'],
-                        resources = src['Resource'],
-                        misc = src['Other'],
-                        buildtarget = buildtarget,
-                        variant = self["MODE"])
+    def _devBuildDsp(self, buildtype, target, source, duplicate=0):
+        # Split source in group
+        ...
+        buildtarget = self.Program(target, src["Source"], duplicate=duplicate)
+        self.MSVSProject(
+            target=target + self["MSVSPROJECTSUFFIX"],
+            srcs=src["Source"],
+            incs=src["Header"],
+            localincs=src["Local Headers"],
+            resources=src["Resource"],
+            misc=src["Other"],
+            buildtarget=buildtarget,
+            variant=self["MODE"],
+        )
 
-
-   def DevProgram(self, target = None, source = None, pattern=None, duplicate=0):
-      if ARGUMENTS.get('dsp', 'no') == 'yes':
-         self._devBuildDsp('exec',target, source, duplicate=duplicate)
-      else:
-         self.Program(target, source, duplicate=duplicate)
-
+    def DevProgram(self, target=None, source=None, pattern=None, duplicate=0):
+        if ARGUMENTS.get("dsp", "no") == "yes":
+            self._devBuildDsp("exec", target, source, duplicate=duplicate)
+        else:
+            self.Program(target, source, duplicate=duplicate)
 ```
 * why are all the sconscript files being read when I only specify one on the command line? Is there a workaround? _SCons, by default, reads everything so that it can build a full dependency tree. This is good. If you are clever then you can do things like if env['BUILD_PSO']: SConscript('src/pso/sconscript'); to only read the SConscripts of the targets you're interested in, but be careful._ 
 * some of my projects require me to build with more than one compiler. How do I do that? _See the answer to your first question :-)_ 
 * do I have to name each and every .cpp? _Try import glob; Program('pso', glob.glob('*.cpp'))_ 
-      * _Leanid: glob will not work with [BuildDir](BuildDir) set. I use next function:_ 
+      * _Leanid: glob will not work with VariantDir set. I use next function:_ 
 
-```txt
+```python
 class Dev(Environment):
-   def DevGetSourceFiles(self, patterns=None):
-      files = []
+    def DevGetSourceFiles(self, patterns=None):
+        files = []
 
-      if patterns is None:
-         patterns=['*'+self["CXXFILESUFFIX"],'*'+self["CFILESUFFIX"], '*'+self["QT_UISUFFIX"]]
-      for file in os.listdir(self.Dir('.').srcnode().abspath):
-          for pattern in patterns:
-             if fnmatch.fnmatchcase(file, pattern):
-                 files.append(file)
-      return files
+        if patterns is None:
+            patterns = [
+                "*" + self["CXXFILESUFFIX"],
+                "*" + self["CFILESUFFIX"],
+                "*" + self["QT_UISUFFIX"],
+            ]
+        for file in os.listdir(self.Dir(".").srcnode().abspath):
+            for pattern in patterns:
+                if fnmatch.fnmatchcase(file, pattern):
+                    files.append(file)
+        return files
 ```
 * how do I add other compile and link parameters? _Use env.Append(CCFLAGS = ['-g', '-O2']) and similar._ 
 
@@ -305,22 +308,22 @@ class Dev(Environment):
  Made some further changes based on comments above and another email: 
 
 I find it's simpler to do most of the work in the SConstruct: in SConstruct: 
-```txt
-  mode = ARGUMENTS['mode']
-  # also set up tools according to mode here
-  build_dir = os.path.join('#Build', mode, 'projectx')
-  SConscript('projectx/SConscript', build_dir=build_dir, ...)
+```python
+mode = ARGUMENTS['mode']
+# also set up tools according to mode here
+build_dir = os.path.join('#Build', mode, 'projectx')
+SConscript('projectx/SConscript', build_dir=build_dir, ...)
 ```
 then the projectx/SConscript doesn't have to know about the mode at all.  And your build dir can go wherever you like, just set up the build_dir arg properly.  The SConscripts can just look like this: 
-```txt
-  foo = Project(...)
-  Alias('projectx', foo)
-  bar = OtherThing(...)
-  Alias('projectx', bar)  # add each target to the projectx alias
+```python
+foo = Project(...)
+Alias('projectx', foo)
+bar = OtherThing(...)
+Alias('projectx', bar)  # add each target to the projectx alias
 ```
 If all your targets (and only those) are under '.' (the current build dir), you could just do 
-```txt
-  Alias('projectx', '.')
+```python
+Alias('projectx', '.')
 ```
 instead.  Of course only the final targets need to be added to the Alias; everything else needed by those will automatically built as needed. 
 
@@ -409,7 +412,7 @@ I created three helper functions that might be useful to others:
       * [GetFiles](GetFiles)(dir, includes, excludes=None) returns a list of files in 'dir' that matches the patterns in 'includes' and doesn't match the patterns in 'excludes'. see [InstallFiles](InstallFiles)() for an example of how to use it. 
       * [InstallFiles](InstallFiles)(env, dest_dir, src_dir, includes, excludes) returns a Node of the dest_dir to use in an Alias(). It gets all of the files in 'src_dir' that matches the patterns in 'includes' and doesn't match the patterns in 'excludes' and adds an Install() for each one in the given 'env'. It's used something like this: 
 
-```txt
+```python
 env.Alias('prepare_main', [
      InstallFiles(env,
         dest_dir = arrizza_local_root,
