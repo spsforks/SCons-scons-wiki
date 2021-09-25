@@ -73,7 +73,7 @@ libEnv.Replace(CCFLAGS=gambitLibCCFLAGS)
 
 env = libEnv
 Export("env")
-libgambc = libEnv.SConscript("lib/SConscript", build_dir="$BUILDROOT/lib", exports="env")
+libgambc = libEnv.SConscript("lib/SConscript", variant_dir="$BUILDROOT/lib", exports="env")
 
 
 # Compile the Gambit gsi and gsc executables
