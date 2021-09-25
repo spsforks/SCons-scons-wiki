@@ -48,13 +48,13 @@ for flavour in ["Debug", "Release"]:
     SConscript(
         "hello/SConscript",
         exports=["env"],
-        build_dir=flavour + "/hello",
+        variant_dir=flavour + "/hello",
         duplicate=0,
     )
     SConscript(
         "world/SConscript",
         exports=["env"],
-        build_dir=flavour + "/world",
+        variant_dir=flavour + "/world",
         duplicate=0,
     )
 ```
