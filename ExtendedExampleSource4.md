@@ -112,7 +112,7 @@ class Dev(Environment):
    #-- set up a VC6 project to be built
    #-- assumes:
    #--      - .dsp is in the source dir
-   #--      - build_dir is not used
+   #--      - variant_dir is not used
    #--      - exetype is one of exe, dll, lib
    def VC6(self, localenv, project, dspname=None, exename=None, exetype=None):
       if dspname is None:  dspname = project

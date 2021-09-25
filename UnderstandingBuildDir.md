@@ -12,7 +12,7 @@ _Comment by [GregNoel](GregNoel): First, there's too much detail, so much so tha
 
 ## Step 1: BuildDir() isn't the droid you're looking for
 
-If your use case is "Get SCons to quit putting !@#$ in the same directory as my SConscript file and put it over <ins>there</ins> instead."  You want the build_dir argument to SConscript().  Stop here. 
+If your use case is "Get SCons to quit putting !@#$ in the same directory as my SConscript file and put it over <ins>there</ins> instead."  You want the variant_dir argument to SConscript().  Stop here. 
 
 
 ## Step 2: BuildDir() might be the droid you're looking for
@@ -64,7 +64,7 @@ liblwip4 = liblwip4Env.SConscript("bfs/sconscript",
                                   exports="env")
 
 #liblwip4 = liblwip4Env.SConscript("bfs/sconscript",
-#                                  build_dir="$BUILDROOT/LIBLWIP4",
+#                                  variant_dir="$BUILDROOT/LIBLWIP4",
 #                                  exports="env")
 ```
 And here's what happens when we run that sconstruct: 
@@ -108,7 +108,7 @@ drwxr-xr-x 5 nds nds  4096 Apr 12 22:38 ..
 -rw-r--r-- 1 nds nds  3876 Apr 12 22:38 tcpip.o
 <other directories elided>
 ```
-Lots of stuff gets dumped under the bfs directory because that is where the sconscript is located and executed.  If that's what you want, great!  However, if you want your scons droppings to go elsewhere, you need to add the "build_dir" flag to your SConscript call in your sconstruct like so: 
+Lots of stuff gets dumped under the bfs directory because that is where the sconscript is located and executed.  If that's what you want, great!  However, if you want your scons droppings to go elsewhere, you need to add the "variant_dir" flag to your SConscript call in your sconstruct like so: 
 
 
 ```txt
@@ -141,7 +141,7 @@ Export("env")
 #liblwip4 = liblwip4Env.SConscript("bfs/sconscript",
 #                                  exports="env")
 liblwip4 = liblwip4Env.SConscript("bfs/sconscript",
-                                  build_dir="$BUILDROOT/LIBLWIP4",
+                                  variant_dir="$BUILDROOT/LIBLWIP4",
                                   exports="env")
 ```
 And upon running that sconstruct: 
@@ -199,7 +199,7 @@ Hey, Presto!  All of the files got placed under the subdirectory BUILD/LIBLWIP4 
 
 ## Step 2: BuildDir() might be the droid you're looking for
 
-"Hey!", you say.  "Where did all those files come from?  We don't have anything to create those."  This is where [BuildDir](BuildDir)() comes in. This time we're going to focus on the sconscript down in the bfs subdirectory. For these examples, I'm going to leave the build_dir in place in the sconstruct as I don't want files going all over my nice, clean areas with sconstruct and sconscript. So, let's take a look at that sconscript, shall we: 
+"Hey!", you say.  "Where did all those files come from?  We don't have anything to create those."  This is where [BuildDir](BuildDir)() comes in. This time we're going to focus on the sconscript down in the bfs subdirectory. For these examples, I'm going to leave the variant_dir in place in the sconstruct as I don't want files going all over my nice, clean areas with sconstruct and sconscript. So, let's take a look at that sconscript, shall we: 
 
 
 ```txt
