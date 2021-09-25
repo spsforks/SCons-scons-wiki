@@ -91,7 +91,7 @@ for e in setup.get_extensions():
         envx.AppendUnique(CPPPATH=e.include_dirs)
     # looking for common src dir prefix
     sources = e.sources[:]
-    build_dir = None
+    variant_dir = None
     src_dir = None
     for s in sources:
         parts = re.split(r'[\\/]', s, 1)
@@ -106,12 +106,12 @@ for e in setup.get_extensions():
     else:
         # src_dir found
         if src_dir:
-            build_dir = os.path.join('build',
+            variant_dir = os.path.join('build',
                 'temp.%s-%d.%d' % (sys.platform, sys.version_info[0], sys.version_info[1]))
-            envx.VariantDir(os.path.join(build_dir, src_dir),
+            envx.VariantDir(os.path.join(variant_dir, src_dir),
                 src_dir,
                 duplicate=0)
-            sources = [os.path.join(build_dir, s) for s in sources]
+            sources = [os.path.join(variant_dir, s) for s in sources]
     # check if we build pyrex extension
     for ix, s in enumerate(sources):
         if s.endswith('.pyx'):
