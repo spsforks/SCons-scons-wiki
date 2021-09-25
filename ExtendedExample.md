@@ -311,8 +311,8 @@ I find it's simpler to do most of the work in the SConstruct: in SConstruct:
 ```python
 mode = ARGUMENTS['mode']
 # also set up tools according to mode here
-build_dir = os.path.join('#Build', mode, 'projectx')
-SConscript('projectx/SConscript', build_dir=build_dir, ...)
+variant_dir = os.path.join('#Build', mode, 'projectx')
+SConscript('projectx/SConscript', variant_dir=build_dir, ...)
 ```
 then the projectx/SConscript doesn't have to know about the mode at all.  And your build dir can go wherever you like, just set up the build_dir arg properly.  The SConscripts can just look like this: 
 ```python
