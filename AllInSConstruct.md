@@ -324,7 +324,7 @@ class Globals:
         dict['CPPPATH'] = ['.'] + relincs + self.stdinc
  
         # These shenanigans are necessary to get SCons to build non-local
-        # sources in the BuildDir instead of their own local directories
+        # sources in the VariantDir instead of their own local directories
         target = dict.pop('target')
         source = dict.pop('source')
         if type(source)==type(''): source = Split(source)
@@ -360,7 +360,7 @@ class Globals:
         dict['LIBPATH'] = dict.get('LIBPATH',[]) + self.stdlibinc
  
         # These shenanigans are necessary to get SCons to build non-local
-        # sources in the BuildDir instead of their own local directories
+        # sources in the VariantDir instead of their own local directories
         target = dict.pop('target')
         source = dict.pop('source',[])
         if type(source)==type(''): source = Split(source)
