@@ -96,7 +96,7 @@ You can either include this function directly in your SConscript, or place in an
 I don't take much credit for this. Most credit belongs to John Meinel from the SCons mailinglist. 
 
 * -- [MichaelKoehmstedt](MichaelKoehmstedt) 
-If you want to glob for generated files or for source files in a [BuildDir](BuildDir), copy the following function into your project and call Glob instead of glob.glob. 
+If you want to glob for generated files or for source files in a [VariantDir](VariantDir), copy the following function into your project and call Glob instead of glob.glob. 
 
 
 ```python

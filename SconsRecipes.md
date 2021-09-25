@@ -96,7 +96,7 @@
 
 # Source Files
 
-* [dir glob](BuildDirGlob) - glob for source files from a build directory
+* [dir glob](VariantDirGlob) - glob for source files from a build directory
 * [external files](ExternalFiles) - use other source files not recognized by scons (e.g. linker scripts)
 * [find target sources](FindTargetSources) - find sources and headers for a target (e.g. when generating MSVSProject)
 * [add files dynamically](AddFilesDynamically) - add files to every build per-environment
@@ -118,8 +118,8 @@
 
 # Build Dirs
 
-* [using BuildDir](UsingBuildDir)
-* [understanding BuildDir](UnderstandingBuildDir)
+* [using VariantDir](UsingVariantDir)
+* [understanding VariantDir](UnderstandingVariantDir)
 
 ---
 
