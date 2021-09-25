@@ -85,11 +85,11 @@ gsiEnv.Replace(CCFLAGS=gsiCCFLAGS)
 
 env = gsiEnv
 Export("env")
-gsi = env.SConscript("gsi/SConscript", build_dir="$BUILDROOT/gsi", exports=["env", "libgambc"])
+gsi = env.SConscript("gsi/SConscript", variant_dir="$BUILDROOT/gsi", exports=["env", "libgambc"])
 
 # Compile the Gambit gsc executable
 env = gsiEnv
 Export("env")
-gsc = env.SConscript("gsc/SConscript", build_dir="$BUILDROOT/gsc", exports=["env", "libgambc"])
+gsc = env.SConscript("gsc/SConscript", variant_dir="$BUILDROOT/gsc", exports=["env", "libgambc"])
 
 ```
