@@ -13,7 +13,7 @@ Let's say you have this (just for example):
 #!python
 sources = ["foo.c", "bar.c", "main.c"]
 env = Environment()
-BuildDir("build", ".", duplicate = 0)
+VariantDir("build", ".", duplicate = 0)
 build_sources = ["build/" + filename for filename in sources]
 prog = env.Program("build/program", build_sources)
 Default(prog)
@@ -24,7 +24,7 @@ and you want to wrap it up so you can do that kind of thing in several places.  
 ```python
 #!python
 def BuildProgramInDir(env, program, sources):
-   BuildDir("build", ".", duplicate=0)
+   VariantDir("build", ".", duplicate=0)
    build_sources = ["build/" + filename for filename in sources]
    prog = env.Program("build/"+program, build_sources)
    Default(prog)
