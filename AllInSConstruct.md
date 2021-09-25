@@ -437,7 +437,7 @@ SConsEnvironment.dSubdirs = MySubdirsMethod
 G.build_dir = G.build_base
  
 # Call the SConscript in the top-level directory
-env.SConscript('SConscript',build_dir=G.build_dir,exports=['env','G'])
+env.SConscript('SConscript', variant_dir=G.build_dir, exports=['env','G'])
 ```
 Note that a big chunk of that code has to do with trying to find out if the free VC++ toolkit is installed. SCons doesn't currently (ver 0.96.90) detect this even if it is the only compiler available. I just happened to be using the free toolkit while I waited for my actual copy of Visual Studio to arrive, when I started playing with SCons. Consequently I spent a lot of my first day or so with SCons struggling to figure out why on earth the simplest compile with VC required so much code to get the environment right. Well since I struggled through it, I'm including the results of that struggle here in the form of the `freeMSVCHack()` function above. Hopefully something similar will be built into future releases of SCons. 
 
