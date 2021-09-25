@@ -56,7 +56,7 @@ allobjs = []
 for sd in subdirs:
     buildDir = os.path.join('build',sd)
     consFile = os.path.join(buildDir,'SConscript')
-    env.BuildDir(buildDir, sd)
+    env.VariantDir(buildDir, sd)
     allobjs = allobjs + env.SConscript( consFile, exports = ['env','Glob'])
 ```
 There is one important discrepency between Fortran 90 and other languages: the SConscript file typically returns a list of not only object files, but also module files. If you blindly pass this list to a Program method, as you would for a C program, for example, you will get a link error because the linker does not know what to do with the module files. To avoid this, you need to 'weed out' the module files before passing the list to the Program method, like so: 
@@ -151,7 +151,7 @@ allobjs = []
 for sd in subdirs:
     buildDir = os.path.join('build',sd)
     consFile = os.path.join(buildDir,'SConscript')
-    env.BuildDir(buildDir, sd)
+    env.VariantDir(buildDir, sd)
     allobjs = allobjs + env.SConscript( consFile, exports = ['env','Glob'])
 
 #
@@ -190,7 +190,7 @@ objs = env.Object(sources)
 
 Return('objs')
 ```
-What you'll notice is that it uses a function Glob, which is imported from the SConstruct script. This Glob function is taken from the page [BuildDirGlob](BuildDirGlob); it allows you to do a glob for source files from within the corresponding build directory. In this case it is used to get a list of all files with the extension .f90 or .f. 
+What you'll notice is that it uses a function Glob, which is imported from the SConstruct script. This Glob function is taken from the page [VariantDirGlob](VariantDirGlob); it allows you to do a glob for source files from within the corresponding build directory. In this case it is used to get a list of all files with the extension .f90 or .f. 
 
 A list of Objects are made in the usual way, and returned. Note that these Objects include the module files, in addition to the real object files. 
 
@@ -215,10 +215,10 @@ def MoveModFiles(target=None, source=None, env=None):
         modfilename = namebase.upper() + nameext
         lowermodfilename = namebase.lower() + nameext
         if modfilename[-4:] == '.mod':
-            builddirupperpath = os.path.join(str(targetdir),modfilename)
-            builddirlowerpath = os.path.join(str(targetdir),lowermodfilename)
-            os.rename(modfilename, builddirupperpath)
-            shutil.copy(builddirupperpath, builddirlowerpath)
+            variant_dirupperpath = os.path.join(str(targetdir),modfilename)
+            variant_dirlowerpath = os.path.join(str(targetdir),lowermodfilename)
+            os.rename(modfilename, variant_dirupperpath)
+            shutil.copy(variant_dirupperpath, variant_dirlowerpath)
 
 ...
 
