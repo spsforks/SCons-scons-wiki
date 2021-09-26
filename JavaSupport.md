@@ -9,11 +9,12 @@ Currently the DAG built by SCons is supposed to have knowledge about every singl
 The only other alternative is to have a special Java/Closure/Scala/JRuby/Jython [SideEffect](SideEffect) builder which realizes the ideas of the Ant glob "**/*.class".  This is, in effect,  what Maven, and Gradle do -- Ant and Gant require the user to specify explicitly what it means to clean so they use remove tasks explicitly. 
 
 So SCons has to compromise here and allow for not having all build products specified in the DAG.  Relying on only considering the 1 -> 1 transformation of: 
-[[!table header="no" class="mointable" data="""
- X.java  |   |  
- X.groovy  |  -->  |  X.class 
- X.scala  |   |  
-"""]]
+
+| | | |
+| --- | --- | --- |
+| X.java | | |
+| X.groovy | --> | X.class |
+| X.scala | | |
 
 to determine whether to compile seems good enough, the reason being that all the other generated classes will always be regenerated anyway. 
 
@@ -38,53 +39,56 @@ What you can do with it:
 
 With Multi-step builders you can simply define build Jar file and specify .java. Or you can add swig.py builder to it and use .i as input to Jar builder, like: 
 
-* Jar(['Sample.i','A.java']) 
+* `Jar(['Sample.i','A.java'])`
 In this call swig builder will build .java from .i files and send it to Java builder, which will build .class files and send them to Jar builder, which will generate .jar file all in one call, so your Java can work similar as  C/C++ builds. 
 
-From patch above download java build example: project.zip file. This example tested on Windows with [BuildDir](BuildDir) set and  duplicate=0. You have to have JDK and swig in your path. 
+From patch above download java build example: project.zip file. This example tested on Windows with `VariantDir` set and  `duplicate=0`. You have to have JDK and swig in your path. 
 
 Example demostrate: 
 
 * src/HelloApplet - build jar file from directory and pottentially sign it. 
 
-```txt
-#this is regulat Java build for scons
+```python
+# this is regular Java build for scons
 import os
-Import ("env")
-denv=env.Copy()
-classes=denv.JavaDir(target='classes',source=['com'])
-#set correct path for jar
-denv['JARCHDIR']=os.path.join(denv.Dir('.').get_abspath(),'classes')
-denv.Jar('HelloApplet',classes)
+
+Import("env")
+denv = env.Clone()
+classes = denv.JavaDir(target="classes", source=["com"])
+# set correct path for jar
+denv["JARCHDIR"] = os.path.join(denv.Dir(".").get_abspath(), "classes")
+denv.Jar("HelloApplet", classes)
 ```
 * src/server - build classes from Java directories and create .war file, which includes built class files, WEB-INF and built [HelloApplet](HelloApplet).jar 
 
-```txt
+```python
 import os
-Import ("env")
-classes=env.JavaDir(target='classes',source=['com'])
-env['WARXFILES']=['SConscript','.cvsignore']
-env['WARXDIRS']=['CVS']
-env.War('scons',[classes,Dir('../WebContent'),'#/buildout/HelloApplet/HelloApplet.jar'])
+
+Import("env")
+classes = env.JavaDir(target="classes", source=["com"])
+env["WARXFILES"] = ["SConscript", ".cvsignore"]
+env["WARXDIRS"] = ["CVS"]
+env.War(
+    "scons", [classes, Dir("../WebContent"), "#/buildout/HelloApplet/HelloApplet.jar"]
+)
 ```
 * src/jni - JNI interface. Will build Shared library and Jar file, Will use swig to generate interface Java and C++ files. Deactivate build in this directory if you do not have swig installed. 
 
-```txt
-Import ("env")
-denv=env.Copy()
-
-denv.Append(SWIGFLAGS=['-java'])
-denv.SharedLibrary('scons',['JniWrapper.cc','Sample.i'])
-denv['JARCHDIR']=denv.Dir('.').get_abspath()
-denv.Jar(['Sample.i','A.java'])
+```python
+Import("env")
+denv = env.Clone()
+denv.Append(SWIGFLAGS=["-java"])
+denv.SharedLibrary("scons", ["JniWrapper.cc", "Sample.i"])
+denv["JARCHDIR"] = denv.Dir(".").get_abspath()
+denv.Jar(["Sample.i", "A.java"])
 ```
 * src/javah - JNI. Will build shared library and Jar file. Will use JavaH to generate C++ header files. 
 
-```txt
-Import('env')
-denv=env.Copy()
-denv['JARCHDIR']=denv.Dir('.').get_abspath()
-denv.Jar('myid','MyID.java')
-denv.JavaH(denv.Dir('.').get_abspath(),'MyID.java')
-denv.SharedLibrary('myid','MyID.cc')
+```python
+Import("env")
+denv = env.Clone()
+denv["JARCHDIR"] = denv.Dir(".").get_abspath()
+denv.Jar("myid", "MyID.java")
+denv.JavaH(denv.Dir(".").get_abspath(), "MyID.java")
+denv.SharedLibrary("myid", "MyID.cc")
 ```
