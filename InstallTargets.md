@@ -38,8 +38,10 @@ import SCons
 
 # define the custom function
 from SCons.Script.SConscript import SConsEnvironment
-SConsEnvironment.Chmod = SCons.Action.ActionFactory(os.chmod,
-        lambda dest, mode: 'Chmod("%s", 0o%o)' % (dest, mode))
+
+SConsEnvironment.Chmod = SCons.Action.ActionFactory(
+    os.chmod, lambda dest, mode: 'Chmod("%s", 0o%o)' % (dest, mode)
+)
 
 def InstallPerm(env, dest, files, perm):
     obj = env.Install(dest, files)
@@ -51,14 +53,18 @@ def InstallPerm(env, dest, files, perm):
 SConsEnvironment.InstallPerm = InstallPerm
 
 # great, we're ready to use it!
-env.InstallPerm(bindir, ['fooprog', 'barprog'], 0o755)
+env.InstallPerm(bindir, ["fooprog", "barprog"], 0o755)
 
 # but let's say we're not happy yet, we'd prefer nicer names.
-SConsEnvironment.InstallProgram = lambda env, dest, files: InstallPerm(env, dest, files, 0o755)
-SConsEnvironment.InstallHeader = lambda env, dest, files: InstallPerm(env, dest, files, 0o644)
+SConsEnvironment.InstallProgram = lambda env, dest, files: InstallPerm(
+    env, dest, files, 0o755
+)
+SConsEnvironment.InstallHeader = lambda env, dest, files: InstallPerm(
+    env, dest, files, 0o644
+)
 
 # great, now you can also install by calling a method named 'InstallHeader' or 'InstallProgram'!
-env.InstallHeader(incdir, ['foo.h', 'bar.h'])
+env.InstallHeader(incdir, ["foo.h", "bar.h"])
 ```
 Don't forget to set the umask, or created directories might get wrong permissions on Unix and Windows: 
 
@@ -75,31 +81,39 @@ Note that it's considered bad Python form to assign names to lambdas and a code 
 * Another similar method to install data with correct permissions is to use a `Command` : 
 
 ```python
-source="./data/icon.png"
-target="/usr/local/share/X/icon.png"
+source = "./data/icon.png"
+target = "/usr/local/share/X/icon.png"
 
 env.Alias("install", target)
-env.Command(target, source, [
-            Copy("$TARGET","$SOURCE"),
-            Chmod("$TARGET", 0o664),
-])
+env.Command(
+    target,
+    source,
+    [
+        Copy("$TARGET", "$SOURCE"),
+        Chmod("$TARGET", 0o664),
+    ],
+)
 ```
 where target and source could be set in a directory parsing loop for conveniance : 
 
 ```python
-# where you need to implement 'RecursiveGlob' yourself 
+# where you need to implement 'RecursiveGlob' yourself
 for file in RecursiveGlob("./data", "*"):
     # strip 'data/' out to have the filepath relative to data dir
     index = file.find("data/") + len("data/")
     filename_relative = file[index:]
     source = os.path.join("./data", filename_relative)
     target = os.path.join(data_dir, filename_relative)
-            
+
     env.Alias("install", target)
-    env.Command(target, source, [
-                Copy("$TARGET","$SOURCE"),
-                Chmod("$TARGET", 0664),
-    ])
+    env.Command(
+        target,
+        source,
+        [
+            Copy("$TARGET", "$SOURCE"),
+            Chmod("$TARGET", 0664),
+        ],
+    )
 ```
 For best results, also make sure the umask is set as described above. 
 
@@ -114,7 +128,7 @@ This is an example that will handle installing .mo files for a source layout of 
 # install .mo files
 locale_dir = "/usr/local/share/locale"
 
-mo_files = Glob("./po/*/app_name.mo",strings=True)
+mo_files = Glob("./po/*/app_name.mo", strings=True)
 for mo in mo_files:
     # extract language code
     index_lo = mo.find("po/") + len("po/")
@@ -124,7 +138,7 @@ for mo in mo_files:
     install_location = locale_dir + "/" + lang_name + "/LC_MESSAGES/app_name.mo"
     env.Alias("install", env.InstallAs(install_location, mo))
 ```
-It should be simple enough to adapt this code to layouts like **/po/[language code].mo** or any other. 
+It should be simple enough to adapt this code to layouts like `**/po/[language code].mo**` or any other. 
 
 
 ## Uninstall targets
@@ -134,17 +148,25 @@ Here's a sample uninstall function :
 ```python
 def create_uninstall_target(env, path, is_glob):
     if is_glob:
-        all_files = Glob(path,strings=True)
+        all_files = Glob(path, strings=True)
         for filei in all_files:
-            env.Command("uninstall-"+filei, filei, [
-                        Delete("$SOURCE"),
-            ])
-            env.Alias("uninstall", "uninstall-"+filei)   
-    else:
-        env.Command("uninstall-"+path, path, [
+            env.Command(
+                "uninstall-" + filei,
+                filei,
+                [
                     Delete("$SOURCE"),
-        ])
-        env.Alias("uninstall", "uninstall-"+path)  
+                ],
+            )
+            env.Alias("uninstall", "uninstall-" + filei)
+    else:
+        env.Command(
+            "uninstall-" + path,
+            path,
+            [
+                Delete("$SOURCE"),
+            ],
+        )
+        env.Alias("uninstall", "uninstall-" + path)
 ```
 
 You can use it like this : 
