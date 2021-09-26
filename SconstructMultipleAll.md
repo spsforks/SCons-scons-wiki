@@ -8,18 +8,17 @@ scons mode=debug all
 ```
 The Sconstruct does not change from [SconstructMultiple](SconstructMultiple). The Sconscript changes slightly (the last 2 lines): 
 ```python
-#!python
 import glob
 
 Import('env', 'project', 'mymode', 'debugcflags', 'releasecflags')
-localenv = env.Copy()
+localenv = env.Clone()
 
 buildroot = '../' + mymode  #holds the root of the build directory tree
 builddir = buildroot + '/' + project   #holds the build directory for this project
 targetpath = builddir + '/' + project  #holds the path to the executable in the build directory
 
-#append the user's additional compile flags
-#assume debugcflags and releasecflags are defined
+# append the user's additional compile flags
+# assume debugcflags and releasecflags are defined
 if mymode == 'debug':
    localenv.Append(CCFLAGS=debugcflags)
 else:
