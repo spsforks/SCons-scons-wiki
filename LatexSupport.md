@@ -19,7 +19,7 @@ I see several spots of immediate interest to get working (these have been dealt 
    1. add output files to emitter 
    1. include check for "bibliography" in the scanner 
 1. bibunit support 
-1. test [BuildDir](BuildDir) with the TeX builders 
+1. test `VariantDir` with the TeX builders 
 
 # A minimal Latex SConstruct file
 
@@ -74,16 +74,16 @@ Dr Nicola Talbot from the University of East Anglia provides a wealth of tips an
 Attempting to process the thesis skeleton file above with the simple Scons script above, I received the following error: 
 
 
-```txt
-  scons: *** While building `['thesis-skel.pdf']' from `['thesis-skel.tex']':
-  Don't know how to build from a source file with suffix `.tex'.
-  Expected a suffix in this list: ['.dvi', '.ps'].
+```bash
+scons: *** While building `['thesis-skel.pdf']' from `['thesis-skel.tex']':
+Don't know how to build from a source file with suffix `.tex'.
+Expected a suffix in this list: ['.dvi', '.ps'].
 ```
 The text of the error suggests that Scons does not have the necessary build logic, when in fact the problem was that my system did not have TeX fully installed. 
 
 On my Fedora Core 4 Linux system, I installed all the tetex packages from the package system manually with the command: 
 
-* sudo yum install tetex tetex-doc tetex-latex tetex-fonts tetex-dvips tetex.afm tetex.xdvi 
+* `sudo yum install tetex tetex-doc tetex-latex tetex-fonts tetex-dvips tetex.afm tetex.xdvi`
 Note: the download for tetex-doc was 50MB and probably isn't necessary to run the TeX/LaTeX builders. 
 
 Once TeX was fully installed, the build proceeded with much verbosity and generated a 12-page PDF output consisting of front-matter, content, and back-matter pages with appropriate page numbering, formatting and titles with mostly empty page contents. 
