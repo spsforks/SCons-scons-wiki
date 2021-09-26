@@ -13,12 +13,11 @@ As the project matures, the sconstruct will get more complicated. The Dev class 
 
 Here's the new Sconstruct: 
 ```python
-#!python 
 from SCons.Script.SConscript import SConsEnvironment
 import glob
 
-#this is our catch-all Dev class
-#it keeps track of all the variables and common functions we need
+# this is our catch-all Dev class
+# it keeps track of all the variables and common functions we need
 class Dev:
   mymode = ''
   debugcflags = ''
@@ -58,23 +57,23 @@ class Dev:
 
 env = Environment()
 
-#put all .sconsign files in one place
+# put all .sconsign files in one place
 env.SConsignFile()
 
-#we can put variables right into the environment, however
-#we must watch out for name clashes.
+# we can put variables right into the environment, however
+# we must watch out for name clashes.
 SConsEnvironment.jDev = Dev()
 
-#get the mode flag from the command line
-#default to 'release' if the user didn't specify
+# get the mode flag from the command line
+# default to 'release' if the user didn't specify
 env.jDev.mymode = ARGUMENTS.get('mode', 'release')   #holds current mode
 
-#check if the user has been naughty: only 'debug' or 'release' allowed
+# check if the user has been naughty: only 'debug' or 'release' allowed
 if not (env.jDev.mymode in ['debug', 'release']):
    print "Error: expected 'debug' or 'release', found: " + env.jDev.mymode
    Exit(1)
 
-#tell the user what we're doing
+# tell the user what we're doing
 print '**** Compiling in ' + env.jDev.mymode + ' mode...'
 
 env.jDev.debugcflags = ['-W1', '-GX', '-EHsc', '-D_DEBUG', '/MDd']   #extra compile flags for debug
@@ -91,11 +90,10 @@ env.jDev.Subproject('herprogram')
 ```
 The new Sconstruct is more complicated, but it simplifies all the Sconscripts (they are all the same): 
 ```python
-#!python 
-#get environment and project
+# get environment and project
 Import('env', 'project')
-localenv = env.Copy()
+localenv = env.Clone()
 
-#call back to jDev to build the project for us
+# call back to jDev to build the project for us
 env.jDev.Buildit(localenv, project)
 ```
