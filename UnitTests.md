@@ -8,7 +8,7 @@ See [http://spacepants.org/blog/scons-unit-test](http://spacepants.org/blog/scon
 
 To have the process of adding unit test nicely encapsulated into an scons Tool, see the section below - "Unit Test integration with an scons Tool". 
 
-[http://snappaction.blogspot.com/2007/02/scons-unit-testing-with-cxxtest-in.html](http://snappaction.blogspot.com/2007/02/scons-unit-testing-with-cxxtest-in.html) shows a way to make adding UnitTests very simple by using [CxxTest](CxxTest) and automatically finding unit tests in a test directory. 
+[http://snappaction.blogspot.com/2007/02/scons-unit-testing-with-cxxtest-in.html](http://snappaction.blogspot.com/2007/02/scons-unit-testing-with-cxxtest-in.html) shows a way to make adding UnitTests very simple by using CxxTest and automatically finding unit tests in a test directory. 
 
 
 # Alias
@@ -208,7 +208,7 @@ Export('env')
 # builds.
 #
 # Here we use boost.test as the unit testing framework.
-testEnv = env.Copy()
+testEnv = env.Clone()
 testEnv.Tool(
     'unittest',
     toolpath=['build_tools'],
@@ -225,7 +225,7 @@ In some sub-directory, onelib, you can then add tests quite easily, as follows:
 ```python
 # Unit tests
 Import('testEnv')
-testEnv = testEnv.Copy()
+testEnv = testEnv.Clone()
 testEnv.AppendUnique(LIBPATH=[env.Dir('.')], LIBS=['one'])
 testEnv.PrependENVPath('LD_LIBRARY_PATH', env.Dir('.').abspath)
 # We can add single file unit tests very easily.
@@ -252,59 +252,60 @@ Here's the code for the tool:
 
 ```python
 import os
-def unitTestAction(target, source, env):
-        '''Action for a 'UnitTest' builder object.
 
-        Runs the supplied executable, reporting failure to scons via the test exit
-        status.
-        When the test succeeds, the file target.passed is created to indicate that
-        the test was successful and doesn't need running again unless dependencies
-        change.
-        '''
-        app = str(source[0].abspath)
-        if os.spawnle(os.P_WAIT, app, env['ENV'])==0:
-            with open(str(target[0]),'w') as f:
-                f.write("PASSED\n")
-        else:
-            return 1
+def unitTestAction(target, source, env):
+    """Action for a 'UnitTest' builder object.
+
+    Runs the supplied executable, reporting failure to scons via the test exit
+    status.
+    When the test succeeds, the file target.passed is created to indicate that
+    the test was successful and doesn't need running again unless dependencies
+    change.
+    """
+    app = str(source[0].abspath)
+    if os.spawnle(os.P_WAIT, app, env["ENV"]) == 0:
+        with open(str(target[0]), "w") as f:
+            f.write("PASSED\n")
+    else:
+        return 1
 
 def unitTestActionString(target, source, env):
-        '''
-        Return output string which will be seen when running unit tests.
-        '''
-        return 'Running tests in ' + str(source[0])
+    """
+    Return output string which will be seen when running unit tests.
+    """
+    return "Running tests in " + str(source[0])
 
 def addUnitTest(env, target=None, source=None, *args, **kwargs):
-        '''Add a unit test
+    """Add a unit test
 
-        Args:
-            target - If the target parameter is present, it is the name of the test
-                executable
-            source - list of source files to create the test executable.
-                any additional parameters are passed along directly to env.Program().
-        
-        Returns:
-            The scons node for the unit test.
+    Args:
+        target - If the target parameter is present, it is the name of the test
+            executable
+        source - list of source files to create the test executable.
+            any additional parameters are passed along directly to env.Program().
 
-        Any additional files listed in the env['UTEST_MAIN_SRC'] build variable are
-        also included in the source list.
-        All tests added with addUnitTest can be run with the test alias:
-                "scons test"
-        Any test can be run in isolation from other tests, using the name of the
-        test executable provided in the target parameter:
-                "scons target"
-        '''
-        if source is None:
-            source = target
-            target = None
-        source = [source, env['UTEST_MAIN_SRC']]
-        program = env.Program(target, source, *args, **kwargs)
-        utest = env.UnitTest(program)
-        # add alias to run all unit tests.
-        env.Alias('test', utest)
-        # make an alias to run the test in isolation from the rest of the tests.
-        env.Alias(str(program[0]), utest)
-        return utest
+    Returns:
+        The scons node for the unit test.
+
+    Any additional files listed in the env['UTEST_MAIN_SRC'] build variable are
+    also included in the source list.
+    All tests added with addUnitTest can be run with the test alias:
+            "scons test"
+    Any test can be run in isolation from other tests, using the name of the
+    test executable provided in the target parameter:
+            "scons target"
+    """
+    if source is None:
+        source = target
+        target = None
+    source = [source, env["UTEST_MAIN_SRC"]]
+    program = env.Program(target, source, *args, **kwargs)
+    utest = env.UnitTest(program)
+    # add alias to run all unit tests.
+    env.Alias("test", utest)
+    # make an alias to run the test in isolation from the rest of the tests.
+    env.Alias(str(program[0]), utest)
+    return utest
 
 # Functions used to initialize the unit test tool.
 def generate(env, UTEST_MAIN_SRC=[], LIBS=[]):
@@ -319,32 +320,35 @@ def generate(env, UTEST_MAIN_SRC=[], LIBS=[]):
 
     SConsEnvironment.addUnitTest = addUnitTest
 
-
 def exists(env):
     return 1
+reformatted -
+All done! ✨ 🍰 ✨
+1 file reformatted.
 ```
 
 # scons check with CxxTest
 
-**While you can still use the code here, I have since created a [CxxTest](CxxTest) builder. see here: [CxxTestBuilder](CxxTestBuilder)** 
+**While you can still use the code here, I have since created a CxxTest builder. see here: [CxxTestBuilder](CxxTestBuilder)** 
 
-I struggled with [CxxTest](CxxTest) and scons for a while, and this is the closest thing to 'make check' I have been able to come. It's quite close, I believe, and I tried to minimize the amount of code it took. 
+I struggled with CxxTest and scons for a while, and this is the closest thing to 'make check' I have been able to come. It's quite close, I believe, and I tried to minimize the amount of code it took. 
 
-I started with suggestions from here: [http://spacepants.org/blog/scons-unit-test](http://spacepants.org/blog/scons-unit-test), and modified the general idea somewhat for it to work with the [CxxTest](CxxTest) c++ test framework [http://cxxtest.sourceforge.net/](http://cxxtest.sourceforge.net/). 
+I started with suggestions from here: [http://spacepants.org/blog/scons-unit-test](http://spacepants.org/blog/scons-unit-test), and modified the general idea somewhat for it to work with the CxxTest c++ test framework [http://cxxtest.sourceforge.net/](http://cxxtest.sourceforge.net/). 
 
 Since I am quite new to scons, I wasn't able to figure out how exactly to put my extensions into a separate file to be sourced by scons automatically, and I hope someone can supply that knowledge. 
 
-This also does not support all [CxxTest](CxxTest) functionality. I only built in what I required, but the result is neat and simple. 
+This also does not support all CxxTest functionality. I only built in what I required, but the result is neat and simple. 
 
 Without further ado, here is the code from my SConstruct: 
 
 
 ```python
 from SCons.Script.SConscript import SConsEnvironment
+
 env = Environment()
 # required for the cxxbuilder.
 # If you use the normal header files, just use .h here.
-env['TEST_SUFFIX'] = '.t.h'
+env["TEST_SUFFIX"] = ".t.h"
 # ----------------------------------
 # cxx test builder
 # ----------------------------------
@@ -354,7 +358,6 @@ CxxTestCpp_bld = Builder(
     src_suffix="$TEST_SUFFIX",
 )
 env["BUILDERS"]["CxxTestCpp"] = CxxTestCpp_bld
-
 
 def UnitTest(environ, target, source=[], **kwargs):
     """UnitTest wrapper function
@@ -370,7 +373,7 @@ def UnitTest(environ, target, source=[], **kwargs):
 SConsEnvironment.UnitTest = UnitTest
 
 def CxxTest(environ, target, source=None, **kwargs):
-    """ A wrapper that supplies the multipart build functionality
+    """A wrapper that supplies the multipart build functionality
     that CxxTest requires.
     """
     if source is None:
@@ -406,7 +409,7 @@ env.CxxTest('test_utility', ['utility.t.h', '../utility.cpp'])
 ```
 I run the tests by typing `scons check`. 
 
-The tests do not compile by scons . (which is identical to the behaviour of make check) 
+The tests do not compile by `scons .` (which is identical to the behaviour of make check) 
 
 If the tests are out of date, they compile - scons dependency tracking works. 
 
@@ -416,7 +419,7 @@ Cheers, [GasperAzman](GasperAzman)
 
 -- Comment on Gasper's code by Matt Doar: 
 
-Just what I wanted, and nicely done, thank you. However, I think that the last line in the [CxxTest](CxxTest) function should be 
+Just what I wanted, and nicely done, thank you. However, I think that the last line in the CxxTest function should be 
 
 
 ```python
