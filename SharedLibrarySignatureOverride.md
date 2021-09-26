@@ -1,5 +1,5 @@
 
-scons 0.96 treat dependencies on shared libraries that are generated in a simplistic manner, if the library is rebuilt, any programs that link against it are also rebuilt. 
+SCons treats dependencies on shared libraries that are generated in a simplistic manner, if the library is rebuilt, any programs that link against it are also rebuilt. 
 
 Most of the time it is not necessary to rebuild the programs, as changes are usually to the implementation of the source not interface changes.  In the case of a shared library it is relatively easy to figure out if the change needs a relink by generating a signature based on the actual external symbols published and required by the library.  This is in addition to the dependencies on the headers, which scons already determines automatically. 
 
@@ -13,7 +13,6 @@ Note it is also overriding the standard [SharedLibrary](SharedLibrary)() builder
 
 
 ```python
-#!python
 ####################################################
 # override SharedLibrary to only update the libs in '#shlib/' if the symbols
 # change.  This is to avoid rebuilding binaries when a shared library has
@@ -22,44 +21,49 @@ Note it is also overriding the standard [SharedLibrary](SharedLibrary)() builder
 # signature to used for the SharedLibrary node itself directly. That is
 # certainly possible, but would rely on the internal structure of SCons.
 
+
 def fasterSharedLibrary(env, library, sources, **args):
-        # use the 'quicker' shallow copy method!
-        envContentSig=env.Copy()
-        envContentSig.TargetSignatures('content')
+    # use the 'quicker' shallow copy method!
+    envContentSig = env.Clone()
+    envContentSig.TargetSignatures("content")
 
-        cat=env.OriginalSharedLibrary(library, sources)
+    cat = env.OriginalSharedLibrary(library, sources)
 
-        # copy all the latest libraries to ONE directory..
-        # for our convenience. Could modify the above to
-        # build directly to this dir instead.
-        catLib = env.Install('#lib', cat) #the CURRENT lib dir
+    # copy all the latest libraries to ONE directory..
+    # for our convenience. Could modify the above to
+    # build directly to this dir instead.
+    catLib = env.Install("#lib", cat)  # the CURRENT lib dir
 
-        # now generate the 'interface' file, using the
-        # content signature for its target
-        catIF=envContentSig.Command('%s.if'%(library),
-                catLib,
-                'nm --extern-only $SOURCES | cut -c 12- | sort &gt; $TARGET')
+    # now generate the 'interface' file, using the
+    # content signature for its target
+    catIF = envContentSig.Command(
+        "%s.if" % (library),
+        catLib,
+        "nm --extern-only $SOURCES | cut -c 12- | sort &gt; $TARGET",
+    )
 
-        # install command to copy lib to shlib, where the link
-        # actually occurs.  Explicitly make this depend only on
-        # the IF file, which has a target content signature.
-        # ie only if the Global Symbol list changes, is copied and this the
-        # Programs it relinked.
-        catLink=env.Command('#linklib/${SHLIBPREFIX}%s${SHLIBSUFFIX}'%(library),
-                '',
-                Copy('$TARGET',
-                catLib))
+    # install command to copy lib to shlib, where the link
+    # actually occurs.  Explicitly make this depend only on
+    # the IF file, which has a target content signature.
+    # ie only if the Global Symbol list changes, is copied and this the
+    # Programs it relinked.
+    catLink = env.Command(
+        "#linklib/${SHLIBPREFIX}%s${SHLIBSUFFIX}" % (library),
+        "",
+        Copy("$TARGET", catLib),
+    )
 
-        #Dir('#lib')
-        envContentSig.Depends(catLink, catIF)
+    # Dir('#lib')
+    envContentSig.Depends(catLink, catIF)
 
-        global libs
-        libs += catLib
+    global libs
+    libs += catLib
 
-        return cat
+    return cat
+
 
 # declaring OriginalSharedLibrary is a bit marginal.  Probably should use
 # a functor style object so we can store it in side the object?
-env['BUILDERS']['OriginalSharedLibrary'] = env['BUILDERS']['SharedLibrary']
-env['BUILDERS']['SharedLibrary'] = fasterSharedLibrary
+env["BUILDERS"]["OriginalSharedLibrary"] = env["BUILDERS"]["SharedLibrary"]
+env["BUILDERS"]["SharedLibrary"] = fasterSharedLibrary
 ```
