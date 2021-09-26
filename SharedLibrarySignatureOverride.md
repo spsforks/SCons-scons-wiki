@@ -5,11 +5,11 @@ Most of the time it is not necessary to rebuild the programs, as changes are usu
 
 The following builder is a way of achieving this by separating changes to the implemention from changes to the interface.  It uses a bunch of files to do this.  There are probably better ways to achieve the same end, ideally scons would allow a custom signature technique to the plugged in for a node, typically by the builder. 
 
-The builder uses 2 common output directories for the libraries, #lib gets the latest builds of the shared libraries installed into it.  The libraries in #linklib directory gets updated only when the interface changes.  All programs get linked against the #linklibs directrory.  The developer sets their LD_LIBRARY_PATH to the libraries in #lib when testing. 
+The builder uses 2 common output directories for the libraries, #lib gets the latest builds of the shared libraries installed into it.  The libraries in `#linklib` directory gets updated only when the interface changes.  All programs get linked against the `#linklib` directrory.  The developer sets their `LD_LIBRARY_PATH` to the libraries in `#lib` when testing. 
 
 The builder sets up an indirect dependency between the library in each version, and uses a nm command extract the global symbols from the updated library, and stored this in a file that is used as the interface signature of the library. 
 
-Note it is also overriding the standard [SharedLibrary](SharedLibrary)() builder within the 'env' environment. However I am not convinced this is the best way to do this. 
+Note it is also overriding the standard `SharedLibrary()` builder within the `env` environment. However I am not convinced this is the best way to do this. 
 
 
 ```python
