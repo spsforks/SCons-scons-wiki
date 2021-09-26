@@ -121,8 +121,6 @@ Alias('neuralnet',['neurelnet1','neurelnet2','neurelnet3','neuralnet4'])
 ```
 The order you add tasks into the Alias is the order they will be executed. 
 
-
-
 ---
 
  In response to the emails, I tried the following. It did not work. 
@@ -146,7 +144,7 @@ VariantDir('#' + builddir, "#.", duplicate=0)
 env.Program(targetpath, source=Split(map(lambda x: '#' + builddir + '/' + x, glob.glob('*.cpp'))))
 ```
 Calling 'scons pso' just says that the target is up to date 
-```cmd
+```console
 D:\projects>scons  pso
 scons: Reading SConscript files ...
 scons: done reading SConscript files.
@@ -173,7 +171,6 @@ project = 'pso'
 Still no joy. Using SConscript works: 
 ```python
 env = Environment()
-
 Export('env')
 env.Alias('cppwiki', 'src/cppwiki/sconscript')
 env.Alias('pso', 'src/pso/sconscript')
@@ -413,18 +410,25 @@ I created three helper functions that might be useful to others:
       * [InstallFiles](InstallFiles)(env, dest_dir, src_dir, includes, excludes) returns a Node of the dest_dir to use in an Alias(). It gets all of the files in 'src_dir' that matches the patterns in 'includes' and doesn't match the patterns in 'excludes' and adds an Install() for each one in the given 'env'. It's used something like this: 
 
 ```python
-env.Alias('prepare_main', [
-     InstallFiles(env,
-        dest_dir = arrizza_local_root,
-        src_dir  = arrizza_websrc_root + '/main',
-        includes = ['*'],
-        excludes = ['.svn']),
-     InstallFiles(env,
-        dest_dir = arrizza_local_html,
-        src_dir  = arrizza_websrc_root + '/htmlmain',
-        includes = ['*'],
-        excludes = ['.svn'])
-      ])
+env.Alias(
+    "prepare_main",
+    [
+        InstallFiles(
+            env,
+            dest_dir=arrizza_local_root,
+            src_dir=arrizza_websrc_root + "/main",
+            includes=["*"],
+            excludes=[".svn"],
+        ),
+        InstallFiles(
+            env,
+            dest_dir=arrizza_local_html,
+            src_dir=arrizza_websrc_root + "/htmlmain",
+            includes=["*"],
+            excludes=[".svn"],
+        ),
+    ],
+)
 ```
 Now 'scons prepare_main' will copy all files from the directories in .../main and in .../htmlmain and put them in their respective destination directories held in the variables 'arrizza_local_root' and 'arrizza_local_html'. All the files in the source directories are copied expect those that match the .svn (this is from the [SubVersion](SubVersion) version control, see [http://www.tigris.org](http://www.tigris.org)). 
 
