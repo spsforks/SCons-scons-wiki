@@ -170,22 +170,23 @@ SConscript('SConscript', exports = 'env')
 ```python
 import os
 import sys
-Import('env')
+
+Import("env")
 
 def PrependDir(dir, filelist):
-    return [os.path.join(dir,x) for x in filelist]
+    return [os.path.join(dir, x) for x in filelist]
 
 # compile java classes into platform independent 'classes' directory
-jni_classes = env.Java('classes', 'jsrc')
-jni_headers = env.JavaH('csrc', jni_classes)
+jni_classes = env.Java("classes", "jsrc")
+jni_headers = env.JavaH("csrc", jni_classes)
 
 # compile native classes into platform dependent 'lib-XXX' directory
 # NOTE: javah dependencies do not appear to work if SConscript was called
 # with a build_dir argument, so we take care of the build_dir here
-native_dir = 'lib-' + sys.platform
+native_dir = "lib-" + sys.platform
 native_src = PrependDir(native_dir, env.Split("""HelloWorldImp.cpp"""))
-env.BuildDir(native_dir, 'csrc', duplicate=0)
-env.SharedLibrary(native_dir+'/HelloWorldImp', native_src)
+env.VariantDir(native_dir, "csrc", duplicate=0)
+env.SharedLibrary(native_dir + "/HelloWorldImp", native_src)
 ```
 
 ### Building
