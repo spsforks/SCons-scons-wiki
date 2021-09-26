@@ -140,7 +140,7 @@ These commands are for "admin" or bookkeeping purposes. They provide the "glue" 
 **Environment** | **Description**
 ---------------:|:---------------
 [Environment()](Environment()) | Creates a new scons environment
-[Copy()](Copy()) | Return a separate copy of a construction environment.
+[Clone()](Clone()) | Return a separate copy of a construction environment.
 [Append()](Append()) | Appends the specified keyword arguments to the end of construction variables in the environment.
 [AppendUnique()](AppendUnique()) | Appends the specified keyword arguments to the end of construction variables in the environment.
 [Prepend()](Prepend()) | Prepends the specified keyword arguments to the beginning of construction variables in the environment.
@@ -174,7 +174,7 @@ These commands are for "admin" or bookkeeping purposes. They provide the "glue" 
 [SConscript()](SConscript()) | reads another scons file
 [Export()](Export()) | makes variables available to sconscript files
 [Import()](Import()) | pulls in the values of exported variables
-[BuildDir()](BuildDir()) | indicates that the build directory for a target
+[VariantDir()](VariantDir()) | indicates a variant build directory for a target
 [SConscriptChdir()](SConscriptChdir()) | Enable/Disable changing working directory when in an SConscript file 
 
 **Caching functions** | **Description**
