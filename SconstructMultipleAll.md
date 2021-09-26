@@ -25,7 +25,7 @@ else:
    localenv.Append(CCFLAGS=releasecflags)
 
 #specify the build directory
-localenv.BuildDir(builddir, ".", duplicate=0)
+localenv.VariantDir(builddir, ".", duplicate=0)
 
 srclst = map(lambda x: builddir + '/' + x, glob.glob('*.cpp'))
 pgm = localenv.Program(targetpath, source=srclst)
