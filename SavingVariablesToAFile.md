@@ -7,13 +7,12 @@ First create a Variables object
 vars = Variables('build-setup.conf')
 
 # Register which variables we're interested in and
-# get values from a saved file if any (defaults, which are
-# specified in the last argument, are used otherwise)
-vars.Add('config', '', 'release')
-vars.Add('prefix', '', '/usr/local')
-vars.Add('platform', '', 'auto')
-vars.Add('glut_enabled', '', False)
-vars.Add('havegettext', '', '')
+# get values from a saved file if any.
+vars.Add('config', help='', default='release')
+vars.Add('prefix', help='', default='/usr/local')
+vars.Add('platform', help='', default='auto')
+vars.Add('glut_enabled', help='', default=False)
+vars.Add('havegettext', help='', default='')
 
 # update these variables in your environment
 vars.Update(env)
