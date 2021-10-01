@@ -3,8 +3,6 @@ SCons has built-in facilities to save variables to a file and load them back - e
 
 First create a Variables object 
 ```python
-#!python
-
 # specify the name of the file in which variables are/will be stored
 vars = Variables('build-setup.conf')
 
@@ -23,12 +21,12 @@ vars.Update(env)
 # do your stuff with the variables
 
 if env['config'] == "debug":
-    env.Append(CCFLAGS=['-g','-Wfatal-errors']) 
+    env.Append(CCFLAGS=['-g', '-Wfatal-errors'])
 elif env['config'] == "release":
-     env.Append(CCFLAGS=['-O3','-DNDEBUG'])
+    env.Append(CCFLAGS=['-O3', '-DNDEBUG'])
 
 # change variables if needed (e.g. if you're running a
-#'configure' step, or if environment changed)
+# 'configure' step, or if environment changed)
 if changing_values:
     env['platform'] = "unix"
     # save new values
