@@ -72,14 +72,14 @@ Then, if you want to try a SCons-style yield directory and get all of the clutte
  
 
 NOTE: the rest of this page is mostly about the `VariantDir()` function.  Most people instead use the variant_dir argument to SConscript, which has much more natural behavior.  There's some discussion of this below, but perhaps not enough.  I don't have time right now, but super quickly, to use variant_dir in the most common way, put this in your SConstruct: 
-```txt
+```python
 env = Environment()
 Export('env')
 SConscript('SConscript', variant_dir='build')
 # and more SConscript calls as desired
 ```
 Then in SConscript: 
-```txt
+```python
 Import('env')
 Program('foo', 'foo.c')
 ```
@@ -107,7 +107,6 @@ Fair enough. So, the problem you may run into is this:
 
 
 ```python
-#!python
 environment = Environment()
 environment.VariantDir('build/', 'src/')
 
@@ -126,7 +125,6 @@ Here's the counter-example:
 
 
 ```python
-#!python
 env1 = Environment()
 env2 = Environment(CCFLAGS = '-g')
 env1.VariantDir('build1/', 'src/')
@@ -160,7 +158,7 @@ Expanding on the example above, all references to files outside the current dire
 For instance in the user guide section entitled [Top-Level Path Names in Subsidiary SConscript Files](http://www.scons.org/doc/2.1.0/HTML/scons-user/x3240.html) the following example is given: 
 
 
-```txt
+```console
 % cat ./SConstruct
 SConscript('src/prog/SConscript')
 
@@ -177,7 +175,7 @@ gcc -o src/prog/prog src/prog/main.o lib/foo1.o src/prog/foo2.o
 A naive use of variant_dir results does not produce the expected results: 
 
 
-```txt
+```console
 % cat ./SConstruct
 SConscript('src/prog/SConscript', variant_dir='build')
 
@@ -192,7 +190,7 @@ Note that foo1.o is still bein built in the library source directory.
 The solution is to use a subsidiary SConscript file in the top level directory and refer to foo1.c relative to the build directory: 
 
 
-```txt
+```console
 % cat ./SConstruct
 SConscript('SConscript', variant_dir='build')
 
@@ -215,7 +213,7 @@ gcc -o build/src/prog/prog build/src/prog/main.o build/lib/foo1.o build/src/prog
 Files referenced by an absolute path ignore `VariantDir()` entirely and are always built in their source directories. 
 
 
-```txt
+```console
 % cat src/prog/SConscript
 env = Environment()
 env.Program('prog', ['main.c', '/usr/src/lib/foo1.c', 'foo2.c'])
@@ -229,7 +227,7 @@ gcc -o build/prog build/main.o /usr/src/lib/foo1.o build/foo2.o
 The solution is to use a relative directory by adding a symlink and then refering to the file via that link: 
 
 
-```txt
+```console
 % ln -s /usr/src/lib lib2
 
 % cat src/prog/SConscript
@@ -246,7 +244,7 @@ Comment from Matt Doar: I think you may want to note that the ln command is issu
 One of the things that people are used to with `make` and other languages is the idea of including files. The `SConscript` function and related `VariantDir` function correspond to this in some ways, but not in others. For instance, I often use: 
 
 
-```txt
+```python
 env = Environment()
 Export('env')
 
@@ -266,7 +264,7 @@ for dir in dirs:
         )
 ```
 Then in each SConscript: 
-```txt
+```python
 Import('env')
 Program('foo', 'foo.c')
 ```
