@@ -14,7 +14,7 @@ env.Alias("install", env.Install(os.path.join(prefix, "bin"), someprogram))
 Basically we alias 'install' to a couple of Install nodes, returned by the `Install` method. That's all. `Alias` is additive, so this works fine. There is no need to add something like `Depends(install, someshlib)`, since SCons computes that dependency automatically. 
 
 Now
-```bash
+```console
 $ scons install
 ```
 
