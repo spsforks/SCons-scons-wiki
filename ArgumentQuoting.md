@@ -1,5 +1,5 @@
 
-The $STRING expansion in actions makes some assumptions: 
+The `$STRING` expansion in actions makes some assumptions: 
 
 * if the expanded variable is a list of strings, each of them is a single argument to the final command. 
 * if the expanded variable is a single string, it is a space-separated list of arguments to the final command. 
