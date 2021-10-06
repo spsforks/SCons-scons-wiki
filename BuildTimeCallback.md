@@ -57,7 +57,7 @@ So now we need to do the something clever in the callback (well.. actually it's 
 
 
 ```python
-def libcallback( libname )
+def libcallback(libname)
     if libname not in MyLib.allLibs:
         raise Exception("The library %s is not defined" % libname)
     
@@ -67,7 +67,7 @@ Now we just need to add the doPreCompile to [MyLib](MyLib):
 
 
 ```python
-    def doPreCompile( self ):
+    def doPreCompile(self):
         files = glob.glob(os.path.join( self.folder, "*.cxx"))
         
         mydll = env.SharedLibrary(self.name, files, CPPPATH = self.folder)
@@ -79,14 +79,16 @@ The last thing is then do the initial calls:
 ```python
 foolib.doInitial()
 barlib.doInitial()
-    ```
+```
+
 The Alias from before, with the above Depends now mean that we can invoke scons like 
-
+```console
 scons foo 
-
+```
 and it will only glob and consider files in foosrc! 
 
-Of course there downsides in that you can't tell scons to compile a single object file - but we are writing things to get round that. And you can't do a scons -c.  However the purpose was to show how you can call something at build time. 
+Of course there downsides in that you can't tell scons to compile a single object file - but we are writing things to get round that. And you can't do a `scons -c`.
+However the purpose was to show how you can call something at build time. 
 
 Complete code in context: 
 ```python
