@@ -4,22 +4,16 @@ Sometimes you wish that SCons could build a file right after you create its node
 RightNow is a function that takes any list of nodes (such as the return value from a Builder) as its sole argument and builds them all if any are out of date.  You can find the code at [https://code.edge.launchpad.net/~asomers/sconsaddons/rightnow](https://code.edge.launchpad.net/~asomers/sconsaddons/rightnow) (for a full list of external SCons Tools check out the [ToolsIndex](ToolsIndex)).  An example SConstruct is below.  In the example, in should contain the name of the file that you wish for your final output. 
 
 
-```txt
-# vim: syntax=python
-env = DefaultEnvironment(tools = ['default', 'rightnow'])
-x = Command(['intermediate'], ['in'],
-    '''cat $SOURCE > $TARGET'''
-    )
+```python
+env = DefaultEnvironment(tools=["default", "rightnow"])
+x = Command(["intermediate"], ["in"], """cat $SOURCE > $TARGET""")
 env.RightNow(x)
 
 try:
-    f = open('intermediate', 'r')
-    outname = f.read().rstrip('\n')
-    f.close()
-    Command([outname], ['intermediate'],
-        '''cat $SOURCE > $TARGET'''
-        )
+    with open("intermediate", "r") as f:
+        outname = f.read().rstrip("\n")
+    Command([outname], ["intermediate"], """cat $SOURCE > $TARGET""")
 except IOError:
-    #Intermediate file must not yet exist
+    # Intermediate file must not yet exist
     pass
 ```
