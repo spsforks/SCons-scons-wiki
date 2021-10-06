@@ -33,7 +33,7 @@ If your use case is "I need multiple types of builds and targets built simultane
 Let's look at a fairly simple example of an sconstruct.  What is in the sconscript isn't so relevant, yet.  Here is what things look like: 
 
 
-```txt
+```console
 [nds@localhost unix]$ pwd
 /home/nds/lwip-scons/contrib/ports/unix
 [nds@localhost unix]$ ls -alR
@@ -51,26 +51,24 @@ drwxr-xr-x 3 nds nds 4096 Apr 12 22:34 ..
 ```
 sconstruct 
 ```python
-#!Python 
 import SCons
-rootEnv = Environment(BUILDROOT="BUILD",
-                      ENV = {"PATH": [".",
-                                      "/bin", "/usr/bin",
-                                      "/opt/bin", "/usr/local/bin"]})
+
+rootEnv = Environment(
+    BUILDROOT="BUILD",
+    ENV={"PATH": [".", "/bin", "/usr/bin", "/opt/bin", "/usr/local/bin"]},
+)
 liblwip4Env = rootEnv.Clone()
 env = liblwip4Env
 Export("env")
-liblwip4 = liblwip4Env.SConscript("bfs/sconscript",
-                                  exports="env")
-
-#liblwip4 = liblwip4Env.SConscript("bfs/sconscript",
-#                                  variant_dir="$BUILDROOT/LIBLWIP4",
-#                                  exports="env")
+liblwip4 = liblwip4Env.SConscript("bfs/sconscript", exports="env")
+# liblwip4 = liblwip4Env.SConscript(
+#     "bfs/sconscript", variant_dir="$BUILDROOT/LIBLWIP4", exports="env"
+# )
 ```
 And here's what happens when we run that sconstruct: 
 
 
-```txt
+```console
 [nds@localhost unix]$ scons -Q
 <Lots of compiler output elided>
 [nds@localhost unix]$ pwd
@@ -111,7 +109,7 @@ drwxr-xr-x 5 nds nds  4096 Apr 12 22:38 ..
 Lots of stuff gets dumped under the bfs directory because that is where the sconscript is located and executed.  If that's what you want, great!  However, if you want your scons droppings to go elsewhere, you need to add the "variant_dir" flag to your SConscript call in your sconstruct like so: 
 
 
-```txt
+```console
 [nds@localhost unix]$ pwd
 /home/nds/lwip-scons/contrib/ports/unix
 [nds@localhost unix]$ ls -alR
@@ -129,25 +127,24 @@ drwxr-xr-x 3 nds nds 4096 Apr 12 22:46 ..
 ```
 sconstruct 
 ```python
-#!Python 
 import SCons
-rootEnv = Environment(BUILDROOT="BUILD",
-                      ENV = {"PATH": [".",
-                                      "/bin", "/usr/bin",
-                                      "/opt/bin", "/usr/local/bin"]})
+
+rootEnv = Environment(
+    BUILDROOT="BUILD",
+    ENV={"PATH": [".", "/bin", "/usr/bin", "/opt/bin", "/usr/local/bin"]},
+)
 liblwip4Env = rootEnv.Clone()
 env = liblwip4Env
 Export("env")
-#liblwip4 = liblwip4Env.SConscript("bfs/sconscript",
-#                                  exports="env")
-liblwip4 = liblwip4Env.SConscript("bfs/sconscript",
-                                  variant_dir="$BUILDROOT/LIBLWIP4",
-                                  exports="env")
+# liblwip4 = liblwip4Env.SConscript("bfs/sconscript", exports="env")
+liblwip4 = liblwip4Env.SConscript(
+    "bfs/sconscript", variant_dir="$BUILDROOT/LIBLWIP4", exports="env"
+)
 ```
 And upon running that sconstruct: 
 
 
-```txt
+```console
 [nds@localhost unix]$ scons -Q
 <Lots of compiler output elided>
 [nds@localhost unix]$ ls -alR
@@ -202,33 +199,58 @@ Hey, Presto!  All of the files got placed under the subdirectory BUILD/LIBLWIP4 
 "Hey!", you say.  "Where did all those files come from?  We don't have anything to create those."  This is where [VariantDir](VariantDir)() comes in. This time we're going to focus on the sconscript down in the bfs subdirectory. For these examples, I'm going to leave the variant_dir in place in the sconstruct as I don't want files going all over my nice, clean areas with sconstruct and sconscript. So, let's take a look at that sconscript, shall we: 
 
 
-```txt
+```console
 [nds@localhost unix]$ pwd
 /home/nds/lwip-scons/contrib/ports/unix
 ```
 bfs/sconscript 
 ```python
-#!Python 
 Import(["env"])
 # Should be called SourcePrefixMap or something ...
 VariantDir("CORE/", "/home/nds/lwip-scons/lwip/src/core/")
 VariantDir("API/", "/home/nds/lwip-scons/lwip/src/api/")
 VariantDir("NETIF/", "/home/nds/lwip-scons/lwip/src/netif/")
-env.Replace(CPPPATH=["/home/nds/lwip-scons/lwip/src/include",
-                     "/home/nds/lwip-scons/lwip/src/include/ipv4",
-# FIXME: This path is to include arch/cc.h.
-                     "/home/nds/lwip/contrib/ports/unix/include",
-# FIXME: This path is to grab lwipopts.h
-                     "/home/nds/lwip/contrib/ports/unix/proj/unix_bsd_echoserver"])
+env.Replace(
+    CPPPATH=[
+        "/home/nds/lwip-scons/lwip/src/include",
+        "/home/nds/lwip-scons/lwip/src/include/ipv4",
+        # FIXME: This path is to include arch/cc.h.
+        "/home/nds/lwip/contrib/ports/unix/include",
+        # FIXME: This path is to grab lwipopts.h
+        "/home/nds/lwip/contrib/ports/unix/proj/unix_bsd_echoserver",
+    ]
+)
 # In "core" subdir
-coreFiles = ["CORE/mem.c", "CORE/memp.c", "CORE/netif.c", "CORE/pbuf.c", "CORE/raw.c",
-             "CORE/stats.c", "CORE/sys.c", "CORE/tcp.c", "CORE/tcp_in.c", "CORE/tcp_out.c",
-             "CORE/udp.c", "CORE/dhcp.c"]
+coreFiles = [
+    "CORE/mem.c",
+    "CORE/memp.c",
+    "CORE/netif.c",
+    "CORE/pbuf.c",
+    "CORE/raw.c",
+    "CORE/stats.c",
+    "CORE/sys.c",
+    "CORE/tcp.c",
+    "CORE/tcp_in.c",
+    "CORE/tcp_out.c",
+    "CORE/udp.c",
+    "CORE/dhcp.c",
+]
 # In "core/ipv4" subdir
-core4Files = ["CORE/ipv4/icmp.c",  "CORE/ipv4/igmp.c",  "CORE/ipv4/ip_addr.c",
-              "CORE/ipv4/ip.c",  "CORE/ipv4/ip_frag.c"]
+core4Files = [
+    "CORE/ipv4/icmp.c",
+    "CORE/ipv4/igmp.c",
+    "CORE/ipv4/ip_addr.c",
+    "CORE/ipv4/ip.c",
+    "CORE/ipv4/ip_frag.c",
+]
 # In "api" subdir
-apiFiles = ["API/api_lib.c", "API/api_msg.c", "API/tcpip.c", "API/err.c", "API/sockets.c"]
+apiFiles = [
+    "API/api_lib.c",
+    "API/api_msg.c",
+    "API/tcpip.c",
+    "API/err.c",
+    "API/sockets.c",
+]
 # In "netif" subdir
 netifFiles = ["NETIF/loopif.c", "NETIF/etharp.c", "NETIF/slipif.c"]
 liblwip4 = env.StaticLibrary("lwip4", [coreFiles, core4Files, apiFiles, netifFiles])
@@ -245,7 +267,6 @@ In my opinion, right here is the crux of the [VariantDir](VariantDir)() misunder
 
 This is the task which isn't discussed very explicitly.  The line: 
 ```python
-#!Python 
 VariantDir("CORE/", "/home/nds/lwip-scons/lwip/src/core/")
 ```
 sets up a mapping such that references to targets named "CORE/foo.c" (prefix/file) get filled out to "/home/nds/lwip-scons/lwip/src/core/foo.c" (original directory/file).  Here is the key: 
@@ -256,14 +277,12 @@ we could have set up a line:
 
 
 ```python
-#!Python 
 VariantDir("BELCH/", "/home/nds/lwip-scons/lwip/src/core/")
 ```
 at which point "BELCH/foo.c" would get filled out to "/home/nds/lwip-scons/lwip/src/core/foo.c".  So, what changes would we have to make to the sconscript file if we used "BELCH" as the prefix?  We would have to use: 
 
 
 ```python
-#!Python 
 # In "core" subdir
 coreFiles = ["BELCH/mem.c", "BELCH/memp.c", "BELCH/netif.c", "BELCH/pbuf.c", "BELCH/raw.c",
              "BELCH/stats.c", "BELCH/sys.c", "BELCH/tcp.c", "BELCH/tcp_in.c", "BELCH/tcp_out.c",
@@ -280,13 +299,12 @@ In doing so, [VariantDir](VariantDir)() has to put those files into the working 
 *This* is the fact that everybody focuses on and gives [VariantDir](VariantDir)() its' name.  Going back to the original sconscript, let's take a look at the organization of the build directory after scons gets through running: 
 
 
-```txt
+```console
 [nds@localhost unix]$ pwd
 /home/nds/lwip-scons/contrib/ports/unix
 ```
 bfs/sconscript  
 ```python
-#!Python 
 Import(["env"])
 
 # Should be called SourcePrefixMap or something ...
@@ -294,25 +312,50 @@ VariantDir("CORE/", "/home/nds/lwip-scons/lwip/src/core/")
 VariantDir("API/", "/home/nds/lwip-scons/lwip/src/api/")
 VariantDir("NETIF/", "/home/nds/lwip-scons/lwip/src/netif/")
 
-env.Replace(CPPPATH=["/home/nds/lwip-scons/lwip/src/include",
-                     "/home/nds/lwip-scons/lwip/src/include/ipv4",
-
-# FIXME: This path is to include arch/cc.h.
-                     "/home/nds/lwip/contrib/ports/unix/include",
-# FIXME: This path is to grab lwipopts.h
-                     "/home/nds/lwip/contrib/ports/unix/proj/unix_bsd_echoserver"])
+env.Replace(
+    CPPPATH=[
+        "/home/nds/lwip-scons/lwip/src/include",
+        "/home/nds/lwip-scons/lwip/src/include/ipv4",
+        # FIXME: This path is to include arch/cc.h.
+        "/home/nds/lwip/contrib/ports/unix/include",
+        # FIXME: This path is to grab lwipopts.h
+        "/home/nds/lwip/contrib/ports/unix/proj/unix_bsd_echoserver",
+    ]
+)
 
 # In "core" subdir
-coreFiles = ["CORE/mem.c", "CORE/memp.c", "CORE/netif.c", "CORE/pbuf.c", "CORE/raw.c",
-             "CORE/stats.c", "CORE/sys.c", "CORE/tcp.c", "CORE/tcp_in.c", "CORE/tcp_out.c",
-             "CORE/udp.c", "CORE/dhcp.c"]
+coreFiles = [
+    "CORE/mem.c",
+    "CORE/memp.c",
+    "CORE/netif.c",
+    "CORE/pbuf.c",
+    "CORE/raw.c",
+    "CORE/stats.c",
+    "CORE/sys.c",
+    "CORE/tcp.c",
+    "CORE/tcp_in.c",
+    "CORE/tcp_out.c",
+    "CORE/udp.c",
+    "CORE/dhcp.c",
+]
 
 # In "core/ipv4" subdir
-core4Files = ["CORE/ipv4/icmp.c",  "CORE/ipv4/igmp.c",  "CORE/ipv4/ip_addr.c",
-              "CORE/ipv4/ip.c",  "CORE/ipv4/ip_frag.c"]
+core4Files = [
+    "CORE/ipv4/icmp.c",
+    "CORE/ipv4/igmp.c",
+    "CORE/ipv4/ip_addr.c",
+    "CORE/ipv4/ip.c",
+    "CORE/ipv4/ip_frag.c",
+]
 
 # In "api" subdir
-apiFiles = ["API/api_lib.c", "API/api_msg.c", "API/tcpip.c", "API/err.c", "API/sockets.c"]
+apiFiles = [
+    "API/api_lib.c",
+    "API/api_msg.c",
+    "API/tcpip.c",
+    "API/err.c",
+    "API/sockets.c",
+]
 
 # In "netif" subdir
 netifFiles = ["NETIF/loopif.c", "NETIF/etharp.c", "NETIF/slipif.c"]
@@ -321,7 +364,7 @@ liblwip4 = env.StaticLibrary("lwip4", [coreFiles, core4Files, apiFiles, netifFil
 Return("liblwip4")
 ```
 
-```txt
+```console
 [nds@localhost unix]$ scons -Q
 <Lots of compiler output elided>
 [nds@localhost unix]$ ls -alR
@@ -394,13 +437,12 @@ scons has created the directories API, CORE, and NETIF underneath the working di
 So, to examine the relationship between everything, let's look at what would happen if we changed CORE to BELCH: 
 
 
-```txt
+```console
 [nds@localhost unix]$ pwd
 /home/nds/lwip-scons/contrib/ports/unix
 ```
 bfs/sconscript 
 ```python
-#!Python 
 Import(["env"])
 
 # Should be called SourcePrefixMap or something ...
@@ -408,25 +450,50 @@ VariantDir("BELCH/", "/home/nds/lwip-scons/lwip/src/core/")
 VariantDir("API/", "/home/nds/lwip-scons/lwip/src/api/")
 VariantDir("NETIF/", "/home/nds/lwip-scons/lwip/src/netif/")
 
-env.Replace(CPPPATH=["/home/nds/lwip-scons/lwip/src/include",
-                     "/home/nds/lwip-scons/lwip/src/include/ipv4",
-
-# FIXME: This path is to include arch/cc.h.
-                     "/home/nds/lwip/contrib/ports/unix/include",
-# FIXME: This path is to grab lwipopts.h
-                     "/home/nds/lwip/contrib/ports/unix/proj/unix_bsd_echoserver"])
+env.Replace(
+    CPPPATH=[
+        "/home/nds/lwip-scons/lwip/src/include",
+        "/home/nds/lwip-scons/lwip/src/include/ipv4",
+        # FIXME: This path is to include arch/cc.h.
+        "/home/nds/lwip/contrib/ports/unix/include",
+        # FIXME: This path is to grab lwipopts.h
+        "/home/nds/lwip/contrib/ports/unix/proj/unix_bsd_echoserver",
+    ]
+)
 
 # In "core" subdir
-coreFiles = ["BELCH/mem.c", "BELCH/memp.c", "BELCH/netif.c", "BELCH/pbuf.c", "BELCH/raw.c",
-             "BELCH/stats.c", "BELCH/sys.c", "BELCH/tcp.c", "BELCH/tcp_in.c", "BELCH/tcp_out.c",
-             "BELCH/udp.c", "BELCH/dhcp.c"]
+coreFiles = [
+    "BELCH/mem.c",
+    "BELCH/memp.c",
+    "BELCH/netif.c",
+    "BELCH/pbuf.c",
+    "BELCH/raw.c",
+    "BELCH/stats.c",
+    "BELCH/sys.c",
+    "BELCH/tcp.c",
+    "BELCH/tcp_in.c",
+    "BELCH/tcp_out.c",
+    "BELCH/udp.c",
+    "BELCH/dhcp.c",
+]
 
 # In "core/ipv4" subdir
-core4Files = ["BELCH/ipv4/icmp.c",  "BELCH/ipv4/igmp.c",  "BELCH/ipv4/ip_addr.c",
-              "BELCH/ipv4/ip.c",  "BELCH/ipv4/ip_frag.c"]
+core4Files = [
+    "BELCH/ipv4/icmp.c",
+    "BELCH/ipv4/igmp.c",
+    "BELCH/ipv4/ip_addr.c",
+    "BELCH/ipv4/ip.c",
+    "BELCH/ipv4/ip_frag.c",
+]
 
 # In "api" subdir
-apiFiles = ["API/api_lib.c", "API/api_msg.c", "API/tcpip.c", "API/err.c", "API/sockets.c"]
+apiFiles = [
+    "API/api_lib.c",
+    "API/api_msg.c",
+    "API/tcpip.c",
+    "API/err.c",
+    "API/sockets.c",
+]
 
 # In "netif" subdir
 netifFiles = ["NETIF/loopif.c", "NETIF/etharp.c", "NETIF/slipif.c"]
@@ -435,7 +502,7 @@ liblwip4 = env.StaticLibrary("lwip4", [coreFiles, core4Files, apiFiles, netifFil
 Return("liblwip4")
 ```
 
-```txt
+```console
 [nds@localhost unix]$ scons -Q
 <Lots of compiler output elided>
 [nds@localhost unix]$ ls -alR
