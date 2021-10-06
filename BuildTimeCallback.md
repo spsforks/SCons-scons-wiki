@@ -15,13 +15,13 @@ class MyLib:
 
     allLibs = {}
     
-    def __init__( self, name, folder ):
+    def __init__(self, name, folder):
         MyLib.allLibs[name] = self
         self.name = name
         self.folder = folder
 
-foolib = MyLib( "foo", "foosrc" )
-barlib = MyLib( "bar", "barsrc" )
+foolib = MyLib("foo", "foosrc")
+barlib = MyLib("bar", "barsrc")
 ```
 Now for each library we want to set up a dummy or phony target that when "built" does the globbing and tells scons about the real files.  For this we use the afore mentioned trick that Scons uses to turn a function and parameters into an Action, which we can then use in a Command - an [ActionFactory](ActionFactory). 
 
@@ -30,12 +30,11 @@ Now for each library we want to set up a dummy or phony target that when "built"
 from SCons.Script import *
 
 # These are "callbacks" that we set up as actions that Scons can call at build time.
-def libcallback( libname ):
+def libcallback(libname):
     # Do something clever
     pass
 
-LibCallback = SCons.Action.ActionFactory( libcallback,
-                                          lambda name: 'Doing "%s"' % name)
+LibCallback = SCons.Action.ActionFactory(libcallback, lambda name: 'Doing "%s"' % name)
 ```
 So a call to [LibCallBack](LibCallBack) now creates a Action object that "remembers" the parameter it was called with, and when invoked will call my libcallback function with that parameter.  This means I can now add a method to [MyLib](MyLib) class to do the following: 
 
