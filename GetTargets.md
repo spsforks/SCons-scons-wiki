@@ -15,7 +15,7 @@ env.Alias('all', ['.'])
 
 Running SCons on this particular SConstruct will provide the following result:
 
-```txt
+```console
 $ scons .
 scons: Reading SConscript files ...
 error: You may not use the '.' target, please use 'all' or name a specific target.
@@ -28,5 +28,5 @@ scons: 'all' is up to date.
 scons: done building targets.
 ```
 
-See also the `BUILD_TARGETS` variable (same chapter in the User Guide) for reading and changing the targets that SCons will try to build.
+See also the [`BUILD_TARGETS`](http://www.scons.org/doc/production/HTML/scons-user.html#sect-command-line-targets) for reading and changing the targets that SCons will try to build.
 
