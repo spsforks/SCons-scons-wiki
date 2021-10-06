@@ -1,32 +1,23 @@
-**Table of Contents**
-
-[TOC]
-
-
 # Dumping the Construction Environment
 
 There are times when it's very helpful to be able to see the contents of the construction environment. Most of the time, dumping the contents of the environment allows you to easily see what's going on inside with the tools being used. And that's a pretty handy task when debugging issues with scons. 
 
-
-
 ---
 
- _**NOTE: **_since 0.96.90, the code below is no longer needed.  Environments have a method Dump() built-in.  Just call: 
-
+_**NOTE: **_since SCons 0.96.90, the code below is no longer needed.  Environments have a method 
+[`Dump`](http://www.scons.org/doc/production/HTML/scons-user.html#f-Dump)
+built-in.  Just call: 
 
 ```python
-#!python
-    print env.Dump()  # dump whole env
-    print env.Dump('CCFLAGS') # dump just one key
+print env.Dump()  # dump whole env
+print env.Dump('CCFLAGS') # dump just one key
 ```
 But if you're using an older version of scons, read on... 
 
 ---
-
  
 ```python
-#!python
-def DumpEnv( env, key = None, header = None, footer = None ):
+def DumpEnv(env, key=None, header=None, footer=None):
     """
     Using the standard Python pretty printer, dump the contents of the
     scons build environment to stdout.
@@ -42,21 +33,21 @@ def DumpEnv( env, key = None, header = None, footer = None ):
     environment.
     """
     import pprint
-    pp = pprint.PrettyPrinter( indent = 2 )
+    pp = pprint.PrettyPrinter(indent=2)
     if key:
-        dict = env.Dictionary( key )
+        mydict = env.Dictionary(key)
     else:
-        dict = env.Dictionary()
+        mydict = env.Dictionary()
     if header:
         print header
-    pp.pprint( dict )
+    pp.pprint(mydict)
     if footer:
-        print footer
+        print(footer)
 ```
 
 # Using DumpEnv
 
-Stick the DumpEnv function someplace easy to access, like in the SConstruct file and then call it. 
+Stick the `DumpEnv` function someplace easy to access, like in the SConstruct file and then call it. 
 
 
 ## Dumping the Entire Environment
@@ -64,13 +55,13 @@ Stick the DumpEnv function someplace easy to access, like in the SConstruct file
 Put: 
 
 
-```txt
-DumpEnv( env )
+```python
+DumpEnv(env)
 ```
 in the SConstruct file. Then running scons will show something like: 
 
 
-```txt
+```console
 scons: Reading SConscript files ...
 { 'AR': 'ar',
   'ARCOM': '$AR $ARFLAGS $TARGET $SOURCES\n$RANLIB $RANLIBFLAGS $TARGET',
@@ -267,13 +258,13 @@ scons: done building targets.
 ## Dumping a Portion of the Environment
 
 
-```txt
-DumpEnv( env, key = 'TOOLS' )
+```python
+DumpEnv(env, key='TOOLS')
 ```
 Note that the key is case sensitive! Then running scons will show something like: 
 
 
-```txt
+```console
 scons: Reading SConscript files ...
 [ 'default',
   'gnulink',
@@ -313,9 +304,8 @@ While it's handy to be able to peek into the environment, it can be annoying to 
 
 
 ```python
-#!python
 if 'dump' in ARGUMENTS:
-    env_key = ARGUMENTS[ 'dump' ]
+    env_key = ARGUMENTS['dump']
     if env_key == 'env':
         prefix = 'env.Dictionary()'
         env_key = None
@@ -329,7 +319,7 @@ if 'dump' in ARGUMENTS:
 To dump the environment, you now have to specify an additional argument on the command line: 
 
 
-```txt
+```console
 scons dump=env
 ```
 Without the dump=env, the environment will not be written out. 
@@ -337,7 +327,7 @@ Without the dump=env, the environment will not be written out.
 The contents of specific portions of the environment can also be specified. For example, to write out the contents of the TOOLS portion of the environment, use: 
 
 
-```txt
+```console
 scons dump=TOOLS
 ```
 
@@ -346,30 +336,30 @@ scons dump=TOOLS
 Sometimes, is would be nice to be able to dump the environment when in a SConscript file someplace in the bowels of a complex build hierarchy. The easiest way to do this is to modify the environment in the SConstruct file by adding the DumpEnv to it. 
 
 
-```txt
-    env[ 'DumpEnv' ] = DumpEnv
+```python
+env[ 'DumpEnv' ] = DumpEnv
 ```
 Then from within a SConscript file, use: 
 
 
-```txt
-   env[ 'DumpEnv' ]( env )
+```python
+env[ 'DumpEnv' ]( env )
 ```
 to dump the contents of the environment at that point. 
 
 Another way to do this is to make Dump a method of the Environment class. Put this after your definition of DumpEnv: 
 
 
-```txt
-   from SCons.Script.SConscript import SConsEnvironment
-   SConsEnvironment.DumpEnv = DumpEnv
+```python
+from SCons.Script.SConscript import SConsEnvironment
+SConsEnvironment.DumpEnv = DumpEnv
 ```
 Then for _any_ environment you can do this in your SConscript: 
 
 
-```txt
-   env.DumpEnv()
-   # or
-   env.DumpEnv(key = 'TOOLS')
+```python
+env.DumpEnv()
+# or
+env.DumpEnv(key = 'TOOLS')
 ```
 This requires scons 0.92 or later. 
