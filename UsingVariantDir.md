@@ -152,7 +152,8 @@ So why does `VariantDir()` work like this? Well, we now know that you can write 
 
 Expanding on the example above, all references to files outside the current directory require special attention when using `VariantDir()`. 
 
-For instance in the user guide section entitled [Top-Level Path Names in Subsidiary SConscript Files](http://www.scons.org/doc/2.1.0/HTML/scons-user/x3240.html) the following example is given: 
+For instance in the user guide section entitled [Top-Level Path Names in Subsidiary SConscript Files](https://scons.org/doc/production/HTML/scons-user/ch14s03.html)
+the following example is given: 
 
 
 ```console
