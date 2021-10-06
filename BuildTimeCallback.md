@@ -11,7 +11,6 @@ My Sconscript files set up a list of libraries each of which has a directory of 
 
 
 ```python
-#!python
 class MyLib:
 
     allLibs = {}
@@ -28,7 +27,6 @@ Now for each library we want to set up a dummy or phony target that when "built"
 
 
 ```python
-#!python
 from SCons.Script import *
 
 # These are "callbacks" that we set up as actions that Scons can call at build time.
@@ -43,15 +41,14 @@ So a call to [LibCallBack](LibCallBack) now creates a Action object that "rememb
 
 
 ```python
-#!python
-    def doInitial( self ):
+    def doInitial(self):
         """ This sets up a dummy target to do the lib globbing etc. at build time """
-        
-        self.myinitdummy = env.Command( "dummy" + self.name + "_libinit",
-                                        [],
-                                        LibCallback( self.name ) )
-        
-        env.Alias( self.name, self.myinitdummy )
+
+        self.myinitdummy = env.Command(
+            "dummy" + self.name + "_libinit", [], LibCallback(self.name)
+        )
+
+        env.Alias(self.name, self.myinitdummy)
 ```
 The Command line is telling scons about a target of "dummy_libfoo_libinit" which is a file that will never exist so scons will always attempt to build it.  It has no source files (just an empty list) and to "build" it scons will call libcallback with self.name. 
 
@@ -61,10 +58,9 @@ So now we need to do the something clever in the callback (well.. actually it's 
 
 
 ```python
-#!python
 def libcallback( libname )
     if libname not in MyLib.allLibs:
-        raise Exception( "The library %s is not defined" % libname )
+        raise Exception("The library %s is not defined" % libname)
     
     MyLib.allLibs[libname].doPreCompile()
 ```
@@ -72,21 +68,19 @@ Now we just need to add the doPreCompile to [MyLib](MyLib):
 
 
 ```python
-#!python
     def doPreCompile( self ):
-        files = glob.glob( os.path.join( self.folder, "*.cxx" ) )
+        files = glob.glob(os.path.join( self.folder, "*.cxx"))
         
-        mydll = env.SharedLibrary( self.name, files, CPPPATH = self.folder )
-        env.Depends( self.name, mydll )
+        mydll = env.SharedLibrary(self.name, files, CPPPATH = self.folder)
+        env.Depends(self.name, mydll)
 ```
 The last thing is then do the initial calls: 
 
 
 ```python
-#!python
 foolib.doInitial()
 barlib.doInitial()
-```
+    ```
 The Alias from before, with the above Depends now mean that we can invoke scons like 
 
 scons foo 
@@ -97,57 +91,49 @@ Of course there downsides in that you can't tell scons to compile a single objec
 
 Complete code in context: 
 ```python
-#!python
 import os
 import glob
 from SCons.Script import *
 
 env = Environment()
 
+
 class MyLib:
 
     allLibs = {}
-    
-    def __init__( self, name, folder ):
+
+    def __init__(self, name, folder):
         MyLib.allLibs[name] = self
         self.name = name
         self.folder = folder
 
-    def doInitial( self ):
+    def doInitial(self):
         """ This sets up a dummy target to do the lib globbing etc. at build time """
-        
-        self.myinitdummy = env.Command( "dummy" + self.name + "_libinit",
-                                        [],
-                                        LibCallback( self.name ) )
-        
-        env.Alias( self.name, self.myinitdummy )
 
+        self.myinitdummy = env.Command(
+            "dummy" + self.name + "_libinit", [], LibCallback(self.name)
+        )
 
-    def doPreCompile( self ):
-        files = glob.glob( os.path.join( self.folder, "*.cxx" ) )
-        
-        mydll = env.SharedLibrary( self.name, files, CPPPATH = self.folder )
-        env.Depends( self.name, mydll )
-                    
+        env.Alias(self.name, self.myinitdummy)
+
+    def doPreCompile(self):
+        files = glob.glob(os.path.join(self.folder, "*.cxx"))
+
+        mydll = env.SharedLibrary(self.name, files, CPPPATH=self.folder)
+        env.Depends(self.name, mydll)
 
 # These are "callbacks" that we set up as actions that Scons can call at build time.
-def libcallback( libname ):
+def libcallback(libname):
     if libname not in MyLib.allLibs:
-        raise Exception( "MyLib: The library %s is not defined" % libname )
-    
+        raise Exception("MyLib: The library %s is not defined" % libname)
+
     MyLib.allLibs[libname].doPreCompile()
 
-LibCallback = SCons.Action.ActionFactory( libcallback,
-                                          lambda name: 'Doing "%s"' % name)
+LibCallback = SCons.Action.ActionFactory(libcallback, lambda name: 'Doing "%s"' % name)
 
-
-
-
-foolib = MyLib( "foo", "foosrc" )
-barlib = MyLib( "bar", "barsrc" )
+foolib = MyLib("foo", "foosrc")
+barlib = MyLib("bar", "barsrc")
 
 foolib.doInitial()
 barlib.doInitial()
-
 ```
-Should have probably created a login first - but if you have any questions I follow the scons mailing list so post there and I'll pick it up :) 
