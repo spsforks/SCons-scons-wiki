@@ -37,21 +37,25 @@ The simplest way to handle these custom arguments is to let SCons do the parsing
 
 ```python
 vars = Variables(None, ARGUMENTS)
-vars.Add(EnumVariable(key='BUILD_TYPE', 
-                      help='type of build to use', 
-                      default='debug',  
-                      allowed_values=('debug', 'release', 'optimized')))
+vars.Add(
+    EnumVariable(
+        key="BUILD_TYPE",
+        help="type of build to use",
+        default="debug",
+        allowed_values=("debug", "release", "optimized"),
+    )
+)
 
 env = Environment(variables=vars)
 
-if env['BUILD_TYPE'] == 'debug':
-    print '*** debug build'
+if env["BUILD_TYPE"] == "debug":
+    print("*** debug build")
 
-if env['BUILD_TYPE'] == 'release':
-    print '*** release build'
+if env["BUILD_TYPE"] == "release":
+    print("*** release build")
 
-if env['BUILD_TYPE'] == 'optimized':
-    print '*** optimized build'
+if env["BUILD_TYPE"] == "optimized":
+    print("*** optimized build")
 ```
 
 ```console
@@ -78,10 +82,10 @@ The `ARGUMENTS` variable presents the values in an easy to consume form. Since y
 
 ```python
 if ARGUMENTS.get('release', '0') == '1':
-    print "*** Release build..."
+    print("*** Release build...")
     buildroot = 'release'
 else:
-    print "*** Debug build..."
+    print("*** Debug build...")
     buildroot = 'debug'
 ```
 
@@ -143,17 +147,19 @@ Instead of adding arguments to the command line, there are cases when it is more
 One use case for this is to make an SCons build look more like another familiar environment. For example build systems from the GNU/Linux environment quite often take a `--prefix` option to fix where build results are to be installed. Here is an example of adding support for `--prefix` to an SCons setup:
 
 ```python
-AddOption('--prefix',
-          dest='prefix',
-          type='string',
-          nargs=1,
-          action='store',
-          metavar='DIR',
-          help='installation prefix')
+AddOption(
+    "--prefix",
+    dest="prefix",
+    type="string",
+    nargs=1,
+    action="store",
+    metavar="DIR",
+    help="installation prefix",
+)
 
-env = Environment(PREFIX=GetOption('prefix'))
+env = Environment(PREFIX=GetOption("prefix"))
 
-installed_foo = env.Install('$PREFIX/usr/bin', 'foo.in')
+installed_foo = env.Install("$PREFIX/usr/bin", "foo.in")
 Default(installed_foo)
 ```
 
@@ -171,30 +177,31 @@ To avoid getting into trouble with added options, here are some guidelines:
   - One approach is to allow the option to appear multiple times on the command line, each with a single argument. To make this work, include the `action=append` keyword (instead of `action=store`) in the `AddOption` call.
   - Another approach is to use a style similar to that described in the SCons `ListVariable()` function: take a single following argument which may consist of one or more comma-separated values. You will have to write the code to break that up, as unlike for `ListVariable` SCons does not provide a way to do that for `AddOption` arguments, but it is relatively straightforward to do so, as a simple `split()` on the collected argument is most of what you need.  
   - Here is an SConscript fragment showing both ways being accepted (the `Flatten` is because `split` will return a list so we'd get a list inside a list in that case):
-    ```python
-    AddOption('--foo', nargs=1, dest='foo', action='append', type='string')
 
-    if GetOption('foo'):
-        foos = [f.split(',') if ',' in f else f for f in GetOption('foo')]
-        foos = Flatten(foos)
-        print("foos=", foos)
-    else:
-        print("No foo given")
+```python
+AddOption('--foo', nargs=1, dest='foo', action='append', type='string')
 
-    ```
+if GetOption('foo'):
+    foos = [f.split(',') if ',' in f else f for f in GetOption('foo')]
+    foos = Flatten(foos)
+    print("foos=", foos)
+else:
+    print("No foo given")
 
-    And when run:
+```
 
-    ```console
-    $ scons -Q -q
-    No foo given
-    $ scons -Q -q --foo=foo
-    foos= ['foo']
-    $ scons -Q -q --foo=foo,bar,baz
-    foos= ['foo', 'bar', 'baz']
-    $ scons -Q -q --foo=foo --foo=bar --foo=baz
-    foos= ['foo', 'bar', 'baz']
-    ```
+And when run:
+
+```console
+$ scons -Q -q
+No foo given
+$ scons -Q -q --foo=foo
+foos= ['foo']
+$ scons -Q -q --foo=foo,bar,baz
+foos= ['foo', 'bar', 'baz']
+$ scons -Q -q --foo=foo --foo=bar --foo=baz
+foos= ['foo', 'bar', 'baz']
+```
 
 - Consider whether using `Variables` might be a workable solution instead. 
 
@@ -203,4 +210,4 @@ To avoid getting into trouble with added options, here are some guidelines:
 
 One final note: normally, SCons does not forward environment variables from the caller's shell to the SCons invocation, but there is one significant exception: the `SCONSFLAGS` variable can be used to control scons by holding options that could be specified on the command line, and they will then be treated as if they came from the command line.  
 
-For any other environment variables, the SConscripts can fetch the values and use them as they see fit, but they must do so intentionally.
+For any other environment variables (except a small number described in the manpage), the SConscripts can fetch the values and use them as they see fit, but they must do so intentionally.
