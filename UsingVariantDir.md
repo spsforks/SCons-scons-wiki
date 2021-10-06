@@ -109,10 +109,7 @@ Fair enough. So, the problem you may run into is this:
 ```python
 environment = Environment()
 environment.VariantDir('build/', 'src/')
-
-environment.Library(target="Foo"
-                ,   source=["src/foo.cpp"])
-
+environment.Library(target="Foo", source=["src/foo.cpp"])
 ```
 And yet it's still building the files in src/foo.cpp? The reason is because you need to specify your source=[build/foo.cpp](build/foo.cpp). I know, I know, it's stupid. 
 
@@ -130,12 +127,12 @@ env2 = Environment(CCFLAGS = '-g')
 env1.VariantDir('build1/', 'src/')
 env2.VariantDir('build2/', 'src/')
 
-env1.Library(target="Foo",
-             source=["build1/foo.cpp"])
-
-env2.Library(target="Foo",
-             source=["build2/foo.cpp"],
-             CCFLAGS = '$CCFLAGS -DSPECIAL_DEBUG_FLAG')
+env1.Library(target="Foo", source=["build1/foo.cpp"])
+env2.Library(
+    target="Foo",
+    source=["build2/foo.cpp"],
+    CCFLAGS = '$CCFLAGS -DSPECIAL_DEBUG_FLAG'
+)
 ```
 `VariantDir()` is really designed around the supporting multiple side-by-side variants, which may be built in different ways.  The only way to guarantee that the flags you want get applied to one variant but not the other is to refer to separate "source file copies" that represent the different compilation steps. 
 
