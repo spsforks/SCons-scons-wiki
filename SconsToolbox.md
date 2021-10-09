@@ -7,7 +7,7 @@ Don't put Builders and Tools here. Put them in [ContributedBuilders](Contributed
 * [WiX_Tool](WiX_Tool) A Tool to create windows installers with the open source WiX toolkit from Microsoft 
 * [EclipsePlugin](EclipsePlugin) A SCons Builder Plugin for the Eclipse IDE. 
 * [SconsTreeView](SconsTreeView) A small program to display a SCons dependency tree in a GUI format. 
-* [CrossCompileMingw32](CrossCompileMingw32) A tool for cross-compiling for the Windows platform. 
+* [CrossCompilingMingw](CrossCompilingMingw) A tool for cross-compiling for the Windows platform. 
 * [ToolRecursiveCopy](ToolRecursiveCopy) A few useful add-ons for cases where you're copying or converting the contents of some folder into some other folder. 
 * [BashCompletion](BashCompletion) A script to enable command line completion in Bash. 
 * [ManpagePdfConverter](ManpagePdfConverter) A Bash script that exports the SCons manpage as a PDF file 
