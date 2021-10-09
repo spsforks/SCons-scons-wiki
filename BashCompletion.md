@@ -7,7 +7,7 @@ To use this script you can:
 
 1. Append this to your personal Bash completion configuration, usually ~/.bash_completion. 
 1. Add this file inthe directory /etc/bash_completion.d (if you have super-user privileges. 
-1. Create a personal ~/bash_completion.d directory, put the file in there and then ensure you have appropriate code in ~/.bash_completion.  I have the code:```txt
+1. Create a personal ~/bash_completion.d directory, put the file in there and then ensure you have appropriate code in `~/.bash_completion`.
 ```bash 
 for file in bash_completion.d/*
 do
@@ -19,7 +19,7 @@ done
 My webpage about this is at [here](http://www.russel.org.uk/sconsBashCompletion.html). If you see any problems with this script do email [me](mailto:russel@russel.org.uk). 
 
 Russel Winder, 2010-04-22 16:24+01:00
-```txt
+```bash
 # -*- mode:shell-script -*-
 
 # Programmable completion for the scons command under bash.
