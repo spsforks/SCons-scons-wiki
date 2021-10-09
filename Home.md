@@ -27,17 +27,19 @@ Welcome to the wiki of the [SCons](http://www.scons.org) project!  This is an op
 
 # Further documentation ![](http://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Gnome-system-help.svg/48px-Gnome-system-help.svg.png)
 
- * [Frequently Asked Questions](FAQ)
  * the official SCons User Guide ([HTML](http://www.scons.org/doc/production/HTML/scons-user.html) or [PDF](http://scons.org/doc/production/PDF/scons-user.pdf))
  * the official SCons Manual page ([HTML](http://www.scons.org/doc/HTML/scons-man.html) or [PDF](http://scons.org/doc/production/PDF/scons-man.pdf)) - very detailed information about SCons features.
+ * the [SCons Cookbook](https://scons-cookbook.readthedocs.io/en/latest/) 
  * the [SCons Recipes](SconsRecipes) page - a gold mine of information, code snippets and various examples
+ * [Frequently Asked Questions](FAQ)
  * some [platform specific notes](PlatformSpecificNotes)
 
 
 # SCons extensions/contributions ![](http://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Gnome-preferences-other.svg/48px-Gnome-preferences-other.svg.png)
 
  * [HowToContribute](HowToContribute) - ideas for helping out the project in general (no hacking skills required!)
- * [ContributedBuilders](ContributedBuilders) - contributed builders (and other misc tools) to provide support for more languages/librairies
+ * A repository of [Contributed Software (scons-contrib)](https://github.com/scons/scons-contrib)
+ * [ContributedBuilders](ContributedBuilders) - contributed builders (and other misc tools) to provide support for more languages/libraries. A number of these have more up to date versions in the scons-contrib repo.
  * [ToolsForFools](ToolsForFools) - Guide for writing new Builders/Tools
  * [SconsToolbox](SconsToolbox) for contributed modules/extensions/scripts
  * [ToolsIndex](ToolsIndex) for Tool modules that are developed separately from SCons
