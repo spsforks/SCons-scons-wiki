@@ -8,7 +8,7 @@ Welcome to the wiki of the [SCons](http://www.scons.org) project!  This is an op
  * [FromMakeToScons](FromMakeToScons) - why scons? a critique of the venerable Make tool, and a history of build systems
  * [SconsVsOtherBuildTools](SconsVsOtherBuildTools) - for those who want to compare SCons to other build tools.
  * [SconsProjects](SconsProjects), open source projects which use SCons (add yours there). Can be a useful resource to learn new SCons tricks or just see it in action
- * \#scons IRC channel on Freenode [irc://irc.freenode.net/scons](irc://irc.freenode.net/scons)
+ * \#scons IRC channel on Libera Chat [irc://irc.libera.char/scons](irc://irc.libera.chat/scons)
  * The [SCons Discord channel](https://discord.gg/bXVpWAy "invitation link"). We're trying this as an alternative to IRC as Discord maintains history and allows more formatting options. Please join and come say hi!
  * [TalksAndSlides](TalksAndSlides) - videos and presentation slides of SCons talks
 
