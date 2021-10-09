@@ -3,7 +3,6 @@ This is a quick program that parses the output of a scons --debug=tree run and d
 
 
 ```python
-#!python
 from wxPython.wx import *
 import os
 import sys
