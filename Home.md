@@ -8,8 +8,8 @@ Welcome to the wiki of the [SCons](http://www.scons.org) project!  This is an op
  * [FromMakeToScons](FromMakeToScons) - why scons? a critique of the venerable Make tool, and a history of build systems
  * [SconsVsOtherBuildTools](SconsVsOtherBuildTools) - for those who want to compare SCons to other build tools.
  * [SconsProjects](SconsProjects), open source projects which use SCons (add yours there). Can be a useful resource to learn new SCons tricks or just see it in action
+ * The [SCons Discord channel](https://discord.gg/bXVpWAy "invitation link"). The preferred chat channel - preserves history, gives more formatting control, and just in general is now a much more active place than our IRC channel.
  * \#scons IRC channel on Libera Chat [irc://irc.libera.char/scons](irc://irc.libera.chat/scons)
- * The [SCons Discord channel](https://discord.gg/bXVpWAy "invitation link"). We're trying this as an alternative to IRC as Discord maintains history and allows more formatting options. Please join and come say hi!
  * [TalksAndSlides](TalksAndSlides) - videos and presentation slides of SCons talks
 
 
@@ -29,7 +29,7 @@ Welcome to the wiki of the [SCons](http://www.scons.org) project!  This is an op
 
  * the official SCons User Guide ([HTML](http://www.scons.org/doc/production/HTML/scons-user.html) or [PDF](http://scons.org/doc/production/PDF/scons-user.pdf))
  * the official SCons Manual page ([HTML](http://www.scons.org/doc/HTML/scons-man.html) or [PDF](http://scons.org/doc/production/PDF/scons-man.pdf)) - very detailed information about SCons features.
- * the [SCons Cookbook](https://scons-cookbook.readthedocs.io/en/latest/) 
+ * the [SCons Cookbook](https://scons-cookbook.readthedocs.io/en/latest/) - various recipes for accomplishing common things.
  * the [SCons Recipes](SconsRecipes) page - a gold mine of information, code snippets and various examples
  * [Frequently Asked Questions](FAQ)
  * some [platform specific notes](PlatformSpecificNotes)
