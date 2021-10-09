@@ -1,6 +1,6 @@
 Using [OpenJade](http://openjade.sourceforge.net/), [doclifter](http://catb.org/~esr/doclifter/) and Jade Wrapper you can export the SCons manpage as a handy, indexed PDF file.
 
-```
+```bash
 # This script was written for Ubuntu 6.10 and assumes the following packages:
 # docbook-utils
 # doclifter
