@@ -29,15 +29,15 @@ up | one of the `--up` options is present
 
 Here are the actions that must be taken based upon the state of the contitions.  If a condition must be true, its column is marked with a '+'; if false, with a '-'; if don't care, with an 'x'.  The action column describes what to do.  A letter in parenthesis indicates a common action that is used in more than one place. 
 
-top | cur | src | up | action
-:---:|:---:|:---:|:---:|:---
-+ | x | + | x | Error "extraneous --srcdir options present"
-+ | x | - | x | (A) process `.scons.top` and proceed normally
-- | + | x | x | (B) create `.scons.top` and proceed normally
-- | - | - | + | Scan up. If `.scons.top`, use (A); if SConstruct flavor, use (B); otherwise error "SConstruct not found when scanning up"
-- | - | + | - | (C) If SConstruct flavor via `--srcdir`, use (B); otherwise error "SConscript not found"
-- | - | - | - | (GNU compatibility) set `--srcdir=..` and use (C)
-- | - | + | + | Damifino; needs a decision: is this more 'src' or 'up'?
+| top | cur | src | up | action
+| :---: | :---: | :---: | :---: | :---
+| + | x | + | x | Error "extraneous --srcdir options present"
+| + | x | - | x | (A) process `.scons.top` and proceed normally
+| - | + | x | x | (B) create `.scons.top` and proceed normally
+| - | - | - | + | Scan up. If `.scons.top`, use (A); if SConstruct flavor, use (B); otherwise error "SConstruct not found when scanning up"
+| - | - | + | - | (C) If SConstruct flavor via `--srcdir`, use (B); otherwise error "SConscript not found"
+| - | - | - | - | (GNU compatibility) set `--srcdir=..` and use (C)
+| - | - | + | + | Damifino; needs a decision: is this more 'src' or 'up'?
 
 
 Action (B) to create a `.scons.top` file uses the primitive operation below to place a `SourceDir(`_dirname_`)` line in the file for each `--srcdir` command-line option. 
