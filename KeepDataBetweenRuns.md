@@ -1,7 +1,7 @@
 
 ## Persist Data Between Runs
 
-[[!bug 1678]] is about being able to keep `--srcdir` command-line options between runs.  Since I see a need to keep configuration information between runs as well, I view fixing that bug as a prerequisite for future configuration work, so I'm providing as much insight as I can to make it easier to do.  And once a generic facility is in place, there's other information that could be kept between runs as well. 
+[#1678](/SCons/scons/issues/1678) is about being able to keep `--srcdir` command-line options between runs.  Since I see a need to keep configuration information between runs as well, I view fixing that bug as a prerequisite for future configuration work, so I'm providing as much insight as I can to make it easier to do.  And once a generic facility is in place, there's other information that could be kept between runs as well. 
 
 I'm going to make a very concrete description of one way this might work.  Be clear that it's not the only way, and it may not be the best way.  And I'm not wed to any of the names; they are made up purely to make it easier to describe the process. 
 
@@ -30,7 +30,7 @@ up | one of the `--up` options is present
 Here are the actions that must be taken based upon the state of the contitions.  If a condition must be true, its column is marked with a '+'; if false, with a '-'; if don't care, with an 'x'.  The action column describes what to do.  A letter in parenthesis indicates a common action that is used in more than one place. 
 
 top | cur | src | up | action
-:-:|:-:|:-:|:-:|:---
+:---:|:---:|:---:|:---:|:---
 + | x | + | x | Error "extraneous --srcdir options present"
 + | x | - | x | (A) process `.scons.top` and proceed normally
 - | + | x | x | (B) create `.scons.top` and proceed normally
