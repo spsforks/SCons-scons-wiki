@@ -4,7 +4,7 @@
 
 This is a draft.  Feel free to edit.  If you have questions, please pose them on the mailing list. 
 
-[#863](/SCons/scons/issues/863) is the main issue report of this one, [#1437](/SCons/scons/issues/1437), [#1442](/SCons/scons/issues/1442), [#1873](/SCons/scons/issues/1873) and [#1895](/SCons/scons/issues/1895) were closed as duplicates, as they reported some variant of this issue.
+[#863](/SCons/scons/issues/863) is the main issue report of this one, [#1437](/SCons/scons/issues/1437), [#1442](/SCons/scons/issues/1442), [#1873](/SCons/scons/issues/1873) and [#1895](/SCons/scons/issues/1895) were closed as duplicates, as they reported some variant of this issue.  [#1671](/SCons/scons/issues/1671) and [#1007](/SCons/scons/issues/1007) (closed) also are variants of this.
 
 ### The Problem(s)
 
