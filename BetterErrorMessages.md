@@ -1,11 +1,10 @@
 
 
-## Better Error Messages
+## Better Builder Error Messages
 
 This is a draft.  Feel free to edit.  If you have questions, please pose them on the mailing list. 
 
-It is believed [#863](/SCons/scons/issues/863), [#1437](/SCons/scons/issues/1437), [#1442](/SCons/scons/issues/1442), [#1871](/SCons/scons/issues/1871) and [#1895](/SCons/scons/issues/1895) are exemplars of this problem. 
-
+[#863](/SCons/scons/issues/863) is the main issue report of this one, [#1437](/SCons/scons/issues/1437), [#1442](/SCons/scons/issues/1442), [#1873](/SCons/scons/issues/1873) and [#1895](/SCons/scons/issues/1895) were closed as duplicates, as they reported some variant of this issue.
 
 ### The Problem(s)
 
@@ -20,7 +19,6 @@ Another related difficulty with the current scheme is that full toolchains are n
 
 A somewhat-related difficulty to the previous point is the use of non-standard suffixes.  A user might wish to use the suffix `.cplusplus` on a C++ file for legacy reasons, yet adding this suffix is painful (or not possible?).  (It should also be possible to remove suffixes.) 
 
-
 ### Analysis
 
 From the user's perspective, SCons should act as if all Builders were present at all times, but only Builders configured into a specific Environment are in play.  That is, SCons should always be able to determine that a Builder should be used (if not always which one), and only generate an error if the required Builder isn't configured. 
@@ -34,8 +32,8 @@ The implications are twofold:
 
 * All `.src --> .tgt` transitions must be known globally to SCons. 
 * All Builder names must be known globally to SCons. 
-The problem is how to get there from here. 
 
+The problem is how to get there from here. 
 
 ### Possible Strategy
 
@@ -46,13 +44,10 @@ There's one possible strategy that SCons could employ:
 * User-provided Builders should have their Builder name(s) and `.src --> .tgt` pair(s) added to the global tables. 
 * If an Environment gets an `AttributeError`, the global table of Builder names is consulted to determine what type of error message should be generated. 
 * If the source-to-target transition is not known in the current Environment, the global table is consulted to determine what type of error message should be generated. 
+
 I'm not sure that this is the best strategy (it seems to have a lot of overhead), but it shows that there is at least one strategy that will deal with the difficulties. 
 
-
-
 ---
-
- 
 
 Still open: 
 
