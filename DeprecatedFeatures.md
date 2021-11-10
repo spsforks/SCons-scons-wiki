@@ -41,3 +41,4 @@ Removed |  Check removed, may cause Python error
  `Taskmaster.Task.` `needs_execute()`  |  internal method; may be used by user-defined subclasses |  should always be overridden - now an abstract method || |  ?  |  2.0  |  2.1??  |  ??  |  4.0
  `Scanner.Scanner` class  |  TBD:  unused internal class; may be used by user code  |  ?  |  ?  |  ?  |  ?  |  ?  |  ?  |  ?
  `Scanner.Selector` class  |  TBD:  unused internal class; may be used by user code  |  ?  |  ?  |  ?  |  ?  |  ?  |  ?  |  ?
+ `qt` tool | Drop old qt3-only tool | qt4/qt4 contrib | 4.3 | 4.3  |  ?  |  ?  |  ?  |  ?  |  ?
