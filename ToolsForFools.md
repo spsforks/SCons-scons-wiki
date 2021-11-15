@@ -1,6 +1,6 @@
 # A simple Builder, and its evolution to a Tool
 
-This small article discusses the different possible approaches while trying to teach SCons how to compile and process exotic file types, in order to support new tools. This can be a compiler for a sparsely used language like "Befunge" [http://www.esolangs.org/wiki/Befunge](http://www.esolangs.org/wiki/Befunge) or a documentation processor like "[AsciiDoc](AsciiDoc)" [http://www.methods.co.nz/asciidoc/](http://www.methods.co.nz/asciidoc/), which aren't supported by the SCons core yet. 
+This small article discusses the different possible approaches while trying to teach SCons how to compile and process exotic file types, in order to support new tools. This can be a compiler for a sparsely used language like [Befunge](http://www.esolangs.org/wiki/Befunge) or a documentation processor like [AsciiDoc](http://www.methods.co.nz/asciidoc/), which aren't supported by the SCons core.
 
 Based on my personal experiences (and preferences!) I outline some of the basic points you have to look out for, when implementing an SCons Tool. Visit [http://www.scons.org/wiki/ToolsIndex](http://www.scons.org/wiki/ToolsIndex) for a list of currently available extension packages, which can serve as examples for your own code. 
 
@@ -17,11 +17,11 @@ From the JAL input file `alarm.jal` the command "`jalv2 alarm.jal`" creates an `
 ## Command wrapper
 
 
-```txt
+```python
 env.Command('alarm.asm','alarm.jal','/opt/jalv24n/bin/jalv2 -asm $TARGET $SOURCE')
-
+```
 or
-
+```python
 env.Command('alarm.asm','alarm.jal','/opt/jalv24n/bin/jalv2 $SOURCE')
 ```
 Both of these calls would properly execute the JAL compiler for the source file in question, but let's look at some of the advantages and disadvantages of this approach. 
@@ -36,13 +36,14 @@ Both of these calls would properly execute the JAL compiler for the source file 
 As a next step, we define a simple `Builder()` named `jalbld` (chap. 17 _Writing Your Own Builders_). We call the constructor of the `Builder` class and pass the basic command line as argument to the `action` parameter. Using the `suffix` specifications, we can leave out the suffixes for our target and source files (cf. the following call of the `Jal` function, sect. 17.3 _Letting SCons Handle the File Suffixes_). Note how the Builder gets appended to the current Environment via the `BUILDERS` variable. This is mandatory to make the `Jal` method accessible. 
 
 
-```txt
-jalbld = Builder(action='/opt/jalv24n/bin/jalv2 $SOURCES',
-                 suffix = '.asm',
-                 src_suffix = '.jal')
-env = Environment(BUILDERS={'Jal' : jalbld})
+```python
+jalbld = Builder(
+    action="/opt/jalv24n/bin/jalv2 $SOURCES",
+    suffix=".asm", src_suffix=".jal"
+)
+env = Environment(BUILDERS={"Jal": jalbld})
 
-env.Jal('alarm','alarm')
+env.Jal("alarm", "alarm")
 ```
 **Pros**: We now have support for automatic suffixes, which requires less typing. 
 
@@ -60,21 +61,21 @@ The `generate` routine is responsible for the actual changes to the Environment.
 Note: There is no rule that says: "There must be only one Builder for each Tool." Most of the currently existing Tools actually add several Builders to your Environment (see also [#special](ToolsForFools) for a syntax example). 
 
 
-```txt
+```python
 import SCons.Builder
 
 #
 # Builders
 #
 _jal_builder = SCons.Builder.Builder(
-        action = '/opt/jalv24n/bin/jalv2 $SOURCES',
-        suffix = '.asm',
-        src_suffix = '.jal')
+    action="/opt/jalv24n/bin/jalv2 $SOURCES",
+    suffix=".asm",
+    src_suffix=".jal"
+)
 
 def generate(env):
     """Add Builders and construction variables to the Environment."""
-
-    env['BUILDERS']['Jal'] = _jal_builder
+    env["BUILDERS"]["Jal"] = _jal_builder
 
 def exists(env):
     return 1
@@ -84,7 +85,7 @@ That's all, nothing else needed. You can save this file as `__init__.py` (this i
 For using our new "`jalv2`" Tool we would write an SConstruct, something like this: 
 
 
-```txt
+```python
 env = Environment(tools=['jal'])
 env.Jal('alarm','alarm')
 ```
@@ -99,19 +100,19 @@ Now isn't that much simpler, for you as developer **and** your users? Still we c
 First the new code: 
 
 
-```txt
-"""SCons.Tool.jal
-
+```python
+"""
 Tool-specific initialization for the JALv2 compiler.
 
 There normally shouldn't be any need to import this module directly.
 It will usually be imported through the generic SCons.Tool.Tool()
 selection method.
-
 """
 
 #
-# Copyright (c) 2001-7,2010 The SCons Foundation
+# MIT License
+#
+# Copyright The SCons Foundation
 #
 # ...
 #
@@ -120,57 +121,60 @@ import SCons.Action
 import SCons.Builder
 import SCons.Util
 
+
 class ToolJalWarning(SCons.Warnings.Warning):
     pass
 
+
 class JalCompilerNotFound(ToolJalWarning):
     pass
+
 
 SCons.Warnings.enableWarningClass(ToolJalWarning)
 
 
 def _detect(env):
-    """ Try to detect the JAL compiler """
-    try: 
-        return env['JAL']
-    except KeyError: 
+    """Try to detect the JAL compiler"""
+    try:
+        return env["JAL"]
+    except KeyError:
         pass
 
-    jal = env.WhereIs('jalv2') or env.WhereIs('jal')
+    jal = env.WhereIs("jalv2") or env.WhereIs("jal")
     if jal:
         return jal
 
-    raise SCons.Errors.StopError(
-        JalCompilerNotFound,
-        "Could not detect JAL compiler")
+    raise SCons.Errors.StopError(JalCompilerNotFound, "Could not detect JAL compiler")
     return None
+
 
 #
 # Builders
 #
 _jal_builder = SCons.Builder.Builder(
-        action = SCons.Action.Action('$JAL_COM','$JAL_COMSTR'),
-        suffix = '$JAL_ASMSUFFIX',
-        src_suffix = '$JAL_SUFFIX')
+    action=SCons.Action.Action("$JAL_COM", "$JAL_COMSTR"),
+    suffix="$JAL_ASMSUFFIX",
+    src_suffix="$JAL_SUFFIX",
+)
+
 
 def generate(env):
     """Add Builders and construction variables to the Environment."""
 
-    env['JAL'] = _detect(env)
+    env["JAL"] = _detect(env)
     env.SetDefault(
         # Additional command-line flags
-        JAL_FLAGS = SCons.Util.CLVar('-quiet'),
-
+        JAL_FLAGS=SCons.Util.CLVar("-quiet"),
         # Suffixes/prefixes
-        JAL_SUFFIX = '.jal',
-        JAL_ASMSUFFIX = '.asm',
-
+        JAL_SUFFIX=".jal",
+        JAL_ASMSUFFIX=".asm",
         # JAL command
-        JAL_COM = '$JAL $JAL_FLAGS $SOURCES',
-        JAL_COMSTR = ''
-        )
+        JAL_COM="$JAL $JAL_FLAGS $SOURCES",
+        JAL_COMSTR="",
+    )
 
-    env['BUILDERS']['Jal'] = _jal_builder
+    env["BUILDERS"]["Jal"] = _jal_builder
+
 
 def exists(env):
     return _detect(env)
@@ -197,13 +201,13 @@ Well, so far we didn't care about side effect files. The real JAL compiler doesn
 Usually each build command is expected to produce the given list of targets from the specified list of source files. For example, 
 
 
-```txt
+```python
 env.Object('foo.o','foo.c')
 ```
 creates the object `foo.o` (target) from `foo.c` (source), and no other files are involved in this step. With our JAL compiler this isn't true. Although we only say 
 
 
-```txt
+```python
 env.Jal('foo.asm','foo.jal')
 ```
 we get the files `foo.hex` and `foo.cod` as additional targets, also known as _side effects_.  
@@ -211,19 +215,19 @@ we get the files `foo.hex` and `foo.cod` as additional targets, also known as _s
 For redefining this common rule in SCons there is the concept of an Emitter (see section 17.6 _Builders That Modify the Target or Source Lists Using an Emitter_). It tells the system which files go in for the build step and what comes out after the job has finished. The default Emitter gets the list of sources and targets, as given by the user in the SConstruct or SConscript, and passes them on unchanged. But for handling side effect files we can override this behaviour by defining our own Emitter, which we are about to do now: 
 
 
-```txt
-"""SCons.Tool.jal
-
+```python
+"""
 Tool-specific initialization for the JALv2 compiler.
 
 There normally shouldn't be any need to import this module directly.
 It will usually be imported through the generic SCons.Tool.Tool()
 selection method.
-
 """
 
 #
-# Copyright (c) 2001-7,2010 The SCons Foundation
+# MIT License
+#
+# Copyright The SCons Foundation
 #
 # ...
 #
@@ -232,79 +236,83 @@ import SCons.Action
 import SCons.Builder
 import SCons.Util
 
+
 class ToolJalWarning(SCons.Warnings.Warning):
     pass
 
+
 class JalCompilerNotFound(ToolJalWarning):
     pass
+
 
 SCons.Warnings.enableWarningClass(ToolJalWarning)
 
 
 def _detect(env):
-    """ Try to detect the JAL compiler """
-    try: 
-        return env['JAL']
-    except KeyError: 
+    """Try to detect the JAL compiler"""
+    try:
+        return env["JAL"]
+    except KeyError:
         pass
 
-    jal = env.WhereIs('jalv2') or env.WhereIs('jal')
+    jal = env.WhereIs("jalv2") or env.WhereIs("jal")
     if jal:
         return jal
 
-    raise SCons.Errors.StopError(
-        JalCompilerNotFound,
-        "Could not detect JAL compiler")
+    raise SCons.Errors.StopError(JalCompilerNotFound, "Could not detect JAL compiler")
     return None
+
 
 #
 # Emitters
 #
-def _jal_emitter(target, source, env): 
-    jal_suffix = env.subst('$JAL_SUFFIX')
-    jal_codsuffix = env.subst('$JAL_CODSUFFIX')
-    jal_hexsuffix = env.subst('$JAL_HEXSUFFIX')
+def _jal_emitter(target, source, env):
+    jal_suffix = env.subst("$JAL_SUFFIX")
+    jal_codsuffix = env.subst("$JAL_CODSUFFIX")
+    jal_hexsuffix = env.subst("$JAL_HEXSUFFIX")
 
     for s in source:
         src = str(s)
         if src.endswith(jal_suffix):
-            jal_stem = src[:-len(jal_suffix)]
+            jal_stem = src[: -len(jal_suffix)]
         else:
             jal_stem = src
-        target.append(jal_stem+jal_codsuffix)
-        target.append(jal_stem+jal_hexsuffix)
+        target.append(jal_stem + jal_codsuffix)
+        target.append(jal_stem + jal_hexsuffix)
 
     return target, source
+
 
 #
 # Builders
 #
 _jal_builder = SCons.Builder.Builder(
-        action = SCons.Action.Action('$JAL_COM','$JAL_COMSTR'),
-        suffix = '$JAL_ASMSUFFIX',
-        src_suffix = '$JAL_SUFFIX',
-        emitter = _jal_emitter)
+    action=SCons.Action.Action("$JAL_COM", "$JAL_COMSTR"),
+    suffix="$JAL_ASMSUFFIX",
+    src_suffix="$JAL_SUFFIX",
+    emitter=_jal_emitter,
+)
+
 
 def generate(env):
     """Add Builders and construction variables to the Environment."""
 
-    env['JAL'] = _detect(env)
+    env["JAL"] = _detect(env)
     env.SetDefault(
         # Additional command-line flags
-        JAL_FLAGS = SCons.Util.CLVar('-quiet'),
-
+        JAL_FLAGS=SCons.Util.CLVar("-quiet"),
         # Suffixes/prefixes
-        JAL_SUFFIX = '.jal',
-        JAL_ASMSUFFIX = '.asm',
-        JAL_CODSUFFIX = '.cod',
-        JAL_HEXSUFFIX = '.hex',
-
+        JAL_SUFFIX=".jal",
+        JAL_ASMSUFFIX=".asm",
+        JAL_CODSUFFIX=".cod",
+        JAL_HEXSUFFIX=".hex",
         # JAL command
-        JAL_COM = '$JAL $JAL_FLAGS $SOURCES',
-        JAL_COMSTR = ''
-        )
+        JAL_COM="$JAL $JAL_FLAGS $SOURCES",
+        JAL_COMSTR="",
+    )
 
-    env['BUILDERS']['Jal'] = _jal_builder
+    env["BUILDERS"]["Jal"] = _jal_builder
+
 
 def exists(env):
     return _detect(env)
@@ -323,19 +331,19 @@ A pseudo-Builder allows for more freedom about how to parse and process its argu
 Note, that you can do far more advanced things with a pseudo-Builder, e.g. have a look at the "`InstallPython`" Builder of the CPython Tool at [http://scons.org/wiki/CPythonTool](http://scons.org/wiki/CPythonTool) and [https://bitbucket.org/dirkbaechle/scons_cpython](https://bitbucket.org/dirkbaechle/scons_cpython), respectively. 
 
 
-```txt
-"""SCons.Tool.jal
-
+```python
+"""
 Tool-specific initialization for the JALv2 compiler.
 
 There normally shouldn't be any need to import this module directly.
 It will usually be imported through the generic SCons.Tool.Tool()
 selection method.
-
 """
 
 #
-# Copyright (c) 2001-7,2010 The SCons Foundation
+# MIT License
+#
+# Copyright The SCons Foundation
 #
 # ...
 #
@@ -344,39 +352,43 @@ import SCons.Action
 import SCons.Builder
 import SCons.Util
 
+
 class ToolJalWarning(SCons.Warnings.Warning):
     pass
 
+
 class JalCompilerNotFound(ToolJalWarning):
     pass
+
 
 SCons.Warnings.enableWarningClass(ToolJalWarning)
 
 
 def _detect(env):
-    """ Try to detect the JAL compiler """
-    try: 
-        return env['JAL']
-    except KeyError: 
+    """Try to detect the JAL compiler"""
+    try:
+        return env["JAL"]
+    except KeyError:
         pass
 
-    jal = env.WhereIs('jalv2') or env.WhereIs('jal')
+    jal = env.WhereIs("jalv2") or env.WhereIs("jal")
     if jal:
         return jal
 
-    raise SCons.Errors.StopError(
-        JalCompilerNotFound,
-        "Could not detect JAL compiler")
+    raise SCons.Errors.StopError(JalCompilerNotFound, "Could not detect JAL compiler")
     return None
+
 
 #
 # Builders
 #
 _jal_builder = SCons.Builder.Builder(
-        action = SCons.Action.Action('$JAL_COM','$JAL_COMSTR'),
-        suffix = '$JAL_ASMSUFFIX',
-        src_suffix = '$JAL_SUFFIX',
-        single_source = 1)
+    action=SCons.Action.Action("$JAL_COM", "$JAL_COMSTR"),
+    suffix="$JAL_ASMSUFFIX",
+    src_suffix="$JAL_SUFFIX",
+    single_source=1,
+)
+
 
 def Jal(env, target, source=None, *args, **kw):
     """
@@ -391,9 +403,9 @@ def Jal(env, target, source=None, *args, **kw):
         source = [source]
 
     result = []
-    jal_suffix = env.subst('$JAL_SUFFIX')
-    jal_codsuffix = env.subst('$JAL_CODSUFFIX')
-    jal_hexsuffix = env.subst('$JAL_HEXSUFFIX')
+    jal_suffix = env.subst("$JAL_SUFFIX")
+    jal_codsuffix = env.subst("$JAL_CODSUFFIX")
+    jal_hexsuffix = env.subst("$JAL_HEXSUFFIX")
     for t, s in zip(target, source):
         # Call builder
         jal_asm = _jal_builder.__call__(env, t, s, **kw)
@@ -401,38 +413,39 @@ def Jal(env, target, source=None, *args, **kw):
         # Add cleanup files
         src = str(s)
         if src.endswith(jal_suffix):
-            jal_stem = src[:-len(jal_suffix)]
+            jal_stem = src[: -len(jal_suffix)]
         else:
             jal_stem = src
-        env.Clean(jal_asm, [jal_stem+jal_codsuffix, jal_stem+jal_hexsuffix])
+        env.Clean(jal_asm, [jal_stem + jal_codsuffix, jal_stem + jal_hexsuffix])
 
     return result
+
 
 def generate(env):
     """Add Builders and construction variables to the Environment."""
 
-    env['JAL'] = _detect(env)
+    env["JAL"] = _detect(env)
     env.SetDefault(
         # Additional command-line flags
-        JAL_FLAGS = SCons.Util.CLVar('-quiet'),
-
+        JAL_FLAGS=SCons.Util.CLVar("-quiet"),
         # Suffixes/prefixes
-        JAL_SUFFIX = '.jal',
-        JAL_ASMSUFFIX = '.asm',
-        JAL_CODSUFFIX = '.cod',
-        JAL_HEXSUFFIX = '.hex',
-
+        JAL_SUFFIX=".jal",
+        JAL_ASMSUFFIX=".asm",
+        JAL_CODSUFFIX=".cod",
+        JAL_HEXSUFFIX=".hex",
         # JAL command
-        JAL_COM = '$JAL $JAL_FLAGS $SOURCES',
-        JAL_COMSTR = ''
-        )
+        JAL_COM="$JAL $JAL_FLAGS $SOURCES",
+        JAL_COMSTR="",
+    )
 
     try:
         env.AddMethod(Jal, "Jal")
     except AttributeError:
         # Looks like we use a pre-0.98 version of SCons...
         from SCons.Script.SConscript import SConsEnvironment
+
         SConsEnvironment.Jal = Jal
+
 
 def exists(env):
     return _detect(env)
@@ -442,7 +455,7 @@ For our Jal method, we are now using a pseudo-Builder. It gets added to the Envi
 **Pros**: A simplified filename interface: the user can specify a list of source files, e.g. 
 
 
-```txt
+```python
 env.Jal(['alarm','timetick'])
 ```
 and the target names `alarm.asm` and `timetick.asm` are created automatically. Clean (and **not** [SideEffect](SideEffect)!) is now used to specify the created files that should get removed additionally on a "`scons -c`". Check the code to see that the Emitter has gone, we don't need it anymore. 
@@ -455,33 +468,31 @@ and the target names `alarm.asm` and `timetick.asm` are created automatically. C
 Another option for our work with JAL is that we can tell the `jalv2` executable to only create HEX or COD files with the calls 
 
 
-```txt
+```console
 jalv2 -no-asm -no-hex -codfile foo.cod foo.jal
 ```
 and 
 
-
-```txt
+```console
 jalv2 -no-asm -no-codfile -hex foo.hex foo.jal
 ```
 . And if `jalv2` has these features, the users of our Tool want them too...rather sooner than later. `:)` 
 
 So here is our final version of the code: 
 
-
-```txt
-"""SCons.Tool.jal
-
+```python
+"""
 Tool-specific initialization for the JALv2 compiler.
 
 There normally shouldn't be any need to import this module directly.
 It will usually be imported through the generic SCons.Tool.Tool()
 selection method.
-
 """
 
 #
-# Copyright (c) 2001-7,2010 The SCons Foundation
+# MIT License
+#
+# Copyright The SCons Foundation
 #
 # ...
 #
@@ -490,57 +501,63 @@ import SCons.Action
 import SCons.Builder
 import SCons.Util
 
+
 class ToolJalWarning(SCons.Warnings.Warning):
     pass
 
+
 class JalCompilerNotFound(ToolJalWarning):
     pass
+
 
 SCons.Warnings.enableWarningClass(ToolJalWarning)
 
 
 def _detect(env):
-    """ Try to detect the JAL compiler """
-    try: 
-        return env['JAL']
-    except KeyError: 
+    """Try to detect the JAL compiler"""
+    try:
+        return env["JAL"]
+    except KeyError:
         pass
 
-    jal = env.WhereIs('jalv2') or env.WhereIs('jal')
+    jal = env.WhereIs("jalv2") or env.WhereIs("jal")
     if jal:
         return jal
 
-    raise SCons.Errors.StopError(
-        JalCompilerNotFound,
-        "Could not detect JAL compiler")
+    raise SCons.Errors.StopError(JalCompilerNotFound, "Could not detect JAL compiler")
     return None
+
 
 #
 # Builders
 #
 _jal_builder = SCons.Builder.Builder(
-        action = SCons.Action.Action('$JAL_COM','$JAL_COMSTR'),
-        suffix = '$JAL_ASMSUFFIX',
-        src_suffix = '$JAL_SUFFIX',
-        single_source = 1)
+    action=SCons.Action.Action("$JAL_COM", "$JAL_COMSTR"),
+    suffix="$JAL_ASMSUFFIX",
+    src_suffix="$JAL_SUFFIX",
+    single_source=1,
+)
 
 _jal_asm_builder = SCons.Builder.Builder(
-        action = SCons.Action.Action('$JAL_ASMCOM','$JAL_ASMCOMSTR'),
-        suffix = '$JAL_ASMSUFFIX',
-        src_suffix = '$JAL_SUFFIX',
-        single_source = 1)
+    action=SCons.Action.Action("$JAL_ASMCOM", "$JAL_ASMCOMSTR"),
+    suffix="$JAL_ASMSUFFIX",
+    src_suffix="$JAL_SUFFIX",
+    single_source=1,
+)
 
 _jal_cod_builder = SCons.Builder.Builder(
-        action = SCons.Action.Action('$JAL_CODCOM','$JAL_CODCOMSTR'),
-        suffix = '$JAL_CODSUFFIX',
-        src_suffix = '$JAL_SUFFIX',
-        single_source = 1)
+    action=SCons.Action.Action("$JAL_CODCOM", "$JAL_CODCOMSTR"),
+    suffix="$JAL_CODSUFFIX",
+    src_suffix="$JAL_SUFFIX",
+    single_source=1,
+)
 
 _jal_hex_builder = SCons.Builder.Builder(
-        action = SCons.Action.Action('$JAL_HEXCOM','$JAL_HEXCOMSTR'),
-        suffix = '$JAL_HEXSUFFIX',
-        src_suffix = '$JAL_SUFFIX',
-        single_source = 1)
+    action=SCons.Action.Action("$JAL_HEXCOM", "$JAL_HEXCOMSTR"),
+    suffix="$JAL_HEXSUFFIX",
+    src_suffix="$JAL_SUFFIX",
+    single_source=1,
+)
 
 
 def Jal(env, target, source=None, *args, **kw):
@@ -556,9 +573,9 @@ def Jal(env, target, source=None, *args, **kw):
         source = [source]
 
     result = []
-    jal_suffix = env.subst('$JAL_SUFFIX')
-    jal_codsuffix = env.subst('$JAL_CODSUFFIX')
-    jal_hexsuffix = env.subst('$JAL_HEXSUFFIX')
+    jal_suffix = env.subst("$JAL_SUFFIX")
+    jal_codsuffix = env.subst("$JAL_CODSUFFIX")
+    jal_hexsuffix = env.subst("$JAL_HEXSUFFIX")
     for t, s in zip(target, source):
         # Call builder
         jal_asm = _jal_builder.__call__(env, t, s, **kw)
@@ -566,52 +583,52 @@ def Jal(env, target, source=None, *args, **kw):
         # Add cleanup files
         src = str(s)
         if src.endswith(jal_suffix):
-            jal_stem = src[:-len(jal_suffix)]
+            jal_stem = src[: -len(jal_suffix)]
         else:
             jal_stem = src
-        env.Clean(jal_asm, [jal_stem+jal_codsuffix, jal_stem+jal_hexsuffix])
+        env.Clean(jal_asm, [jal_stem + jal_codsuffix, jal_stem + jal_hexsuffix])
 
     return result
+
 
 def generate(env):
     """Add Builders and construction variables to the Environment."""
 
-    env['JAL'] = _detect(env)
+    env["JAL"] = _detect(env)
     env.SetDefault(
         # Additional command-line flags
-        JAL_FLAGS = SCons.Util.CLVar('-quiet'),
-
+        JAL_FLAGS=SCons.Util.CLVar("-quiet"),
         # Suffixes/prefixes
-        JAL_SUFFIX = '.jal',
-        JAL_ASMSUFFIX = '.asm',
-        JAL_CODSUFFIX = '.cod',
-        JAL_HEXSUFFIX = '.hex',
-
+        JAL_SUFFIX=".jal",
+        JAL_ASMSUFFIX=".asm",
+        JAL_CODSUFFIX=".cod",
+        JAL_HEXSUFFIX=".hex",
         # JAL commands
-        JAL_COM = '$JAL $JAL_FLAGS $SOURCES',
-        JAL_COMSTR = '',
-        JAL_ASMCOM = '$JAL $JAL_FLAGS -no-codfile -no-hex -asm $TARGET $SOURCE',
-        JAL_ASMCOMSTR = '',
-        JAL_CODCOM = '$JAL $JAL_FLAGS -no-asm -no-hex -codfile $TARGET $SOURCE',
-        JAL_CODCOMSTR = '',
-        JAL_HEXCOM = '$JAL $JAL_FLAGS -no-asm -no-codfile -hex $TARGET $SOURCE',
-        JAL_HEXCOMSTR = ''
-        )
+        JAL_COM="$JAL $JAL_FLAGS $SOURCES",
+        JAL_COMSTR="",
+        JAL_ASMCOM="$JAL $JAL_FLAGS -no-codfile -no-hex -asm $TARGET $SOURCE",
+        JAL_ASMCOMSTR="",
+        JAL_CODCOM="$JAL $JAL_FLAGS -no-asm -no-hex -codfile $TARGET $SOURCE",
+        JAL_CODCOMSTR="",
+        JAL_HEXCOM="$JAL $JAL_FLAGS -no-asm -no-codfile -hex $TARGET $SOURCE",
+        JAL_HEXCOMSTR="",
+    )
 
     try:
         env.AddMethod(Jal, "Jal")
     except AttributeError:
         # Looks like we use a pre-0.98 version of SCons...
         from SCons.Script.SConscript import SConsEnvironment
+
         SConsEnvironment.Jal = Jal
 
-    env['BUILDERS']['JalAsm'] = _jal_asm_builder
-    env['BUILDERS']['JalCod'] = _jal_cod_builder
-    env['BUILDERS']['JalHex'] = _jal_hex_builder
+    env["BUILDERS"]["JalAsm"] = _jal_asm_builder
+    env["BUILDERS"]["JalCod"] = _jal_cod_builder
+    env["BUILDERS"]["JalHex"] = _jal_hex_builder
+
 
 def exists(env):
     return _detect(env)
-
 ```
 We added specialized builders for creating ASM, COD and HEX files (`_jal_*_builder`), together with the required variables for the new command lines and flags. This time not as pseudo-Builders, because we don't have to take any side effects into account. Only a single file type gets generated when calling one of the Builders `JalAsm`, `JalCod` and `JalHex`. 
 
