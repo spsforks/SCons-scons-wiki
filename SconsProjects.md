@@ -19,7 +19,6 @@ Active open source projects which use SCons as their build system:
 * [Madagascar](http://www.ahay.org/) - geophysical data processing and reproducible numerical experiments ([SConstruct](http://sourceforge.net/p/rsf/code/HEAD/tree/trunk/SConstruct)). Uses SCons not only for compiling software but also for managing data processing flows. See [Reproducible computational experiments using SCons](http://www.ahay.org/wiki/Reproducible_computational_experiments_using_SCons) and their [SCons page](http://www.ahay.org/wiki/SCons).
 * [Mapnik](http://www.mapnik.org/) - free toolkit for developing geospatial mapping applications ([SConstruct](https://github.com/mapnik/mapnik/blob/master/SConstruct))
 * [Mars: Land of No Mercy](http://mars.sourceforge.net/) Open source isometric turn-based strategy game. See [SConstruct](http://svn.sourceforge.net/viewcvs.cgi/mars/mars/trunk/SConstruct?view=markup) 
-* [Mixxx](http://mixxx.org) - Free MP3 DJ Mixing Software 
 * [MongoDB](http://mongodb.org) (Document Database) MongoDB (from "humongous") is a scalable, high-performance, open source, document-oriented database. See [SConstruct](http://github.com/mongodb/mongo/blob/master/SConstruct) 
 * [Netsukuku](http://netsukuku.freaknet.org/) (Netsukuku daemon) See [SConstruct](http://hinezumilabs.org/cgi-bin/viewcvs.cgi/netsukuku/src/SConstruct). 
 * [Nonpareil](http://nonpareil.brouhaha.com) (Microcode-level HP calculator simulator) See [SConstruct](http://svn.brouhaha.com/viewcvs/nonpareil/trunk/SConstruct) and the SConscript files in subdirectories 
