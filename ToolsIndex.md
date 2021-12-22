@@ -68,6 +68,7 @@ pkg-config | Git  | <https://github.com/manuelnaranjo/scons-pkg-config>  | `git 
 [Protocol Buffers](ProtocBuilder)  | Mercurial  | <https://bitbucket.org/russel/scons_protobuf>  | `hg clone https://bitbucket.org/russel/scons_protobuf protoc`
 [Qt4](Qt4Tool)  | Git  | <https://github.com/dirkbaechle/scons_qt4>  | `git clone git@github.com:dirkbaechle/scons_qt4.git qt4`
 [Qt5](Qt5Tool)  | Git  | <https://github.com/dirkbaechle/scons_qt5>  | `git clone git@github.com:dirkbaechle/scons_qt5.git qt5`
+[Qt6](Qt6Tool)  | Git  | <https://github.com/cwiede/scons_qt6>       | `git clone git@github.com:cwiede/scons_qt6.git qt6`
 [reST (docutils)](ReStructuredTextBuilder)  | Mercurial  | <https://bitbucket.org/dirkbaechle/scons_rest>  | `hg clone https://bitbucket.org/dirkbaechle/scons_rest rest`
 [RightNow](RightNow)  | Bazaar  | <https://code.launchpad.net/~asomers/sconsaddons/rightnow>  | `bzr branch lp:~asomers/sconsaddons/rightnow`
 SIP  | Mercurial  | <https://bitbucket.org/dirkbaechle/scons_sip>  | `hg clone https://bitbucket.org/dirkbaechle/scons_sip sip`
