@@ -14,8 +14,12 @@ Details of various speedups:
 * `CPPPATH`: normally you tell Scons about include directories by setting the `CPPPATH` construction variable, which causes SCons to search those directories when doing implicit dependency scans and also includes those directories in the compile command line. If you have header files that never or rarely change (e.g. system headers, or C run-time headers), then you can exclude them from `CPPPATH` and include them in the `CCFLAGS` construction variable instead, which causes SCons to not consider those directories when scanning for implicit dependencies (if put in `CCFLAGS`, you need to use the whole include syntax, for example `-Iincdir` rather than just the directory name). Carefully tuning the include directories in this way can usually result in a dramatic speed increase with very little loss of accuracy. 
 * <s>Avoid RCS and SCCS scans by using `env.SourceCode(".", None)` - this is especially interesting if you are using lots of c or c++ headers in your program and that your file system is remote (nfs, samba).</s> **Note: _this option has been removed from SCons_**
 * When using `VariantdDir`, use it with "duplicate" set to 0: `VariantDir(variant_dir, src_dir, duplicate=0)`. This will cause scons to invoke Builders using the path names of source files in `src_dir` and the path names of derived files within `variant_dir`. However, this may cause build problems if source files are generated during the build, IF any invoked tools are hard-coded to put derived files in the same directory as the source files. 
-* On a multi-processor / multi-code machine it may be beneficial to run multiple jobs at once - use the `--jobs N` option (where N is the number of processors on your machine), or `SetOption)('num_jobs', N)` inside your SConstruct or SConscript.  On Windows machines, the number of processors is available in the environment variable `NUMBER_OF_PROCESSORS`. It is worth experimenting with the value - for some builds it works well to have more (perhaps even many more) jobs than processors, in others it is better to have fewer.  The jobs number only helps when you're actually building, it doesn't impact much if few or no files are being rebuilt.
-* If you have more than a few dozen preprocessor defines (`-DFOO1 -DFOO2`) you may find from using `--profile` that SCons is spending a lot of time in the `subst()` method, usually just adding the -D string to the defines over and over again. This can really slow down builds where nothing has changed. As an example: with 100+ defines I saw a do-nothing build time drop from 35s to 20s using the idea described in "Caching the CPPDEFINES" elsewhere on this page. 
+* On a multi-processor / multi-core machine it may be beneficial to run multiple jobs at once - use the `--jobs N` option (where N is the number of processors on your machine), or `SetOption)('num_jobs', N)` inside your SConstruct or SConscript.  On Windows machines, the number of processors is available in the environment variable `NUMBER_OF_PROCESSORS`. It is worth experimenting with the value - for some build types it works well to have more (perhaps even many more) jobs than processors, in others it is better to have fewer.  The jobs number only helps when you're actually building, it doesn't impact much if few or no files are being rebuilt.
+* If you have more than a few dozen preprocessor defines (`-DFOO1 -DFOO2`) you may find from using `--profile` that SCons is spending a lot of time in the `subst()` method, usually just adding the `-D` string to the defines over and over again. This can really slow down builds where nothing has changed. As an example: with 100+ defines I saw a do-nothing build time drop from 35s to 20s using the idea described in "Caching the CPPDEFINES" elsewhere on this page. 
+* Limit tools initialized:  SCons always initializes the tool list for the default environment - the one used when you call builders as a global function rather than as a method (e.g. `Program` instead of `env.Program`).  If you don't ever call builders except as construction environment methods, this is just wasted initialization time that can be skipped.  The impact is noticable when you call lots of small builds, like running a testsuite (especially SCons' own testsuite!); it won't have much impact on a single large build. To do this just force initialization of the default environment yourself, with an empty tool list:
+  ```python 
+  SCons.Defaults.DefaultEnvironment(tools=[]) 
+  ```
 
 Another trick to making things faster is to avoid relinking programs when a shared library has been modified but not rebuilt. See [SharedLibrarySignatureOverride](SharedLibrarySignatureOverride) 
 
@@ -23,11 +27,6 @@ Another trick to making things faster is to avoid relinking programs when a shar
 
 The following was suggested by [leanid nazdrynau in scons-users, May 2006](http://scons.tigris.org/servlets/ReadMsg?list=users&msgNo=7713):
 
-```python 
-# Next line is important, it deactivates tools search for default variable.
-# just note that now in SConscript you have to use env.Program(...) instead of simply Program().
-SCons.Defaults.DefaultEnvironment(tools=[]) 
-```
 
 ## Note on the `CPPPATH` trick
 
