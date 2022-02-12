@@ -19,7 +19,7 @@ In SCons 2.1 and later, the following paths are tried in order to detect SCons s
 
 | OS (Platform)    | Paths         |
 |-----------------:|:--------------|
-| Windows<br> (win32/cygwin)      | `$ALLUSERSPROFILE\Application Data\scons`<br> `$USERPROFILE\Local Settings\Applicatio Data\scons`<br> `$APPDATA\scons`<br> `~\.scons` |
+| Windows<br> (win32/cygwin)      | `$ALLUSERSPROFILE\scons`<br> `$USERPROFILE\Local Settings\Applicatio Data\scons`<br> `$APPDATA\scons`<br> `~\.scons` |
 | MacOS X (darwin) | `/Library/Application Support/SCons`<br> `/opt/local/share/scons`<br> `/sw/share/scons`<br> `~/Library/Application Support/SCons`<br> `~/.scons` |
 | Solaris (sunos)  | `/opt/sfw/scons`<br> `/usr/share/scons`<br> `~/.scons` |
 | Linux/HPUX/... (other) | `/usr/share/scons`<br> `~/.scons` |
