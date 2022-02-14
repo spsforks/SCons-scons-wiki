@@ -146,7 +146,7 @@ import subprocess, os
 import SCons.Errors, SCons.Warnings, SCons.Util
 
 # enables Scons warning for this builder
-class UnpackWarning(SCons.Warnings.Warning):
+class UnpackWarning(SCons.Warnings.SConsWarning):
     pass
 
 SCons.Warnings.enableWarningClass(UnpackWarning)
@@ -202,12 +202,15 @@ def __fileextractor_win_7zip(env, count, no, i):
 # @param env environment object
 # @return extractor entry or None on non existing
 def __getExtractor(source, env):
-    # we check each unpacker and get the correct list command first, run the command and
-    # replace the target filelist with the list values, we sorte the extractors by their priority
-    for unpackername, extractor in sorted(
-        env["UNPACK"]["EXTRACTOR"].items(), key=lambda (k, v): (v["PRIORITY"], k)
-    ):
+    # we check each unpacker and get the correct list command first,
+    # run the command and replace the target filelist with the list values,
+    # we sort the extractors by their priority
+    def prio(item):
+        k, v = item
+        return v["PRIORITY"], k
 
+    unpackers = sorted(env["UNPACK"]["EXTRACTOR"].items(), key=prio)
+    for unpackername, extractor in unpackers:
         if not SCons.Util.is_String(extractor["RUN"]):
             raise SCons.Errors.StopError(
                 "list command of the unpack builder for [%s] archives is not a string"
@@ -218,7 +221,6 @@ def __getExtractor(source, env):
                 "run command of the unpack builder for [%s] archives is not set - can not extract files"
                 % (unpackername)
             )
-
         if not SCons.Util.is_String(extractor["LISTFLAGS"]):
             raise SCons.Errors.StopError(
                 "list flags of the unpack builder for [%s] archives is not a string"
@@ -229,7 +231,6 @@ def __getExtractor(source, env):
                 "list command of the unpack builder for [%s] archives is not a string"
                 % (unpackername)
             )
-
         if not SCons.Util.is_String(extractor["EXTRACTFLAGS"]):
             raise SCons.Errors.StopError(
                 "extract flags of the unpack builder for [%s] archives is not a string"
@@ -288,8 +289,7 @@ def __action(target, source, env):
     if env["UNPACK"]["VIWEXTRACTOUTPUT"]:
         handle = subprocess.Popen(cmd, shell=True)
     else:
-        devnull = open(os.devnull, "wb")
-        handle = subprocess.Popen(cmd, shell=True, stdout=devnull)
+        handle = subprocess.Popen(cmd, shell=True, stdout=subprocess.DEVNULL)
 
     if handle.wait() != 0:
         raise SCons.Errors.BuildError(
@@ -331,10 +331,12 @@ def __emitter(target, source, env):
     if not source[0].exists():
         raise SCons.Errors.StopError("source file [%s] must be exist" % (source[0]))
 
-    # create the list command and run it in a subprocess and pipes the output to a variable,
-    # we need the shell for reading data from the stdout
+    # create the list command and run it in a subprocess and pipe the output
+    # to a variable. we need the shell for reading data from the stdout.
+    # we need text (called as universal_newlines for maximum version compat)
+    # else we get bytes and the filter below tosses all the data as not-string!
     cmd = env.subst(extractor["LISTCMD"], source=source, target=target)
-    handle = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
+    handle = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, universal_newlines=True)
     target = handle.stdout.readlines()
     handle.communicate()
     if handle.returncode != 0:
@@ -363,7 +365,7 @@ def __emitter(target, source, env):
     # the line removes duplicated names - we need this line, otherwise a cyclic
     # dependency error will occur, because the list process can create
     # redundant data (an archive file can not store redundant content in a filepath)
-    target = [i.strip() for i in list(set(target))]
+    target = [i.strip() for i in set(target)]
     if not target:
         SCons.Warnings.warn(
             UnpackWarning,
@@ -575,6 +577,7 @@ def generate(env):
 # @return true
 def exists(env):
     return 1
+
 ```
 The builder need an own warning, so a class is created and the warning is enabled. After that for each toolset the "splitting functions" are defined, that can understand the output of the tool, the function gets four parameter (environment, number of returning output lines, current line number, line content). One of these functions is called on each returning output line and the function must return the directory- or filename (on None the line is ignored). The `__getExtractor` function returns the parameter of an extractor command. All toolkits are stored in a Python dict, so this function returns one item of this dict and checks the parameter. This list uses a priority, which sets an order to the items, because file suffixes like tar.gz can be used by Tar and by GZip. The order defines that tar.gz is used by Tar first, because Tar can handle these files and pipe the data to GZip. GZip can extract only the gz-part, but we need two runs over the archive in this case to get the archive content (one for gz and next for tar).  The `__action` function is the builder call, which runs the extract command, but here an own subprocess is used, because the output of the tool should suppress and the shell option must be enabled, because some toolkits need a shell. 
 
@@ -609,12 +612,12 @@ def LUA_DownloadURL():
     html = f.read()
     f.close()
 
-    found = re.search("<a href=\"ftp/lua-(.*)\.tar\.gz\">", html, re.IGNORECASE)
+    found = re.search('<a href="ftp/lua-(.*)\.tar\.gz">', html, re.IGNORECASE)
     if found == None:
         raise SCons.Errors.StopError("LUA Download URL not found")
 
-    downloadurl = found.group(0).replace("\"", "").replace("<", "").replace(">", "")
-    downloadurl = re.sub(r'(?i)a href=', "", downloadurl)
+    downloadurl = found.group(0).replace('"', "").replace("<", "").replace(">", "")
+    downloadurl = re.sub(r"(?i)a href=", "", downloadurl)
 
     return "https://www.lua.org/" + downloadurl
 
@@ -695,4 +698,4 @@ For each library a "download URL" function is used, which extracts with regular 
 
 In my build processes I use a target / alias `library` which downloads, extracts and compiles all libraries that are needed by the project. The compiled libraries and their headers are stored in a subdirectory of the project `library/<name of the library>/<version of the library>`. With this process the update to a new library version is very easy, because it is full automated. For large libraries eg [Qt](https://qt-project.org/) or [Boost](https://www.boost.org) this automation is very helpfull. The Boost installation process uses by default the bJam / b2 compiler, which can be build by a bootstrap process, so for my Boost building process I call `env.Command` after the unpack call, so the bJam / b2 is build first and after that, the command runs the build process of the library. For other libraries (eg [LaPack](https://www.netlib.org/lapack/) or [HDF](https://www.hdfgroup.org/HDF5/)) I call [CMake](https://www.cmake.org/) from the command call, so SCons wraps only the library default build process. During the linking process of my project the SConstruct scripts scans the library installation directory and gets always the library with the latest / newest version (see [Distutils Version](https://docs.python.org/3/distutils/apiref.html#module-distutils.version)), so the project upgrade to a new library version is very fast. 
 
-The source code of both builder can be downloaded here: [Unpack-Builder](https://github.com/flashpixx/Storage/blob/master/Scons/site_scons/site_tools/Unpack.py) / [Download-Builder](https://github.com/flashpixx/Storage/blob/master/Scons/site_scons/site_tools/URLDownload.py) **NOTE: stale links**
+The source code of both builders can be downloaded here: [Unpack-Builder](https://github.com/flashpixx/Storage/blob/master/Scons/site_scons/site_tools/Unpack.py) / [Download-Builder](https://github.com/flashpixx/Storage/blob/master/Scons/site_scons/site_tools/URLDownload.py) **NOTE: stale links**
