@@ -1,14 +1,13 @@
-_Note: this page has undergone some conversion since publication, to reflect that Python 3 is current, since this is a topic that continues to come up with projects using SCons and including "external" libraries.  In its current form it is untested - please let us know and/or supply corrections if issues are discovered._
+Note: this page has undergone some conversion since publication. The builders have been converted to Python 3, to match current SCons: since 4.0, SCons only runs on Python 3. Lightly tested.
 
-# Download- & Unpack-Builder
+# URLDownload and Unpack Builders
 
 The idea for these builders is created by the requirement that a project uses different libraries and some libraries must be installed with different compiler- and linker options. The libraries must be also updated during the project lifetime. The task of the builders should be: 
 
 1. download a source code release of a library (e.g. tar.gz / tar.bz2) 
-1. unpack this file 
-1. build the source code with SCons to a shared / static library 
-1. install the header files and library
-
+2. unpack this file 
+3. build the source code with SCons to a shared / static library 
+4. install the header files and library
 
 ![process diagram](DownloadUnpack/process.png)
 
@@ -16,9 +15,9 @@ The idea for these builders is created by the requirement that a project uses di
 The picture shows the build process of a shared library, so the latest version of a library should be read from the project webpage, the download URL should be pushed to the builder that gets the file, this file is pushed to a builder, which extracts the file and pushes the file content, which is needed by the shared library builder, to SCons `SharedLibrary()` call, which finally builds the library. The update process is worked in an equal way, because only the URL changes.  
 
 
-## Download Builder
+## URLDownload Builder
 
-The Download-Builder should only download a file from a URL input. Python supports the [`urllib` package](https://docs.python.org/3/library/urllib.html). The filename of the downloaded file can be created by the users target name or should be created by the server, that sends the file. This information can be handle by Python's [`urllib.parse` module](https://docs.python.org/3/library/urllib.parse.html#module-urllib.parse).
+The URLDownload Builder should only download a file from a URL input. Python supports the [`urllib` module](https://docs.python.org/3/library/urllib.html). The filename of the downloaded file can given by the user as the target name, or else will be inferred from the information sent back by the download process. This information can be handle by Python's [`urllib.parse` module](https://docs.python.org/3/library/urllib.parse.html#module-urllib.parse).
 
 
 ```python
@@ -133,12 +132,13 @@ The builder can be used with (the URL can be any URL type which is supported by 
 
 
 ```python
+env = Environment(tools=["URLDownload"])
 env.URLDownload( "<filename>", "<download url>" )
 ```
 
 ## Unpack Builder
 
-The next step is an Unpack-Builder, that can unpack a tar.gz or tar.bz2 file. Unix derivatives uses GZip, BZip2 and Tar for extracting these filetypes, which are often part of the distribution. On MS Windows [7-Zip](https://www.7-zip.org/) can handle these files, so the builder uses depend on the system the correct toolset. Each tool can return another format of the archive file & directory list, so the builder must understand the format for create the correct target list, in this case the builder supports a callable Python structure that splits the text output of the tool into a target file list. Because of this circumstances the call of the extracting tool must catch the output. The emitter of the builder should create a file list with individual split of the output and the builder should run the extract command. 
+The next step is an Unpack-Builder, that can unpack a tar.gz or tar.bz2 file. Unix derivatives uses GZip, BZip2 and Tar for extracting these filetypes, which are often part of the distribution. On MS Windows [7-Zip](https://www.7-zip.org/) can handle these files, so the builder uses depend on the system the correct toolset. Each tool can return another format of the archive file & directory list, so the builder must understand the format for create the correct target list, in this case the builder supports a callable Python structure that splits the text output of the tool into a target file list. Because of this circumstances the call of the extracting tool must catch the output. The emitter of the builder should create a file list with individual split of the output and the builder should run the extract command.  TODO: could convert these to use Python's stdlib `tarfile` and `zipfile` modules to avoid having to fiddle with external commands.
 
 
 ```python
@@ -588,6 +588,8 @@ The `generate` function initializes the builder depend on the environment.
 The builder can be used with 
 
 ```python
+env = Environment(tools=["Unpack"])
+
 # use without injection
 env.Unpack( "<target-name>", "<archive file>" )
 
