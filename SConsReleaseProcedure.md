@@ -1,6 +1,6 @@
 # Current SCons Release Procedure
 
-The procedure has been used for all releases since 4.0.0. 
+The procedure has been used for all releases since 4.3.0. 
 
 ## Tag Release in Git
 
@@ -26,7 +26,7 @@ python bin/docs-create-example-outputs.py
 - [ ] Check if there's anything specific to this version in `doc/man/scons.xml` that should be updated.. For example, support for a particular Python version may be deprecated or dropped in this SCons release. In particular, look for the sequence **`requires Python`**. It's worth rerunning the `docs-validate.py` script if a change was made here.
 - [ ] Commit the auto-generated doc changes to current branch ("Regenerated docs for X.Y.Z release.") 
 - [ ] Update CHANGES.txt (should already be up to date) 
-- [ ] Update RELEASE.txt: this gets its content *replaced* for each release.  New functionality, deprecated functionality, changed functionality, and fixes.  Get this from CHANGES.txt.  Add new contributors to list at end. 
+- [ ] Update RELEASE.txt (should already be up to date) 
 - [ ] Edit `debian/changelog`. Be careful of formatting here, it gets machine-parsed. 
 - [ ] Commit 
 - [ ] Update `default_version` in SConstruct
@@ -108,5 +108,6 @@ twine upload  build/dist/SCons-*.tar.gz build/dist/SCons*.whl
 ## After Release
 
 - [ ] On GitHub create a pull request from the branch. GitHub will give you a URL when you push and create the branch which will take you to a page to do just this.
-- [ ] On default branch, run `python bin/update-release-info.py post` to go back to develop mode. 
+- [ ] On Github create a release with RELEASE.txt using [Github New Release Page](https://github.com/SCons/scons/releases/new)
+- [ ] On master branch, run `python bin/update-release-info.py post` to go back to develop mode. 
 - [ ] Commit those changes after review 
