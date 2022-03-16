@@ -9,8 +9,7 @@ import SCons.Node.Python
 class EnvValue(SCons.Node.Python.Value):
     """Node class which substitutes variables from the environment"""
     def __init__(self,env,value):
-        """Initialiser takes an Environment and a string to be
-expanded."""
+        """Initialiser takes an Environment and a string to be expanded."""
         SCons.Node.Python.Value.__init__(self,value)
         self.env=env
     def __str__(self):
