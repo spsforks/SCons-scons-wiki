@@ -48,7 +48,7 @@ What can be seen are a number of small cycles involving only three or four objec
 
 The big cycles are connected by a hierarchy of interconnected _frame_ objects. After some digging through the SCons source code I found a number of spots where stack-frames are extracted to deal with exceptions or get access to variables stored in the frame of one of the calling functions. The culprit is a local reference to the own stack-frame which creates a cycle: The local variables are stored in the frame. If the frame is referred by one of the variables a cycle has been created. 
 
-Once the problem was found, it was quite easy to fix. As information is searched in one of the prior frames, one can start with the parent frame to prevent the cycle creation. The attached patch solves this problem: [leak_frame.patch](leak_frame.patch) 
+Once the problem was found, it was quite easy to fix. As information is searched in one of the prior frames, one can start with the parent frame to prevent the cycle creation. The attached patch solves this problem: [leak_frame.patch](/WikiUsers/LudwigHaehne/ReferenceCycles/leak_frame.patch)
 
 Another clean build with the patched version reveals the effect: 
 
