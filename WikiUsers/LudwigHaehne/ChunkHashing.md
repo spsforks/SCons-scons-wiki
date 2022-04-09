@@ -32,7 +32,7 @@ env.Command('test.stat', 'test.big', Action(get_stat))
 [Valgrind/Massif](http://valgrind.org/docs/manual/ms-manual.html) used to output informative post-script graphs which were superseded by plain-text output in version 3.3. To make sense of the output, `ms_print` or [msplot](http://www.aaltjegron.nl/msplot/) can be used. Here is an example illustrating `ms_print` for the purpose of extracting memory usage over time. 
 
 
-```txt
+```console
 $ valgrind --tool=massif --max-snapshots=30 scons
 ==15263== Massif, a heap profiler.
 ==15263== Copyright (C) 2003-2007, and GNU GPL'd, by Nicholas Nethercote
@@ -80,7 +80,7 @@ import SCons.Heapmonitor
 SCons.Heapmonitor.start_periodic_snapshots(interval=0.5)
 ```
 
-```txt
+```console
 $ scons -Q --debug=memory
 dd if=/dev/zero of=test.big seek=900 bs=1M count=0 2>/dev/null
 Snapshot Label                     Virtual Total ( Measurable)   Tracked Total
@@ -107,7 +107,7 @@ The idea is to not use `get_contents` of Node.FS.File for signature generation o
 Here is the result of the test above with the patch applied: 
 
 
-```txt
+```console
 $ scons -Q --debug=memory
 dd if=/dev/zero of=test.big seek=900 bs=1M count=0 2>/dev/null
 Snapshot Label                     Virtual Total ( Measurable)   Tracked Total
@@ -135,9 +135,9 @@ A prototype implementation of content caching did not lead to a measurable speed
 
 
 ## Benchmark
-[[!table header="no" class="mointable" data="""
-                            |  Bigfile-Test Case  |  Ardour       |  Synthetic Project 
+
+ patch                      |  Bigfile-Test Case  |  Ardour       |  Synthetic Project 
+ :------------------------- | :-----------------  |  :----------  |  :----------------
  Unpatched                  |  6.0s               |  44.1s        |  8.3s              
  Generator Patch            |  5.0s               |  44.2s        |  8.3s              
  Backward-compatible Patch  |  5.0s               |  44.1s        |  8.3s              
-"""]]
