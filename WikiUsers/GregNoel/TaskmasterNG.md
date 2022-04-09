@@ -4,7 +4,16 @@
 
 This is a mix of how it works now, how it should work, and how I'd rewrite it. It's a very preliminary draft; consider it about an 0.1 version. 
 
-[[!toc ]] 
+## Contents
+
+* [General](#general)
+* [Schedule Executors not Nodes](#schedule-executors-not-nodes)
+* [Transverse Graph](#transverse-graph)
+* [Extensions to Functionality](#extensions-to-functionality)
+* [Backward Incompatibilities](#backward-incompatibilities)
+* [Jobs](#jobs)
+* [Tasks](#tasks)
+* [Scheduling Pipeline](#scheduling-pipeline)
 
 To add: 
 
@@ -76,7 +85,7 @@ Four things will need to be implemented:
    * The logic to delete an intermediate target when the need for it is done. 
 Using an explicit pipeline, it is much more straightforward to add the secondary and intermediate target flavors.  A stage is inserted just before the build stage to check for missing sources.  If there are any, the build stage of the missing source is scheduled (which may cause its missing targets to be scheduled), then wait for all the targets to be completed. 
 
-[[!bug 583]]. 
+[issue #583](/scons/scons/issues/583)
 
 
 ### Adding Nodes at build time
@@ -148,8 +157,10 @@ For each mode, there are a number of decisions made by the Taskmaster that may b
       * _special_ Python function run internally 
 * **outofdate** evaluate build for out-of-date 
 * **print** print command before executing 
-* **???** other functions not yet identified [[!table header="no" class="mointable" data="""
+* **???** other functions not yet identified
+
  **function**  |  **build**  |  **clean**  |  **query**  |  **dryrun**  |  **config**  |  **touch**  |  **mode** 
+ ------------- | ----------- | ----------- | ----------- | ------------ | ------------ | ----------- | ---------
  treewalk  |  no  |  yes  |  yes  |  yes  |  no  |  yes  |  mode 
  job  |  parallel  |  special  |  special  |  special  |  serial  |  special  |  mode 
  parallel  |  yes  |  no  |  no  |  no  |  no  |  no  |  mode 
@@ -157,7 +168,6 @@ For each mode, there are a number of decisions made by the Taskmaster that may b
  print  |  yes  |  special  |  no  |  yes  |  no  |  yes  |  mode 
  fn  |  build  |  clean  |  query  |  dryrun  |  config  |  touch  |  mode 
  fn  |  build  |  clean  |  query  |  dryrun  |  config  |  touch  |  mode 
-"""]]
 
 
 ## Scheduling Pipeline
