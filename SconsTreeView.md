@@ -79,7 +79,7 @@ app.MainLoop()
 
 ---
 
- I like this script, but in newer version of wxpython the names of some classes/modules have changed. I have attached a patched version of this script  [SconsTreeView-wx2.8.8.0.py](SconsTreeView-wx2.8.8.0.py) . (John Femiani) 
+ I like this script, but in newer version of wxpython the names of some classes/modules have changed. I have attached a patched version of this script  [SconsTreeView-wx2.8.8.0.py](/SconsTreeView/SconsTreeView-wx2.8.8.0.py) . (John Femiani) 
 
 
 
