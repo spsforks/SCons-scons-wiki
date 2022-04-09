@@ -21,7 +21,7 @@ SCons creates a lot of instances of various classes when conducting large softwa
 
 Choosing a class for assigning slots can be eased by evaluating which type of instances take up most of the memory. The following chart was generated with the `HtmlStats` facility of the Heapmonitor while making an up-to-check of Ardour. 
 
-[[!img timespace.png] 
+[[/WikiUsers/LudwigHaehne/SlotClasses/timespace.png]]
 
 
 ### Executor
@@ -46,7 +46,8 @@ The Executor objects are interesting due to the large number of instances in mem
  Slot class size (total)    |  897.14 KB (3.08%)    |  1.71 MB (6%) 
 """]]
 
-[slot_executor.patch](slot_executor.patch) 
+[slot_executor.patch](/WikiUsers/LudwigHaehne/SlotClasses/slot_executor.patch)
+
 
 
 ### Node objects
@@ -58,8 +59,7 @@ Depending on the project, Node objects take between 60-90% of the memory observa
 
 An `Attrs` instance is stored in each Node object. It serves as a dictionary to store additional information - presumably by Tools. Turning this into a slotted class is easy but only allows a very minor memory reduction. Moreover, `Attrs` should still be used as a general purpose dictionary so I attached a `__dict__` slot.  
 
-[slot_attrs.patch](slot_attrs.patch) 
-
+[slot_attrs.patch](/WikiUsers/LudwigHaehne/SlotClasses/slot_attrs.patch)
 
 ### NodeInfo, BuildInfo and SConsign
 
@@ -77,7 +77,7 @@ Every Node object has a `BuildInfo` and `NodeInfo` structure attached to it. Thi
  Slot class size (average)  |  7.26 KB             |  5.46 KB        |  6.68 KB      
 """]]
 
-[slot_sconsign.patch](slot_sconsign.patch) 
+[slot_sconsign.patch](/WikiUsers/LudwigHaehne/SlotClasses/slot_sconsign.patch)
 
 
 ## Results
