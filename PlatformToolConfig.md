@@ -432,8 +432,12 @@ The _command variable_ is the environment variable that specifies the command on
    * Ranlib: RANLIB (ranlib) 
    * Sed: SED (sed, may not be needed) 
    * TeX: ??? (TeX, LaTeX, ...) 
-   * TODO: ProgMkdirP (pave path, probably not needed), ProgLnS (symlink, probably not needed) [[!table header="no" class="mointable" data="""
-For comparison, this table shows command variables and the existing SCons Tools that set them up:||
+   * TODO: ProgMkdirP (pave path, probably not needed), ProgLnS (symlink, probably not needed)
+
+For comparison, this table shows command variables and the existing SCons Tools that set them up:
+
+Var | Tools
+--- | -----
 AS | 386asm as gas masm nasm
 CC | aixcc bcc32 cc gcc hpcc icc icl intelc* mingw* msvc* mwcc* sgicc suncc
 CXX | aixc++ c++ g++ hpc++ sgic++ sunc++
@@ -452,7 +456,6 @@ GUI | qt
 FFI | swig
 package | tar zip
 ??? | midl msvs rmic rpcgen
-"""]]
 
 The configured platform and set of tools is passed to an Environment when it is instantiated.  The values set up by the platform and tools are copied (??? maybe there's a more efficient scheme ???) into the Environment instance, and off we go. 
 
