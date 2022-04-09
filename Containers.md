@@ -63,3 +63,6 @@ I see two possible solutions:
 There are advantages and disadvantages to both methods.  Most people know what subclassing is, so they'll be very familiar with it.  The problem is naming conflicts; without very careful adherence to naming conventions, at some point we're going to make a mistake that no-one is going to be happy with.  Delegation is cleaner in this respect.  The other big win for delegates is that since they are completely separate from the rest of SCons, they can be unit tested on their own.  This isn't possible with subclassing.
 
 The next question is how to define the delegates.  The simplest way is to define them within the SConstruct/SConscript files, but might be better to have a function that allows you to specify where a delegate is in relation to the SConstruct/SConscript file.  Again, this allows the delegate to be unit tested without involving the rest of the build system (this can be handy if you have a large build team, and don't want to break what others are doing, etc.)
+
+
+[Discussion](ContainersDiscussion)
