@@ -161,7 +161,6 @@ The first idea I came up with was to override getattr:
 
 
 ```python
-#!python 
 class LazyBuddy:
   lazyattr = {
     'a': 0,
@@ -206,7 +205,6 @@ To fix the problem with the above approach, a proxy object could be used that cr
 
 
 ```python
-#!python 
 class LazyAttr(object):
 
     __slots__ = ('obj', 'attr', 'cls')
@@ -260,12 +258,12 @@ class Node:
 ```
 
 ## Quantify (and revert) the fix
-[[!table header="no" class="mointable" data="""
+
                                  |  Original  |  Conservative patch  |  Smart patch 
+ ---                             | ---        | ---                  | ---
  after reading SConscript files  |  32.82 MB  |  31.78 MB  |  31.52 MB 
  after building targets          |  60.26 MB  |  59.29 MB  |  59.22 MB 
  Total build time                |  43.83 s   |  43.76 s   |  74.84 s 
-"""]]
 
 The amount of memory saved is about 1MB or 1-2%, depending on the nature of the project. The "smart" patch seems to be nice and elegant, but really hits performance. Furthermore, it is hard to get it really right with all the magic methods involved. 
 
