@@ -8,7 +8,7 @@ Status | Draft
 Post History| http://scons.tigris.org/ds/viewMessage.do?dsMessageId=2366897&dsForumId=1272
 Tracking issue | [#2536](/scons/issues/2536)
 
-Please use the [[/Discussion | "Discussion" page]] for discussions about how this SEP should evolve.
+Please use the ["Discussion" page](ContainersDiscussion) for discussions about how this SEP should evolve.
 
 After discussing this privately with Greg Noel, I've realized that my original hierarchy of how to handle all kinds of aggregates was needlessly complicated.  Greg suggested that there be some kind of Blob class, with default semantics that can be easily overridden somehow.  The version of the page you see here is due directly to his influence.
 
