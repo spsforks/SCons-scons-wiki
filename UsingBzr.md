@@ -191,7 +191,7 @@ If you are coming from Subversion (or CVS), you may be a bit scared by the merge
 
 Because a picture is worth 1000 words (reputedly), here is a screenshot of part of the history of one branch of numscons -- a project by David Cournapeau: 
 
-[[!img Screenshot.png] 
+[[/UsingBzr/Screenshot.png]]
 
 Each color in the drawing of the branch history corresponds to another branch. As you can see, merging branches is a regular occurrence. The idea is that there are several local branches, each for one special feature being working on. Since numscons is using another project internally, SCons, David has a branch which keeps track of SCons changes; a branch which is the mainline, a branch for the current version he is working on (0.2 in this case), etc... Also, since he work at different places, he sometimes just copies branches on a USB disk to transfer a branch from one computer to the other. This should convince you that merge is a much more robust feature with Bazaar than it is generally with Subversion. 
 
