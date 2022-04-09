@@ -11,15 +11,15 @@ Note that this content is maintained elsewhere, so please don't change this page
 
 This page introduces the `InformationAboutPlatformAndTools` (`IAPAT`) class.  It is the focus of all of the discussion below.  The intent is that users will be naturally encouraged to use a new paradigm for their development:   
 ```python
-     iapat = InformationAboutPlatformAndTools()
-     ... modify iapat for their build
-     env = iapat.Environment()
+iapat = InformationAboutPlatformAndTools()
+... modify iapat for their build
+env = iapat.Environment()
 ```
 The existing `Environment()` function will be redefined in terms of a default `IAPAT`; that is, it's the rough equivalent of this code:   
 ```python
-     def Environment(*args, **kw):
-          iapat = DefaultInformationAboutPlatformAndTools()
-          return iapat.Environment(*args, **kw)
+def Environment(*args, **kw):
+    iapat = DefaultInformationAboutPlatformAndTools()
+    return iapat.Environment(*args, **kw)
 ```
 
 Information collected in the `IAPAT` is used to set up a derived `Environment`.  The `IAPAT` can be reused so that the same collected information can be used in more than one `Environment`.  Thus, to set up a configuration for the entire build, one only need initialize the default `IAPAT` suitably. 
@@ -47,17 +47,26 @@ For [cross-compilation](PlatformToolConfig), the intent is that everything Just 
 To enable [cross-compilation](PlatformToolConfig), all a user has to do is use the `IAPAT` paradigm.  The intent is that everything else Just Works. 
 
 Methods are provided to interrogate the GNU cpu-vendor-kernel-os information as well as the SCons platform ID:   
-`     if iapat['PLATFORM'] == 'darwin': iapat['FRAMEWORKS'] = 'Cocoa'`   
-`     if iapat['PLATFORM_CPU'] == 'sparc': iapat['CCFLAGS'] += '-mv8'` 
+```python
+if iapat['PLATFORM'] == 'darwin':
+    iapat['FRAMEWORKS'] = 'Cocoa'
+if iapat['PLATFORM_CPU'] == 'sparc':
+    iapat['CCFLAGS'] += '-mv8'
+```
 
 Based on the platform type, the `IAPAT` setup also determines the prefix and suffix for things like program names, library names, and the like.   
-`    prog_name = iapat['PROGPREFIX'] + 'prog' + iapat['PROGSUFFIX']`   
-`    if prog_name != 'prog': Alias('prog', progname)` 
+```python
+prog_name = iapat['PROGPREFIX'] + 'prog' + iapat['PROGSUFFIX']
+if prog_name != 'prog':
+    Alias('prog', progname)
+```
 
 The `IAPAT` also contains the shell environment that will be used by any commands run (both the configuration commands below and Environments derived from the `IAPAT`), so this is now the place to fiddle with those values:   
-`     iapat['ENV']['PATH'] += os.path.join(sys.environ['HOME'], 'bin')`   
-`     iapat.vars.ENV.PATH += '/usr/X11/bin' # maybe`   
-`     iapat['ENV']['JAVA_HOME'] = os.environ['JAVA_HOME']` 
+```python
+iapat['ENV']['PATH'] += os.path.join(sys.environ['HOME'], 'bin')
+iapat.vars.ENV.PATH += '/usr/X11/bin' # maybe
+iapat['ENV']['JAVA_HOME'] = os.environ['JAVA_HOME']
+```
 
 
 ### Per-invocation Overrides
@@ -65,68 +74,89 @@ The `IAPAT` also contains the shell environment that will be used by any command
 Simply put, [per-invocation overrides](PlatformToolConfig) are options and variables found on the command line.  The twist is that a build can save selected options in one or more files and use them as defaults later. 
 
 Restore the specified options and variables from save file:   
-`     opts = iapat.OptionFile('saved_args', '--opt', 'CCFLAGS', 'LIBS')`   
-`     opts.AddOptions('CC', 'CFLAGS')`   
-`     opts.AddOptions('CXX', 'CXXFLAGS')` 
+```python
+opts = iapat.OptionFile('saved_args', '--opt', 'CCFLAGS', 'LIBS')
+opts.AddOptions('CC', 'CFLAGS')
+opts.AddOptions('CXX', 'CXXFLAGS')
+```
 
 Allow `--type` and `--opt` on the command line:   
-`     iapat.EnumOption('type', 'Type of build', 'debug', 'production,build,profile')`   
-`     iapat.IntOption('opt', 'Set optimization level', 0, dest='optimize')` 
+```python
+iapat.EnumOption('type', 'Type of build', 'debug', 'production,build,profile')
+iapat.IntOption('opt', 'Set optimization level', 0, dest='optimize')
+```
 
 Allow `--enable-framework` and `--disable-framework` on the command line:   
-`     iapat.FeatureOption('framework', 'use of OS X frameworks', True)` 
+```python
+iapat.FeatureOption('framework', 'use of OS X frameworks', True)
+```
 
 Allow `--with-threads` and `--without-threads` on the command line:   
-`     iapat.PackageOption('threads', 'thread support', True, '/usr/share/threads')` 
+```python
+iapat.PackageOption('threads', 'thread support', True, '/usr/share/threads')
+```
 
 Allow `DESTDIR=PATH` on the command line:   
-`     iapat.PathVariable('DESTDIR', 'Staging location', 'stage')` 
+```python
+iapat.PathVariable('DESTDIR', 'Staging location', 'stage')
+```
 
 Allow `CCFLAGS=` on the command line as a SCons list-like variable:   
-`     iapat.CLVar('CCFLAGS', 'Common C/C++ options', '-pedantic')`   
-`     # add optimization level (from command-line --opt above)`   
-`     iapat['CCFLAGS'] += '-O%d' % GetOption('optimize')` 
+```python
+iapat.CLVar('CCFLAGS', 'Common C/C++ options', '-pedantic')
+# add optimization level (from command-line --opt above)
+iapat['CCFLAGS'] += '-O%d' % GetOption('optimize')
+```
 
 Set an arbitrary variable that will be copied to derived Environments:   
-`     iapat['FOO'] = 'bar'` 
+```python
+iapat['FOO'] = 'bar'
+```
 
 Example usage:   
-`     $ scons -opt=2 --type=profile --without-threads DESTDIR=/tmp/stage CCFLAGS='-Wall'` 
-
+```console
+$ scons -opt=2 --type=profile --without-threads DESTDIR=/tmp/stage CCFLAGS='-Wall'
+```
 
 ### Toolchains
 
 [Toolchains](PlatformToolConfig) are the way a user identifies the commands that are needed for the build. A _toolchain_ is one or more _tool_s that should be used together.  Any toolchains used in the build must be declared.  Toolchains may be specified abstractly (`'CC'` asks for an available C toolchain based on the platform defaults) or concretely (`'CC-intel'` specifies the Intel C compiler toolchain). 
 
 xxx work on these examples   
-`    iapat.Toolchain('CC', 'CXX')`   
-`    ftn = iapat.Toolchain.OneOf('F90', 'F95', 'F77', 'FC')`   
-`    my_tools = iapat.Toolchain.All('TeX', ftn)`   
-`    iapat.Toolchain.SetDefault(my_tools)` 
+```python
+iapat.Toolchain('CC', 'CXX')
+ftn = iapat.Toolchain.OneOf('F90', 'F95', 'F77', 'FC')
+my_tools = iapat.Toolchain.All('TeX', ftn)
+iapat.Toolchain.SetDefault(my_tools)
+```
 
 
 ### Per-platform Configuration
 
 [Per-platform configuration](PlatformToolConfig) allows features of the `IAPAT`'s platform to be probed.  Multiple header files can be created and they can be created for different language conventions.  Variables declared in a header are placed (with their values) in the header when it is generated:   
-`    hdr = iapat.Header('config.h')`   
-`    hdr.Comment('/* GENERATED FILE: do not edit */')`   
-`    hdr.Comment(disclaimer)`   
-`    hdr.Declare('PREFIX', 'Path prefix to installed location', '/usr/share')`   
-`    hdr.vars.PREFIX = GetOption(['prefix'])`   
-`    hdr.Declare('HAVE_LIBM', 'Can use functions in math library')`   
-`    hdr.vars.HAVE_LIBM = iapat.CheckHeader('math.h')`   
-`    hdr.Declare('HAVE_ZLIB', 'Include support for zlib compression')` 
+```python
+hdr = iapat.Header('config.h')
+hdr.Comment('/* GENERATED FILE: do not edit */')
+hdr.Comment(disclaimer)
+hdr.Declare('PREFIX', 'Path prefix to installed location', '/usr/share')
+hdr.vars.PREFIX = GetOption(['prefix'])
+hdr.Declare('HAVE_LIBM', 'Can use functions in math library')
+hdr.vars.HAVE_LIBM = iapat.CheckHeader('math.h')
+hdr.Declare('HAVE_ZLIB', 'Include support for zlib compression')
+```
 
 Configuration nodes can be created and placed in a DAG.  Evaluating the node as a 'bool' or a 'str' causes the commands to be run and the appropriate result returned:   
-`    if iapat.TryCommand(c_cmd_line, test_prog): ...`   
-`    action = iapat.CheckHeader('zlib.h')`   
-`    node = iapat.MakeNode('check.hdr.zlib', None, action)`   
-`    action = iapat.CheckFunc('zlib', 'zlib.h')`   
-`    node = iapat.MakeNode('check.hdrfunc.zlib', node, action)`   
-`    hdr.vars.HAVE_ZLIB = node` 
+```python
+if iapat.TryCommand(c_cmd_line, test_prog):
+    ...
+action = iapat.CheckHeader('zlib.h')
+node = iapat.MakeNode('check.hdr.zlib', None, action)
+action = iapat.CheckFunc('zlib', 'zlib.h')
+node = iapat.MakeNode('check.hdrfunc.zlib', node, action)
+hdr.vars.HAVE_ZLIB = node
+```
 
-<a name="cross"></a> 
-# Cross-compilation
+## Cross-compilation
 
 xxx we're discussing the `IAPAT` itself 
 
@@ -150,35 +180,45 @@ The simplest case is when no paramters are specified.  If the command line has a
 `    iapat = InformatonAboutPlatformAndTools()` 
 
 If one argument is specified, it is either a single value or hyphen-separated values.  The single value can either be one of the SCons platform IDs (or values we choose to add later) or a special form that refers to the command line; the hyphen-separated values are split and proceed as if they had been specified as multiple arguments:   
-`    iapat = InformatonAboutPlatformAndTools('--target')`   
-`    iapat = InformatonAboutPlatformAndTools('darwin')`   
-`    iapat = InformatonAboutPlatformAndTools('posix')`   
-`    iapat = InformatonAboutPlatformAndTools('win32')`   
-`    iapat = InformatonAboutPlatformAndTools('cray-unicos')`   
-`    iapat = InformatonAboutPlatformAndTools('580-amdahl-sysv')`   
-`    iapat = InformatonAboutPlatformAndTools('x86-suse-linux-gnu')` 
+```python
+iapat = InformatonAboutPlatformAndTools('--target')
+iapat = InformatonAboutPlatformAndTools('darwin')
+iapat = InformatonAboutPlatformAndTools('posix')
+iapat = InformatonAboutPlatformAndTools('win32')
+iapat = InformatonAboutPlatformAndTools('cray-unicos')
+iapat = InformatonAboutPlatformAndTools('580-amdahl-sysv')
+iapat = InformatonAboutPlatformAndTools('x86-suse-linux-gnu')
+```
 
 If there are two arguments, the first is a CPU designation and the second is a shorthand of either the vendor or the operating system.   
-`    iapat = InformatonAboutPlatformAndTools('sparc', 'sun')`   
-`    iapat = InformatonAboutPlatformAndTools('pyramid', 'bsd')`   
-`    iapat = InformatonAboutPlatformAndTools('ppc', 'ibm')`   
-`    iapat = InformatonAboutPlatformAndTools('ppc', 'osx')`   
-`    iapat = InformatonAboutPlatformAndTools('x86', 'osx')`   
-`    iapat = InformatonAboutPlatformAndTools('x86', 'pc')` 
+```python
+iapat = InformatonAboutPlatformAndTools('sparc', 'sun')
+iapat = InformatonAboutPlatformAndTools('pyramid', 'bsd')
+iapat = InformatonAboutPlatformAndTools('ppc', 'ibm')
+iapat = InformatonAboutPlatformAndTools('ppc', 'osx')
+iapat = InformatonAboutPlatformAndTools('x86', 'osx')
+iapat = InformatonAboutPlatformAndTools('x86', 'pc')
+```
 
 If there are three arguments, they are the CPU designation, the vendor, and the operating system:   
-`    iapat = InformatonAboutPlatformAndTools('ppc', 'apple', 'osx')`   
-`    iapat = InformatonAboutPlatformAndTools('amd64', 'redhat', 'linux')`   
-`    iapat = InformatonAboutPlatformAndTools('x86', 'pc', 'windows')` 
+```python
+iapat = InformatonAboutPlatformAndTools('ppc', 'apple', 'osx')
+iapat = InformatonAboutPlatformAndTools('amd64', 'redhat', 'linux')
+iapat = InformatonAboutPlatformAndTools('x86', 'pc', 'windows')
+```
 
 If there are four arguments, they are the CPU designation, the vendor, the kernel, and the OS:   
-`    iapat = InformatonAboutPlatformAndTools('x86', 'debian', 'linux', 'gnu')`   
-`    iapat = InformatonAboutPlatformAndTools('ppc', 'apple', 'darwin', 'osx')` 
+```python
+iapat = InformatonAboutPlatformAndTools('x86', 'debian', 'linux', 'gnu')
+iapat = InformatonAboutPlatformAndTools('ppc', 'apple', 'darwin', 'osx')
+```
 
 In all cases, the arguments are processed to produce five canonicalized values: the platform, the CPU, the vendor, the kernel, and the OS.  If a value cannot be determined, a reasonable default is used.  Note that little attempt is made to validate that the pieces fit together properly, so it's quite possible that a bogus specification will lead to an illegal combination. 
 
 In addition to the canonicalized values, an `IAPAT` has variables that help when setting up a cross-build.  For example, `CROSSPREFIX` is empty for a normal compile but is set with the standard GNU prefix for a cross-build, so it's simple to locate the appropriate program:   
-`    erlang = iapat.WhereIs('${CROSSPREFIX}erlc')`   
+```python
+erlang = iapat.WhereIs('${CROSSPREFIX}erlc')
+```
 The Erlang compiler is `'erlc'` in a normal build or `'powerpc-apple-darwin9-erlc'` for a cross-compile to OS X on PPC. 
 
 
@@ -248,11 +288,13 @@ The results are made available to the environment (((under discussion: as enviro
 ## Default IAPAT
 
 The default `IAPAT` is accessed via a `DefaultInformationAboutPlatformAndTools()` factory function that implements the "singleton" pattern.  The default `IAPAT` may be used in much the same way that a `IAPAT` created by a user:   
-`    iapat = DefaultInformationAboutPlatformAndTools('--target')`   
-`    iapat.Toolchain('LEX', 'YACC', 'CC')`   
-`    DefaultInformationAboutPlatformAndTools().Toolchain('PDF')`   
-`    DefaultInformationAboutPlatformAndTools(toolchains = 'Jar')`   
-`    DefaultInformationAboutPlatformAndTools(FOO = 'BAR')` 
+```python
+iapat = DefaultInformationAboutPlatformAndTools('--target')
+iapat.Toolchain('LEX', 'YACC', 'CC')
+DefaultInformationAboutPlatformAndTools().Toolchain('PDF')
+DefaultInformationAboutPlatformAndTools(toolchains = 'Jar')
+DefaultInformationAboutPlatformAndTools(FOO = 'BAR')
+```
 
 There are some additional rules on the default `IAPAT` (((enforced by the factory function?  by making the default `IAPAT` a derived class?))): 
 
@@ -264,7 +306,6 @@ There are some additional rules on the default `IAPAT` (((enforced by the factor
 
 Backward compatibility is provided by the default `IAPAT`.  It configures the local machine, provides the expected variables, and the correct per-platform toolchains.  xxx 
 
-<a name="options"></a> 
 # Per-invocation variations
 
 xxx *Option() methods, command-line construction variables, and saved argument files 
@@ -302,12 +343,7 @@ ttt
 
 xxx configure contexts 
 
-
-
 ---
-
- 
-
 
 # Previous draft still being mined for content
 
@@ -432,8 +468,8 @@ The _command variable_ is the environment variable that specifies the command on
 
 For comparison, this table shows command variables and the existing SCons Tools that set them up:
 
-Var | Tools
---- | -----
+Var  | Tools
+:--- | :----
 AS | 386asm as gas masm nasm
 CC | aixcc bcc32 cc gcc hpcc icc icl intelc* mingw* msvc* mwcc* sgicc suncc
 CXX | aixc++ c++ g++ hpc++ sgic++ sunc++
