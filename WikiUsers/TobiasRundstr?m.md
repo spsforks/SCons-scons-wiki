@@ -14,9 +14,9 @@ If you want a checklist you can mark off as you go, cut-n-paste these contents.
 [[!toc 3]] 
 
 [[!inline pages="../InitSVN" quick="yes" raw="yes"]] 
-[[!format txt """
-  $ export RELEASE=3.2.0.beta.yyyymmdd
-"""]]
+```console
+$ export RELEASE=3.2.0.beta.yyyymmdd
+```
 
 ### Send Starting Message
 
@@ -38,11 +38,11 @@ If you want a checklist you can mark off as you go, cut-n-paste these contents.
 [[FIXME|ReleaseHOWTO/TipBetaBody]] Use `svnmerge avail --log` instead of dry run. Use `svnmerge` to find out what changesets are available to be merged: 
 
 
-[[!format txt """
-  $ cd checkpoint
-  $ svnmerge avail --log >../trunk/log.file
-  $ cd ../trunk
-"""]]
+```console
+$ cd checkpoint
+$ svnmerge avail --log >../trunk/log.file
+$ cd ../trunk
+```
 
 ### Edit Configuration Files
 
@@ -51,7 +51,8 @@ The `commit.txt` file created in the previous step has the commit comments for a
 **The `log.file` and `src/CHANGES.txt` files** 
 
 Both `log.file` and `src/CHANGES.txt` use similar formats.  Assuming `commit.txt` has three log entries, three from John Doe on two issues and two by Jim Smith on a single issue, `log.file` would look like this: 
-[[!format txt """
+
+```txt
 Rebased to trunk revision 54321:
 
 From John Doe:
@@ -60,9 +61,9 @@ From John Doe:
 
 From Jim Smith:
  - Item done by Jim Smith.
-"""]]
+```
 In theory, the first section of `src/CHANGES.TXT` should already have the corresponding information.  If it does, steal it for `log.file`.  If it doesn't, add it to `src/CHANGES.txt`.  In the end, the items in `src/CHANGES.txt` for John Doe and Jim Smith should have this information: 
-[[!format txt """
+```
   From John Doe:
 
     - One item that was done by John Doe with details and examples.
@@ -72,7 +73,8 @@ In theory, the first section of `src/CHANGES.TXT` should already have the corres
   From Jim Smith:
 
     - Item done by Jim Smith with details and examples.
-"""]]
+```
+
 **Verify the `src/RELEASE.txt` file** 
 
 In theory, the entries in `src/RELEASE.txt` should already summarize `src/CHANGES.txt` except that issues are summarized by topic and the names of contributors are collected in a section at the bottom.  In practice, not all of the entries have been transcribed. 
@@ -120,9 +122,9 @@ Verify that `version_tuple` in `ReleaseConfig` has the correct release number an
 To merge the changes from the trunk into the `checkpoint` branch, run this command from within the `checkpoint` directory: 
 
 
-[[!format txt """
-  $ svnmerge merge -b -S $SVN/trunk -f commit.txt
-"""]]
+```console
+$ svnmerge merge -b -S $SVN/trunk -f commit.txt
+```
 
 ### Resolve Conflicts
 
@@ -143,9 +145,9 @@ From within the `checkpoint` directory:
 [[FIXME|ReleaseHOWTO/TipBetaBody]] 
 
 
-[[!format txt """
-  $ svn commit -m"Update checkpoint branch for $VERSION; see CHANGES.txt for details."
-"""]]
+```console
+$ svn commit -m"Update checkpoint branch for $VERSION; see CHANGES.txt for details."
+```
 
 [[!inline pages="../BuildAndTest" quick="yes" raw="yes"]] [[!inline pages="../Prepare" quick="yes" raw="yes"]] 
 
@@ -155,9 +157,9 @@ From within the `checkpoint` directory:
 From within the `checkpoint` directory: 
 
 
-[[!format txt """
-  $ svn cp . $SVN/tags/$VERSION
-"""]]
+```console
+$ svn cp . $SVN/tags/$VERSION
+```
 
 ### Archive Candidate Packages
 
