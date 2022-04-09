@@ -11,20 +11,18 @@ Anyway, is that a problem in SCons? Let's see how much garbage is produced build
 
 SConstruct: 
 ```python
-#!python 
 env = Environment()
 SConscript('src/SConscript', exports='env')
 ```
 src/SConscript: 
 ```python
-#!python 
 Import('env')
 env.Program('hello.c', CPPPATH='.')
 ```
 The garbage can be measured with the garbage debug flag which turns off the garbage collector and prints the garbage that would have been collected. To reduce the noise, the output can be redirected to a file which can be used to build reference graphs to illustrate the cycles graphically. 
 
 
-```txt
+```console
 > $SCONS --debug=garbage --garbage=leak.txt
 scons: Reading SConscript files ...
 scons: done reading SConscript files.
@@ -38,7 +36,7 @@ Garbage:      893 collected objects (   403 in cycles):    562.06 KB
 If graphviz is installed, a PDF can be generated with the following commands: 
 
 
-```txt
+```console
 dot -o leak.dot leak.txt
 dot leak.dot -Tps -o leak.eps
 epstopdf leak.eps
@@ -63,13 +61,12 @@ Garbage:      564 collected objects (   185 in cycles):    255.60 KB
 
 The remaining cycles all involve bound methods as depicted.  
 
-[[!img methodcycle.png] 
+[[/WikiUsers/LudwigHaehne/ReferenceCycles/methodcycle.png]]
 
 The pattern in the code looks like the following: 
 
 
 ```python
-#!python 
 class Foo:
   def __init__(self, variant):
     if variant == 'Alice':
@@ -81,7 +78,7 @@ class Foo:
   def bob(self):
     pass
 ```
-What can be done is to use [weak methods](http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/81253) to refer to the bound methods. This is safe because the method is referenced by the instance it is attached to. If the method refers back (with im_self) a cycle is created. However, the cycle can be avoided if the method only holds a weak reference to the object: [leak_weakmethod.patch](leak_weakmethod.patch) 
+What can be done is to use [weak methods](http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/81253) to refer to the bound methods. This is safe because the method is referenced by the instance it is attached to. If the method refers back (with im_self) a cycle is created. However, the cycle can be avoided if the method only holds a weak reference to the object: [leak_weakmethod.patch](/WikiUsers/LudwigHaehne/ReferenceCycles/leak_weakmethod.patch)
 
 Compiling again we are told that building our hello world example, no garbage is produced at all! 
 ```txt
@@ -91,7 +88,6 @@ There is one problem with this approach, though. Calling a weak method is slower
 
 
 ```python
-#!python 
 import weakref
 
 class WeakMethod(object):
