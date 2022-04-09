@@ -39,8 +39,8 @@ SCons needs the ability to handle dependencies on jars in the Maven and Ivy repo
 
 SCons needs a unit test execution capability.  TestNG, JUnit4, and JUnit3 execution tasks would be needed.  These would need to depend on creating compilation of all the source then the compilation of all the tests, including pulling dependencies from Maven and/or Ivy repositories. 
 
-SCons needs to support construction and installation of War files (see [[!bug 1704]]). 
+SCons needs to support construction and installation of War files (see [1704](/scons/scons/issues/1704))
 
 SCons needs to support the handling of Cobertura and other instrumentation systems for handling code coverage. 
 
-SCons needs to have an Ant Task so that continuous integration systems that only support Ant and Maven (which is most of them, [CruiseControl](CruiseControl), [TeamCity](TeamCity), Bamboo) can still be used.  Buildbot just calls a command so SCons is already supported.  Hudson rather  forward lookingly created a Gant capability as well as Ant and Maven and may be amenable to adding SCons (but may have to be Jython based to avoid the need for a Python installation?). 
+SCons needs to have an Ant Task so that continuous integration systems that only support Ant and Maven (which is most of them, CruiseControl, TeamCity, Bamboo) can still be used.  Buildbot just calls a command so SCons is already supported.  Hudson rather  forward lookingly created a Gant capability as well as Ant and Maven and may be amenable to adding SCons (but may have to be Jython based to avoid the need for a Python installation?). 
