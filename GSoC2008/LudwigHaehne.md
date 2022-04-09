@@ -6,12 +6,12 @@ The goal of this work is to develop a facility that assists users and developers
 
 
 ### Contact Information
-[[!table header="no" class="mointable" data="""
+
  Name  |  Ludwig Hähne 
+ :--- | ---
  Email  |  wkx gmx li 
  Place of Residence  |  Dresden, Germany 
  Timezone  |  CEST +0200 
-"""]]
 
 
 ## Abstract
@@ -38,7 +38,7 @@ With a reduced memory footprint, it would be more feasible to build large softwa
 
 I'd first like to illustrate the problem with a figure: 
 
-[[!img benchmark.png] 
+[[/GSoC2008/LudwigHaehne/benchmark.png]]
 
 This is the result of a scalability test where I compared the applicability of Make and SCons for large projects using synthetically generated projects. 
 
@@ -134,7 +134,9 @@ An idea which could also help to improve runtime performance is to save the DAG 
 
 ### Schedule
 
-* [[!table header="no" class="mointable" data="""
+* 
+ timeline | tasks
+ --- | ---
  Community bonding period  |  Formalize requirements, assemble test suite for heap monitor 
  26.05. - 31.05.  |  #01, #02 Basic functionality tests and Wiki description 
  02.06. - 07.06.  |  #03, #04 Basic implementation, Integration of asizeof 
