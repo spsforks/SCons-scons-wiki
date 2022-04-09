@@ -259,7 +259,7 @@ class Node:
 
 ## Quantify (and revert) the fix
 
-                                 |  Original  |  Conservative patch  |  Smart patch 
+ x                               |  Original  |  Conservative patch  |  Smart patch 
  ---                             | ---        | ---                  | ---
  after reading SConscript files  |  32.82 MB  |  31.78 MB  |  31.52 MB 
  after building targets          |  60.26 MB  |  59.29 MB  |  59.22 MB 
