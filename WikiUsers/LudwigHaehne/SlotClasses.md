@@ -83,8 +83,8 @@ Every Node object has a `BuildInfo` and `NodeInfo` structure attached to it. Thi
 
 The previous results look promising but do not provide an overview about the whole memory consumption and execution time impact. 
 
- -                    |  Ardour up-to-date check memory  |  Ardour up-to-date check runtime 
- ---                  | ---                           | ---
+ x                    |  Ardour up-to-date check memory  |  Ardour up-to-date check runtime 
+ ---                  | ---                              | ---
  Classic              |  60.34 MB    |  43.7s 
  `Executor` slotted   |  58.60 MB    |  43.7s 
  `*Info` slotted      |  56.94 MB    |  45.1s 
