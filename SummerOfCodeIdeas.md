@@ -118,7 +118,8 @@ Ideally, there would be multiple ways to output and format results.  This lends 
          * SimpleFormatter: just prints out everything 
          * XMLFormatter: print out an XML to some predefined schema 
          * FancyFormatter: simply prints to stdout/stderr, but gives more information such as time, etc. 
-The following [UML](http://www.uml.org/) diagram illustrates this relationship: [[!img SCons-loggers_and_handlers.png] Using this vocabulary, the current SCons default would be a ConsoleHandler with a SimpleFormatter. The final goal would be to allow SCons to integrate easily with build tools such as: 
+The following [UML](http://www.uml.org/) diagram illustrates this relationship: [[/SummerOfCodeIdeas/SCons-loggers_and_handlers.png]]
+Using this vocabulary, the current SCons default would be a ConsoleHandler with a SimpleFormatter. The final goal would be to allow SCons to integrate easily with build tools such as: 
 
       * [CruiseControl](http://cruisecontrol.sourceforge.net/) 
       * [BuildBot](http://buildbot.sourceforge.net/) 
