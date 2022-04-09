@@ -2,7 +2,7 @@ Third draft, with more examples and details.  This description now includes the 
 
 Note that this content is maintained elsewhere, so please don't change this page directly.  Instead, if you have comments, or find things wrong or inconsistent, let me know and I'll fix it as quickly as possible.  If it's something trivial (like a typo), contact me via the the email information in my [wiki home page](GregNoel).  If it's more significant, write me in the scons-dev mailing list, or create a section in the [discussion page](PlatformToolConfig/Discussion). Thanks!
 
-**Table of Contents**
+# Table of Contents
 
 [TOC]
 
@@ -10,13 +10,17 @@ Note that this content is maintained elsewhere, so please don't change this page
 # Introduction and Overview
 
 This page introduces the `InformationAboutPlatformAndTools` (`IAPAT`) class.  It is the focus of all of the discussion below.  The intent is that users will be naturally encouraged to use a new paradigm for their development:   
-`     iapat = InformationAboutPlatformAndTools()`   
-`     ... modify iapat for their build`   
-`     env = iapat.Environment()`   
+```python
+     iapat = InformationAboutPlatformAndTools()
+     ... modify iapat for their build
+     env = iapat.Environment()
+```
 The existing `Environment()` function will be redefined in terms of a default `IAPAT`; that is, it's the rough equivalent of this code:   
-`     def Environment(*args, **kw):`   
-`          iapat = DefaultInformationAboutPlatformAndTools()`   
-`          return iapat.Environment(*args, **kw)` 
+```python
+     def Environment(*args, **kw):
+          iapat = DefaultInformationAboutPlatformAndTools()
+          return iapat.Environment(*args, **kw)
+```
 
 Information collected in the `IAPAT` is used to set up a derived `Environment`.  The `IAPAT` can be reused so that the same collected information can be used in more than one `Environment`.  Thus, to set up a configuration for the entire build, one only need initialize the default `IAPAT` suitably. 
 
@@ -82,14 +86,6 @@ Allow `CCFLAGS=` on the command line as a SCons list-like variable:
 `     iapat.CLVar('CCFLAGS', 'Common C/C++ options', '-pedantic')`   
 `     # add optimization level (from command-line --opt above)`   
 `     iapat['CCFLAGS'] += '-O%d' % GetOption('optimize')` 
-
-
-
-
-
-
-
-
 
 Set an arbitrary variable that will be copied to derived Environments:   
 `     iapat['FOO'] = 'bar'` 
@@ -202,7 +198,7 @@ If the build triple isn't given, GNU uses a shell script called `config.guess` t
 
 GNU also uses a shell script called `config.sub` to canonicalize a triple and provide aliases for common architectures.  (For example, a CPU of `'ppc'` is canonicalized into `'powerpc'`; `'ppc'` is called an _alias_.)  This means that anything analyzing the triple doesn't need to know that, for example, `'amd64'` is really a CPU type of `'x86_64'`.  It's also infected by the GNU virus and is also supposed to be complex. 
 
-<a name="#autocompat"></a> === Compatibility Constraints and Related Issues=== 
+### Compatibility Constraints and Related Issues
 
 By far the most common complaint of people using the GNU system is that just specifying the target machine (the `--target` option to `configure`) is that their programs aren't cross-compiled.  It's not intuitive that one has to specify the <ins>`--host`</ins> option to get a cross-compile of the program being built.  Therefore, I believe we need to break with this model, either by coining a new word for the output of the built cross-compiler or by defaulting things such that just specifying the target machine will cross-compile the build.  I don't have any immediate suggestions for either case, but [see the discussion](PlatformToolConfig/Discussion) about it.. 
 
