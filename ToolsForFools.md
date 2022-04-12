@@ -1,6 +1,6 @@
 # A simple Builder, and its evolution to a Tool
 
-This small article discusses the different possible approaches while trying to teach SCons how to compile and process exotic file types, in order to support new tools. This can be a compiler for a sparsely used language like [Befunge](http://www.esolangs.org/wiki/Befunge) or a documentation processor like [AsciiDoc](http://www.methods.co.nz/asciidoc/), which aren't supported by the SCons core.
+This small article discusses the different possible approaches while trying to teach SCons how to compile and process exotic file types, in order to support new tools. This can be a compiler for a sparsely used language like [Befunge](http://www.esolangs.org/wiki/Befunge) or a documentation processor like [AsciiDoc](https://asciidoctor.org/docs/what-is-asciidoc/), which aren't supported by the SCons core.
 
 Based on my personal experiences (and preferences!) I outline some of the basic points you have to look out for, when implementing an SCons Tool. Visit the [Tools Index](http://www.scons.org/wiki/ToolsIndex) for a list of currently available extension packages, which can serve as examples for your own code. 
 
