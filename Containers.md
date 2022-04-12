@@ -6,7 +6,7 @@ Title | Aggregates Extension
 Author | Cem Karan
 Status | Draft
 Post History| http://scons.tigris.org/ds/viewMessage.do?dsMessageId=2366897&dsForumId=1272
-Tracking issue | [#2536](/scons/issues/2536)
+Tracking issue | [#2536](/scons/scons/issues/2536)
 
 Please use the ["Discussion" page](ContainersDiscussion) for discussions about how this SEP should evolve.
 
