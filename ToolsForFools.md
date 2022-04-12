@@ -2,7 +2,7 @@
 
 This small article discusses the different possible approaches while trying to teach SCons how to compile and process exotic file types, in order to support new tools. This can be a compiler for a sparsely used language like [Befunge](http://www.esolangs.org/wiki/Befunge) or a documentation processor like [AsciiDoc](http://www.methods.co.nz/asciidoc/), which aren't supported by the SCons core.
 
-Based on my personal experiences (and preferences!) I outline some of the basic points you have to look out for, when implementing an SCons Tool. Visit [http://www.scons.org/wiki/ToolsIndex](http://www.scons.org/wiki/ToolsIndex) for a list of currently available extension packages, which can serve as examples for your own code. 
+Based on my personal experiences (and preferences!) I outline some of the basic points you have to look out for, when implementing an SCons Tool. Visit the [Tools Index](http://www.scons.org/wiki/ToolsIndex) for a list of currently available extension packages, which can serve as examples for your own code. 
 
 Throughout the text I'll use a rather unknown compiler as example, JAL. This acronym stands for "Just Another Language", and is an alternative to programming PIC microprocessors in Assembler (shudder!). The language itself reminds a bit of PASCAL, decide for yourself whether this is a good or bad thing. `;)` 
 
@@ -18,7 +18,7 @@ From the JAL input file `alarm.jal` the command "`jalv2 alarm.jal`" creates an `
 
 
 ```python
-env.Command('alarm.asm','alarm.jal','/opt/jalv24n/bin/jalv2 -asm $TARGET $SOURCE')
+env.Command("alarm.asm", "alarm.jal", "/opt/jalv24n/bin/jalv2 -asm $TARGET $SOURCE")
 ```
 or
 ```python
@@ -80,7 +80,7 @@ def generate(env):
 def exists(env):
     return 1
 ```
-That's all, nothing else needed. You can save this file as `__init__.py` (this is not the SConstruct anymore!) and copy it to your `site_scons/site_tools/jal` folder. For more infos about how and where to install your Tools, visit our Wiki at [http://www.scons.org/wiki/ToolsIndex](http://www.scons.org/wiki/ToolsIndex) and read section 17.7 _Where To Put Your Custom Builders and Tools_ please. 
+That's all, nothing else needed. You can save this file as `__init__.py` (this is not the SConstruct anymore!) and copy it to your `site_scons/site_tools/jal` folder. For more infos about how and where to install your Tools, visit [Tools Index](http://www.scons.org/wiki/ToolsIndex) in the SCons wiki and read section 17.7 _Where To Put Your Custom Builders and Tools_ please. 
 
 For using our new "`jalv2`" Tool we would write an SConstruct, something like this: 
 
@@ -101,6 +101,12 @@ First the new code:
 
 
 ```python
+# MIT License
+#
+# Copyright The SCons Foundation
+#
+# ...
+
 """
 Tool-specific initialization for the JALv2 compiler.
 
@@ -109,29 +115,17 @@ It will usually be imported through the generic SCons.Tool.Tool()
 selection method.
 """
 
-#
-# MIT License
-#
-# Copyright The SCons Foundation
-#
-# ...
-#
-
 import SCons.Action
 import SCons.Builder
 import SCons.Util
 
-
 class ToolJalWarning(SCons.Warnings.Warning):
     pass
-
 
 class JalCompilerNotFound(ToolJalWarning):
     pass
 
-
 SCons.Warnings.enableWarningClass(ToolJalWarning)
-
 
 def _detect(env):
     """Try to detect the JAL compiler"""
@@ -147,7 +141,6 @@ def _detect(env):
     raise SCons.Errors.StopError(JalCompilerNotFound, "Could not detect JAL compiler")
     return None
 
-
 #
 # Builders
 #
@@ -156,7 +149,6 @@ _jal_builder = SCons.Builder.Builder(
     suffix="$JAL_ASMSUFFIX",
     src_suffix="$JAL_SUFFIX",
 )
-
 
 def generate(env):
     """Add Builders and construction variables to the Environment."""
@@ -174,7 +166,6 @@ def generate(env):
     )
 
     env["BUILDERS"]["Jal"] = _jal_builder
-
 
 def exists(env):
     return _detect(env)
@@ -200,22 +191,25 @@ Well, so far we didn't care about side effect files. The real JAL compiler doesn
 
 Usually each build command is expected to produce the given list of targets from the specified list of source files. For example, 
 
-
 ```python
-env.Object('foo.o','foo.c')
+env.Object('foo.o', 'foo.c')
 ```
 creates the object `foo.o` (target) from `foo.c` (source), and no other files are involved in this step. With our JAL compiler this isn't true. Although we only say 
 
-
 ```python
-env.Jal('foo.asm','foo.jal')
+env.Jal('foo.asm', 'foo.jal')
 ```
 we get the files `foo.hex` and `foo.cod` as additional targets, also known as _side effects_.  
 
 For redefining this common rule in SCons there is the concept of an Emitter (see section 17.6 _Builders That Modify the Target or Source Lists Using an Emitter_). It tells the system which files go in for the build step and what comes out after the job has finished. The default Emitter gets the list of sources and targets, as given by the user in the SConstruct or SConscript, and passes them on unchanged. But for handling side effect files we can override this behaviour by defining our own Emitter, which we are about to do now: 
 
-
 ```python
+# MIT License
+#
+# Copyright The SCons Foundation
+#
+# ...
+
 """
 Tool-specific initialization for the JALv2 compiler.
 
@@ -224,29 +218,17 @@ It will usually be imported through the generic SCons.Tool.Tool()
 selection method.
 """
 
-#
-# MIT License
-#
-# Copyright The SCons Foundation
-#
-# ...
-#
-
 import SCons.Action
 import SCons.Builder
 import SCons.Util
 
-
 class ToolJalWarning(SCons.Warnings.Warning):
     pass
-
 
 class JalCompilerNotFound(ToolJalWarning):
     pass
 
-
 SCons.Warnings.enableWarningClass(ToolJalWarning)
-
 
 def _detect(env):
     """Try to detect the JAL compiler"""
@@ -261,7 +243,6 @@ def _detect(env):
 
     raise SCons.Errors.StopError(JalCompilerNotFound, "Could not detect JAL compiler")
     return None
-
 
 #
 # Emitters
@@ -282,7 +263,6 @@ def _jal_emitter(target, source, env):
 
     return target, source
 
-
 #
 # Builders
 #
@@ -292,7 +272,6 @@ _jal_builder = SCons.Builder.Builder(
     src_suffix="$JAL_SUFFIX",
     emitter=_jal_emitter,
 )
-
 
 def generate(env):
     """Add Builders and construction variables to the Environment."""
@@ -332,6 +311,12 @@ Note, that you can do far more advanced things with a pseudo-Builder, e.g. have 
 
 
 ```python
+# MIT License
+#
+# Copyright The SCons Foundation
+#
+# ...
+
 """
 Tool-specific initialization for the JALv2 compiler.
 
@@ -340,29 +325,17 @@ It will usually be imported through the generic SCons.Tool.Tool()
 selection method.
 """
 
-#
-# MIT License
-#
-# Copyright The SCons Foundation
-#
-# ...
-#
-
 import SCons.Action
 import SCons.Builder
 import SCons.Util
 
-
 class ToolJalWarning(SCons.Warnings.Warning):
     pass
-
 
 class JalCompilerNotFound(ToolJalWarning):
     pass
 
-
 SCons.Warnings.enableWarningClass(ToolJalWarning)
-
 
 def _detect(env):
     """Try to detect the JAL compiler"""
@@ -378,7 +351,6 @@ def _detect(env):
     raise SCons.Errors.StopError(JalCompilerNotFound, "Could not detect JAL compiler")
     return None
 
-
 #
 # Builders
 #
@@ -388,7 +360,6 @@ _jal_builder = SCons.Builder.Builder(
     src_suffix="$JAL_SUFFIX",
     single_source=1,
 )
-
 
 def Jal(env, target, source=None, *args, **kw):
     """
@@ -420,7 +391,6 @@ def Jal(env, target, source=None, *args, **kw):
 
     return result
 
-
 def generate(env):
     """Add Builders and construction variables to the Environment."""
 
@@ -446,7 +416,6 @@ def generate(env):
 
         SConsEnvironment.Jal = Jal
 
-
 def exists(env):
     return _detect(env)
 ```
@@ -456,17 +425,16 @@ For our Jal method, we are now using a pseudo-Builder. It gets added to the Envi
 
 
 ```python
-env.Jal(['alarm','timetick'])
+env.Jal(['alarm', 'timetick'])
 ```
 and the target names `alarm.asm` and `timetick.asm` are created automatically. Clean (and **not** [SideEffect](SideEffect)!) is now used to specify the created files that should get removed additionally on a "`scons -c`". Check the code to see that the Emitter has gone, we don't need it anymore. 
 
-**Cons**: The [AddMethod](AddMethod) got introduced in SCons version 0.98. For earlier distributions, the fallback mechanism of simply slapping the pseudo-Builder on top of the SConsEnvironment will not work, i.e. Clone() doesn't behave correct in all cases. 
+**Cons**: `AddMethod` was introduced in SCons version 0.98. For earlier distributions, the fallback mechanism of simply slapping the pseudo-Builder on top of the SConsEnvironment will not work, i.e. `Clone()` doesn't behave correctly in all cases. 
 
 <a name="special"></a> 
 ## Adding specialized builders
 
 Another option for our work with JAL is that we can tell the `jalv2` executable to only create HEX or COD files with the calls 
-
 
 ```console
 jalv2 -no-asm -no-hex -codfile foo.cod foo.jal
@@ -481,6 +449,12 @@ jalv2 -no-asm -no-codfile -hex foo.hex foo.jal
 So here is our final version of the code: 
 
 ```python
+# MIT License
+#
+# Copyright The SCons Foundation
+#
+# ...
+
 """
 Tool-specific initialization for the JALv2 compiler.
 
@@ -489,29 +463,17 @@ It will usually be imported through the generic SCons.Tool.Tool()
 selection method.
 """
 
-#
-# MIT License
-#
-# Copyright The SCons Foundation
-#
-# ...
-#
-
 import SCons.Action
 import SCons.Builder
 import SCons.Util
 
-
 class ToolJalWarning(SCons.Warnings.Warning):
     pass
-
 
 class JalCompilerNotFound(ToolJalWarning):
     pass
 
-
 SCons.Warnings.enableWarningClass(ToolJalWarning)
-
 
 def _detect(env):
     """Try to detect the JAL compiler"""
@@ -526,7 +488,6 @@ def _detect(env):
 
     raise SCons.Errors.StopError(JalCompilerNotFound, "Could not detect JAL compiler")
     return None
-
 
 #
 # Builders
@@ -559,7 +520,6 @@ _jal_hex_builder = SCons.Builder.Builder(
     single_source=1,
 )
 
-
 def Jal(env, target, source=None, *args, **kw):
     """
     A pseudo-Builder wrapper for the JALv2 executable.
@@ -589,7 +549,6 @@ def Jal(env, target, source=None, *args, **kw):
         env.Clean(jal_asm, [jal_stem + jal_codsuffix, jal_stem + jal_hexsuffix])
 
     return result
-
 
 def generate(env):
     """Add Builders and construction variables to the Environment."""
@@ -625,7 +584,6 @@ def generate(env):
     env["BUILDERS"]["JalAsm"] = _jal_asm_builder
     env["BUILDERS"]["JalCod"] = _jal_cod_builder
     env["BUILDERS"]["JalHex"] = _jal_hex_builder
-
 
 def exists(env):
     return _detect(env)
