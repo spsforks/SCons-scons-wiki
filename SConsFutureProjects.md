@@ -124,4 +124,4 @@ Shift some of the core Tools out, by making them external plug-ins (see [ToolsIn
  <a name="Help"></a> 
 # refactor Help()
 
-The =Help()= function is too coarse. Any call overwrites the local options added via the =[AddOption](AddOption)()= function. The =[AddOption](AddOption)()= function itself doesn't support grouping options. You can't get help about local options unless you read all the =SConscript= files. The whole thing needs a refactoring to address more sophisticated, modern needs. 
+The =Help()= function is too coarse. Any call overwrites the local options added via the `AddOption()` function. The `AddOption()` function itself doesn't support grouping options. You can't get help about local options unless you read all the `SConscript` files. The whole thing needs a refactoring to address more sophisticated, modern needs. 
