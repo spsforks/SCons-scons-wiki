@@ -17,4 +17,4 @@ SWIGScanner = SCons.Scanner.ClassicCPP(
 env.Prepend(SCANNERS=[SWIGScanner])
 ```
 
-Mattias also writes: "Regarding the _wrap.h for directors I just add it add a [SideEffect](SideEffect) and a Clean call for it. You might also considering throwing a Depends() in there. Do the same for the generated .py file." -- [JohnPye](JohnPye) 
+Mattias also writes: "Regarding the _wrap.h for directors I just add it add a `SideEffect()` and a `Clean()` call for it. You might also considering throwing a `Depends()` in there. Do the same for the generated .py file." -- [JohnPye](JohnPye) 

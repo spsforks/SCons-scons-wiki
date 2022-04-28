@@ -449,7 +449,7 @@ For our Jal method, we are now using a pseudo-Builder. It gets added to the Envi
 ```txt
 env.Jal(['alarm','timetick'])
 ```
-and the target names `alarm.asm` and `timetick.asm` are created automatically. Clean (and **not** [SideEffect](SideEffect)!) is now used to specify the created files that should get removed additionally on a "`scons -c`". Check the code to see that the Emitter has gone, we don't need it anymore. 
+and the target names `alarm.asm` and `timetick.asm` are created automatically. `Clean` (and **not** `SideEffect`!) is now used to specify the created files that should get removed additionally on a "`scons -c`". Check the code to see that the Emitter has gone, we don't need it anymore. 
 
 **Cons**: The [AddMethod](AddMethod) got introduced in SCons version 0.98. For earlier distributions, the fallback mechanism of simply slapping the pseudo-Builder on top of the SConsEnvironment will not work, i.e. Clone() doesn't behave correct in all cases. 
 
