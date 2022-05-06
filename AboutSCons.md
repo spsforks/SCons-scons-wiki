@@ -17,4 +17,4 @@ Distinctive features of SCons include:
 
 See also: [SconsVsOtherBuildTools](SconsVsOtherBuildTools)
 
-See History: http://legacy.python.org/workshops/2002-02/papers/16/index.htm
+See History: https://web.archive.org/web/20180321082341/http://legacy.python.org/workshops/2002-02/papers/16/index.htm
