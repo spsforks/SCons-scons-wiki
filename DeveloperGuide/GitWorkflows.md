@@ -4,14 +4,17 @@
 
 For those who don't want to read the entire page, here is a quick summary:
 
-* Visit the main GitHub SCons Page [https://github.com/SCons/scons.git](https://github.com/SCons/scons.git)
-* Fork scons repo from GitHub UI
-* `git clone <your_repo_URL>`
-* `git remote add upstream git@github.com:SCons/scons.git`
-* `git fetch upstream`
-* `git checkout -b <your_working_branchname> upstream/master`
-* `git config branch.<your_working_branchname>.remote origin`
-  * Without the above, git push would try to push your change to the upstream repo
+* Visit the main GitHub SCons Page [https://github.com/SCons/scons](https://github.com/SCons/scons)
+* Fork the scons repo from GitHub UI - makes a repo in your own account.
+* Set up the following plumbing:
+```bash
+  git clone <your_repo_URL>
+  git remote add upstream git@github.com:SCons/scons.git
+  git fetch upstream
+  git checkout -b <your_working_branchname> upstream/master
+  git config branch.<your_working_branchname>.remote origin
+```
+  Without the above, git push would try to push your change to the upstream repo
 * Do your work 
 * Add a blurb on your proposed change to `CHANGES.txt`.
 * `git push`
