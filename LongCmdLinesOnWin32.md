@@ -126,7 +126,7 @@ def SetupSpawn( env ):
         buf.ourenv = env
         env['SPAWN'] = buf.ourspawn
 ```
-Call [SetupSpawn](SetupSpawn)(env) when you need this. Thanks to xuru on #scons, we can now build and link Blender without the need to split large libraries into smaller parts. 
+Call `SetupSpawn(env)` when you need this. Thanks to xuru on #scons, we can now build and link Blender without the need to split large libraries into smaller parts. 
 
 by Nathan Letwory (jesterKing) 
 
