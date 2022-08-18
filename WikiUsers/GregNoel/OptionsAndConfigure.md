@@ -1,5 +1,8 @@
 
-_This is not in any way ready for review and comment, but Steven is working on dealing with command-line flags that haven't been specified in advance, and that part is mostly done, so I'm publishing this so he can look at it for ideas.  Please don't edit this; I'll update it when it's ready for true public scrutiny.  Tks. -JGN_ [[!toc ]] 
+_This is not in any way ready for review and comment, but Steven is working on dealing with command-line flags that haven't been specified in advance, and that part is mostly done, so I'm publishing this so he can look at it for ideas.  Please don't edit this; I'll update it when it's ready for true public scrutiny.  Tks. -JGN_ 
+
+# Table of Contents
+
 # Unifying Options and Configuration
 
 This page presents a position that command-line options (both flags and assignments) and configuration should be unified into a single framework (or, worst case, that they should be derived from a common base class).  The idea behind the position is that these are ways that SCons gets "outside" information; that is, information that is not embedded in the SConscripts. 
@@ -15,6 +18,7 @@ The command line consists of four types of tokens:
 * [Word-based flags](OptionsAndConfigure).  These are preceded by two hyphens.  They may or may not take a value; if they do take a value, an equal sign <ins>_always_</ins> separates the name and the value. 
 * [Variable assignments](OptionsAndConfigure).  These are `name=value` pairings. 
 * Arguments.  Anything that is not a flag option or a variable assignment option.  Arguments are outside the scope of this discussion; the only thing we will say about them is that they are gathered into a list and made available to the SCons scripts. 
+
 Another source of options are [control files](OptionsAndConfigure).  These are text files containing `name=value` pairs similar to command-line variable assignments.  (They are actually Python scripts, so any legal Python value is acceptable.) 
 
 The last source of options are [configure tests](OptionsAndConfigure).  These values are programmatically determined by probing the platform on which the build is run. 
