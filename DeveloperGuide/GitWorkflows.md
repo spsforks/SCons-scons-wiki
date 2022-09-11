@@ -44,6 +44,8 @@ Now you should have a copy of the sources in the "`scons`" folder.
   * `git config --global core.eol lf`. 
   * `git config --global core.autocrlf false`
   * This forces files to checkout with lf rather than the Windows standard crlf line endings and is necessary to ensure that all the tests pass.  Some will fail if their test files are checked out with crlf line endings.
+  * `git config --global blame.ignoreRevsFile .git-blame-ignore-revs`
+  * This allows specifying that certain commits are to be ignored for git blame purposes. (For example mass reformatting)
 
 
 ## Fork repository on GitHub side for creating pull requests
