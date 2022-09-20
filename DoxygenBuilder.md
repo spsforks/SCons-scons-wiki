@@ -11,6 +11,7 @@ The above now appears to have moved to a Mercurial branch on Bitbucket: [https:/
 
 **Please use the Bazaar Mercurial branch above and not any of the codes below, which are left here just to preserve the historical record.** 
 
+_Update: the links above are both dead - the email archive through Tigris is gone, as are any bitbucket repositories that are not git (Atlassian retired all the others).  There is now a version of this, minimally forward-ported to Python 3, in the scons-contrib repository at https://github.com/scons/scons-contrib.  The actual working status is somewhat unknown - we'd love to hear from anyone who has success (or failure) using that version._
 
 ## Usage
 
