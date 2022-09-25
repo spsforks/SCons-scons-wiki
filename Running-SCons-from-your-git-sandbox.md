@@ -11,9 +11,19 @@
 python path-to-your-sandbox/scripts/scons.py
 ```
 
+### A virtualenv, with an editable install
+If you run this setup, then whenever the virtualenv is activated, the command `scons` will just work to run your development version.
+
+```bash
+$ python -m venv devenv
+$ source devenv/bin/activate
+$ cd path-to-your-sandbox
+$ pip install --editable .
+```
+
+
 ### Less simple way
 Put these lines in a shell script and run the script.  If you want to run it regularly, make the script executable and put it in your private bin directory. 
-
 
 ```bash
 #!/usr/bin/env bash 
