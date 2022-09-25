@@ -2,7 +2,7 @@
 
 This is the SCons Developer Guide.  Start here to [learn how to contribute to SCons](/SCons/scons/wiki/DeveloperGuide/Introduction) and understand how it works under the hood.
 
-* [Introduction](DeveloperGuide/Introduction)
+* [Introduction](Introduction)
 * Getting the source
     * `git clone https://github.com/SCons/scons.git`
     * [Source tree organization](SourceWalkThrough) 
