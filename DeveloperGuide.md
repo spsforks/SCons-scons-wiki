@@ -1,6 +1,6 @@
 # SCons Developer Guide
 
-This is the SCons Developer Guide.  Start here to [learn how to contribute to SCons](/SCons/scons/wiki/DeveloperGuide/Introduction) and understand how it works under the hood.
+This is the SCons Developer Guide.  Start here to [learn how to contribute to SCons](Introduction) and understand how it works under the hood.
 
 * [Introduction](Introduction)
 * Getting the source
