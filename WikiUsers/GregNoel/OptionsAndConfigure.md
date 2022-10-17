@@ -39,8 +39,8 @@ Single-character flags are reserved to SCons and may not be specified for user f
 
 Here is what single-character flags become.  Any flag not recognized causes an error. 
 
-| Opt | Longopt |   | -A | ERROR
-|:----|:--------|---|:---|:-----
+| Opt | Longopt |   | OPT | Longopt
+|:----|:--------|---|:----|:-------
 | `-a` | `--always-build` (*) |   | -A | ERROR
 | `-b` | ignored for compatibility |   | -B | ERROR
 | `-c` | `--clean` |   | -C _directory_ | --directory=_directory_
