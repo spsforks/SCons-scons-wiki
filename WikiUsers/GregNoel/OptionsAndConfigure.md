@@ -4,11 +4,11 @@ _This is not in any way ready for review and comment, but Steven is working on d
 # Table of Contents
 
 # Contents
-  - <a name="SingleCharacterFlags"></a> 
-  - <a name="WordBasedFlags"></a> 
-  - <a name="Variables"></a> 
-  - <a name="ControlFiles"></a> 
-  - <a name="ConfigTests"></a> 
+  - <a href="#SingleCharacterFlags">Single-character flags</a>
+  - <a href="#WordBasedFlags">Word-based flags</a>
+  - <a href="#Variables">Variable Assignments</a>
+  - <a href="#ControlFiles">Control Files</a>
+  - <a href="#ConfigTests">Configure Tests</a>
 
 # Unifying Options and Configuration
 
@@ -30,7 +30,7 @@ Another source of options are [control files](OptionsAndConfigure).  These are t
 
 The last source of options are [configure tests](OptionsAndConfigure).  These values are programmatically determined by probing the platform on which the build is run. 
 
-<a name="SingleCharacterFlags"></a> 
+<a id="SingleCharacterFlags"></a> 
 ## Single-character flags
 
 **Synopsis:** Single-character flags are converted to their equivalent word-based flags. 
@@ -38,38 +38,42 @@ The last source of options are [configure tests](OptionsAndConfigure).  These va
 Single-character flags are reserved to SCons and may not be specified for user flags.  When the command line is cracked, single-character flags are converted to their equivalent word-based flags; the translation is hard-wired, so single-character flags cannot be extended. 
 
 Here is what single-character flags become.  Any flag not recognized causes an error. 
-[[!table header="no" class="mointable" data="""
--a | --always-build (*) |   | -A | ERROR
--b | ignored for compatibility |   | -B | ERROR
--c | --clean |   | -C _directory_ | --directory=_directory_
--d _flag(s)_ | --debug=_flag(s)_ |   | -D | --up=defaults (*)
--e | --environment-overrides (*) |   | -E | ERROR
--f _file_ | --file=_file_ |   | -F | ERROR
--g | ERROR |   | -G | ERROR
--h | --help |   | -H | --help-options
--i | --ignore-errors |   | -I _directory_ | --include-dir=_directory_
--j _N_ | --jobs=_N_ |   | -J | ERROR
--k | --keep-going |   | -K | ERROR
--l _N_ | --load-average=_N_ (*) |   | -L | ERROR
--m | ignored for compatibility |   | -M | ERROR
--n | --dry-run |   | -N | ERROR
--o _file_ | --old-file=_file_ |   | -O | ERROR
--p | --print-data-base (*) |   | -P | ERROR
--q | --question |   | -Q | --no-status-messages (*)
--r | --no-builtin-rules (*) |   | -R | --no-builtin-variables (*)
--s | --silent |   | -S | --no-keep-going
--t | --touch |   | -T | ERROR
--u | --up=dot (*) |   | -U | --up=here (*)
--v | --version |   | -V | ERROR
--w | --print-directory |   | -W _file_ | --what-if=_file_ (*)
--x | ERROR |   | -X | ERROR
--y | ERROR |   | -Y _repository_ | --repository=_repository_
--z | ERROR |   | -Z | ERROR
-"""]]
 
-The (*) marks entries that are future or otherwise assume something at variance with the current flags.  Also, the `-W` usage conforms to `GNU make`, not the `--warnings` usage of `automake`.  _TODO: insert a list here with the differences._ 
+| Opt | Longopt |   | -A | ERROR
+|:----|:--------|---|:---|:-----
+| `-a` | `--always-build` (*) |   | -A | ERROR
+| `-b` | ignored for compatibility |   | -B | ERROR
+| `-c` | `--clean` |   | -C _directory_ | --directory=_directory_
+| `-d _flag(s)_` | --debug=_flag(s)_ |   | -D | --up=defaults (*)
+| `-e` | -`-environment-overrides `(*) |   | -E | ERROR
+| `-f _file_` | -`-file=_file_` |   | -F | ERROR
+| `-g` | ERROR |   | -G | ERROR
+| `-h` | -`-help` |   | -H | --help-options
+| `-i` | `--ignore-errors` |   | -I _directory_ | --include-dir=_directory_
+| `-j _N_` | `--jobs=_N_` |   | -J | ERROR
+| `-k` | `--keep-going` |   | -K | ERROR
+| `-l _N_` | `--load-average=_N_` (*) |   | -L | ERROR
+| `-m` | ignored for compatibility |   | -M | ERROR
+| `-n` | `--dry-run` |   | -N | ERROR
+| `-o _file_ | `--old-file=_file_` |   | -O | ERROR
+| `-p` | `--print-data-base` (*) |   | -P | ERROR
+| `-q` | `--question` |   | -Q | --no-status-messages (*)
+| `-r` | `--no-builtin-rules` (*) |   | -R | --no-builtin-variables (*)
+| `-s` | `--silent` |   | -S | --no-keep-going
+| `-t` | `--touch` |   | -T | ERROR
+| `-u` | `--up=dot` (*) |   | -U | --up=here (*)
+| `-v` | `--version` |   | -V | ERROR
+| `-w` | `--print-directory` |   | -W _file_ | --what-if=_file_ (*)
+| `-x` | ERROR |   | -X | ERROR
+| `-y` | ERROR |   | -Y _repository_ | --repository=_repository_
+| `-z` | ERROR |   | -Z | ERROR
 
-<a name="WordBasedFlags"></a> 
+
+The (*) marks entries that are future or otherwise assume something at variance with the current flags.  Also, the `-W` usage conforms to `GNU make`, not the `--warnings` usage of `automake`.
+
+_TODO: insert a list here with the differences._ 
+
+<a id="WordBasedFlags"></a> 
 ## Word-based flags
 
 **Synopsis:** When the command line is cracked, flag options are placed in a private list.  A flag may occur more than once on the command line; the multiple occurrences are accumulated.  A _defining instance_ of a flag causes all of its occurences to be removed from the list and a value calculated.  This value is available immediately, so it may be saved or used for further calculations.  Values calculated from the flag value may be accumulated in a pool and passed to an Environment when it is instantiated.  At the end of the parse phase, any flags still on the list cause an error message. 
@@ -325,7 +329,7 @@ Prototype to retrieve flag:
      % scons --opt=-O1 --optimize=-O2
      optimization level is <-O2>
 ```
-<a name="Variables"></a> 
+<a id="Variables"></a> 
 ## Variable Assignments
 
 When the command line is cracked, variable assignments are placed in a global pool using their _canonical name_ (the primary name for the variable).  Variables are marked valid by encountering a _defining instance_ of the variable (see [DefiningHelpText](DefiningHelpText) for details).  Variable assignments may also be read from an option file; the option file will be rewritten if a value changes.  At the end of the parse phase, any variables not marked valid cause an error message to be generated. 
@@ -337,10 +341,10 @@ These values may then be processed into a context that accumulates construction 
 
 One or more contexts may then be used to initialize the construction variables of an Environment.  These values may then be used in the construction of command lines in the normal way. 
 
-<a name="ControlFiles"></a> 
+<a id="ControlFiles"></a> 
 ## Control Files
 
-<a name="ConfigTests"></a> 
+<a id="ConfigTests"></a> 
 ## Configure Tests
 
 **Synopsis:** Configure operates in an infinite sea of tests.  Each test is uniquely named by some convention (probably a tuple that captures all of the salient facts).  When a configuration function is executed, it composes these tests into a DAG; obviously, if the test has already been run, there's no need to repeat it and the result can be used immediately.  Some tests exist only for a side-effect (in which case the "test" is really "Has this side-effect been done?").  Each test produces a result, which can be true/false, values from some enumerated set, or whatever.  These results can in turn be used for calculations.  In some cases, those calculations can be saved in a context that can set the initial values of an Environment's construction variables. 
