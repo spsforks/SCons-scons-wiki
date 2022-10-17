@@ -3,6 +3,13 @@ _This is not in any way ready for review and comment, but Steven is working on d
 
 # Table of Contents
 
+# Contents
+  - <a name="SingleCharacterFlags"></a> 
+  - <a name="WordBasedFlags"></a> 
+  - <a name="Variables"></a> 
+  - <a name="ControlFiles"></a> 
+  - <a name="ConfigTests"></a> 
+
 # Unifying Options and Configuration
 
 This page presents a position that command-line options (both flags and assignments) and configuration should be unified into a single framework (or, worst case, that they should be derived from a common base class).  The idea behind the position is that these are ways that SCons gets "outside" information; that is, information that is not embedded in the SConscripts. 
