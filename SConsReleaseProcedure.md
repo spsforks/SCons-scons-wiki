@@ -27,7 +27,6 @@ python bin/docs-create-example-outputs.py
 - [ ] Commit the auto-generated doc changes to current branch ("Regenerated docs for X.Y.Z release.") 
 - [ ] Update CHANGES.txt (should already be up to date) 
 - [ ] Update RELEASE.txt (should already be up to date) 
-- [ ] Edit `debian/changelog`. Be careful of formatting here, it gets machine-parsed. 
 - [ ] Commit 
 - [ ] Update `default_version` in SConstruct
 - [ ] Build packages and doc: `python scripts/scons.py >& build-XYZ.log` (good idea to save build logfile somewhere) 
@@ -50,7 +49,7 @@ scons-local-$VERSION.zip
 
 * There is now a shell script to do this: `bin/upload-release-files.sh X.Y.Z mysfusername` as long as [SourceForge](SourceForge) and scons.org have your ssh pub key and you're using SSH Agent Forwarding. 
 * It uploads all the packages to SF, uploads the doc to scons.org, unpacks it, and updates the doc symlinks.
-** You will be prompted for your password numerous times. 
+  * You will be prompted for your password numerous times. 
 * You may still have to tell SF that the new release dirs exist in its File Manager (it's a bit buggy). 
 
 ## Prepare Announcement and announce to all
@@ -75,6 +74,7 @@ git push --tags
 
 - [ ] Update Sourceforge: 
 - [ ] set default downloads for each win/linux/mac etc. appropriately, using the "info" link on the right of each download. 
+  - NOTE: it will take a minute or two for these changes to affect the README and default downloads you've just set.
 - [ ] Announce to scons-users and scons-dev python list
 
 
