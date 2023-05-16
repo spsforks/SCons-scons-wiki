@@ -2,12 +2,12 @@
 
 [TOC]
 
-Evolution is a slow process. Getting rid of old bad habits is never easy.  This article is a critique of the Make build tool.  We list its shortcomings and we suggest a few more modern alternatives. 
+Evolution is a slow process. Getting rid of old bad habits is never easy.  This article is a critique of the **Make** build tool.  We list its shortcomings and suggest a few more modern alternatives. 
 
 
 ## Make looks fine on the surface
 
-The Make build tool is with us for about 20 years.  It is somewhat a sad thing to see today complex new projects considering Make as their only choice.  I often get the question "What is wrong with Make?". So often that the obvious answer to the question becomes "First wrong thing is the people ignorance about Make limitations with respect to their requirements".  As a matter of facts, I will start my critique as a list of wrong beliefs around this classic tool. 
+The Make build tool is with us since 20 years.  It is somewhat a sad thing to see today complex new projects considering Make as their only choice.  I often get the question "What is wrong with Make?". So often that the obvious answer to the question becomes "First wrong thing is the people ignorance about Make limitations with respect to their requirements".  As a matter of facts, I will start my critique as a list of wrong beliefs around this classic tool. 
 
 
 ### Myth 1: Make-based builds are portable
