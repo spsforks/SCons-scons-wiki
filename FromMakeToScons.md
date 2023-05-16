@@ -7,7 +7,7 @@ Evolution is a slow process. Getting rid of old bad habits is never easy.  This 
 
 ## Make looks fine on the surface
 
-The Make build tool is with us since 20 years.  It is somewhat a sad thing to see today complex new projects considering Make as their only choice.  I often get the question "What is wrong with Make?". So often that the obvious answer to the question becomes "First wrong thing is the people ignorance about Make limitations with respect to their requirements".  As a matter of facts, I will start my critique as a list of wrong beliefs around this classic tool. 
+The Make build tool has been with us for 20 years. It is somewhat sad to see complex new projects today considering Make as their only choice. I often get the question, "What is wrong with Make?" so frequently that the obvious answer to the question becomes, "The first wrong thing is people's ignorance about Make's limitations in relation to their requirements." As a matter of fact, I will start my critique with a list of incorrect beliefs surrounding this classic tool.
 
 
 ### Myth 1: Make-based builds are portable
