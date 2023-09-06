@@ -116,7 +116,7 @@ SConscript('lib/SConscript')
 SConscript('test/SConscript')
 ```
 
-##  Supporting mutiple builds: Variant directory
+##  Supporting multiple builds: Variant directory
 
 Many projects need to support building in several different ways from the same sources.  A common case is a "debug" build with support for examining objects with debuggers, etc. and a "release" build that is stripped and optimized. SCons has the capability of supporting this through an instruction that tells it to use a *variant directory*. A variant directory is a build-specific location where the targets are placed, while the sources continue to come from the common location.
 
