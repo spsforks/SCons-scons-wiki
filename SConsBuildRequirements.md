@@ -17,8 +17,6 @@ You need to have the Python binding for either `libxml2` and `libxslt` or for `l
 
 See also [DeveloperGuide/Documentation](DeveloperGuide/Documentation) for further details. 
 
-Note: the docs do not currently build under Python 3. Check the progress of [Issue 3300](https://github.com/SCons/scons/issues/3300) for progress.  Also note there is no supported Python 3.x binding for `libxslt`.
-
 
 ## Master script
 
