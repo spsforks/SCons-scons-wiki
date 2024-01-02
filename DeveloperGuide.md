@@ -1,6 +1,6 @@
 # SCons Developer Guide
 
-This is the SCons Developer Guide.  Start here to [learn how to contribute to SCons](Introduction) and understand how it works under the hood.
+This is the SCons Developer Guide.  Start here to [learn how to contribute to SCons](DevGuide-Introduction) and understand how it works under the hood.
 
 * [Introduction](Introduction)
 * Getting the source
@@ -9,7 +9,7 @@ This is the SCons Developer Guide.  Start here to [learn how to contribute to SC
 * Hacking on the source
     * META: do you really need to?
         * [Writing builders](ToolsForFools), wrappers, and subclassing (don't need to change source)
-        * Using scons_dir for extensions
+        * Using `site_scons` for extensions
     * [Running from the source tree](Running-SCons-from-your-git-sandbox)
     * [DebuggingScons](DebuggingScons)
 * Contributing
