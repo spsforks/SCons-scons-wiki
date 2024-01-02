@@ -1,7 +1,5 @@
 This is the main entry page for working out a redesigned architecture suitable for SCons' feature set, but designed with performance in mind. 
 
-A previous initial mish-mash of exists at [../Initial](DeveloperGuide/ReArchitecture/Initial), but that page is now deprecated.  We're transferring the salvageable content to this hierarchy. 
-
 Methodology:  Things that have been more-or-less decided upon, or are an initial draft for discussion with no competing counter-proposal, go in the pages in the **Settled** section.  Undecided issues go in the topic's discussion page (follow the link in the navigation bar).  To start a discussion about an item, add a section to the topic's discussion page and link to the discussion section from its location in the appropriate **Settled** page. 
 
 
