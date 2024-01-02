@@ -154,4 +154,4 @@ JGN: Still a draft; please ask questions to help me make it better.  There's an 
 
 ## Greg Noel
 
-Also see [[!bug 810]] which discusses emitters and overrides for them.  The solution to that will require both something like the proposal above plus some flavor of the kind of thing done by [DynamicSourceGenerator](DynamicSourceGenerator) (which is very interesting but also very unSCons-like).
+Also see [bug #810](/SCons/scons/issues/810) which discusses emitters and overrides for them.  The solution to that will require both something like the proposal above plus some flavor of the kind of thing done by [DynamicSourceGenerator](DynamicSourceGenerator) (which is very interesting but also very unSCons-like).

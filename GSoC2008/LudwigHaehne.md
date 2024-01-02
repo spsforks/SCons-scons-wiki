@@ -123,9 +123,9 @@ An idea which could also help to improve runtime performance is to save the DAG 
          * [Block-wise MD5 hashing](WikiUsers/LudwigHaehne/ChunkHashing) 
          * [Classes with __slots__](WikiUsers/LudwigHaehne/SlotClasses) 
 * [31] (./) Check-In successful memory reduction tweaks (passing all tests) 
-         * [[!bug 2179]], [[!bug 2180]], [[!bug 2181]], [[!bug 2178]], [[!bug 2149]], [[!bug 2177]] 
+         * [bug #2179](/SCons/scons/issues/2179), [bug #2180](/SCons/scons/issues/2180), [bug #2181](/SCons/scons/issues/2181), [bug #2178](/SCons/scons/issues/2178), [bug #2149](/SCons/scons/issues/2149), [bug #2177]](/SCons/scons/issues/2177)
 * [40] (./) Wiki page with [low memory footprint SCons usage recommendations](ReduceMemory) 
-* [50] (./) Review Tigris issues concerning MD5 signatures [[!bug 1459]], [[!bug 1646]], quantify and commit fix if applicable 
+* [50] (./) Review Tigris issues concerning MD5 signatures [bug #1459](/SCons/scons/issues/1459), [bug #1646](/SCons/scons/issues/1646), quantify and commit fix if applicable 
 * [51] (./) Review [Memory savings with new style classes](http://scons.tigris.org/servlets/ReadMsg?listName=users&msgNo=11883), quantify and commit fix if applicable 
 * [A] [!] _Optional:_ Cache DAG on disk prototype (delivered as a patch) 
 * [B] [!] _Optional:_ More elaborate data representation prototype (GUI, delivered as an external module) 

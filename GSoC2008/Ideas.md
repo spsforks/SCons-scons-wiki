@@ -1,10 +1,3 @@
-
-[[!toc 3]] 
-
-
-
-
-
 ---
 
  
@@ -141,7 +134,7 @@ Mentor(s): Probably [GregNoel](GregNoel)
  
 ### Smarter Treatment of Intermediate Targets
 
-[[!bug 583]] is about implementing something similar to the .INTERMEDIATE and .SECONDARY special targets in GNU `make` (see the description in the [manual](http://www.gnu.org/software/make/manual/make.html#Chained-Rules)). A SECONDARY target is only built if it is needed by a downstream target that's being rebuilt. An INTERMEDIATE target is a SECONDARY that is automatically deleted once all downstream targets using it are successfully built. 
+[bug #583](/SCons/scons/issues/583) is about implementing something similar to the .INTERMEDIATE and .SECONDARY special targets in GNU `make` (see the description in the [manual](http://www.gnu.org/software/make/manual/make.html#Chained-Rules)). A SECONDARY target is only built if it is needed by a downstream target that's being rebuilt. An INTERMEDIATE target is a SECONDARY that is automatically deleted once all downstream targets using it are successfully built. 
 
 This idea will need four things to be implemented: 
 
@@ -158,7 +151,7 @@ Mentor(s): [GregNoel](GregNoel)
  
 ### Don't Rebuild if Only "Comments" Differ
 
-If only the comments in a file change, there's no need to rebuild anything that depends on it. This can easily be accomplished by stripping out comments (and other extraneous content) when calculating the signature. [[!bug 193]] discusses this, including some tips for implementation, although the approach suggested there may not be adequate in all cases. 
+If only the comments in a file change, there's no need to rebuild anything that depends on it. This can easily be accomplished by stripping out comments (and other extraneous content) when calculating the signature. [bug #193](/SCons/scons/issues/193) discusses this, including some tips for implementation, although the approach suggested there may not be adequate in all cases. 
 
 The complication here is that the source for one tool could be comments for another.  For example, the C compiler and the Oxygen documentation system operate on the same files, but they have different ideas about what the significant content is.  Changing the documentation should not trigger the C compiler and changing the code should not trigger the documentation system. 
 
@@ -178,7 +171,7 @@ Mentor(s): Probably [StevenKnight](StevenKnight)
 
 SCons has no direct support for versioned libraries and applications, that is, packages that may have multiple versions installed at the same time.  SCons supports neither installing a versioned package nor choosing between multiple packages for a particular build. 
 
-In the former case, the need is for a cross-platform "link" (or "symlink"?) action, with generic chaining so that `libfoo.so` can be symlinked to `libfoo.so.1`, which is linked to `libfoo.so.1.2`, which is linked to `libfoo.so.1.2.3` (the actual installed library).  Similarly, an application might be installed as `prog2.3` and needs a symlink to `prog`.  In addition, when cleaning (`'scons -c'`), it needs to remove the link only if it refers to the correct object (_i.e._, it should not remove a link created by a later installation).  See [[!bug 1947]] for other aspects of this task. 
+In the former case, the need is for a cross-platform "link" (or "symlink"?) action, with generic chaining so that `libfoo.so` can be symlinked to `libfoo.so.1`, which is linked to `libfoo.so.1.2`, which is linked to `libfoo.so.1.2.3` (the actual installed library).  Similarly, an application might be installed as `prog2.3` and needs a symlink to `prog`.  In addition, when cleaning (`'scons -c'`), it needs to remove the link only if it refers to the correct object (_i.e._, it should not remove a link created by a later installation).  See [bug #1947](/SCons/scons/issues/1947) for other aspects of this task. 
 
 In the latter case, the need is to be able to choose a version of a library or application that's not the default (either an older guaranteed-stable version or a newer maybe-not-stable version).  How this is done varies between systems; the design of the feature should hide that level of detail.  Robert Lupton of Princeton has an Python implementation for selecting applications that works in his environment (it also can specify version dependencies to automate much of the selection), but it's not clear if it's sufficiently general-purpose. 
 
@@ -239,7 +232,7 @@ The idea is to trade a guaranteed correct build for a fast development cycle whe
 
 The feature could require modifications to SConscripts to take advantage of it.  It could also impose restrictions on the information provided by calling SConscripts (perhaps so that the imports could be cached) so that only the local SConscript needs to be evaluated.  Additional restrictions and caveats are also possible.  And when a full build is done, the affected files may be rebuilt, even if it is not strictly necessary. 
 
-[[!bug 1939]] is one possible way to implement this project.  Other ways are possible.  A good proposal should consider alternatives. 
+[bug 1939](/SCons/scons/issues/1939) is one possible way to implement this project.  Other ways are possible.  A good proposal should consider alternatives. 
 
 Mentor(s): Josh Leavitt <Josh dot Leavitt at hill af mil>, [GregNoel](GregNoel), [StevenKnight](StevenKnight) 
 
@@ -387,7 +380,7 @@ Mentor(s): possibly [JohnPye](JohnPye)
 
 Some builders are significantly faster if they compile more than one program at a time.  Other builders can optimize better if they can see more than one file at a time.  What these builders have in common is that they want to be passed all the out-of-date source files in the same step. 
 
-[[!bug 1086]] offers further discussion of the issues and and [[!bug 1381]] has a patch that partially implements this concept.  The patch is several years old and is unlikely to work in its current state, but it should provide a good starting point. 
+[bug #1086](/SCons/scons/issues/1086) offers further discussion of the issues and and [bug #1381](/SCons/scons/issues/1381) has a patch that partially implements this concept.  The patch is several years old and is unlikely to work in its current state, but it should provide a good starting point. 
 
 Finishing the development, creating regression tests, and writing the documentation is unlikely to be a full summer's worth of work, but it could easily be combined with other smaller tasks to fill out the time. 
 

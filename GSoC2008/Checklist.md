@@ -3,7 +3,7 @@
 ## Checklist for Google Summer of Code 2008
 
 * <del>Revamp the [proposal description](GSoC2008/Proposal) to emphasize process and be less intimidating.</del>  [2007-Apr-22: _a draft is available for comment_ - JGN] [2008-Mar-04: _final draft published_ - JGN] 
-* <del>Get [[!bug 1234]] and [[!bug 4321]] links working.</del>  [2007-05-30: _Fixed by Gary Oberbrunner; see [[!bug 1650]]_ - JGN] 
+* <del>Get [[!bug 1234]] and [[!bug 4321]] links working.</del>  [2007-05-30: _Fixed by Gary Oberbrunner; see [bug #1650](/SCons/scons/issues/1650)_ - JGN] 
 * **Identify more mentors** 
    * Recruitment should be on-going throughout the year. 
    * There should be a specific campaign in January or February. 
