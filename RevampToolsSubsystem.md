@@ -32,7 +32,7 @@ TODO: Talk about cross-compile support here
 
 Since we try to provide a framework for build systems, our Tool shouldn't care. Both should be possible ways for a user to extend the build engine. A Tool can be used to change an existing Environment, for example by decorating it with custom Builders. 
 
-The question is though: How do we want our Tools to be organized for the standard SCons implementation? Especially, when we have a Tool like "latex" that basically looks the same for all distributions (miktex, texlive, ...) in terms of command calls. Do we want a "miktex" Tool under the covers, that gets automatically selected by the "latex" Toolchain? Should there be a [LatexCommon](LatexCommon).py in cases like this? And how do we go about tests for these toolchains? 
+The question is though: How do we want our Tools to be organized for the standard SCons implementation? Especially, when we have a Tool like "latex" that basically looks the same for all distributions (miktex, texlive, ...) in terms of command calls. Do we want a "miktex" Tool under the covers, that gets automatically selected by the "latex" Toolchain? Should there be a `LatexCommon.py` in cases like this? And how do we go about tests for these toolchains? 
 
 Is a Tool ultimately responsible for detecting paths to possible alternatives of executables? Idea: 
 
