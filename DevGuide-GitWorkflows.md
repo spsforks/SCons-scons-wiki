@@ -85,7 +85,7 @@ git checkout -b foo
 
 ## Updating a pull request
 
-After you submitted your pull request, it gets reviewed by other developers. Chances are high that you receive comments or questions about your changes (see also [the Developer Guide intro](DeveloperGuide/Introduction)). In some cases you'll be asked to add or correct things, so you have to update your request.
+After you submitted your pull request, it gets reviewed by other developers. Chances are high that you receive comments or questions about your changes (see also [the Developer Guide intro](DevGuide-Introduction)). In some cases you'll be asked to add or correct things, so you have to update your request.
 
 For this, update your local "`scons`" copy to the corresponding bookmark, if required.
 
