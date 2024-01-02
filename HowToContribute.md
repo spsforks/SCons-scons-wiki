@@ -38,5 +38,5 @@ Scan recent posts on the [mailing lists](https://www.scons.org/lists.html) for b
 * **GSoC**:
 If you are a student and want to contribute to SCons you can apply to the [Google Summer of Code](GSoC). Otherwise you can volunteer as a mentor, or come up with new ideas for the students.  
 * **Development**:
-Help in development by [hacking the core](DeveloperGuide) and fixing bugs. [Add more tests](DeveloperGuide/TestingMethodology) or improve the existing ones.  
+Help in development by [hacking the core](DeveloperGuide) and fixing bugs. [Add more tests](DevGuide-TestingMethodology) or improve the existing ones.  
 
