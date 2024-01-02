@@ -1,8 +1,8 @@
 ## What we need for proper Tool support:
-- A common module for detecting, storing and retrieving infos about the current host architecture, processor type and OS (this would be the [PlatformInfo](PlatformInfo) the platform, the CPU, the vendor, the kernel, and the OS). It should be used throughout the whole source tree, including the test framework and the tests themselves. - Introduce Toolchains, as an abstraction for a series (=list) of tools that should get initialized by a single keyword. It should be possible to: 
+- A common module for detecting, storing and retrieving infos about the current host architecture, processor type and OS (this would be the `PlatformInfo` the platform, the CPU, the vendor, the kernel, and the OS). It should be used throughout the whole source tree, including the test framework and the tests themselves. - Introduce Toolchains, as an abstraction for a series (=list) of tools that should get initialized by a single keyword. It should be possible to: 
 * Check whether we can load/use a toolchain or single tool in our current environment (as given by os.environ['PATH']) 
 * Check whether we can load/use a toolchain or single tool in a special environment. 
-* Get a list of possible toolchains for a "Tooltopic" (can't think of another name right now). A "Tooltopic" would be "C++", and possible toolchains include "mingw" and "msvs". This selection would depend on the [PlatformInfo](PlatformInfo). 
+* Get a list of possible toolchains for a "Tooltopic" (can't think of another name right now). A "Tooltopic" would be "C++", and possible toolchains include "mingw" and "msvs". This selection would depend on the `PlatformInfo`. 
 * Get a default toolchain for a topic, that is actually installed in the current system. 
 * Dynamically add new toolchains. 
 * Dynamically add new tools to a toolchain. 
@@ -36,7 +36,7 @@ The question is though: How do we want our Tools to be organized for the standar
 
 Is a Tool ultimately responsible for detecting paths to possible alternatives of executables? Idea: 
 
-   * Tool can return a list of paths, that can be used to realize a given "toolchain" link...while doing so it should access infos from the [PlatformInfo](PlatformInfo). 
+   * Tool can return a list of paths, that can be used to realize a given "toolchain" link...while doing so it should access infos from the `PlatformInfo`. 
 Problem: How to synchronize toolchain names between SCons and the Tools? Probably best, that SCons doesn't keep a list of them...but can request the list of ids this Tool realizes, from the Tool package itself. 
 
 Probably handled as another SEP: Extending the build system such that a Tool (=Builder) can decide to run all (or only some) commands (=Actions) locally!!! 
