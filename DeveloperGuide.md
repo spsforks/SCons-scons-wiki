@@ -19,7 +19,7 @@ This is the SCons Developer Guide.  Start here to [learn how to contribute to SC
     * [git workflows](GitWorkflows), explains how to work with git to submit your patches
     * [SconsBuildRequirements](SconsBuildRequirements), which packages you need for a full build
     * [Packaging](ReleaseHOWTO/SimplifiedReleaseProcedure)
-* [Architecture](ArchitectureOverview)
+* [Architecture](DevGuide-ArchitectureOverview)
     * [Installation](Installation) (the way SCons is meant to be found)
     * [Nodes](Nodes) (Dir, File, Value, ...)
     * [Signatures](Signatures)
