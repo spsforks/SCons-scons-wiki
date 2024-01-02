@@ -32,7 +32,7 @@ So, you have the sources... now what?
 
 The documentation for SCons is basically split in two parts: the main documents for the [user guide](http://www.scons.org/doc/production/HTML/scons-user.html) and [MAN page](http://www.scons.org/doc/production/HTML/scons-man.html) in the `doc` subfolder, and the descriptions of the Tools, Functions, Builders and Construction Variables which appear both in the manpage and in the Appendices A-D of the [user guide](http://www.scons.org/doc/production/HTML/scons-user.html). You can find them in "`*.xml`" files parallel to the Python source files in the `SCons` folder - this locality is intended to make it easier to remember to update docs and code together (roughly, "if you change `Foo.py`, also look at `Foo.xml`").
 
-Check out [DeveloperGuide/Documentation](Documentation) for a full description of the DocBook toolchain that we're using currently.
+Check out [Documentation](DevGuide-Documentation) for a full description of the DocBook toolchain that we're using currently.
 
 Make your editorial changes, then validate all the documents as described in the [toolchain documentation](Documentation). Required dependencies for this validation step are the Python bindings for either "`libxml2`" or "`lxml`", so make sure to have one of them installed in your system (since SCons became all Python 3, you'll need lxml as the Python libxml2 binding is no longer supported).
 
