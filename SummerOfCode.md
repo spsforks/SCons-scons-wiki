@@ -13,7 +13,7 @@ _Note:  The discussion below was post-mortem after 2007.  To get in on what's ha
 
 _These are points that will be merged with the [current checklist](GSoC2007/CheckList) to create the [checklist for next year](GSoC2008/Checklist).  For now, we just need to be sure any new points are listed._ 
 
-* Get [[!bug 123]] and [[!bug 321]] links working. 
+* Get [bug #123](/SCons/scons/issues/123) and [bug #321](/SCons/scons/issues/321) links working. 
 * Starter page for mentors. 
 * Actively recruit mentors all year long. 
 * Revamp proposal page to emphasize process and be less intimidating. 
