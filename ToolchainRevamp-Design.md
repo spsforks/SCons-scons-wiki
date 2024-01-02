@@ -105,7 +105,7 @@ class ToolCat(Tool):
 
 ## Toolchain Design
 
-A [SimpleToolchain](SimpleToolchain) is a list of Tools, all of which must exist for the toolchain to be allowed to be used.  (A simple Tool can be used anywhere a [SimpleToolchain](SimpleToolchain) is found.) A Toolchain is either a [SimpleToolchain](SimpleToolchain), or an OR-list of Toolchains, in which case each toolchain is tried in order and the first one to succeed is used. Any Tool within a Toolchain may be marked as optional; such a tool will be used if the toolchain is used and if it exists, but doesn't need to exist to satisfy its toolchain. 
+A `SimpleToolchain` is a list of Tools, all of which must exist for the toolchain to be allowed to be used.  (A simple Tool can be used anywhere a `SimpleToolchain` is found.) A Toolchain is either a `SimpleToolchain`, or an OR-list of Toolchains, in which case each toolchain is tried in order and the first one to succeed is used. Any Tool within a Toolchain may be marked as optional; such a tool will be used if the toolchain is used and if it exists, but doesn't need to exist to satisfy its toolchain. 
 
 Simple example: (tools here can be tool names, or Tool objects.) 
 
@@ -129,7 +129,7 @@ SCons base, tool authors, or SConscript-writers can all update toolchains.  The 
 `new_toolchain = Toolchain.AddAlternative(OtherToolchain, before=False)`: 
 
 * if this toolchain is an [OrToolchain](OrToolchain), add [OtherToolchain](OtherToolchain) to start or end (and return new).   
-* If this toolchain is a [SimpleToolchain](SimpleToolchain), return a new [OrToolchain](OrToolchain) with both the old and new.   
+* If this toolchain is a `SimpleToolchain`, return a new [OrToolchain](OrToolchain) with both the old and new.   
 * Returns the new toolchain in both cases. 
 To replace a tool in a toolchain, what should the interface be? 
 
