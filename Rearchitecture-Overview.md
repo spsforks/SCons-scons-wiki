@@ -5,13 +5,13 @@ Methodology:  Things that have been more-or-less decided upon, or are an initial
 
 ## Settled
 
-[Goals](Goals) - The requirements spec (where we use the term "Goals" because these won't all be hard-and-fast). 
+[Goals](Rearchitecture-Goals) - The requirements spec (where we use the term "Goals" because these won't all be hard-and-fast). 
 
-[UseCases](UseCases) - The use cases we believe cover 90% of what users want and for which we will optimize performance. 
+[UseCases](Rearchitecture-UseCases) - The use cases we believe cover 90% of what users want and for which we will optimize performance. 
 
-[Design](Design) - The design itself.  This should ideally not refer to existing SCons design or implementation.  (In practice, I'm sure it'll be hard to not have some leakage.) 
+[Design](Rearchitecture-Design) - The design itself.  This should ideally not refer to existing SCons design or implementation.  (In practice, I'm sure it'll be hard to not have some leakage.) 
 
-[Implementation](Implementation) - How the current SCons implementation can be made to fit the new architecture. 
+[Implementation](Rearchitecture-Implementation) - How the current SCons implementation can be made to fit the new architecture. 
 
 
 ## Terminology
@@ -26,7 +26,7 @@ Methodology:  Things that have been more-or-less decided upon, or are an initial
 | Transverse  |  In graph theory, a graph calculated from an initial graph by reversing the direction of its arcs. 
 
 
-[1] (((SK:  Greg, I'm trying to educate myself about the graph theory, and this doesn't look like the correct definition of "dual".  On the face of it, you can't just transform nodes to arcs, because arcs by definition have two endpoints and a node in the original graph with multiple arcs can't suddenly become a an arc in the dual that points to more than two nodes.  The definition I see for "dual" transforms each _plane region_ in the original graph into a node in the dual.  Please clarify.)))  
+[1] (((SK:  Greg, I'm trying to educate myself about the graph theory, and this doesn't look like the correct definition of "dual".  On the face of it, you can't just transform nodes to arcs, because arcs by definition have two endpoints and a node in the original graph with multiple arcs can't suddenly become an arc in the dual that points to more than two nodes.  The definition I see for "dual" transforms each _plane region_ in the original graph into a node in the dual.  Please clarify.)))  
 
 
 ## TODO
