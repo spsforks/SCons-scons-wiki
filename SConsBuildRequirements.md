@@ -40,5 +40,5 @@ This script is kept up to date on a best-effort basis, but might be a bit out of
 For other systems, examine that script, and use the native packaging tools - package names should have some relationship,
 but will likely differ a bit.  The doc build is not currently supported on Windows.
 
-See also [DeveloperGuide/Documentation](DeveloperGuide/Documentation) for further details. 
+See also [Developing and Building Documentation](DevGuide-Documentation) for further details. 
 
