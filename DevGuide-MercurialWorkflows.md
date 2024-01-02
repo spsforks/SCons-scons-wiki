@@ -2,7 +2,7 @@
 
 [TOC]
 
-# See [GitWorkflows.md](Gitworkflows.md) for any work after September 18, 2017
+# See [GitWorkflows](Gitworkflows) for any work after September 18, 2017
 
 # Below is purely historical.
 
@@ -150,7 +150,7 @@ You only have to be careful later, when creating a pull request. If you have pus
 
 ## Updating a pull request
 
-After you submitted your pull request, it gets reviewed by other developers. Chances are high that you receive comments or questions about your changes (see also [the Developer Guide intro](DeveloperGuide/Introduction)). In some cases you'll get asked to add or correct things, so you have to update your request.
+After you submitted your pull request, it gets reviewed by other developers. Chances are high that you receive comments or questions about your changes (see also [the Developer Guide intro](DevGuide-Introduction)). In some cases you'll get asked to add or correct things, so you have to update your request.
 
 For this, update your local "`scons`" copy to the corresponding bookmark, if required.
 
