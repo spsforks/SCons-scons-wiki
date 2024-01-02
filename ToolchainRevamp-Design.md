@@ -128,8 +128,8 @@ SCons base, tool authors, or SConscript-writers can all update toolchains.  The 
 
 `new_toolchain = Toolchain.AddAlternative(OtherToolchain, before=False)`: 
 
-* if this toolchain is an [OrToolchain](OrToolchain), add [OtherToolchain](OtherToolchain) to start or end (and return new).   
-* If this toolchain is a `SimpleToolchain`, return a new [OrToolchain](OrToolchain) with both the old and new.   
+* if this toolchain is an `OrToolchain`, add `OtherToolchain` to start or end (and return new).   
+* If this toolchain is a `SimpleToolchain`, return a new `OrToolchain` with both the old and new.   
 * Returns the new toolchain in both cases. 
 To replace a tool in a toolchain, what should the interface be? 
 
