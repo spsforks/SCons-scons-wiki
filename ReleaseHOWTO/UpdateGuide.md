@@ -1,5 +1,5 @@
 
-CAUTION: Only try this step if you have the toolchain for building the documentation.  The packages needed are discussed in DeveloperGuide/Documentation.  It's quite a list. 
+CAUTION: Only try this step if you have the toolchain for building the documentation.  The packages needed are discussed [here](DevGuide-Documentation).  It's quite a list. 
 
 The following steps verify that the user guide sources (some of which are generated from other files) are up to date. 
 
