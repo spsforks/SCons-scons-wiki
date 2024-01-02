@@ -3,8 +3,8 @@
    * scons --version (or similar) should list installed tools and toolchains 
    * missing external tools should give sensible errors 
 * Tool setup must happen before reading SConstruct somehow 
-   * [DefaultEnvironment](DefaultEnvironment) and all new Environments should know about all tools 
-   * alternative: lazy-construct [DefaultEnvironment](DefaultEnvironment) 
+   * `DefaultEnvironment` and all new Environments should know about all tools 
+   * alternative: lazy-construct `DefaultEnvironment` 
    * user-specified tools and toolchains need to be specifiable at beginning of build 
 * User should be able to set default tools and toolchains 
    * unused tools shouldn't take any startup time 
@@ -45,7 +45,7 @@
 * Considerations 
    * "batteries included?" 
       * Each tool should do its best to set itself up, find executables, etc. 
-      * What about SCons policy of not relying on $PATH?  Maybe we should relax that or have an option? 
+      * What about SCons policy of not relying on `$PATH`?  Maybe we should relax that or have an option? 
    * minimum magic, maximum flexibility 
    * what about single tools?  Should every tool be required to be part of a toolchain (even if it's just one tool)?  Maybe this doesn't matter much. 
 * Non-goals: 
