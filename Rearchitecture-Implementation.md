@@ -1,1 +1,1 @@
-A page for specific [ReArchitecture](ReArchitecture) implementation issues, specifically including issues concerning the ransition from the current implementation.
+A page for specific [ReArchitecture](Rearchitecture-Overview) implementation issues, specifically including issues concerning the transition from the current implementation.
