@@ -21,9 +21,9 @@ Finally, if anything is unclear or the descriptions on this page raise further q
 
 ## Getting the sources
 
-Your contributions and changes will get processed through _pull requests_, so you'll have to create a personal account on [https://github.com](https://github.com), fork the "default" SCons repository, and then clone your private copy to your computer. The page [DeveloperGuide/GitWorkflows](GitWorkflows) lists these steps in greater detail. It also describes how to push your changes back up to Github, so that you can finally create the pull request.
+Your contributions and changes will get processed through _pull requests_, so you'll have to create a personal account on [https://github.com](https://github.com), fork the "default" SCons repository, and then clone your private copy to your computer. The page [GitWorkflows](DevGuide-GitWorkflows) lists these steps in greater detail. It also describes how to push your changes back up to Github, so that you can finally create the pull request.
 
-For a short description of how the source tree is organized you can refer to: [DeveloperGuide/SourceWalkThrough](SourceWalkThrough)
+For a short description of how the source tree is organized you can refer to: [SourceWalkThrough](DevGuide-SourceWalkThrough)
 
 So, you have the sources... now what?
 
@@ -53,7 +53,7 @@ This way, you can check that there are no tests failing on your system in the cu
 
 If they are all passing (there may be several "No results", depending on which tools are available), you can start with development. Make sure your local "`master`" branch is up to date with the canoncial source on GitHub, create a branch to work in, change sources and add files as required, then commit your changes locally. 
 
-Please help us to improve and extend our regression test suite. For a bugfix add one or more test(s) that break before applying your changes, and pass afterwards. When adding features, try to create end-to-end tests covering the new functionality. The "Testing Howto" at [DeveloperGuide/TestingMethodology](TestingMethodology) explains all the details. Try to write your tests so that they work cross-platform.
+Please help us to improve and extend our regression test suite. For a bugfix add one or more test(s) that break before applying your changes, and pass afterwards. When adding features, try to create end-to-end tests covering the new functionality. The "Testing Howto" at [TestingMethodology](DevGuide-TestingMethodology) explains all the details. Try to write your tests so that they work cross-platform.
 
 Ensure that your source changes are properly documented. Especially when changing and adding features, it is expected that you update comments and the XML files accordingly (see section above).  Edit the file "`CHANGES.txt`" by adding your name and a short note, reflecting your contributions.
 
