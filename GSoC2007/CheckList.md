@@ -2,7 +2,7 @@
 
 # Checklist for Google Summer of Code 2007
 
-* <del>Gather the information about what should be contained in a proposal.  It's currently scattered and needs to be collected in one place.</del>  [2007-Feb-18: Done, at least a [solid draft](GSoC2007/Proposal) - JGN] 
+* <del>Gather the information about what should be contained in a proposal.  It's currently scattered and needs to be collected in one place.</del>  [2007-Feb-18: Done, at least a [solid draft](GSoC2007-Proposal) - JGN] 
 * <del>Identify mentors right away</del> [2007-Mar-8 sample done] 
 * <del>Possibly create a mentors@scons mailing list if we have enough.</del> [2007-Feb-22 done] 
 * <del>**Get ideas written up sooner**</del> and figure out how to write better task suggestions. 

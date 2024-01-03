@@ -2,7 +2,7 @@
 
 # How To Write a Good Proposal
 
-This page outlines what is needed in a proposal that will be acceptable to SCons.  For a source of potential tasks, look at the [ideas page](GSoC2007).  You can also look at the [mentors page](GSoC2007/Mentors) for information about the people who will be doing the evaluations. 
+This page outlines what is needed in a proposal that will be acceptable to SCons.  For a source of potential tasks, look at the [ideas page](GSoC2007).  You can also look at the [mentors page](GSoC2007-Mentors) for information about the people who will be doing the evaluations. 
 
 
 ## Requirements

@@ -33,7 +33,7 @@ This structure is taken directly from the [2008 Google application form](http://
 1. **Where is the main IRC channel for your organization?** 
       * We don't use IRC regularly for development. The user IRC channel is `#scons` on the PPDC network (irc`:`//irc.freenode.net/#scons); developers often hang out there. 
 1. **Does your organization have an application template you would like to see students use? If so, please provide it now. (optional)** 
-      * http`:`//scons.org/wiki/GSoC2008/Template 
+      * http`:`//scons.org/wiki/GSoC2008-Template 
 1. **Who will be your backup organization administrator? Please enter their Google Account address. We will email them to confirm, your organization will not become active until they respond. (optional)** 
       * Gary.Oberbrunner`@`gmail.com 
 

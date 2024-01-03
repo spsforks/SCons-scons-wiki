@@ -81,7 +81,7 @@ dev`@`scons.tigris.org
 
 What is the application template you would like contributors to your organization to use.
 : 
-http`:`//scons.org/wiki/GSoC2009/Template 
+http`:`//scons.org/wiki/GSoC2009-Template 
 
 
 What is your plan for dealing with disappearing contributors?

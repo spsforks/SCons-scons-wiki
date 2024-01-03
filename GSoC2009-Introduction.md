@@ -20,6 +20,4 @@ Here's a short list of things a student can do by working on SCons:
 * Apply **complexity analysis** techniques to understand the bottlenecks. 
 * Apply **data mining techniques** on real sets of data to understand the algorithm parameters. 
 * Use **visualization** tools to view data and interpret results. 
-Moreover, unlike large organizations that may have fifty or more proposals for a single idea, SCons gets fewer submissions, so your chances of success are better here. 
-
-There's also a separate page on [writing a proposal for SCons](GSoC2008/Proposal) as well as a page of [SCons mentors](GSoC2008/Mentors).  Possible projects are located in the [ideas page](GSoC2008). 
+There's also a separate page on [writing a proposal for SCons](GSoC2009-Proposal) as well as a page of [SCons mentors](GSoC2009-Mentors).  Possible projects are located in the [ideas page](GSoC2009). 
