@@ -42,7 +42,7 @@ This is a builder that takes a file containing a template and fills it in using 
 * It could take prefix/suffix arguments so template variables could look like %FOO% or $(FOO) or whatever people want. Handling parens like this means maybe handling nested parens in the expressions. Even should allow for no prefix/suffix. 
 * It should be able to take a construction environment as the dictionary, so construction variables get expanded. This shouldn't be the default because it's a little unsafe (you never know what stuff might appear in an Environment in the future and break your build). 
 * There could be a better interface for passing the substitution dict than just overriding SUBST_DICT; apply some creativity here! A Value node or something possibly? 
-It also needs a test suite and documentation. There's some documentation in this wiki at [DeveloperGuide/TestingMethodology](DevGuide0TestingMethodology). 
+It also needs a test suite and documentation. There's some documentation in this wiki at [DeveloperGuide/TestingMethodology](DevGuide-TestingMethodology). 
 
 This is a reasonably-sized project, and well-contained so it should be very easy to integrate the result into the release with minimal disruption. It shouldn't take more than two or three weeks: a week for preparation (exploring ideas, specification, writing some tests), a week for implementation and testing, and a week for documentation and fixing bugs. 
 
