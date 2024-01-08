@@ -21,7 +21,7 @@ Finally, if anything is unclear or the descriptions on this page raise further q
 
 ## Getting the sources
 
-Your contributions and changes will get processed through _pull requests_, so you'll have to create a personal account on [https://github.com](https://github.com), fork the "default" SCons repository, and then clone your private copy to your computer. The page [GitWorkflows](DevGuide-GitWorkflows) lists these steps in greater detail. It also describes how to push your changes back up to Github, so that you can finally create the pull request.
+Your contributions and changes will get processed through _pull requests_, so you'll have to create a personal account on [https://github.com](https://github.com), fork the "default" SCons repository, and then clone your private copy to your computer. The page [GitWorkflows](GitWorkflows) lists these steps in greater detail. It also describes how to push your changes back up to Github, so that you can finally create the pull request.
 
 For a short description of how the source tree is organized you can refer to: [SourceWalkThrough](DevGuide-SourceWalkThrough)
 
