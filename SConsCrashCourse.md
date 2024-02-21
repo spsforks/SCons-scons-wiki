@@ -4,25 +4,27 @@ See [SconsProcessOverview](SconsProcessOverview) for a high level view of SCons 
 
 ## SConstruct and Environment
 
-The main build configuration script for **SCons** is the `SConstruct` file. When the `scons` script is called, it will automatically search for this file in the current directory (actually, several alternate names are also searched for and will be used if found `Sconstruct`, `sconstruct`, `SConstruct.py`, `Sconstruct.py`, `sconstruct.py`).
+The main build configuration script for **SCons** is the `SConstruct` file. When the `scons` script is called, it will automatically search for this file in the current directory (actually, several alternate names are also searched for and will be used if found: `Sconstruct`, `sconstruct`, `SConstruct.py`, `Sconstruct.py`, `sconstruct.py`).
 
-The full SCons API is available for usage from SConstruct, including the **Environment** class. The Environment class describes a **Construction Environment** which controls a build; a build configuration may have several of these if there are different instructions for different parts of the build. Typically a build configuration instantiates this class very early, although it's certainly not required to do so at the very top. 
+The full SCons API is available for usage from `SConstruct, including the **Environment** class. The Environment class describes a **Construction Environment** which controls a build; a build configuration may have several of these if there are different instructions for different parts of the build. Typically, a build configuration instantiates this class very early, although it's certainly not required to do so at the very top. 
 
 ```python
 env = Environment()
 ```
-This sets up a basic environment. Now, you can set up build targets.
+This sets up a basic environment. Now, you can start telling SCons what you want built.
 
 ```python
 env.Program(target='bar', source=['foo.c'])
 ```
-This tells SCons that `bar` is made from source file `foo.c`. SCons has rules for lots of common build tasks so you don't have to describe the actual commands to use. The Program builder figures out that this is a C language build and the the appropriate Action will invoke the appropriate C compiler to build it. Behind the scenes, SCons will also work out if there are other dependencies - for example if `foo.c` includes header files, and maybe those header files include other header files, those are all added to the dependency graph, and SCons can detect when `bar` needs to be rebuilt if any of those dependencies go out of date. This is a big improvement over older build systems that could not detect if a rebuild was needed due to a dependency unless you explicitly called out the dependency.
+This gives SCons three important pieces of information: that you want a program-style target - a thing you could run; that it should take the internal name `bar`; and that the list of sources needed to construct it consists of the single source file `foo.c`. `Program` is an example of an SCons component called a Builder, and they are usually named to give a strong hint what the outcome will be (like `Object`, or `Jar` or `PDF`).
 
-As an additional bit of smarts, note that the *target* is named `bar`, that does not say the produced file is named `bar`. As a multi-platform build tool, SCons understands the needs of the platform it is generating for and deals with any required file suffixes (or prefixes) itself without you having to program in that information.
+SCons has rules for lots of common build tasks, so you don't have to describe the actual commands to use. The Program builder will recognize the file suffix `.c` and lookup the associated transformation template (think "how to call the compiler with the right arguments"). Such a template is called an **Action**, and it is attached to the node that will describe the target, to be filled in when SCons actually issues the build command.  Behind the scenes, SCons will also work out if there are other dependencies - for example if `foo.c` includes header files, and maybe those header files include other header files, those are all added to the dependency graph, and SCons can detect when `bar` needs to be rebuilt if any of those dependencies go out of date. This is a big improvement over older build systems that could not detect if a rebuild was needed due to a dependency unless you explicitly called out the dependency.
+
+As an additional detail, note that the *target* is named `bar`, which does not say the produced file is named `bar`. As a multi-platform build tool, SCons understands the needs of the platform it is generating for and deals with any required file suffixes (or prefixes) itself without you having to program in that information.
 
 For more complex programs you must set up a more specialized environment. For example, setting up the flags the compiler will use, additional directories to search for include files, etc.
 
-To do that you can specify named parameters such as `CCFLAGS` for C files or `CPPFLAGS` for the C++ Preprocessor. More of these can be seen below in this article and also in the [Configuration File Reference](http://www.scons.org/doc/production/HTML/scons-man.html#configuration_file_reference) section of the [man page](http://www.scons.org/doc/production/HTML/scons-man.html).
+To do that you can specify named parameters such as `CCFLAGS` for C files or `CPPFLAGS` for the C/C++ Preprocessor. More of these can be seen below in this article and also in the [Configuration File Reference](http://www.scons.org/doc/production/HTML/scons-man.html#configuration_file_reference) section of the [man page](http://www.scons.org/doc/production/HTML/scons-man.html).
 
 ```python
 # directly when constructing your Environment
