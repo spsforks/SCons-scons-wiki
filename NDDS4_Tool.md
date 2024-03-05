@@ -24,7 +24,7 @@ import SCons.Scanner.IDL
 import SCons.Tool
 import SCons.Util
 
-class ToolNddsWarning(SCons.Warnings.Warning):
+class ToolNddsWarning(SCons.Warnings.SConsWarning):
    pass
 
 class NddsHomeNotFound(ToolNddsWarning):
@@ -84,9 +84,9 @@ def generate(env):
 
       NDDSARCH = os.listdir(os.path.join(NDDSHOME, 'lib') )[0]
    except:
-      print "Error looking for NDDSHOME and/or libraries"
+      print("Error looking for NDDSHOME and/or libraries")
 
-   print "Loading ndds4 tool..."
+   print("Loading ndds4 tool...")
 
    #Set up NDDS environment      
    env.AppendUnique(CPPPATH = [os.path.join(NDDSHOME,'include')] )

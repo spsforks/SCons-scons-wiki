@@ -116,7 +116,7 @@ def when_code(env, bytecode, native, toplevel=None):
         elif env['OCAML_CODE'] == 'toplevel':
                 r = toplevel
         else:
-                print "$OCAML_CODE must be either 'toplevel', 'bytecode' or 'native'"
+                print("$OCAML_CODE must be either 'toplevel', 'bytecode' or 'native'")
                 env.Exit(1)
         return r
 def obj_suffix(env):
@@ -180,7 +180,7 @@ def find_packages(env):
         packs = env.Split(env['OCAML_PACKS'])
         if not is_installed(env['OCAMLFIND']):
                 if len(packs):
-                        print "Warning: ocamlfind not found, ignoring ocaml packages"
+                        print("Warning: ocamlfind not found, ignoring ocaml packages")
                 return ""
         s = "%s query %%s -separator ' ' %s" % (
                 env['OCAMLFIND'], " ".join( packs)
