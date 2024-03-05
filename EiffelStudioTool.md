@@ -1,22 +1,22 @@
 
 # SCons and Eiffel
 
-This is a SCons tool for building [EiffelStudio](http://dev.eiffel.com) projects. It works with [EiffelStudio](http://dev.eiffel.com) 5.7 and above (although the latest [EiffelStudio](http://dev.eiffel.com) is recommended, currently 15.12). It has been tested on Windows (XP, 2003, 7, 2008 and 10), Mac OS X (everything from 10.4 to 10.11) and Linux (Ubuntu 7.10 and 10.04). 
+This is a SCons tool for building [EiffelStudio](https://dev.eiffel.com) projects. It works with EiffelStudio 5.7 and above (although the latest EiffelStudio is recommended, currently 15.12). It has been tested on Windows (XP, 2003, 7, 2008 and 10), Mac OS X (everything from 10.4 to 10.11) and Linux (Ubuntu 7.10 and 10.04). [*update: v23.09 was released in Sept 2023, if anyone has tested with a later release than the 15.12 listed it would be good to update this page*]
 
-Put the builder in a script called _Eiffel.py_, in a directory that you reference with _toolpath_, as shown in the example below; or put it in a directory called _site_scons/site_tools_ as mentioned in the SCons man page. 
+Put the builder in a script called `Eiffel.py`, in a directory that you reference with _toolpath_, as shown in the example below; or put it in a directory called _site_scons/site_tools_ as mentioned in the SCons man page. 
 
 It requires Python 2.4 or above, because it uses the _subprocess_ module which was new in Python 2.4. 
 
 
 ### Sources and Targets
 
-This Eiffel builder knows the nuts and bolts of running [EiffelStudio](http://dev.eiffel.com)'s command-line compiler. Each [EiffelStudio](http://dev.eiffel.com) project has a **.ecf** file (Eiffel configuration file) and builds an executable or a DLL. You feed the builder the path to the **.ecf** configuration file; this is the builder's _source_. You can specify additional source dependencies, if you wish (resource files, icons, etc.). 
+This Eiffel builder knows the nuts and bolts of running EiffelStudio's command-line compiler. Each EiffelStudio project has an Eiffel configuration file (`.ecf`) and builds an executable or a DLL. You feed the builder the path to the `.ecf` configuration file; this is the builder's _source_. You can specify additional source dependencies, if you wish (resource files, icons, etc.). 
 
-The .ecf file contains one or more **targets**. A .ecf target specifies which executable you want to build and how to build it. You specify one of these to the builder. 
+The `.ecf` file contains one or more **targets**. A `.ecf` target specifies which executable you want to build and how to build it. You specify one of these to the builder. 
 
-The target passed to the builder is not the same as the target that the builder emits. The target passed in is a string (e.g., 'foo'), from which the builder computes the emitted full target path (e.g., 'C:\projects\app\EIFGENs\foo\F_code\foo.exe'). The builder's emitter computes the full target path by reading various settings inside the .ecf file. (For example, the `executable_name` setting gives the base name of the target file; sometimes this setting is missing, in which case the base name is the same as the .ecf document element's `name` attribute. The target file extension is also computed; for example, it is .dll if the `msil_generation_type` setting is `dll`.) 
+The target passed to the builder is not the same as the target that the builder emits. The target passed in is a string (e.g., 'foo'), from which the builder computes the emitted full target path (e.g., `C:\projects\app\EIFGENs\foo\F_code\foo.exe`). The builder's emitter computes the full target path by reading various settings inside the `.ecf` file. (For example, the `executable_name` setting gives the base name of the target file; sometimes this setting is missing, in which case the base name is the same as the `.ecf` document element's `name` attribute. The target file extension is also computed; for example, it is .dll if the `msil_generation_type` setting is `dll`.) 
 
-When calling the builder, you may omit the target if you wish. _By default, the Eiffel builder builds the target with the same base name as the .ecf file._ (There will be an error, of course, if the .ecf file has no such target.) 
+When calling the builder, you may omit the target if you wish. _By default, the Eiffel builder builds the target with the same base name as the `.ecf` file._ (There will be an error, of course, if the `.ecf` file has no such target.) 
 
 The builder usually emits one target file path (the executable or dll). In some cases, however, it emits more. 
 
@@ -27,17 +27,17 @@ The builder usually emits one target file path (the executable or dll). In some 
 
 ### The Scanner
 
-Apart from the .ecf file, the most important input to the Eiffel compiler is the universe of **.e** Eiffel class files that it has to compile. These class files are dependencies that the builder figures out for itself, by scanning the .ecf file. The Scanner looks for all _cluster_ and _override_ declarations inside the .ecf, and finds all .e files in each such directory. Therefore, thanks to the Scanner, if you modify an Eiffel class in one of the clusters named in the .ecf, or if you modify the .ecf itself, then the builder will know that it needs to rebuild the project. 
+Apart from the `.ecf` file, the most important input to the Eiffel compiler is the universe of **.e** Eiffel class files that it has to compile. These class files are dependencies that the builder figures out for itself, by scanning the `.ecf` file. The Scanner looks for all _cluster_ and _override_ declarations inside the `.ecf`, and finds all .e files in each such directory. Therefore, thanks to the Scanner, if you modify an Eiffel class in one of the clusters named in the `.ecf`, or if you modify the `.ecf` itself, then the builder will know that it needs to rebuild the project. 
 
 If the cluster or override is recursive, then the Scanner scans the subdirectories too. If it's not recursive but has explicitly-named sub-clusters, the Scanner also understands how to scan these sub-clusters. 
 
-As well as **.e** class files, the scanner detects the following dependencies mentioned in the .ecf file: 
+As well as **.e** class files, the scanner detects the following dependencies mentioned in the `.ecf` file: 
 
-* **.ecf libraries**. (Such libraries are not recursively scanned, however. Although it's useful to detect that the library file itself has changed, a library is a stable thing, so scanning its contents would be a waste of time.) 
+* **`.ecf` libraries**. (Such libraries are not recursively scanned, however. Although it's useful to detect that the library file itself has changed, a library is a stable thing, so scanning its contents would be a waste of time.) 
 * **.NET assemblies**. 
 * External object files. 
 * **.h** or **.hpp** files inside external include directories. 
-Environment variable substitution is performed on the file and directory paths. The Scanner prints warnings if the .ecf file uses undefined environment variables. _Construction variables are deliberately ignored, because it would be incorrect to substitute them given that the Eiffel compiler does not know about SCons construction variables._ The following [EiffelStudio](http://dev.eiffel.com) environment variables are commonly used in .ecf files, so if they are undefined the builder tries to define them with sensible platform-specific assumptions: 
+Environment variable substitution is performed on the file and directory paths. The Scanner prints warnings if the `.ecf` file uses undefined environment variables. _Construction variables are deliberately ignored, because it would be incorrect to substitute them given that the Eiffel compiler does not know about SCons construction variables._ The following EiffelStudio environment variables are commonly used in `.ecf` files, so if they are undefined the builder tries to define them with sensible platform-specific assumptions: 
 
 * **ISE_C_COMPILER** 
 * **ISE_EIFFEL** 
@@ -49,7 +49,7 @@ Environment variable substitution is performed on the file and directory paths. 
 
 The builder has a construction variable **EC**, specifying the Eiffel command-line compiler. It defaults to the path to "ec" found in the **PATH** environment variable. Failing that, it uses the **ISE_EIFFEL** environment variable to construct the path to "ec". If this too fails, then it falls back simply to "ec". (Using **ISE_EIFFEL** is helpful, for example, when running SCons on Linux or Mac via **sudo**, which restricts the **PATH** variable, or if the user has not added "ec" to the path.) 
 
-[EiffelStudio](http://dev.eiffel.com) 6.2 introduced an alternative compiler called "ecb". Its output is identical to the output of "ec", but it reportedly runs about 20% faster. Beware, however, that "ecb" uses its own set of precompiled libraries, rather than the ones installed with [EiffelStudio](http://dev.eiffel.com), so if you are using precompiled libraries you will have to build them specially for "ecb". 
+EiffelStudio 6.2 introduced an alternative compiler called "ecb". Its output is identical to the output of "ec", but it reportedly runs about 20% faster. Beware, however, that "ecb" uses its own set of precompiled libraries, rather than the ones installed with EiffelStudio, so if you are using precompiled libraries you will have to build them specially for "ecb". 
 
 I haven't tested the builder with the Gobo Eiffel compiler [gec](http://www.gobosoft.com/eiffel/gobo/gec/index.html), nor with Helmut Brandl's Eiffel interpreter and compiler [tecomp](http://tecomp.sourceforge.net). 
 
@@ -63,8 +63,8 @@ The **ECFLAGS** construction variable controls what kind of build is done by the
 * `scons ECFLAGS="-finalize -keep -c_compile"`: do an incremental build of a finalized executable, retaining assertions. 
 * `scons ECFLAGS="-precompile -clean" -c_compile`: build a precompiled library. 
 * `scons ECFLAGS="-freeze -c_compile"`: do an incremental freeze (i.e., make a debug executable). 
-* `scons ECFLAGS="-freeze -project_path 62 -c_compile"`: do an incremental freeze, in a subdirectory below the SConscript called "62", rather than the default location below the .ecf file. 
-* `scons ECFLAGS="-freeze -target app_no_precompile -c_compile"`: do an incremental freeze, using the the .ecf target "app_no_precompile". 
+* `scons ECFLAGS="-freeze -project_path 62 -c_compile"`: do an incremental freeze, in a subdirectory below the SConscript called "62", rather than the default location below the `.ecf` file. 
+* `scons ECFLAGS="-freeze -target app_no_precompile -c_compile"`: do an incremental freeze, using the the `.ecf` target "app_no_precompile". 
 Note, in the last example, that specifying the `-target` flag overrides any other way of specifying the target. 
 
 **ECFLAGS** can be set by several means: 
@@ -82,7 +82,7 @@ But you _do_ want to see this output if the build fails! You can open the log fi
 
 ### Example Usage
 
-The following SConstruct assumes that you have created "app.ecf" with 3 targets: 
+The following SConstruct is an example of how to use the EiffelStudioTool. This example assumes that you have previously created an EiffelStudio configuration file called `app.ecf` that has 3 targets: 
 
 * **gobo** to precompile the Gobo library. 
 * **app** to build an executable named "app" without any precompiled libraries. 
@@ -127,7 +127,7 @@ env.Eiffel('app_using_precompile', ['app.ecf', 'app.rc', gobo])
 # Don't call finish_freezing - Peter Gummer, April 2008
 # Support -target and -project_path compiler options and incremental builds - Peter Gummer, May 2008
 # Scanner detects more dependencies - Peter Gummer, June 2008
-# Emitter computes target by reading .ecf file - Peter Gummer, June 2008
+# Emitter computes target by reading `.ecf` file - Peter Gummer, June 2008
 # Support -c_compile compiler option rather than hard-coding it - Peter Gummer, December 2008
 # Fix scanning on non-Windows platforms - Peter Gummer, August 2010
 # Emitter computes target compatibly with EiffelStudio 6.5 and higher - Peter Gummer, August 2010
@@ -525,16 +525,16 @@ def dirname(path, n):
 
 The builder should define **ECCOM** and **ECCOMSTR** to support that common idiom. 
 
-On Windows, if one of the ISE_* environment variables is not defined then [EiffelStudio](http://dev.eiffel.com) looks for it in the registry. The Scanner could simulate this better by likewise looking at the registry. The trouble with this approach (apart from the added complexity) is that it might easily break if [EiffelStudio](http://dev.eiffel.com)'s use of the registry changes in future versions. 
+On Windows, if one of the ISE_* environment variables is not defined then EiffelStudio looks for it in the registry. The Scanner could simulate this better by likewise looking at the registry. The trouble with this approach (apart from the added complexity) is that it might easily break if EiffelStudio's use of the registry changes in future versions. 
 
 When doing a .NET build, the Scanner prints a warning that **$ISE_DOTNET_FRAMEWORK** is undefined. This is the directory containing .NET framework assemblies. We would not normally expect the environment variable to be defined, so it would be good to suppress the warning, unless a reliable way can be found to guess at its value. 
 
-The Scanner scans all of the dependencies that the .ecf mentions, blindly ignoring any targets or conditions specified in the .ecf. This can cause unnecessary nodes in the dependency list. 
+The Scanner scans all of the dependencies that the `.ecf` mentions, blindly ignoring any targets or conditions specified in the `.ecf`. This can cause unnecessary nodes in the dependency list. 
 
-* Conditional scanning would require handling the various cases that [EiffelStudio](http://dev.eiffel.com) itself handles. This would be complicated and error-prone, so it may be best not even to try this one! 
-* A dependency may be declared only for a particular target in the .ecf. There a couple of ways that target-specific scanning might be achieved: 
+* Conditional scanning would require handling the various cases that EiffelStudio itself handles. This would be complicated and error-prone, so it may be best not even to try this one! 
+* A dependency may be declared only for a particular target in the `.ecf`. There a couple of ways that target-specific scanning might be achieved: 
       * One option would be passing the target to the Scanner. A few ideas for doing this: 
             * Perhaps the `Builder()` keyword argument `target_scanner` could be used. 
             * Perhaps the `Scanner()` keyword argument `path_function` could be abused. 
             * Perhaps the emitter might add the target to `Node.attributes`, for the Scanner to retrieve. 
-      * Probably a cleaner option would be to remove the Scanner altogether, instead adding the dependencies to the `sources` list in the emitter. This would also be more efficient, because the .ecf file would be parsed only once, not twice. 
+      * Probably a cleaner option would be to remove the Scanner altogether, instead adding the dependencies to the `sources` list in the emitter. This would also be more efficient, because the `.ecf` file would be parsed only once, not twice. 
