@@ -97,17 +97,17 @@ There are two main construction environment classes, `Environment.Base` and `Env
   * `Errors/StopError(Exception)`
   * `Errors/TaskmasterException(Exception)`
   * `Errors/UserError(Exception)`
-  * `Warnings/CacheWriteErrorWarning(Warning)`
-  * `Warnings/CorruptSConsignWarning(Warning)`
-  * `Warnings/DependencyWarning(Warning)`
-  * `Warnings/DeprecatedWarning(Warning)`
-  * `Warnings/DuplicateEnvironmentWarning(Warning)`
-  * `Warnings/MisleadingKeywordsWarning(Warning)`
-  * `Warnings/MissingSConscriptWarning(Warning)`
-  * `Warnings/NoMD5ModuleWarning(Warning)`
-  * `Warnings/NoMetaclassSupportWarning(Warning)`
-  * `Warnings/NoParallelSupportWarning(Warning)`
-  * `Warnings/ReservedVariableWarning(Warning)`
+  * `Warnings/CacheWriteErrorWarning(SConsWarning)`
+  * `Warnings/CorruptSConsignWarning(SConsWarning)`
+  * `Warnings/DependencyWarning(SConsWarning)`
+  * `Warnings/DeprecatedWarning(SConsWarning)`
+  * `Warnings/DuplicateEnvironmentWarning(SConsWarning)`
+  * `Warnings/MisleadingKeywordsWarning(SConsWarning)`
+  * `Warnings/MissingSConscriptWarning(SConsWarning)`
+  * `Warnings/NoMD5ModuleWarning(SConsWarning)`
+  * `Warnings/NoMetaclassSupportWarning(SConsWarning)`
+  * `Warnings/NoParallelSupportWarning(SConsWarning)`
+  * `Warnings/ReservedVariableWarning(SConsWarning)`
   * `Warnings/Warning(SCons.Errors.UserError)`
 
 ## Executor
