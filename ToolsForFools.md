@@ -99,6 +99,9 @@ Now isn't that much simpler, for you as developer **and** your users? Still we c
 
 First the new code: 
 
+> **Note**
+Previous iterations of this article showed inheriting from `SCons.Warnings.Warning`. The base SCons warning class was renamed to `SConsWarning` as of SCons 4.0.0 to avoid conflicts with the Python language `Warning` class.
+
 
 ```python
 # MIT License
@@ -119,7 +122,7 @@ import SCons.Action
 import SCons.Builder
 import SCons.Util
 
-class ToolJalWarning(SCons.Warnings.Warning):
+class ToolJalWarning(SCons.Warnings.SConsWarning):
     pass
 
 class JalCompilerNotFound(ToolJalWarning):
@@ -222,7 +225,7 @@ import SCons.Action
 import SCons.Builder
 import SCons.Util
 
-class ToolJalWarning(SCons.Warnings.Warning):
+class ToolJalWarning(SCons.Warnings.SConsWarning):
     pass
 
 class JalCompilerNotFound(ToolJalWarning):
@@ -329,7 +332,7 @@ import SCons.Action
 import SCons.Builder
 import SCons.Util
 
-class ToolJalWarning(SCons.Warnings.Warning):
+class ToolJalWarning(SCons.Warnings.SConsWarning):
     pass
 
 class JalCompilerNotFound(ToolJalWarning):
@@ -467,7 +470,7 @@ import SCons.Action
 import SCons.Builder
 import SCons.Util
 
-class ToolJalWarning(SCons.Warnings.Warning):
+class ToolJalWarning(SCons.Warnings.SConsWarning):
     pass
 
 class JalCompilerNotFound(ToolJalWarning):
