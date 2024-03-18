@@ -29,7 +29,6 @@ python bin/docs-create-example-outputs.py
 - [ ] Update CHANGES.txt (should already be up to date) 
 - [ ] Update RELEASE.txt (should already be up to date) 
 - [ ] Update ReleaseConfig
-- [ ] Commit 
 - [ ] Update `default_version` in SConstruct
 - [ ] Build packages and doc: `python scripts/scons.py >& build-XYZ.log` (good idea to save build logfile somewhere) 
 
