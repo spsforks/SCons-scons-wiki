@@ -10,7 +10,7 @@ The procedure has been used for all releases since 4.3.0.
 ```bash
 git fetch 
 git checkout -b rel_<NAME> master
-git clean -xfb
+git clean -xfd
 ```
 
 
