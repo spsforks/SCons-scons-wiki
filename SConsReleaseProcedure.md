@@ -28,6 +28,7 @@ python bin/docs-create-example-outputs.py
 - [ ] Commit the auto-generated doc changes to current branch ("Regenerated docs for X.Y.Z release.") 
 - [ ] Update CHANGES.txt (should already be up to date) 
 - [ ] Update RELEASE.txt (should already be up to date) 
+- [ ] Update ReleaseConfig
 - [ ] Commit 
 - [ ] Update `default_version` in SConstruct
 - [ ] Build packages and doc: `python scripts/scons.py >& build-XYZ.log` (good idea to save build logfile somewhere) 
@@ -43,7 +44,8 @@ scons-local-$VERSION.tar.gz
 scons-local-$VERSION.zip
 
 ```
-
+- [ ] Commit the above changes to git and push. 
+- [ ] Tag and push tag
 
 ## Upload Software and Doc
 - [ ] Run `bin/upload-release-files.sh X.Y.Z mysfusername`
@@ -56,12 +58,15 @@ scons-local-$VERSION.zip
 ## Prepare Announcement and announce to all
 
 * Use RELEASE.txt as blurb 
-* Update scons.org
 
+
+
+## Update website
 
 | File   | Changes  |
 |---|---|
 | versions.py  | update SCONS_PRODUCTION_VERSION, SCONS_PRIOR_VERSION, SCONS_API_VERSIONS  |
+| content/documentation/documentation.md | Update the version for each type of documentation |
 | content/releases/release-###.rst | add an announcement |
 
 
