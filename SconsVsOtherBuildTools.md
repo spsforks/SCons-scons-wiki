@@ -102,7 +102,7 @@ Qmake's predecessor was called [tmake](http://www.trolltech.com/download/freebie
 
 # A-A-P
 
-[A-A-P](http://www.a-a-p.org) is another python based build tool, written by Vim's author Bram Moolenar. 
+[A-A-P](http://www.a-a-p.org) is another python based build tool, written by Vim's author Bram Moolenar (RIP.)
 
 
 # Ant
