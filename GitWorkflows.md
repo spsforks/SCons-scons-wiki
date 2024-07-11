@@ -81,6 +81,7 @@ Create a new topic branch to work in. Make changes. Run appropriate tests. If us
 
 You may have to write or modifiy the tests.  If fixing a bug that was not detected by the testsuite, construct a test case that shows the problem and make sure it fails, and then passes with your fix.  Issues reporting bugs are requested to include a reproducer, this might provide a useful starting point for a testcase.
 
+Compose a brief description of the change for the release notes (currently, one entry each in `CHANGES.txt` and `RELEASE.txt`), letting users of SCons know how they will be affected, and if appropriate, any steps they might take to adapt to new behavior.
 
 ## Rebasing changes
 
