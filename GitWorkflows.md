@@ -16,14 +16,30 @@ For those who don't want to read the entire page, here is a quick summary:
 ```
   Without the above, git push would try to push your change to the upstream repo
 * Do your work 
-* Add a blurb on your proposed change to `CHANGES.txt`.
+* Add a blurb on your proposed change to `CHANGES.txt` and `RELEASE.txt`.
 * `git push`
 * Go to the web interface of your fork and push `Create pull request` button.
 * Fill in the template and submit.
 
 ## Overview for Github Beginners
 
-To create Pull Requests ("hi, SCons maintainers, I am _Requesting_ you _Pull_ this set of changes into the official mainline"), you need to juggle a few things.  You need a git branch somewhere on github which will be associated with the branch you want to merge to.  Since most of us will not have the rights to do that in the SCons/scons repository, that will usually be a copy ("fork") in your own github account.  And you also need a copy to actually make changes to on your own computer.  So you fork the official repository, then clone your fork to your computer. You work on your own computer to make the changes and push those up to your github fork. Then you can create a PR, which is easy because github remembers your copy of SCons is associated with the official SCons repository.
+Changes to SCons are handled via a "fork and pull" model.
+That means you make a fork of the SCons GitHub repository in your own account,
+create a "topic" branch for your work, and push your changes to it.
+When you are ready to share that work,
+you submit a *Pull Request* from your topic branch to the main SCons branch.
+A pull request (PR) is a proposal to merge changes from one branch to another.
+That triggers discussion over the details of the proposal, and you may
+need to iterate on your branch a few times to address review comments.
+While the PR is active, it will update automatically when it
+sees changes to your topic branch, so there's no further cooordination
+work you have to do on it.
+
+Following this workflow can be a little challenging if you've never
+used it before, but soon becomes familiar.
+
+The main trick is, you need two copies of the SCons repository:
+one in your github account, and one on your computer.
 
 ## Guidelines
 
@@ -31,9 +47,15 @@ To create Pull Requests ("hi, SCons maintainers, I am _Requesting_ you _Pull_ th
 * A (free) GitHub account is needed.
 * Patches are reviewed and accepted by the release team.
 * For point releases and fixes, apply the patch to the oldest supported release, then merge it to default branch (if necessary)
-* Development is done on default branch; named branches are for maintenance and for some large features.
+* Development is done on default branch; named branches are for maintenance and for occasional large features.
 
-## Clone SCons repository
+## Fork repository on GitHub for creating pull requests
+
+Login to [GitHub](https://github.com/), go to [https://github.com/SCons/scons](https://github.com/SCons/scons) and click the "fork" button (a blue arrow).
+
+## Clone your SCons fork
+
+
 
 ```txt
 git clone git@github.com:SCons/scons.git
@@ -47,10 +69,6 @@ Now you should have a copy of the sources in the "`scons`" folder.
   * `git config --global blame.ignoreRevsFile .git-blame-ignore-revs`
   * This allows specifying that certain commits are to be ignored for git blame purposes. (For example mass reformatting)
 
-
-## Fork repository on GitHub side for creating pull requests
-
-Login to [GitHub](https://github.com/), go to [https://github.com/SCons/scons](https://github.com/SCons/scons) and click the "fork" button (a blue arrow).
 
 
 ## Making changes
