@@ -46,8 +46,7 @@ one in your github account, and one on your computer.
 * If you have a patch which follows the [submission guidelines](http://www.scons.org/guidelines.html) (code, doc, test) you can submit a [Pull Request ("PR")](https://github.com/SCons/scons/pulls) on GitHub.
 * A (free) GitHub account is needed.
 * Patches are reviewed and accepted by the release team.
-* For point releases and fixes, apply the patch to the oldest supported release, then merge it to default branch (if necessary)
-* Development is done on default branch; named branches are for maintenance and for occasional large features.
+* Development is done on master branch; named branches are for releases and for occasional large features.
 
 ## Fork repository on GitHub for creating pull requests
 
