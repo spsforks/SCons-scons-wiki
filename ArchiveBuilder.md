@@ -10,7 +10,6 @@ Save this file as 'archive.py' and put it somewhere accessible from your environ
 
 ```python
 #!python
-#! /usr/bin/env python
 #
 # Copyright 2007 Nicolas Rougier
 #
@@ -36,7 +35,7 @@ from archive import Files, archive_builder
 
 ...
  
-env.Append (BUILDERS = {'Archive' : archive_builder})
+env.Append (BUILDERS={'Archive': archive_builder})
 
 ...
 
@@ -53,7 +52,7 @@ import fnmatch
 import tarfile, zipfile
 
 # _________________________________________________________________________Files
-def Files (path, include = ['*'],  exclude= []):
+def Files (path, include=['*'],  exclude=[]):
     """ Recursively find files in path matching include patterns list
         and not matching exclude patterns
     """
@@ -105,8 +104,5 @@ def ArchiveString (target, source, env):
     """ Information string for Archive """
     return 'Making archive %s' % os.path.basename (str (target[0]))
 
-archive_builder = Builder (action = SCons.Action.Action(Archive, ArchiveString))
-
-
-
+archive_builder = Builder(action=SCons.Action.Action(Archive, ArchiveString))
 ```
