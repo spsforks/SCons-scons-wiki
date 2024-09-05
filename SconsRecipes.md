@@ -153,6 +153,7 @@
 * [CudaTool](CudaTool) - tool for NVidia's CUDA
 * [Building Debian packages](http://quentinsf.com/writings/debscons/)
 * Quite a bunch of SCons techniques, including the use of SConf, can be seen in the [https://madman.sf.net](https://madman.sf.net) madman build scripts
+* [Cluster Integration](Integration-with-Cluster-Management): Example of using slurm to distribute build steps to a cluster
 
 ---
 
