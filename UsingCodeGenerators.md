@@ -28,7 +28,7 @@ mk_vds_tool = env.Program(target="mk_vds", source="mk_vds.c")
 # create emitter that says that any target (.vds) depends on our mk_vds program
 def mk_vds_emitter(target, source, env):
     env.Depends(target, mk_vds_tool)
-    return (target, source)
+    return target, source
 
 
 # create a builder (that uses the emitter) to build .vds files from .txt files
