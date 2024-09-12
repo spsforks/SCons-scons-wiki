@@ -25,6 +25,7 @@ python bin/docs-create-example-outputs.py
 ```
 
 - [ ] Check if there's anything specific to this version in `doc/man/scons.xml` that should be updated.. For example, support for a particular Python version may be deprecated or dropped in this SCons release. In particular, look for the sequence **`requires Python`**. It's worth rerunning the `docs-validate.py` script if a change was made here.
+- [ ] Check for any instances of `NEXT_RELEASE` in the code/docs and replace with the version being released. (TODO: Script this)
 - [ ] Commit the auto-generated doc changes to current branch ("Regenerated docs for X.Y.Z release.") 
 - [ ] Update CHANGES.txt (should already be up to date) 
 - [ ] Update RELEASE.txt (should already be up to date) 
