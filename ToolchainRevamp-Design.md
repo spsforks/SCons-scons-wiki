@@ -9,9 +9,9 @@ There are two main objects in the toolchain: a `Tool`, and a `Toolchain`.
 
 A Tool's job is to update an Environment with variables and one or more Builders to build something.
 
-This new Tool design preserves the current named-tool syntax but allows currying args to the tool, which we should use to replace the existing method of pre-setting Environment vars which the tool examines.  Tools shouldn't change their behavior anymore based on Env (except for a few well-defined systemwide properties), but instead take args.
+This new Tool design preserves the current named-tool syntax but allows currying args to the tool, which we should use to replace the existing method of pre-setting Environment vars which the tool examines.  Tools shouldn't change their behavior any more based on Env (except for a few well-defined systemwide properties), but instead take args.
 
-tool constructors produce a Tool object.  Each tool object has a name. There's no need for distinct tool instances with the same args (tools don't have internal state apart from their args or derived from them) so they can be memoized.
+Tool constructors produce a Tool object.  Each tool object has a name. There's no need for distinct tool instances with the same args (tools don't have internal state apart from their args or derived from them) so they can be memoized.
 
 `tool=Tool(classname, toolname, **kw)`: returns a Tool object of the appropriate subclass.  classname can be any registered tool name. Names are registered by the Tool.
 
@@ -24,7 +24,7 @@ tool constructors produce a Tool object.  Each tool object has a name. There's n
 * this must be fast; can cache results.
 `tool.generate()`: apply tool to environment.  Pretty much same as old system.
 
-`tool.version`: tuple of version.  Typically ints: (maj, min, build) but will be compared elementwise.
+`tool.version`: tuple of version.  Typically, ints: (maj, min, build) but will be compared elementwise.
 
 `tool.author, release_date, license`: strings.  All optional.
 
@@ -117,11 +117,9 @@ msvc_c_toolchain = SimpleToolchain([msvc_c, msvc_link, msvc_lib], Toolchain.OPTI
 intel_c_toolchain = SimpleToolchain(intel_c, intel_link) # requires msvc_c_toolchain on Windows too; how to capture that?
 windows_c_toolchain = OrToolchain(intel_c_toolchain, msvc_c_toolchain, gnu_c_toolchain)
 ```
-* What about tool ABIs and other args here?  This doesn't capture x86
-   * vs. x86_64, though the base tools in a toolchain can have args, so it's possible to build toolchains that specify ABIs -- it's just not easy to do by default.  Maybe need global vars for this, yuck.
-* What about the fact that Intel C requires the base C compiler?  Some
-   * form of `Tool.Depends()` or `Toolchain.Depends()`?
-* How can user know that optional tools are missing?  (A: mytool.exists())  What happens if they're used?  Should be something sensible.
+* What about tool ABIs and other args here?  This doesn't capture x86 vs. x86_64, though the base tools in a toolchain can have args, so it's possible to build toolchains that specify ABIs -- it's just not easy to do by default.  Maybe need global vars for this, yuck.
+* What about the fact that Intel C requires the base C compiler?  Some form of `Tool.Depends()` or `Toolchain.Depends()`?
+* How can user know that optional tools are missing?  (A: `mytool.exists()`)  What happens if they're used?  Should be something sensible.
 
 ### Updating Toolchains
 
@@ -149,9 +147,9 @@ I'm deliberately staying away from platform specification here (GNU-like tuples 
 
 `Tool.exists` should return end-user-useful error messages, but not throw exceptions.  Toolchains are responsible for displaying those errors when appropriate, and hiding them otherwise (e.g. when testing which toolchain to use).
 
-`Tool.generate` may throw exceptions in error cases because exists() can't always predict perfectly that the tool will work properly; error messages should be extra-helpful here.
+`Tool.generate` may throw exceptions in error cases because `exists()` can't always predict perfectly that the tool will work properly; error messages should be extra-helpful here.
 
-Missing but used tools: this shouldn't happen anymore, because the toolchain will give an error as the Environment is being constructed. We should never get into a situation where e.g. $CC is empty when the Object() builder is called.  HOWEVER, just in case it could happen, we should have some kind of requires(toolchain) method in builders to catch this error and tell the user.  This might be a lot of work to thread through everything however.
+Missing but used tools: this shouldn't happen anymore, because the toolchain will give an error as the Environment is being constructed. We should never get into a situation where e.g. `$CC` is empty when the `Object()` builder is called.  HOWEVER, just in case it could happen, we should have some kind of requires(toolchain) method in builders to catch this error and tell the user.  This might be a lot of work to thread through everything however.
 
 
 ## Use Cases
