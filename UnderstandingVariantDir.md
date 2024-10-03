@@ -1,34 +1,34 @@
-Okay, I have been trying to beat SCons into submission several times and I kept staring at VariantDir and how it should affect me.  I *think* I understand it as well as the malfunction most people have with it.  `VariantDir()` <ins>is</ins> somewhat crappily named, but only somewhat.  It does what the developers say it does, but they tend to explain the rare use case of multiple build types rather than the common use case of a pristine source tree off in la la land.  So, we present: 
+Okay, I have been trying to beat SCons into submission several times and I kept staring at ``VariantDir`` and how it should affect me.  I *think* I understand it as well as the malfunction most people have with it.  `VariantDir()` *is* somewhat crappily named, but only somewhat.  It does what the developers say it does, but they tend to explain the rare use case of multiple build types rather than the common use case of a pristine source tree off in la la land.  So, we present: 
 
 **Table of Contents**
 
 [TOC]
 
-_Comment by [GregNoel](GregNoel): First, there's too much detail, so much so that the (extremely valid) points get lost.  Second, any attempt to explain VariantDir that doesn't contrast it with Repository is flawed, because that's <ins>exactly</ins> what delivers "a pristine source tree off in la la land."  Third, VariantDir is badly conflated with the [SCons build model](UsingVariantDir), so that should be discussed here as well.  Please contact me directly for more detailed suggestions._ 
+_Comment by [GregNoel](GregNoel): First, there's too much detail, so much so that the (extremely valid) points get lost.  Second, any attempt to explain VariantDir that doesn't contrast it with Repository is flawed, because that's *exactly* what delivers "a pristine source tree off in la la land."  Third, ``VariantDir`` is badly conflated with the [SCons build model](UsingVariantDir), so that should be discussed here as well.  Please contact me directly for more detailed suggestions._ 
 
 
-# Andy's 3 Step Guide To VariantDir()
+# Andy's 3 Step Guide To ``VariantDir()``
 
 
-## Step 1: VariantDir() isn't the droid you're looking for
+## Step 1: ``VariantDir()`` isn't the droid you're looking for
 
 If your use case is "Get SCons to quit putting !@#$ in the same directory as my SConscript file and put it over <ins>there</ins> instead."  You want the variant_dir argument to SConscript().  Stop here. 
 
 
-## Step 2: VariantDir() might be the droid you're looking for
+## Step 2: ``VariantDir()`` might be the droid you're looking for
 
 If your use case is "I have this external source tree that I can't pull directly under my SCons directories and can't put an SConscript in it, but I still need to build it without putting SCons droppings all over it."  You probably want `VariantDir()`.  To me, this is the most common case because it resembles the pristine "source" directory that people familiar with GNU want. 
 
 
-## Step 3: VariantDir() is definitely the droid you're looking for
+## Step 3: ``VariantDir()`` is definitely the droid you're looking for
 
-If your use case is "I need multiple types of builds and targets built simultaneously."  You almost certainly want `VariantDir()`.  I won't cover this case here as this is what the main developers cover at length in their descriptions.  I couldn't possibly explain this as well as they do since I don't really use it yet. 
+If your use case is "I need multiple types of builds and targets built simultaneously."  You almost certainly want ``VariantDir()``.  I won't cover this case here as this is what the main developers cover at length in their descriptions.  I couldn't possibly explain this as well as they do since I don't really use it yet. 
 
 
 # Examples:
 
 
-## Step 1: VariantDir() isn't the droid you're looking for
+## Step 1: ``VariantDir()`` isn't the droid you're looking for
 
 Let's look at a fairly simple example of an sconstruct.  What is in the sconscript isn't so relevant, yet.  Here is what things look like: 
 
@@ -194,9 +194,9 @@ drwxr-xr-x 5 nds nds  4096 Apr 12 22:48 ..
 Hey, Presto!  All of the files got placed under the subdirectory BUILD/LIBLWIP4 just like we specified. Congratulations, if all you wanted was to make scons generate files away from your sconscript file and its directory, you're done. If not, read on ... 
 
 
-## Step 2: VariantDir() might be the droid you're looking for
+## Step 2: ``VariantDir()`` might be the droid you're looking for
 
-"Hey!", you say.  "Where did all those files come from?  We don't have anything to create those."  This is where [VariantDir](VariantDir)() comes in. This time we're going to focus on the sconscript down in the bfs subdirectory. For these examples, I'm going to leave the variant_dir in place in the sconstruct as I don't want files going all over my nice, clean areas with sconstruct and sconscript. So, let's take a look at that sconscript, shall we: 
+"Hey!", you say.  "Where did all those files come from?  We don't have anything to create those."  This is where ``VariantDir()`` comes in. This time we're going to focus on the sconscript down in the bfs subdirectory. For these examples, I'm going to leave the variant_dir in place in the sconstruct as I don't want files going all over my nice, clean areas with sconstruct and sconscript. So, let's take a look at that sconscript, shall we: 
 
 
 ```console
@@ -256,14 +256,14 @@ netifFiles = ["NETIF/loopif.c", "NETIF/etharp.c", "NETIF/slipif.c"]
 liblwip4 = env.StaticLibrary("lwip4", [coreFiles, core4Files, apiFiles, netifFiles])
 Return("liblwip4")
 ```
-Whoa!  What the ... ?!?!  *3* [VariantDir](VariantDir)()'s?  Capital letters in directories that don't exist?!?!  Source files that appear from nowhere?  What is going on? 
+Whoa!  What the ... ?!?!  *3* ``VariantDir()``'s?  Capital letters in directories that don't exist?!?!  Source files that appear from nowhere?  What is going on? 
 
-What is happening is that [VariantDir](VariantDir)() is being used to pull files from an area outside of the direct control of scons and build those files under the control of scons.  If you can add an sconscript to the source directory, you really shouldn't be playing with [VariantDir](VariantDir)().  In this instance, the lwip library is outside of our control and cannot be saddled with an sconscript, yet is sufficiently dependent that we have to rebuild it with the local application.  This is a prime example for [VariantDir](VariantDir)(). 
+What is happening is that ``VariantDir()`` is being used to pull files from an area outside of the direct control of scons and build those files under the control of scons.  If you can add an sconscript to the source directory, you really shouldn't be playing with ``VariantDir()``.  In this instance, the lwip library is outside of our control and cannot be saddled with an sconscript, yet is sufficiently dependent that we have to rebuild it with the local application.  This is a prime example for ``VariantDir()``. 
 
-In my opinion, right here is the crux of the [VariantDir](VariantDir)() misunderstandings.  [VariantDir](VariantDir)() does *two* separate things of which one isn't explained very often.  I have chosen to use capital letters to highlight the fact that there are two things occurring simultaneously. 
+In my opinion, right here is the crux of the ``VariantDir()`` misunderstandings.  ``VariantDir()`` does *two* separate things of which one isn't explained very often.  I have chosen to use capital letters to highlight the fact that there are two things occurring simultaneously. 
 
 
-### A) VariantDir() sets up a prefix to original directory substitution for target files
+### A) ``VariantDir()```` sets up a prefix to original directory substitution for target files
 
 This is the task which isn't discussed very explicitly.  The line: 
 ```python
@@ -292,11 +292,11 @@ core4Files = ["BELCH/ipv4/icmp.c",  "BELCH/ipv4/igmp.c",  "BELCH/ipv4/ip_addr.c"
               "BELCH/ipv4/ip.c",  "BELCH/ipv4/ip_frag.c"]
 ```
 
-### B) VariantDir() copies the external files from the source directory into the working area.
+### B) ``VariantDir()`` copies the external files from the source directory into the working area.
 
-In doing so, [VariantDir](VariantDir)() has to put those files into the working area somewhere so that it can avoid name collisions.  It does so by setting the build directory equivalent to prefix name. 
+In doing so, ``VariantDir()`` has to put those files into the working area somewhere so that it can avoid name collisions.  It does so by setting the build directory equivalent to prefix name. 
 
-*This* is the fact that everybody focuses on and gives [VariantDir](VariantDir)() its' name.  Going back to the original sconscript, let's take a look at the organization of the build directory after scons gets through running: 
+*This* is the fact that everybody focuses on and gives ``VariantDir()`` its' name.  Going back to the original sconscript, let's take a look at the organization of the build directory after scons gets through running: 
 
 
 ```console
@@ -573,6 +573,6 @@ drwxr-xr-x 5 nds nds  4096 Apr 12 23:43 ..
 This time scons pulls the files from "/home/nds/lwip-scons/lwip/src/core/" and deposits them into BUILD/LIBLWIP4/BELCH.  Even though the name of the "build directory" has changed, everything still compiles just fine.  This is the usage that receives the most attention and leads to ... 
 
 
-## Step 3: VariantDir() is definitely the droid you're looking for
+## Step 3: ``VariantDir()`` is definitely the droid you're looking for
 
-If your use case is: "I need multiple types of builds and targets built simultaneously."  You almost certainly want [VariantDir](VariantDir)().  In that case, I suggest starting with the [UsingVariantDir](UsingVariantDir) entry.  The main developers explain this case far better than I ever could. 
+If your use case is: "I need multiple types of builds and targets built simultaneously."  You almost certainly want ``VariantDir()``.  In that case, I suggest starting with the [UsingVariantDir](UsingVariantDir) entry.  The main developers explain this case far better than I ever could. 
