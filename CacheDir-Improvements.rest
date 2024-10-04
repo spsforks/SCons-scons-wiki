@@ -18,10 +18,11 @@ Here are some collected thoughts on improving the benefits the SCons derived-fil
 
   * Remote backends: a proposed implementation ([3971](/SCons/scons/pull/3971) is written to a specific back-end style, that used by `bazel-remote`, which is a WebDAV style and uses two storage buckets (named `/ac` and `/cas`), because `bazel` also caches its' idea of Actions.  A more general approach would be to allow any key-value store like Redis/Valkey, Memcached, various cloud options, etc.
 
-  * Remote configuration: there should be a way to set attributes for use of the remote, such as considering it read-only.
+  * Remote configuration: there should be a way to set attributes for use of the remote, such as considering it read-only. Should account for local settings and possibly remote - to follow the example, *we* could decide to treat the remote as read-only, or the remote could decide that it's read-only to us.  Not very nice if we think we can update the remote and fail a build because it won't let us, but we also don't want to keep trying and ignore the failures, that would be a considerable resource waste.
 
   * Network retrieval is "slow" in computer terms, SCons currently does cache retrieval in a blocking fashion, but that wouldn't be desirable for remote.  How should the asynchronous fetching of (possibly) network-cached files be implemented? 
 
+  * Cleanup: SCons doesn't currently prune a local cache (that's a top-level bullet on this page).  It doesn't make much sense for a local SCons to try to manage a remote storage set up to presumably serve many users.
 
 
 *Existing saved discussions to be pasted*
