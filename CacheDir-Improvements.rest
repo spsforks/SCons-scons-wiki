@@ -1,1 +1,27 @@
-A place to hold thoughts about ways the derived-file cache functionality could be improved.
+Here are some collected thoughts on improving the benefits the SCons derived-file cache brings to the table. At the moment, there is no ordering: where things appear on this page should not imply anything about priority, usefulness, ease of implementation, or any other metric. That would be useful to add.
+
+* Cache management support: SCons has no cache size limit or file count limit, and does not prune the cache. This should be provided. If SCons itself implemented a (settable) size limit, it would have to implement a policy for when to evict old entries (LRU is the common choice).  A separate cache management utility would leave the SCons code simpler and might be desirable for performance reasons as well. There is a trick that was contributed to this wiki that adds some support for size limiting: [[LimitCacheSizeWithProgress]]
+
+* Automatic caching:  would it be desirable to enable caching by default, with an option to disable entirely or selectively?  Various other systems do this.  It might be a surprise that builds cause disk space consumption, but it might produce better performance out of the box.
+
+* Set the cache directory from the command line.  This has an issue filed - refer there: [3618](/SCons/scons/issues/3618)
+
+* Produce cache logs in a machine-parsable format. See [3696](/SCons/scons/issues/3696). For an illustration, `ccache` has these command-line options: `--show-stats` to produce a readable statistics output, `--print-stats` to produce a predictable TSV format.
+
+* Enhanced/persistent cache statistics: at the moment, cache requests and hits are collected for the duration of an SCons run, and emitted only if `--cache-debug` is requested.  Cache information could be stored in the cache to allow examination of longer-term cache statistics, plus some more general information could be shown like cache disk/file size, ages, etc.) 
+
+* Cache compression: should there be an option (or default) to compress cache entries?
+
+* Remote cache storage.  This is a highly desired topic.  As developers mostly work on individual machines, sharing cache across a team needs a network mode.  This comes with a bunch of considerations, and will likely add a bunch of options.  A few bullet points, see discussion below for more details.
+
+  * Cache policy: how a local and remote cache interact needs to be defined.  There could be a settable policy (SCons uses a "policy" approach for options like `--duplicate` and `--decider``), like the , or the policy can be derived from the combination of flags. This needs to address: is this run L-only, R-only, L+R; if both, which to prefer; does L-miss + R-hit cause a write to L.
+
+  * Remote backends: a proposed implementation ([3971](/SCons/scons/pull/3971) is written to a specific back-end style, that used by `bazel-remote`, which is a WebDAV style and uses two storage buckets (named `/ac` and `/cas`), because `bazel` also caches its' idea of Actions.  A more general approach would be to allow any key-value store like Redis/Valkey, Memcached, various cloud options, etc.
+
+  * Remote configuration: there should be a way to set attributes for use of the remote, such as considering it read-only.
+
+  * Network retrieval is "slow" in computer terms, SCons currently does cache retrieval in a blocking fashion, but that wouldn't be desirable for remote.  How should the asynchronous fetching of (possibly) network-cached files be implemented? 
+
+
+
+*Existing saved discussions to be pasted*
