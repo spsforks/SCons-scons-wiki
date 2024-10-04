@@ -124,7 +124,7 @@ First of all, you are going to want [PythonMode](https://www.emacswiki.org/cgi-b
 For Emacs, it is suggested to add the following to your .emacs files, to enable Python mode for SConstruct and SConscript files. 
 
 
-```txt
+```lisp
  (setq auto-mode-alist
       (cons '("SConstruct" . python-mode) auto-mode-alist))
  (setq auto-mode-alist
