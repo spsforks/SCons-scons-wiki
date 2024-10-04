@@ -1,10 +1,10 @@
 ## How to limit the cache size (by abusing Progress())
 
-The cache for derived files currently will grow indefinitely, which can cause problem for automated builds, or if the build generates very large files. It is however possible to attach a cleanup function to Progress(), which gets called every a few steps during the build.
+The cache for derived files currently will grow indefinitely, which can cause problems for automated builds, or if the build generates very large files. It is however possible to attach a cleanup function to `Progress()`, which gets called every a few steps during the build.
 
-In the scenario from which the following example stems, object files are generated with varying compile time and sizes, and be able to cache large Fortran code with compile time on the order of several minutes is critically important. Therefore, a predictor is needed to estimate the time penalty for removing a file from the cache, and resulting in a rebuild. In this simple example, the rebuilt time is considered as proportional to the derived file size, and the likelihood of rebuilding decays exponentially. Therefore, the weight for each file is calculated as size * exp(-age * log(2) / half_time), and the file with the smallest weights are removed first.
+In the scenario from which the following example stems, object files are generated with varying compile time and sizes, and be able to cache large Fortran code with compile time on the order of several minutes is critically important. Therefore, a predictor is needed to estimate the time penalty for removing a file from the cache, and resulting in a rebuild. In this simple example, the rebuilt time is considered as proportional to the derived file size, and the likelihood of rebuilding decays exponentially. Therefore, the weight for each file is calculated as `size * exp(-age * log(2) / half_time)`, and the file with the smallest weights are removed first.
 
-Scanning through the cache directory, if done at every step of the build, can have a large impact for a large build. This is avoided using Progress()' ninterval, and the cache directory is allowed to grow beyond the limit for few steps into the build.
+Scanning through the cache directory, if done at every step of the build, can have a large impact for a large build. This is avoided using the`Progress()` `ninterval` argument, and the cache directory is allowed to grow beyond the limit for a few steps into the build.
 
 ```py
 import os, sys, glob, time, math
