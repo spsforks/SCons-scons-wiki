@@ -2,13 +2,46 @@ A page for the specific use case(s) we're trying to design for.
 
 This is _not_ intended to cover all of the functionality, but instead to list the common use cases that we believe cover "90%" of what users want from SCons.  The goal is to design the architecture for optimal performance of these "90%" cases.  Functionality outside of the "90%" use cases defined here will be supported (eventually), but performance may suffer. 
 
-[TOC]
+<!-- TOC -->
+<a name="contents">
+
+ - [THE Performance Test Configuration](#the-performance-test-configuration)
+   - [Common code plus three variants](#common-code-plus-three-variants)
+   - [One repository](#one-repository)
+   - [C/C++ Compilation](#cc-compilation)
+   - [Java](#java)
+   - [Documentation](#documentation)
+   - [Hierarchy](#hierarchy)
+   - [Packaging](#packaging)
+   - [Configuration(???)](#configuration)
+   - [Qt(???)](#qt)
+ - [Use Cases for the configuration]( use-cases-for-the-configuration)
+   - [Full-tree build](#full-tree-build)
+   - [Null build](#null-build)
+   - [Null+1 .c build](#null1-c-build)
+   - [Null+1 .h build](#null1-h-build)
+   - [Null+1 .java build](#null1-java-build)
+ - [Out-of-scope things](#out-of-scope-things)
+   - [Generated Header Files](#generated-header-files)
+   - [Pre-Compiled Headers](#pre-compiled-headers)
+   - [Built Source Files](#built-source-files)
+   - [Fortran programs](#fortran-programs)
+ - [Test Configuration Generator](#test-configuration-generator)
+   - [Top-level SConstruct](#top-level-sConstruct)
+   - [Top-level SConscript](#top-level-sConscript)
+   - [Include](#include)
+   - [Libraries](#libraries)
+   - [Programs](#programs)
+   - [Java](#java)
+   - [Documentation](#documentation)
+   - [Source](#source)
+<!-- /TOC -->
 
 
 # THE Performance Test Configuration
 
 (((SK:  I'm going to suggest that we try to create _one_ configuration that will represent our canonical test bed for performance tests.  It will be a reasonably large, multi-language project that contains at least some of all of the common tools that we want, as well as use of key features within the "90%" scope.)))   
-(((JGN: Although I agree with the general idea, I view this as the integration test, the performance test for everything combined.  But there also should be <ins>unit</ins> tests, where a single component is exercised in detail.  Since we're not going to get to this level of testing overnight (or even soon), the most productive route is to create the all-in-one test first and then create more focused tests as we go along.))) 
+(((JGN: Although I agree with the general idea, I view this as the integration test, the performance test for everything combined.  But there also should be *unit* tests, where a single component is exercised in detail.  Since we're not going to get to this level of testing overnight (or even soon), the most productive route is to create the all-in-one test first and then create more focused tests as we go along.))) 
 
 Note that the specific numbers below are simply stakes in the ground for a default canonical use case for initial testing/design purposes. 
 
@@ -19,7 +52,7 @@ That said, the suggested default values can be adjusted in response to better in
 (((SK:  I'm re-evaluating my thinking here.  I added your suggestions re: test generation, and I agree about the need for performance test cases of specific components, and for the ability to scale factors in the larger test case like this.  My concern is that monolithic thinking has gotten us into trouble into trouble in the SCons architecture itself, so why do I think it wouldn't be a problem here?  My problem is I don't have a good model in my head for how to break this down into smaller test cases, because (IMHO) most of `O(N*M)` interactions that kill us are coming from interactions between subsystems that aren't going to show up unless you combine them in a performance test.   
 As a concrete example, the actual search of (e.g.) `CPPPATH` directories for include files is already micro-optimized and would probably show adequate performance in isolation under a test configured to "search 100 `-I` directories for a program that include 100 distinct `.h` files."  It's not until you also say that you want to do that for 100 distinct `.cc` files that the larger algorithm breaks down.  And once you have to combine factors like this, it felt like the camel's nose under the tent that meant you might as well go with a large configuration anyway....   
 Upshot:  I'm suspicious that my suggestion is really just because I don't know how to break this down profitably.  I would encourage someone else with a clearer conception to rewrite this (or to add an alternative structure) to try to break it down into more manageable subsets.)))   
-(((JGN: I actually think you're making my point, but you're misunderstanding the details of what I think the test generator should do.  It should be possible to dial <ins>all</ins> of the parameters individually, not just a single dial with settings for 'small', 'medium', and 'large'.  You'd be able to dial up a case with a hundred include directories each with a hundred headers and one library with 100 sources, with all the other settings at zero or one.  In fact, you'd be able to dial each setting from ten to a thousand and compare the performance.  If there's a M*N interaction, that would show it.  If there appears to be a problem with performance-in-the-large, this would allow you to isolate the component(s) that are causing the problem.)))   
+(((JGN: I actually think you're making my point, but you're misunderstanding the details of what I think the test generator should do.  It should be possible to dial *all* of the parameters individually, not just a single dial with settings for 'small', 'medium', and 'large'.  You'd be able to dial up a case with a hundred include directories each with a hundred headers and one library with 100 sources, with all the other settings at zero or one.  In fact, you'd be able to dial each setting from ten to a thousand and compare the performance.  If there's a `M*N` interaction, that would show it.  If there appears to be a problem with performance-in-the-large, this would allow you to isolate the component(s) that are causing the problem.)))   
 (((SK:  I totally understood that you were suggesting each setting should be separately configurable.  I agree.  But it's unhelpful to stop there.  The problem is not solved by just saying, "Oh, we'll make everything configurable."  Parameter configurability will make for a very useful performance testing infrastructure; great.  Now, if we're actually going to dial those settings appropriately in a set of smaller, non-monolithic use cases that identify the performance bottlenecks we want to measure ourselves against, _what should those use cases be_?  I don't have a good handle on how to start defining those configurations.)))   
 (((JGN: I don't know that we can identify those use cases in advance, or that we should try.  A couple of cases, sure, but if we knew what the performance problems were, we wouldn't be here in the first place.  I want to be in the position that when we become suspicious that we have a problem, we can easily create a stress test.  But see below for some known stressors.))) 
 
@@ -217,7 +250,7 @@ The test configuration generator consists of a number of components.  Each compo
 (((JGN: could easily toss in more depth to the hierarchy by adding a project level with multiple projects, each with their own includes, sources, _etc._, or subdirectories of sources feeding up to a library or program.  Or both, for that matter.)))   
 (((SK:  Good start.))) 
 
-(((JGN: If I were designing this program, and it's really too early to do that, I'd make the control file be Python, just like a SConscript, with a repertoire of building blocks that it could mix and match, and the ability to specify, uh, call them content creators (_i.e._, some form of callback) that could tailor a particular building block to suit.  Some of the building blocks would create certain kinds of files (headers and sources and Java, oh my!), while others would create directories of files, and others would build trees of SConscripts in the directories.  Each building block would return something self-descriptive, so that most of the time, all the test builder had to do was pass a list of lower-level blocks to a higher-level builder.  Lots and lots and <ins>lots</ins> of details to work out, but there's the 10,000 meter overview.))) 
+(((JGN: If I were designing this program, and it's really too early to do that, I'd make the control file be Python, just like a SConscript, with a repertoire of building blocks that it could mix and match, and the ability to specify, uh, call them content creators (_i.e._, some form of callback) that could tailor a particular building block to suit.  Some of the building blocks would create certain kinds of files (headers and sources and Java, oh my!), while others would create directories of files, and others would build trees of SConscripts in the directories.  Each building block would return something self-descriptive, so that most of the time, all the test builder had to do was pass a list of lower-level blocks to a higher-level builder.  Lots and lots and *lots* of details to work out, but there's the 10,000 meter overview.))) 
 
 
 ## Top-level SConstruct
