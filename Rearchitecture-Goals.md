@@ -1,7 +1,26 @@
-
 A page for specific goals of the Rearchitecture, both design goals and implementation goals. 
 
 (Consider this the requirements specification, although we're calling it "Goals" because everything here won't be a hard-and-fast requirement.) 
+
+*Note: this is part of a historical planning exercise that was not developed. The ideas would ceratainly be considered in any future rearchitecting project.
+
+<!-- TOC -->
+<a name="contents">
+  -[Performance](#performance)
+    - [Big-O](#big-o)
+    - [Caching](#caching)
+    - [Startup](#startup)
+  -[Design](#design)
+  -[Architecture](#architecture)
+  -[Transition](#transition)
+  -[APIs](#aPIs)
+  -[Testing](#testing)
+    - [Unit Testing](#unit-testing)
+    - [System Testing](#system-testing)
+    - [Performance Testing](#performance-testing)
+  -[Discussion ](#discussion )
+    - [O(1) `CPPPATH`](#o1-cpppath)
+<!-- /TOC -->
 
 # Performance
 

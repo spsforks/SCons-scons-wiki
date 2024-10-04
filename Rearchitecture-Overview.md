@@ -2,6 +2,16 @@ This is the main entry page for working out a redesigned architecture suitable f
 
 Methodology:  Things that have been more-or-less decided upon, or are an initial draft for discussion with no competing counter-proposal, go in the pages in the **Settled** section.  Undecided issues go in the topic's discussion page (follow the link in the navigation bar).  To start a discussion about an item, add a section to the topic's discussion page and link to the discussion section from its location in the appropriate **Settled** page. 
 
+*Note: this is part of a historical planning exercise that was not developed. The ideas would ceratainly be considered in any future rearchitecting project.
+
+<!-- TOC -->
+<a name="contents">
+
+    - [Settled](#settled)
+    - [Terminology](#terminology)
+    - [TODO](#todo)
+<!-- /TOC -->
+
 
 ## Settled
 

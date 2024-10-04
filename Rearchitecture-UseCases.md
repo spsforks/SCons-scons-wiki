@@ -2,6 +2,8 @@ A page for the specific use case(s) we're trying to design for.
 
 This is _not_ intended to cover all of the functionality, but instead to list the common use cases that we believe cover "90%" of what users want from SCons.  The goal is to design the architecture for optimal performance of these "90%" cases.  Functionality outside of the "90%" use cases defined here will be supported (eventually), but performance may suffer. 
 
+*Note: this is part of a historical planning exercise that was not developed. The ideas would ceratainly be considered in any future rearchitecting project.
+
 <!-- TOC -->
 <a name="contents">
 
@@ -15,7 +17,7 @@ This is _not_ intended to cover all of the functionality, but instead to list th
    - [Packaging](#packaging)
    - [Configuration(???)](#configuration)
    - [Qt(???)](#qt)
- - [Use Cases for the configuration]( use-cases-for-the-configuration)
+ - [Use Cases for the configuration](#use-cases-for-the-configuration)
    - [Full-tree build](#full-tree-build)
    - [Null build](#null-build)
    - [Null+1 .c build](#null1-c-build)
