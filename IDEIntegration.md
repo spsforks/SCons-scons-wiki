@@ -50,7 +50,7 @@ Note: VS2005 seems to need absolute paths to filenames for the click-on-errors i
 1. For debug build the command should be "scons debug=1"
 1. For Rebuild All: "scons -c & scons" ("scons -c & scons  debug=1" for debug)
 
-Alternatively, you can use [the `MSVSProject()` builder](http://scons.org/doc/production/HTML/scons-user.html#b-MSVSProject) in your SConstruct file to generate a Visual Studio project file.
+Alternatively, you can use [the `MSVSProject()` builder](https://scons.org/doc/production/HTML/scons-user.html#b-MSVSProject) in your SConstruct file to generate a Visual Studio project file.
 
 [back to contents](#contents)
 
@@ -66,7 +66,7 @@ Alternatively, you can use [the `MSVSProject()` builder](http://scons.org/doc/pr
 1. Use Debug -> Breakpoints menu to add a symbolic breakpoint at main() - just type main where it says 'Double click for Symbol' - if you don't add this break point none of the breakpoints set in the editors will work, because gdb doesn't have the symbol information until you start debugging ([Jim Ingham suggests](http://www.cocoabuilder.com/archive/message/xcode/2006/8/15/8869) turning off "Lazy Symbol Loading" in Debug Preferences.) 
 See also the hint to get proper error parsing on [MacOSX](MacOSX). 
 
-Alternatively, you can use [scons-xcode](https://bitbucket.org/al45tair/scons-xcode) to generate project files automatically.
+Alternatively, you can use the [scons-xcode](https://github.com/al45tair/scons-xcode) tool to generate project files automatically.
 
 [back to contents](#contents)
 
@@ -79,7 +79,7 @@ SConsolidator is an Eclipse plug-in that provides tool integration for SCons in 
 * Interactive mode to quickly build single source files speeding up round trip times 
 * A special view for a convenient build target management of all workspace projects 
 * Graph visualization of build dependencies with numerous layout algorithms and search and filter functionality that enables debugging of SCons scripts 
-More information can be found at [http://sconsolidator.com](http://sconsolidator.com) and its update site is available at [http://www.sconsolidator.com/update](http://www.sconsolidator.com/update). 
+More information can be found at [https://github.com/IFS-HSR/SConsolidator](https://github.com/IFS-HSR/SConsolidator).
 
 ---
 
@@ -97,7 +97,7 @@ See [SCons Setup](http://www.kdevelop.org/mediawiki/index.php/FAQ#How_can_I_set_
 
 ### How can I set up a project with SCons?
 
-[SCons](http://www.scons.org) is a software construction tool.  KDevelop (as of version 3.2.2) does not support SCons projects directly.  However, it is possible to set up a project very simply using SCons by writing a "stub" Makefile and using the "Custom Makefiles" project type.  An example of a simple stub Makefile is the following (note that lines after target names should be indented with tabs, not spaces): 
+[SCons](https://scons.org) is a software construction tool.  KDevelop (as of version 3.2.2) does not support SCons projects directly.  However, it is possible to set up a project very simply using SCons by writing a "stub" Makefile and using the "Custom Makefiles" project type.  An example of a simple stub Makefile is the following (note that lines after target names should be indented with tabs, not spaces): 
 
 ```txt
 project_name:
@@ -118,7 +118,7 @@ Create a Custom Project. There is no direct way to create a custom project (i.e.
 
 ## Emacs and XEmacs
 
-First of all, you are going to want [PythonMode](http://www.emacswiki.org/cgi-bin/wiki/PythonMode) if you don't have it already.  If you are running on a system with a package manager, you might wish to look there first.  On my Fedora system, the base XEmacs install was missing many useful accessories.  I achieved a more complete installation with the command: 
+First of all, you are going to want [PythonMode](https://www.emacswiki.org/cgi-bin/wiki/PythonMode) if you don't have it already.  If you are running on a system with a package manager, you might wish to look there first.  On my Fedora system, the base XEmacs install was missing many useful accessories.  I achieved a more complete installation with the command: 
 
 * sudo yum install xemacs-packages-base xemacs-packages-base-el xemacs-packages-extra xemacs-packages-extra-el xemacs-packages-extra-info 
 For Emacs, it is suggested to add the following to your .emacs files, to enable Python mode for SConstruct and SConscript files. 
@@ -151,11 +151,11 @@ This setting might affect other projects you compile normally with make or gmake
 
 ### Compilation mode and error navigation
 
-Compilation mode and its usage is documented as part of the [GNU Emacs Manual](http://www.delorie.com/gnu/docs/emacs/emacs_319.html). 
+Compilation mode and its usage is documented as part of the [GNU Emacs Manual](https://www.delorie.com/gnu/docs/emacs/emacs_319.html). 
 
 If you employ a custom or unusual build tool as part of your build process, you might find your Emacs/XEmacs is unable to navigate the error text in the *compilation* buffer.  To fix this, you can provide a custom regular expression for the variable _compilation-error-regexp-alist_. 
 
-This is a fairly advanced undertaking.  The page [(efaq)Compiler error messages](http://www.cs.cmu.edu/cgi-bin/info2www?(efaq)Compiler%20error%20messages) can get you started.  It suggests cribbing something similar to what you require from the Emacs source for compile.el, which contains many elaborations.  On my Fedora system, this file is located at _/usr/share/xemacs/xemacs-packages/lisp/xemacs-base/compile.el_, but only after I manually installed the package sources (.el files) as described above.  If you only find compile.elc, you have the package installed, but not the package sources. 
+This is a fairly advanced undertaking.  The page [(efaq)Compiler error messages](https://www.cs.cmu.edu/cgi-bin/info2www?(efaq)Compiler%20error%20messages) can get you started.  It suggests cribbing something similar to what you require from the Emacs source for compile.el, which contains many elaborations.  On my Fedora system, this file is located at _/usr/share/xemacs/xemacs-packages/lisp/xemacs-base/compile.el_, but only after I manually installed the package sources (.el files) as described above.  If you only find compile.elc, you have the package installed, but not the package sources. 
 
 Hi [MaxEnt](MaxEnt) -- here's what I use, it's much simpler.  You'll need a recent emacs (more recent than 21.1).  It just processes the filenames to remove the build dirs. 
 
@@ -180,7 +180,7 @@ Hi [MaxEnt](MaxEnt) -- here's what I use, it's much simpler.  You'll need a rece
 
 ## Qt Creator
 
-[Qt Creator](http://qt.nokia.com/products/developer-tools/developer-tools) is a free, cross-platform, lightweight IDE. Although designed to integrate with Qt, it can be used for any C++ project. 
+[Qt Creator](https://doc.qt.io/qtcreator/) is a free, cross-platform, lightweight IDE. Although designed to integrate with Qt, it can be used for any C++ project. 
 
 To use it with scons: 
 
@@ -191,13 +191,13 @@ To use it with scons:
 * Click the Done button. 
 Qt Creator will add four files to the top-level directory: 
 
-* $PROJECT_NAME.files 
-* $PROJECT_NAME.includes 
-* $PROJECT_NAME.config 
-* $PROJECT_NAME.creator 
-The most important one is $PROJECT_NAME.files, which is just a list of all the files you want to show in the IDE. See [http://doc.qt.nokia.com/qtcreator/creator-project-generic.html](http://doc.qt.nokia.com/qtcreator/creator-project-generic.html) for details. 
+* `$PROJECT_NAME.files`
+* `$PROJECT_NAME.includes`
+* `$PROJECT_NAME.config`
+* `$PROJECT_NAME.creator`
+The most important one is `$PROJECT_NAME.files`, which is just a list of all the files you want to show in the IDE. See [http://doc.qt.nokia.com/qtcreator/creator-project-generic.html](http://doc.qt.nokia.com/qtcreator/creator-project-generic.html) for details. 
 
-Now you have to add the SConstruct and SConscript files to the IDE. Either edit by hand the $PROJECT_NAME.files or, in the IDE project browser, right click on the top-level directory and select "Add existing files", and then select SConstruct from the list. Do the same for the SConscripts. 
+Now you have to add the SConstruct and SConscript files to the IDE. Either edit by hand the `$PROJECT_NAME.files or`, in the IDE project browser, right click on the top-level directory and select "Add existing files", and then select `SConstruct` from the list. Do the same for the SConscripts. 
 
 Last step: adding a build and a clean target. 
 
@@ -217,7 +217,7 @@ On the left pane, click on "Edit". You will find the previous view, with the pro
 
 ## Geany
 
-[Geany](http://www.geany.org/) is a free, cross-platform, lightweight IDE. 
+[Geany](https://www.geany.org/) is a free, cross-platform, lightweight IDE. 
 
 To use it with scons: 
 
