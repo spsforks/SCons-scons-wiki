@@ -2,6 +2,8 @@ Here are some collected thoughts on improving the benefits the SCons derived-fil
 
 * Cache management support: SCons has no cache size limit or file count limit, and does not prune the cache. This should be provided. If SCons itself implemented a (settable) size limit, it would have to implement a policy for when to evict old entries (e.g. LRU).  A separate cache management utility would leave the SCons code simpler and might be desirable for performance reasons as well. There is a trick that was contributed to this wiki that adds some support for size limiting: [[LimitCacheSizeWithProgress]]
 
+* Cache validation: somewhat related to "cache management" - in the distant past, users have complained about cache entries being corrupted, usually by running out of space during a write. It was speculated on, but no recorded confirmation, that there could be concurrent-write problems in shared caches. There's not an obvious way to validate independently - while the csig of the file sent to cache was known at creation time, that signature is not available later, the cache key is the bsig.  A proposal in one issue suggested checking current files in the build tree against their cached equivalents. The idea didn't seem to get that much traction at the time (aka the proposed patch was never merged) but it wasn't rejected, either.
+
 * Automatic caching:  would it be desirable to enable caching by default, with an option to disable entirely or selectively?  Various other systems do this, others like SCons are opt-in.  It might be a surprise that builds cause disk space consumption, but it might produce better performance out of the box.
 
 * Set the cache directory from the command line.  This has an issue filed, see `3618 </SCons/scons/issues/3618>`_
