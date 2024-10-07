@@ -16,7 +16,7 @@ Here are some collected ideas on improving the utility of the SCons derived-file
 
 * Cache compression: should there be an option to compress cache entries?
 
-* Remote cache storage.  This is a highly desired topic.  As developers mostly work on individual machines, sharing cache across a team needs a network mode.  This comes with a number of considerations, and will likely add several command-line options.  "Use NFS" is an approach that is known to work, but not everyone has a setup (note: Amazon EFS is an NFS implementation).  A few bullet points, see discussion below for more details.
+* Remote cache storage. See `Issue 4394 </SCons/scons/issues/4394>`_. This is a highly desired topic.  As developers mostly work on individual machines, sharing cache across a team needs a network mode.  This comes with a number of considerations, and will likely add several command-line options.  "Use NFS" is an approach that is known to work, but not everyone has a setup (note: Amazon EFS is an NFS implementation).  A few bullet points, see discussion below for more details.
 
   * Cache policy: how a local and remote cache interact needs to be defined.  There could be a settable policy (SCons uses a "policy" approach for options like ``--duplicate`` and ``--decider``), or the policy can be derived from the combination of flags. This needs to address: is this run L-only, R-only or L+R; if L+R, which to prefer; does L-miss + R-hit cause a write to L?
 
