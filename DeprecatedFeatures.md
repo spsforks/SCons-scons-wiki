@@ -19,7 +19,8 @@ Removed |  Check removed, may cause Python error
 
  **Feature**  |  **Description / Notes**  |  **Repl**  |  **Annuc**  |  **Hidden**  |  **Suppr**  |  **Mand**  |  **Fatal**  |  **Removed**
 :-----|:------|:---|:---|:----|:----|:----|:----|:----|
- Python 3.5  |  Drop support for Python 3.5  |  N/A  |  4.2  |  4.3.0  |  4.3.0  |  4.3.0  |  4.3.0  |  4.3.0 
+ Python 3.6  |  Drop support for Python 3.6  |  N/A  |  4.8.0  |  N/A |  N/A  |  N/A  |  ??  |  ?? 
+ Python 3.5  |  Drop support for Python 3.5  |  N/A  |  4.2  |   N/A |  N/A  |  N/A  |  4.3.0  |  4.3.0 
  `--cache-<option>`  |  Convert to `--cache=<option>`  |  2.1??  |  2.1??  |  2.1??  |  ??  |  ??  |  3.0??  |  3.2?? 
  `${,UN}CHANGED_SOURCES` `${,UN}CHANGED_TARGETS` reserved variables  |  Deprecate the user's ability to set them  |  N/A  |  1.2  |  Warning message (and assignment suppressed) as one of the reserved construction variable names |||||
  `Options/*.py` modules  |  Stub modules, restored when 0.98.1 removed them and broke released configurations  |  0.98.3  |  TODO  |   |  1.2  |  2.0  |  2.1??  |  3.0?? 
