@@ -6,7 +6,7 @@ See [SconsProcessOverview](SconsProcessOverview) for a high level view of SCons 
 
 The main build configuration script for **SCons** is the `SConstruct` file. When the `scons` script is called, it will automatically search for this file in the current directory (actually, several alternate names are also searched for and will be used if found: `Sconstruct`, `sconstruct`, `SConstruct.py`, `Sconstruct.py`, `sconstruct.py`).
 
-The full SCons API is available for usage from `SConstruct, including the **Environment** class. The Environment class describes a **Construction Environment** which controls a build; a build configuration may have several of these if there are different instructions for different parts of the build. Typically, a build configuration instantiates this class very early, although it's certainly not required to do so at the very top. 
+The full SCons API is available for usage from `SConstruct`, including the **Environment** class. The Environment class describes a **Construction Environment** which controls a build; a build configuration may have several of these if there are different instructions for different parts of the build. Typically, a build configuration instantiates this class very early, although it's certainly not required to do so at the very top. 
 
 ```python
 env = Environment()
