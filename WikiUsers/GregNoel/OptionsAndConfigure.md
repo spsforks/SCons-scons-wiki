@@ -1,5 +1,4 @@
-
-_This is not in any way ready for review and comment, but Steven is working on dealing with command-line flags that haven't been specified in advance, and that part is mostly done, so I'm publishing this so he can look at it for ideas.  Please don't edit this; I'll update it when it's ready for true public scrutiny.  Tks. -JGN_ 
+_This is a historical document capturing design thoughts on refactoring the various ways external data can be supplied to SCons into a more unified approach. While work was done, it was not merged and is no longer available._
 
 # Table of Contents
 
@@ -15,9 +14,6 @@ _This is not in any way ready for review and comment, but Steven is working on d
 This page presents a position that command-line options (both flags and assignments) and configuration should be unified into a single framework (or, worst case, that they should be derived from a common base class).  The idea behind the position is that these are ways that SCons gets "outside" information; that is, information that is not embedded in the SConscripts. 
 
 Options and configuration results either affect program flow or are converted into into values for construction variables (or both).  Those values are then incorporated into a SCons Environment which is used to build objects.  The message in this wiki page is how those construction variables are calculated and then incorporated. 
-
-
-
 
 The command line consists of four types of tokens: 
 
@@ -41,32 +37,32 @@ Here is what single-character flags become.  Any flag not recognized causes an e
 
 | Opt | Longopt |   | OPT | Longopt
 |:----|:--------|---|:----|:-------
-| `-a` | `--always-build` (*) |   | -A | ERROR
-| `-b` | ignored for compatibility |   | -B | ERROR
-| `-c` | `--clean` |   | -C _directory_ | --directory=_directory_
-| `-d _flag(s)_` | --debug=_flag(s)_ |   | -D | --up=defaults (*)
-| `-e` | -`-environment-overrides `(*) |   | -E | ERROR
-| `-f _file_` | -`-file=_file_` |   | -F | ERROR
-| `-g` | ERROR |   | -G | ERROR
-| `-h` | -`-help` |   | -H | --help-options
-| `-i` | `--ignore-errors` |   | -I _directory_ | --include-dir=_directory_
-| `-j _N_` | `--jobs=_N_` |   | -J | ERROR
-| `-k` | `--keep-going` |   | -K | ERROR
-| `-l _N_` | `--load-average=_N_` (*) |   | -L | ERROR
-| `-m` | ignored for compatibility |   | -M | ERROR
-| `-n` | `--dry-run` |   | -N | ERROR
-| `-o _file_ | `--old-file=_file_` |   | -O | ERROR
-| `-p` | `--print-data-base` (*) |   | -P | ERROR
-| `-q` | `--question` |   | -Q | --no-status-messages (*)
-| `-r` | `--no-builtin-rules` (*) |   | -R | --no-builtin-variables (*)
-| `-s` | `--silent` |   | -S | --no-keep-going
-| `-t` | `--touch` |   | -T | ERROR
-| `-u` | `--up=dot` (*) |   | -U | --up=here (*)
-| `-v` | `--version` |   | -V | ERROR
-| `-w` | `--print-directory` |   | -W _file_ | --what-if=_file_ (*)
-| `-x` | ERROR |   | -X | ERROR
-| `-y` | ERROR |   | -Y _repository_ | --repository=_repository_
-| `-z` | ERROR |   | -Z | ERROR
+| `-a` | `--always-build` (*) |           | `-A` | ERROR
+| `-b` | ignored for compatibility |      | `-B` | ERROR
+| `-c` | `--clean` |                      | `-C directory` | `--directory=directory`
+| `-d flags` | `--debug=flags` |          | `-D` | `--up=defaults` (*)
+| `-e` | -`-environment-overrides `(*) |  | `-E` | ERROR
+| `-f file` | -`-file=file` |             | `-F` | ERROR
+| `-g` | ERROR |                          | `-G` | ERROR
+| `-h` | -`-help` |                       | `-H` | `--help-options`
+| `-i` | `--ignore-errors` |              | `-I directory` | `--include-dir=directory`
+| `-j N` | `--jobs=N` |                   | `-J` | ERROR
+| `-k` | `--keep-going` |                 | `-K` | ERROR
+| `-l N` | `--load-average=N` (*) |       | `-L` | ERROR
+| `-m` | ignored for compatibility |      | `-M` | ERROR
+| `-n` | `--dry-run` |                    | `-N` | ERROR
+| `-o file` | `--old-file=file` |         | `-O` | ERROR
+| `-p` | `--print-data-base` (*) |        | `-P` | ERROR
+| `-q` | `--question` |                   | `-Q` | `--no-status-messages` (*)
+| `-r` | `--no-builtin-rules` (*) |       | `-R` | `--no-builtin-variables` (*)
+| `-s` | `--silent` |                     | `-S` | `--no-keep-going`
+| `-t` | `--touch` |                      | `-T` | ERROR
+| `-u` | `--up=dot` (*) |                 | `-U` | `--up=here` (*)
+| `-v` | `--version` |                    | `-V` | ERROR
+| `-w` | `--print-directory` |            | `-W file` | `--what-if=file` (*)
+| `-x` | ERROR |                          | `-X` | ERROR
+| `-y` | ERROR |                          | `-Y repository` | `--repository=repository`
+| `-z` | ERROR |                          | `-Z` | ERROR
 
 
 The (*) marks entries that are future or otherwise assume something at variance with the current flags.  Also, the `-W` usage conforms to `GNU make`, not the `--warnings` usage of `automake`.
@@ -97,80 +93,82 @@ The _names_ are a list of one or more strings of flag names to match.
 The _audit_ function takes the matched values and calculates the value to use.  
 The _args_ are in a dict and are passed as keyword parameters to the audit function. 
 
-
-
 The audit function takes two positional parameters, plus any keyword arguments from the _args_ parameter: 
+```py
 value = audit(flags, values, **args)
-: 
+```
+
 The _flags_ are a list of matching flag names from the command line, in the order they appear on the command line.  
 The _values_ are a list of the corresponding values for the flags; `None` is used to indicate that the flag was not given a value.  
 The _args_ are the keywords given to the `Query.Flag` function. 
 
-
-
 Here's a sample implementation of EnableFlag (see below) with little error checking: 
 
-
-
-```txt
-   def EnableFlag(key, state = 'no', default = 'yes', help=None):
-      # could use bound variables for audit function if desired
-      def audit(flags, values, state = 'no', default = 'yes'):
-         if not values:    # not on command line
+```py
+def EnableFlag(key, state="no", default="yes", help=None):
+    # could use bound variables for audit function if desired
+    def audit(flags, values, state="no", default="yes"):
+        if not values:  # not on command line
             state = yesno(state)
-            if state == 'no': return 'no'
+            if state == "no":
+                return "no"
             return yesno(default)
-         f = flags[-1]     # last flag wins
-         v = values[-1]
-         if f[0:7] == 'disable':
-            if v is not None: print "value ignored for'--%s'" % f
-            return 'no'
-         if v is None:     # no value for --enable, use default
+        f = flags[-1]  # last flag wins
+        v = values[-1]
+        if f[0:7] == "disable":
+            if v is not None:
+                print("value ignored for'--%s'" % f)
+            return "no"
+        if v is None:  # no value for --enable, use default
             v = default
-         return yesno(v)
-      # Scan the command line for this set of flags
-      v = Query.Flag(['enable-'+key, 'disable-'+key], audit,
-                     { 'state':state, 'default':default })
-      FLAGS['enable-'+key] = v
-      HelpText(help)
-      return v
+        return yesno(v)
+
+    # Scan the command line for this set of flags
+    v = Query.Flag(
+        ["enable-" + key, "disable-" + key],
+        audit,
+        {"state": state, "default": default},
+    )
+    FLAGS["enable-" + key] = v
+    HelpText(help)
+    return v
 ```
 
 ### Additional pre-defined flag values
 
 These command-line flags should be pre-defined; they are the flags supported by `configure` (plus `--install` to support RPM and Debian build notions).  Even if they aren't used today, someday we will be glad to have them. 
-[[!table header="no" class="mointable" data="""
-**Deployment directories**||
---prefix=PREFIX | install architecture-independent files in PREFIX [/usr/local]
---exec-prefix=EPREFIX | install architecture-dependent files in EPREFIX [PREFIX]
---bindir=DIR | user executables [EPREFIX/bin]
---sbindir=DIR | system admin executables [EPREFIX/sbin]
---libexecdir=DIR | program executables [EPREFIX/libexec]
---datadir=DIR | read-only architecture-independent data [PREFIX/share]
---sysconfdir=DIR | read-only single-machine data [PREFIX/etc]
---sharedstatedir=DIR | modifiable architecture-independent data [PREFIX/com]
---localstatedir=DIR | modifiable single-machine data [PREFIX/var]
---libdir=DIR | object code libraries [EPREFIX/lib]
---includedir=DIR | C header files [PREFIX/include]
---oldincludedir=DIR | C header files for non-gcc [/usr/include]
---infodir=DIR | info documentation [PREFIX/info]
---mandir=DIR | man documentation [PREFIX/man]
-**Packaging**||
---install=DIR | install tree is relative to DIR [empty]  
-(called DESTDIR by configure and BUILDROOT by RPM)
-**Configuration selection**||
---enable-FEATURE[=ARG] | include FEATURE (ARG=yes)
---disable-FEATURE | do not include FEATURE (same as --enable-FEATURE=no)
---with-PACKAGE[=ARG] | use PACKAGE (ARG=yes)
---without-PACKAGE | do not use PACKAGE (same as --with-PACKAGE=no)
-**Cross-compilation**||
---build=BUILD | configure for building on BUILD [guessed] (unneeded?)
---host=HOST | cross-compile to build programs to run on HOST [BUILD]
---target=TARGET | programs should produce output for TARGET [HOST]
---program-prefix=PREFIX | prepend PREFIX to installed program names
---program-suffix=SUFFIX | append SUFFIX to installed program names
---program-transform-name=PROGRAM | run '`sed PROGRAM`' on installed program names
-"""]]
+
+| Opition | Description [default] |
+|:----|:--------|
+| **Deployment directories**||
+| `--prefix=PREFIX` | install architecture-independent files in PREFIX [/usr/local]
+| `--exec-prefix=EPREFIX` | install architecture-dependent files in EPREFIX [PREFIX]
+| `--bindir=DIR` | user executables [EPREFIX/bin]
+| `--sbindir=DIR` | system admin executables [EPREFIX/sbin]
+| `--libexecdir=DIR` | program executables [EPREFIX/libexec]
+| `--datadir=DIR` | read-only architecture-independent data [PREFIX/share]
+| `--sysconfdir=DIR` | read-only single-machine data [PREFIX/etc]
+| `--sharedstatedir=DIR` | modifiable architecture-independent data [PREFIX/com]
+| `--localstatedir=DIR` | modifiable single-machine data [PREFIX/var]
+| `--libdir=DIR` | object code libraries [EPREFIX/lib]
+| `--includedir=DIR` | C header files [PREFIX/include]
+| `--oldincludedir=DIR` | C header files for non-gcc [/usr/include]
+| `--infodir=DIR` | info documentation [PREFIX/info]
+| `--mandir=DIR` | man documentation [PREFIX/man]
+| **Packaging**||
+| `--install=DIR` | install tree is relative to DIR [empty]  (called DESTDIR by configure and BUILDROOT by RPM)
+| **Configuration selection**||
+| `--enable-FEATURE[=ARG]` | include FEATURE (ARG=yes)
+| `--disable-FEATURE` | do not include FEATURE (same as `--enable-FEATURE=no`)
+| `--with-PACKAGE[=ARG]` | use PACKAGE (ARG=yes)
+| `--without-PACKAGE` | do not use PACKAGE (same as `--with-PACKAGE=no`)
+| **Cross-compilation**||
+| `--build=BUILD` | configure for building on BUILD [guessed] (unneeded?)
+| `--host=HOST` | cross-compile to build programs to run on HOST [BUILD]
+| `--target=TARGET` | programs should produce output for TARGET [HOST]
+| `--program-prefix=PREFIX` | prepend PREFIX to installed program names
+| `--program-suffix=SUFFIX` | append SUFFIX to installed program names
+| `--program-transform-name=PROGRAM` | run '`sed PROGRAM`' on installed program names
 
 Only the last one is problematical.  It's a rarely-used feature, and maybe some other mechanism could be used. 
 
@@ -180,96 +178,102 @@ Only the last one is problematical.  It's a rarely-used feature, and maybe some 
 Command-line flags that begin `'--disable-'` are treated as if they were an `--enable-` with the value `'no'`.  That is, `--disable-foo` is turned into `--enable-foo=no`; any value that the flag had is ignored. 
 
 A possible prototype: 
+```py
 Query.EnableFlag(key, state, default, help=None)
-: 
+```
+
 Evaluate flags with the names `--enable-`_key_ or `--disable-`_key_.  If no such flag is present, the default state is _state_.  The _state_ parameter must be either **yes** or **no**; if it is not present, **no** is assumed.  If no value is present for an `--enable-`_key_ flag, the _default_ value is used.  If the _default_ parameter is not present, a value of **yes** is returned.  (The values **y**, **yes**, **t**, **true**, **1**, **on** and **all** will be treated as **yes**, and the values **n**, **no**, **f**, **false**, **0**, **off** and **none** will be treated as **no**.)  Any specified help is passed to the help subsytem. 
-
-
-
 
 ### With/Without flags
 
 The processing of the with/without flags is very similar to that of the enable/disable flags, except that `--without-foo` is converted to `--with-foo=no`. 
 
 A possible prototype: 
+```py
 Query.WithFlag(key, state, default, help=None)
-: 
+```
+
 Evaluate flags with the names `--with-`_key_ or `--without-`_key_.  If no such flag is present, the default state is _state_.  The _state_ parameter must be either **yes** or **no**; if it is not present, **no** is assumed.  If no value is present for an `--with-`_key_ flag, the _default_ value is used.  If the _default_ parameter is not present, a value of **yes** is returned.  (The values **y**, **yes**, **t**, **true**, **1**, **on** and **all** will be treated as **yes**, and the values **n**, **no**, **f**, **false**, **0**, **off** and **none** will be treated as **no**.)  Any specified help is passed to the help subsytem. 
 
 
+```py
+print("with foo?", Query.WithFlag("foo", state="no", default="/with/foo"))
+print("with bar?", Query.WithFlag("bar", state="yes", default="/with/bar"))
+```
 
-
-
-```txt
-     print 'with foo?', Query.WithFlag('foo', state = 'no', default = '/with/foo')
-     print 'with bar?', Query.WithFlag('bar', state = 'yes', default = '/with/bar')
-
-     % scons
-     with foo? no
-     with bar? /with/bar
-     % scons --with-foo --with-bar
-     with foo? /with/foo
-     with bar? /with/bar
-     % scons --without-foo --without-bar
-     with foo? no
-     with bar? no
-     % scons --with-foo=/opt/foo --with-bar=/opt/bar
-     with foo? /opt/foo
-     with bar? /opt/bar
+```con
+% scons
+with foo? no
+with bar? /with/bar
+% scons --with-foo --with-bar
+with foo? /with/foo
+with bar? /with/bar
+% scons --without-foo --without-bar
+with foo? no
+with bar? no
+% scons --with-foo=/opt/foo --with-bar=/opt/bar
+with foo? /opt/foo
+with bar? /opt/bar
 ```
 
 ### Other user-defined flags
 
 Here's a sample of possible pre-defined flag types (_i.e._, wrappers with audit functions that are maintained as part of SCons).  These are chosen to indicate the range of functionality possible and may not be realistic as described. 
+```py
 Query.BoolFlag(key, default, help=None)
-: 
+```
+
 Evaluate a flag whose initial value is _default_ (False if not present) and the value is reversed each time the flag is specified on the command line.  The flag cannot have a value.  The flag will have the specified _key_ and display the specified _help_ text.  For example: 
-
-
-
-`        tf = pool.BoolFlag('exclusive', False)` 
+```py
+tf = pool.BoolFlag('exclusive', False)
+```
 
 * Each occurrence of the `--exclusive` flag will flip whether or not it should be exclusive. 
-`` 
+```py
 Query.CountFlag(key, help=None)
-: 
+```
+
 Evaluate a flag whose initial value is zero and the value is incremented each time the flag is specified on the command line.  The flag cannot have a value.  The flag will have the specified _key_ and display the specified _help_ text.  For example: 
 
 
-
-`        number = pool.CountFlag('clean')` 
+```py
+number = pool.CountFlag('clean')` 
 Query.LastFlag(key, default, help=None)
-: 
+```
+
 Evaluate the flag(s) specified; return is `None` if the flag is not present, the _default_ if the flag is present without a value, and the value if there is one.  The specified _help_ text will be passed to the help subsystem.  If there are multiple occurences of the flag, the last one wins.  For example: 
 
 
-
-`        opt = pool.LastFlag(['opt', 'optimize'], '-O')` 
+```py
+opt = pool.LastFlag(['opt', 'optimize'], '-O')` 
 Query.EnumFlag((key, default, allowed_values[, map[, ignorecase]], help=None)
-: 
+```
+
 Like `Options.EnumOption`. 
 
-
+```py
 Query.ListFlag(key, default, names[, map], help=None)
-: 
+```
+
 Like `Options.ListOption`. 
 
-
+```py
 Query.PackageFlag(key, help, default)
-: 
+```
+
 Like `Options.PackageOption`. 
 
-
+```py
 Query.PathFlag(key, default[, validator], help=None)
-: 
+```
+
 Like `Options.PathOption`; the last one on the command line wins. 
 
-
+```py
 Query.PathFlags(key, default[, validator], help=None)
-: 
+```
+
 Like `PathFlag` except that multiple occurrences are accumulated. 
-
-
 
 
 ### Cross-compilation flags
@@ -301,33 +305,34 @@ Prototype to retrieve flag:
 
 
 
-```txt
-     def audit(flags, values, none = None, default = None):
-          if not values:        # not on command line
-               return none
-          v = values[-1]        # last flag present wins
-          if v is None:         # no value specified
-               return default
-          return v
+```py
+def audit(flags, values, none=None, default=None):
+    if not values:  # not on command line
+        return none
+    v = values[-1]  # last flag present wins
+    if v is None:  # no value specified
+        return default
+    return v
 
-     opt = DefineFlag('opt', ['opt', 'optimize'],
-                             audit,{'none':'', 'default':'-O'})
-     print """optimization level is <%s>""" % opt
+opt = DefineFlag("opt", ["opt", "optimize"], audit, {"none": "", "default": "-O"})
+print("""optimization level is <%s>""" % opt)
+```
 
-     % scons
-     optimization level is <>
-     % scons --opt
-     optimization level is <-O>
-     % scons --optimize
-     optimization level is <-O>
-     % scons --opt=-O1
-     optimization level is <-O1>
-     % scons --opt=-O1 --opt=-O2
-     optimization level is <-O2>
-     % scons --optimize=-O1 --opt=O2
-     optimization level is <-O2>
-     % scons --opt=-O1 --optimize=-O2
-     optimization level is <-O2>
+```con
+% scons
+optimization level is <>
+% scons --opt
+optimization level is <-O>
+% scons --optimize
+optimization level is <-O>
+% scons --opt=-O1
+optimization level is <-O1>
+% scons --opt=-O1 --opt=-O2
+optimization level is <-O2>
+% scons --optimize=-O1 --opt=O2
+optimization level is <-O2>
+% scons --opt=-O1 --optimize=-O2
+optimization level is <-O2>
 ```
 <a id="Variables"></a> 
 ## Variable Assignments
@@ -351,21 +356,23 @@ One or more contexts may then be used to initialize the construction variables o
 
 Access to the sea of tests is via a Config context: 
 
-`conf = Config(autoconf = None,`  
- `              custom_tests = None,`  
- `              conf_dir = '#/.sconf_temp',`  
- `              log_file = '#/config.log')` 
+```py
+conf = Config(
+    autoconf=None, custom_tests=None, conf_dir="#/.sconf_temp", log_file="#/config.log"
+)
+```
 
 All tools used in a Config context must be initialized, either by using the autoconf parameter (e.g., `autoconf = ['cc', 'c++', 'python']`) or by calling the appropriate configuration function (e.g., `conf.Prog.CC(cross='yes')`).  In some cases, the initialization is implicit; a test can _require_ that the C compiler be configured and include that test result in its own DAG. 
 
 Header files can be created to pass configure results to program logic: 
+```py
+conf_h = ConfigHeader(file = 'config.h', lang = 'C')
+conf_h.Define(name, value = 1, comment=None)
+```
 
-`     conf_h = ConfigHeader(file = 'config.h', lang = 'C')`  
- `     conf_h.Define(name, value = 1, comment=None)` 
+The `conf_h` object is a wrapper for a built file with the given name and a builder that builds the given type of file from the dependencies; the Define() method encapsulates its parameters into some specialty Node type and creates a dependency on the conf_h node.  The file itself is *not* built until it is needed during the build phase; standard dependency checking will prevent it from being regenerated if it hasn't changed. 
 
-The conf_h object is a wrapper for a built file with the given name and a builder that builds the given type of file from the dependencies; the Define() method encapsulates its parameters into some specialty Node type and creates a dependency on the conf_h node.  The file itself is <ins>_not_</ins> built until it is needed during the build phase; standard dependency checking will prevent it from being regenerated if it hasn't changed. 
-
-If the value in a `conf_h.Define()` is None, the name is specifically undefined (_i.e._, `#undef name` is generated) in languages that allow it. 
+If the value in a `conf_h.Define()` is None, the name is specifically undefined (i.e., `#undef name` is generated) in languages that allow it. 
 
 
 ## API
@@ -382,26 +389,25 @@ Commonality
 
 
 
-```txt
-   # pool objects, all really the same class
-   cf = CommandFlags( xxx )
-   co = CommandOptions( xxx )
-   fo = FileOptions( xxx )
-   cc = Config( xxx )
-   # defining instance
-   cf.CountFlag('clean', 'Clean')
-   co.ListOption('status', 'Marital status', 'single,married,divorced,widowed')
-   fo.ValueOption('CCFLAGS', 'Common C/C++ flags', '-Wall')
-   cc.Prog.CC()
-   cc.Prog.CXX()
-   # accumulate, another of the pool object class
-   a = Accumulate( xxx )
-   a.Fetch(cf, 'prefix')
-   a.Fetch(fo, 'CCFLAGS')
-   # use
-   env = Environment( config = [cc, a] )
+```py
+# pool objects, all really the same class
+cf = CommandFlags(xxx)
+co = CommandOptions(xxx)
+fo = FileOptions(xxx)
+cc = Config(xxx)
+# defining instance
+cf.CountFlag("clean", "Clean")
+co.ListOption("status", "Marital status", "single,married,divorced,widowed")
+fo.ValueOption("CCFLAGS", "Common C/C++ flags", "-Wall")
+cc.Prog.CC()
+cc.Prog.CXX()
+# accumulate, another of the pool object class
+a = Accumulate(xxx)
+a.Fetch(cf, "prefix")
+a.Fetch(fo, "CCFLAGS")
+# use
+env = Environment(config=[cc, a])
 ```
-
 
 ---
 
@@ -446,15 +452,17 @@ There's a lot of detail missing here (distinguishing between 'update' access and
 
 There's a global object called `HelpText`. 
 
-`     HelpText.Wrap('Text printed first', 'Text printed last')` 
+```
+HelpText.Wrap('Text printed first', 'Text printed last')
 
-`     section = HelpText.Section('section_name')` 
+section = HelpText.Section('section_name')
 
-`     section.Wrap('Text at beginning of section', 'Text at end of section')` 
+section.Wrap('Text at beginning of section', 'Text at end of section')
 
-`     HelpText.__call__('section_name', key, short_help, long_help)` 
+HelpText.__call__('section_name', key, short_help, long_help)
 
-`     section.__call__(key, short_help, long_help)` 
+section.__call__(key, short_help, long_help)
+```
 
 So '`scons -h`' prints a short blurb and the list of sections. 
 
